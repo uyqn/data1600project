@@ -1,7 +1,10 @@
-C:\Users\deahj\Desktop\data1600project\src\main\java\main\RegisterController.java
-C:\Users\deahj\Desktop\data1600project\src\main\java\users\User.java
-C:\Users\deahj\Desktop\data1600project\src\main\java\module-info.java
-C:\Users\deahj\Desktop\data1600project\src\main\java\main\RootUserController.java
-C:\Users\deahj\Desktop\data1600project\src\main\java\main\LoginController.java
-C:\Users\deahj\Desktop\data1600project\src\main\java\main\App.java
-C:\Users\deahj\Desktop\data1600project\src\main\java\users\UserList.java
+C:\Users\uyngu\Desktop\data1600project\src\main\java\controllers\RegisterController.java
+C:\Users\uyngu\Desktop\data1600project\src\main\java\controllers\SuperUserController.java
+C:\Users\uyngu\Desktop\data1600project\src\main\java\controllers\EndUserController.java
+C:\Users\uyngu\Desktop\data1600project\src\main\java\controllers\RootUserController.java
+C:\Users\uyngu\Desktop\data1600project\src\main\java\module-info.java
+C:\Users\uyngu\Desktop\data1600project\src\main\java\users\User.java
+C:\Users\uyngu\Desktop\data1600project\src\main\java\main\App.java
+C:\Users\uyngu\Desktop\data1600project\src\main\java\main\LoginController.java
+C:\Users\uyngu\Desktop\data1600project\src\main\java\controllers\GUI.java
+C:\Users\uyngu\Desktop\data1600project\src\main\java\users\UserList.java

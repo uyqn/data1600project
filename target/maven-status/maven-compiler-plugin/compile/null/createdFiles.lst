@@ -1,7 +1,10 @@
-main\RootUserController.class
-main\App.class
-module-info.class
-main\RegisterController.class
+controllers\RegisterController.class
+controllers\GUI.class
+controllers\EndUserController.class
+controllers\RootUserController.class
 main\LoginController.class
 users\UserList.class
+controllers\SuperUserController.class
+main\App.class
+module-info.class
 users\User.class

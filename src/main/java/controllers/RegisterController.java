@@ -1,10 +1,13 @@
-package main;
+package controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import main.App;
+import main.LoginController;
 import users.*;
 
 import java.io.IOException;
@@ -34,7 +37,8 @@ public class RegisterController {
 
     @FXML
     void cancel(ActionEvent event) throws IOException {
-        App.setRoot("login");
+        GUI<LoginController> toLogin = new GUI<>(event, "login");
+        toLogin.switchScene();
     }
 
     User createUser(){
