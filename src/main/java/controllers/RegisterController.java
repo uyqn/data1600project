@@ -25,7 +25,16 @@ public class RegisterController {
             try {
                 UserList.add(user);
                 resetFields();
-            } catch (IllegalArgumentException e) {
+
+                Alert success = new Alert(Alert.AlertType.INFORMATION);
+                success.setTitle("Registration complete");
+                success.setHeaderText("Successfully registered " + user.getUsername());
+                success.setContentText("Please sign into the app");
+                success.showAndWait();
+
+                GUI<LoginController> toLogin = new GUI<>(event, "login");
+                toLogin.switchScene();
+            } catch (IllegalArgumentException | IOException e) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Username taken");
                 alert.setHeaderText("A problem occurred when creating person");

@@ -49,7 +49,7 @@ public class LoginController {
     @FXML
     void register(ActionEvent event) throws IOException {
         GUI<RegisterController> toRegister = new GUI<>(event, "register");
-        toRegister.newWindow();
+        toRegister.switchScene();
     }
 
     private String getString(String id){
