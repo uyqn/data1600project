@@ -8,8 +8,8 @@ public class UserList {
     public static void add(User user) throws IllegalArgumentException{
         for (User member : members) {
             if (user.getUsername().equals(member.getUsername())) {
-                throw new IllegalArgumentException("A user with the username " + member.getUsername() + "already " +
-                        "exists please pick a new username");
+                throw new IllegalArgumentException("A user with the username " + member.getUsername() + " already " +
+                        "exists \nplease pick a new username");
             }
         }
         members.add(user);

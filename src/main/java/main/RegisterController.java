@@ -18,6 +18,7 @@ public class RegisterController {
     void signUp(ActionEvent event) {
         User user = createUser();
         if(user != null) {
+            user.setAccessLevel(2);
             try {
                 UserList.add(user);
                 resetFields();
@@ -42,7 +43,7 @@ public class RegisterController {
         if(getString("chosenPassword").equals(getString("confirmedPassword"))){
             password = getString("chosenPassword");
             try{
-                return new EndUser(username, password);
+                return new User(username, password);
             }catch (IllegalArgumentException e){
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Unable to create user!");

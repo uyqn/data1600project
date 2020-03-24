@@ -32,8 +32,8 @@
             <Font name="System Bold" size="30.0" />
          </font>
       </Label>
-      <Button alignment="CENTER" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#signIn" prefHeight="25.0" prefWidth="70.0" text="Sign in" GridPane.columnSpan="2147483647" GridPane.rowIndex="3" />
-      <Button alignment="TOP_CENTER" mnemonicParsing="false" onAction="#register" prefWidth="70.0" text="Register" GridPane.columnSpan="2147483647" GridPane.rowIndex="4">
+      <Button alignment="CENTER" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#signIn" prefHeight="25.0" prefWidth="80.0" text="Sign in" GridPane.columnSpan="2147483647" GridPane.rowIndex="3" />
+      <Button alignment="TOP_CENTER" mnemonicParsing="false" onAction="#register" prefWidth="80.0" text="Register" GridPane.columnSpan="2147483647" GridPane.rowIndex="4">
          <opaqueInsets>
             <Insets />
          </opaqueInsets>

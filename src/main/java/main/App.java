@@ -2,11 +2,16 @@ package main;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import users.User;
+import users.UserList;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 /**
  * JavaFX App
@@ -17,6 +22,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+        initializeCoreFunctions();
         scene = new Scene(loadFXML("login"));
         stage.setScene(scene);
         stage.show();
@@ -35,4 +41,17 @@ public class App extends Application {
         launch();
     }
 
+    private void initializeCoreFunctions(){
+        User root = new User("root", "r00t", 0);
+        User uy = new User("uyqn", "s341864", 1);
+        User andreas = new User("andreasth", "s338851", 1);
+        User helene = new User("helenebp", "s341873", 1);
+        User kunde = new User("kunde", "regular", 2);
+
+        UserList.add(root);
+        UserList.add(uy);
+        UserList.add(andreas);
+        UserList.add(helene);
+        UserList.add(kunde);
+    }
 }

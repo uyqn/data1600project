@@ -4,4 +4,5 @@ module main {
 
     opens main to javafx.fxml;
     exports main;
+    exports users;
 }
