@@ -3,7 +3,6 @@ package controllers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import main.App;
 import main.LoginController;
 import users.User;
 

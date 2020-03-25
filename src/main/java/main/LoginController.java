@@ -8,7 +8,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import users.User;
 import users.UserList;
-
 import java.io.IOException;
 
 public class LoginController {
