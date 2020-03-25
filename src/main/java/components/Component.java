@@ -11,6 +11,13 @@ public class Component {
     private SimpleDoubleProperty width;
     private SimpleDoubleProperty length;
 
+    public Component(String name, String manufacturer, String model,
+                     double price) {
+        this.name = new SimpleStringProperty(name);
+        this.manufacturer = new SimpleStringProperty(manufacturer);
+        this.model = new SimpleStringProperty(model);
+        this.price = new SimpleDoubleProperty(price);
+    }
 
     public String getName() {
         return name.getValue();
