@@ -42,7 +42,7 @@ public class Component {
 
     @Override
     public String toString(){
-        return "Komponent" + name +":";
+        return "Component" + name +":";
     }
 
 }
