@@ -13,7 +13,7 @@ public class Component {
 
 
     public String getName() {
-        return name.get();
+        return name.getValue();
     }
 
     public void setName(String name) {
@@ -21,7 +21,7 @@ public class Component {
     }
 
     public String getManufacturer() {
-        return manufacturer.get();
+        return manufacturer.getValue();
     }
 
     public void setManufacturer(String manufacturer) {
@@ -29,7 +29,7 @@ public class Component {
     }
 
     public String getModel() {
-        return model.get();
+        return model.getValue();
     }
 
     public void setModel(String model) {
@@ -37,7 +37,7 @@ public class Component {
     }
 
     public double getPrice() {
-        return price.get();
+        return price.getValue();
     }
 
     public void setPrice(double price) {
@@ -45,7 +45,7 @@ public class Component {
     }
 
     public double getHeight() {
-        return height.get();
+        return height.getValue();
     }
 
     public void setHeight(double height) {
@@ -53,7 +53,7 @@ public class Component {
     }
 
     public double getWidth() {
-        return width.get();
+        return width.getValue();
     }
 
     public void setWidth(double width) {
@@ -61,7 +61,7 @@ public class Component {
     }
 
     public double getLength() {
-        return length.get();
+        return length.getValue();
     }
 
     public void setLength(double length) {
