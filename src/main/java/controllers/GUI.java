@@ -6,7 +6,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 
 public class GUI<T> {
@@ -24,18 +23,18 @@ public class GUI<T> {
         return fxmlLoader.getController();
     }
 
-    public void newWindow() throws IOException {
+    public void newWindow() {
         Stage stage = new Stage();
         stage.setScene(scene());
         stage.show();
     }
 
-    public void switchScene() throws IOException {
+    public void switchScene() {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene());
     }
 
-    private Scene scene() throws IOException {
+    private Scene scene() {
         return new Scene(parent);
     }
 }
