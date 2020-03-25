@@ -56,7 +56,6 @@ public class Component {
         return width.get();
     }
 
-
     public void setWidth(double width) {
         this.width.set(width);
     }
