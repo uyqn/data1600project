@@ -5,26 +5,30 @@ import javafx.beans.property.SimpleStringProperty;
 
 public class Component {
 
-    private SimpleStringProperty name, manufacturer, model;
-    private SimpleDoubleProperty price;
-    private SimpleDoubleProperty height;
-    private SimpleDoubleProperty width;
-    private SimpleDoubleProperty length;
+    private SimpleStringProperty manufacturer = new SimpleStringProperty();
+    private SimpleStringProperty model = new SimpleStringProperty();
+    private SimpleDoubleProperty price = new SimpleDoubleProperty();
 
-    public Component(String name, String manufacturer, String model,
+    private SimpleStringProperty name = new SimpleStringProperty();
+    private SimpleDoubleProperty width = new SimpleDoubleProperty();
+    private SimpleDoubleProperty length = new SimpleDoubleProperty();
+    private SimpleDoubleProperty height = new SimpleDoubleProperty();
+
+    public Component(String manufacturer, String model,
                      double price) {
-        this.name = new SimpleStringProperty(name);
-        this.manufacturer = new SimpleStringProperty(manufacturer);
-        this.model = new SimpleStringProperty(model);
-        this.price = new SimpleDoubleProperty(price);
+        setManufacturer(manufacturer);
+        setModel(model);
+        setPrice(price);
+
+        setName();
     }
 
     public String getName() {
         return name.getValue();
     }
 
-    public void setName(String name) {
-        this.name.set(name);
+    public void setName() {
+        this.name.set(getManufacturer() + " " + getModel());
     }
 
     public String getManufacturer() {
