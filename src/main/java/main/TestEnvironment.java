@@ -4,8 +4,8 @@ import components.*;
 
 public class TestEnvironment {
     public static void main(String[] args){
-        Dimension dim = new Dimension(10,10, 10);
+        Component test = new Component("Manufacturer", "Model", 299);
 
-        System.out.println(dim.getVolume());
+        System.out.println(test.getHeight());
     }
 }

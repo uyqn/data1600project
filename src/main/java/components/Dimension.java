@@ -7,6 +7,8 @@ public class Dimension {
     private transient SimpleDoubleProperty depth = new SimpleDoubleProperty();
     private transient SimpleDoubleProperty height = new SimpleDoubleProperty();
 
+    public Dimension(){}
+
     public Dimension(String dimension){
         setDimension(dimension);
     }

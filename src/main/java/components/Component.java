@@ -12,7 +12,7 @@ public class Component {
     private transient SimpleDoubleProperty price = new SimpleDoubleProperty();
 
     private transient SimpleStringProperty name = new SimpleStringProperty();
-    private transient SimpleObjectProperty<Dimension> dimension = new SimpleObjectProperty<>();
+    private transient SimpleObjectProperty<Dimension> dimension = new SimpleObjectProperty<>(new Dimension());
 
     public Component(String manufacturer, String model,
                      double price) {
@@ -78,6 +78,14 @@ public class Component {
 
     public double getHeight(){
         return dimension.getValue().getHeight();
+    }
+
+    public double getArea(){
+        return dimension.getValue().getArea();
+    }
+
+    public double getVolume(){
+        return dimension.getValue().getVolume();
     }
 
     public void setDimension(double width, double depth, double height){
