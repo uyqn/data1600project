@@ -126,8 +126,8 @@ public class CPU extends Component{
         if(!clockSpeed.matches("[1-9]\\.[0-9]{1,2}/[1-9]\\.[0-9]{1,2}((\\s)?GHz)?")){
             throw new IllegalArgumentException("Clock speed format is #.##/#.## GHz");
         }else {
-            String formatted = clockSpeed.replaceAll("\\s|[A-Za-z]", "");
-            String[] split = formatted.split("/");
+            String formatted = clockSpeed.replaceAll("\\s|GHz", "");
+            String[] split = formatted.split("[/\\-]");
 
             setCoreClock(Double.parseDouble(split[0]));
             setBoostClock(Double.parseDouble(split[1]));
@@ -152,10 +152,12 @@ public class CPU extends Component{
 
     @Override
     public String toString() {
-        return getCOMPONENT_TYPE() + ": " + super.getName() + "\n" +
-                "Socket: " + getSocket() + "\n" +
-                "Number of cores: " + getCoreCount() + "\n" +
-                "Clock speed: " + getClockSpeed() + "\n" +
-                "Power usage: " + getPower() + "W";
+        return String.format("%s: %s\n" +
+                "Socket: %s\n" +
+                "Number of cores: %s\n" +
+                "Clock speed: %s\n" +
+                "Power usage: %s\n" +
+                "Price: %s",
+                getCOMPONENT_TYPE(), getName(), getSocket(), getCoreCount(), getClockSpeed(), getPower(), getPrice());
     }
 }

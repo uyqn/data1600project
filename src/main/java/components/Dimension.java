@@ -58,13 +58,14 @@ public class Dimension {
     }
 
     public void setDimension(String dimension){
-        String rDouble = "[1-9](\\.[0-9]{1,2})?";
-        String rX = "[Xx ]|[^A-Za-z0-9]";
+        String rDouble = "[0-9]+(\\.[0-9]*)?";
+        String rX = "[Xx\\s,*;/]";
 
         if(!dimension.matches(rDouble+rX+rDouble + "|" + rDouble + rX + rDouble + rX + rDouble)){
             throw new IllegalArgumentException("Invalid format for specifying dimension correct format is #x# or " +
                     "#x#x#");
         }
+
 
         String[] split = dimension.replaceAll(rX, ";").split(";");
 

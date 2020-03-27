@@ -4,7 +4,7 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 
-public class Component {
+public class Component{
     public static final transient String DELIMITER = ",";
 
     private transient SimpleStringProperty manufacturer = new SimpleStringProperty();
@@ -64,16 +64,24 @@ public class Component {
         this.price.set(price);
     }
 
-    public String getDimension() {
-        return dimension.getValue().toString();
+    public void setWidth(double width){
+        dimension.getValue().setWidth(width);
     }
 
     public double getWidth(){
         return dimension.getValue().getWidth();
     }
 
+    public void setDepth(double depth){
+        dimension.getValue().setDepth(depth);
+    }
+
     public double getDepth(){
-        return dimension.getValue().getWidth();
+        return dimension.getValue().getDepth();
+    }
+
+    public void setHeight(double height){
+        dimension.getValue().setHeight(height);
     }
 
     public double getHeight(){
@@ -86,6 +94,10 @@ public class Component {
 
     public double getVolume(){
         return dimension.getValue().getVolume();
+    }
+
+    public String getDimension() {
+        return dimension.getValue().toString();
     }
 
     public void setDimension(double width, double depth, double height){
