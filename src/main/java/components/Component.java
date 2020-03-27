@@ -1,19 +1,18 @@
 package components;
 
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 public class Component {
     public static final transient String DELIMITER = ",";
 
-    private SimpleStringProperty manufacturer = new SimpleStringProperty();
-    private SimpleStringProperty model = new SimpleStringProperty();
-    private SimpleDoubleProperty price = new SimpleDoubleProperty();
+    private transient SimpleStringProperty manufacturer = new SimpleStringProperty();
+    private transient SimpleStringProperty model = new SimpleStringProperty();
+    private transient SimpleDoubleProperty price = new SimpleDoubleProperty();
 
-    private SimpleStringProperty name = new SimpleStringProperty();
-    private SimpleDoubleProperty width = new SimpleDoubleProperty();
-    private SimpleDoubleProperty length = new SimpleDoubleProperty();
-    private SimpleDoubleProperty height = new SimpleDoubleProperty();
+    private transient SimpleStringProperty name = new SimpleStringProperty();
+    private transient SimpleObjectProperty<Dimension> dimension = new SimpleObjectProperty<>();
 
     public Component(String manufacturer, String model,
                      double price) {
@@ -65,42 +64,33 @@ public class Component {
         this.price.set(price);
     }
 
-    public double getHeight() {
-        return height.getValue();
+    public String getDimension() {
+        return dimension.getValue().toString();
     }
 
-    public void setHeight(double height) {
-        if(height <= 0){
-            throw new IllegalArgumentException("Height must be greater than 0");
-        }
-        this.height.set(height);
+    public double getWidth(){
+        return dimension.getValue().getWidth();
     }
 
-    public double getWidth() {
-        return width.getValue();
+    public double getDepth(){
+        return dimension.getValue().getWidth();
     }
 
-    public void setWidth(double width) {
-        if(width <= 0){
-            throw new IllegalArgumentException("Width must be greater than 0");
-        }
-        this.width.set(width);
+    public double getHeight(){
+        return dimension.getValue().getHeight();
     }
 
-    public double getLength() {
-        return length.getValue();
+    public void setDimension(double width, double depth, double height){
+        dimension.getValue().setWidth(width);
+        dimension.getValue().setDepth(depth);
+        dimension.getValue().setHeight(height);
     }
 
-    public void setLength(double length) {
-        if(length <= 0){
-            throw new IllegalArgumentException("Length must be greater than 0");
-        }
-        this.length.set(length);
+    public void setDimension(String dimension){
+        this.dimension.getValue().setDimension(dimension);
     }
 
-    @Override
-    public String toString(){
-        return "Component" + name +":";
+    public void setDimension(Dimension dimension) {
+        this.dimension.set(dimension);
     }
-
 }

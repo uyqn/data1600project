@@ -1,28 +1,29 @@
 package components;
 
 import fileManager.FileOpenerCSV;
+import fileManager.Formatter;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 public class CPU extends Component{
-    private static final SimpleStringProperty COMPONENT_TYPE = new SimpleStringProperty("CPU");
+    private static final transient SimpleStringProperty COMPONENT_TYPE = new SimpleStringProperty("CPU");
 
-    private SimpleStringProperty socket = new SimpleStringProperty();
-    private SimpleIntegerProperty coreCount = new SimpleIntegerProperty();
-    private SimpleDoubleProperty coreClock = new SimpleDoubleProperty();
-    private SimpleDoubleProperty boostClock = new SimpleDoubleProperty();
-    private SimpleIntegerProperty power = new SimpleIntegerProperty();
+    private transient SimpleStringProperty socket = new SimpleStringProperty();
+    private transient SimpleIntegerProperty coreCount = new SimpleIntegerProperty();
+    private transient SimpleDoubleProperty coreClock = new SimpleDoubleProperty();
+    private transient SimpleDoubleProperty boostClock = new SimpleDoubleProperty();
+    private transient SimpleIntegerProperty power = new SimpleIntegerProperty();
 
-    private SimpleStringProperty clockSpeed = new SimpleStringProperty();
+    private transient SimpleStringProperty clockSpeed = new SimpleStringProperty();
 
     public CPU(String manufacturer,
                String model,
-               double price,
                String socket,
                int coreCount,
                String clockSpeed,
-               int power) {
+               int power,
+               double price) {
         super(manufacturer, model, price);
 
         setSocket(socket);
@@ -33,12 +34,12 @@ public class CPU extends Component{
 
     public CPU(String manufacturer,
                String model,
-               double price,
                String socket,
                int coreCount,
                double coreClock,
                double boostClock,
-               int power) {
+               int power,
+               double price) {
         super(manufacturer, model, price);
 
         setSocket(socket);
@@ -134,8 +135,9 @@ public class CPU extends Component{
         }
     }
 
+
     public String toCSV() {
-        String formatted = String.format("%s;%s;%s;%s;%s;%s;%s;%s",
+        return Formatter.toCSV(
                 getCOMPONENT_TYPE(),
                 getManufacturer(),
                 getModel(),
@@ -143,10 +145,9 @@ public class CPU extends Component{
                 getCoreCount(),
                 getCoreClock(),
                 getBoostClock(),
-                getPower()
-                );
-
-        return formatted.replaceAll(";", FileOpenerCSV.DELIMITER);
+                getPower(),
+                getPrice()
+        );
     }
 
     @Override
