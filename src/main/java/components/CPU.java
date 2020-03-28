@@ -157,7 +157,7 @@ public class CPU extends Component{
                 "Number of cores: %s\n" +
                 "Clock speed: %s\n" +
                 "Power usage: %s\n" +
-                "Price: %s",
+                "Price: %s NOK",
                 getCOMPONENT_TYPE(), getName(), getSocket(), getCoreCount(), getClockSpeed(), getPower(), getPrice());
     }
 }

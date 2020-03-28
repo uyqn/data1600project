@@ -1,8 +1,11 @@
 package components;
 
+import fileManager.Formatter;
 import javafx.beans.property.SimpleDoubleProperty;
 
 public class Dimension {
+    private static final transient  String DELIMITER = " x ";
+
     private transient SimpleDoubleProperty width = new SimpleDoubleProperty();
     private transient SimpleDoubleProperty depth = new SimpleDoubleProperty();
     private transient SimpleDoubleProperty height = new SimpleDoubleProperty();
@@ -88,7 +91,7 @@ public class Dimension {
     @Override
     public String toString() {
         return (getHeight() == 0) ?
-                String.format("%s x %s", getWidth(), getDepth()) :
-                String.format("%s x %s x %s", getWidth(), getDepth(), getHeight());
+                Formatter.toCSV(DELIMITER, getWidth(), getDepth()) :
+                Formatter.toCSV(DELIMITER, getWidth(), getDepth(), getHeight());
     }
 }

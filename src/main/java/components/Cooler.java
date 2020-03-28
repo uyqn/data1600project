@@ -6,7 +6,7 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 public class Cooler extends Component {
-    private static final transient SimpleStringProperty COMPONENT_TYPE = new SimpleStringProperty("Regular cooler");
+    private static final transient SimpleStringProperty COMPONENT_TYPE = new SimpleStringProperty("Cooler");
 
     private transient SimpleDoubleProperty coreRPM = new SimpleDoubleProperty();
     private transient SimpleDoubleProperty maxRPM = new SimpleDoubleProperty();
