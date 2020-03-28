@@ -36,7 +36,7 @@ public class Component{
     }
 
     public void setManufacturer(String manufacturer) {
-        if(!manufacturer.matches("[A-Z][a-z]+|[A-Z]+")){
+        if(!manufacturer.matches("[A-Z][A-Za-z ]+|[A-Z][A-Za-z]+")){
             throw new IllegalArgumentException("Invalid name format for manufacturer");
         }
         this.manufacturer.set(manufacturer);

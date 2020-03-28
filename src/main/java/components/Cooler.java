@@ -1,11 +1,12 @@
 package components;
 
+import fileManager.Formatter;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 public class Cooler extends Component {
-    private static final transient SimpleStringProperty COMPONENT_TYPE = new SimpleStringProperty("Regular Cooler");
+    private static final transient SimpleStringProperty COMPONENT_TYPE = new SimpleStringProperty("Regular cooler");
 
     private transient SimpleDoubleProperty coreRPM = new SimpleDoubleProperty();
     private transient SimpleDoubleProperty maxRPM = new SimpleDoubleProperty();
@@ -205,6 +206,10 @@ public class Cooler extends Component {
         this.coreNoise.set(coreNoise);
     }
 
+    public double getMaxNoise() {
+        return maxNoise.getValue();
+    }
+
     public void setMaxNoise(double maxNoise) {
         if(maxNoise < coreNoise.getValue()){
             throw new IllegalArgumentException("Max noise cannot be less than base noise");
@@ -217,7 +222,7 @@ public class Cooler extends Component {
     }
 
     public void setNoise(String noise) {
-        if(!noise.matches("[1-9]\\.[0-9]{1,2}[/\\-][1-9]\\.[0-9]{1,2}((\\s)?dBA)?")){
+        if(!noise.matches("[1-9]([0-9]+)?(\\.[0-9]*)?[/\\-][1-9]([0-9]+)?(\\.[0-9]*)?((\\s)?dBA)?")){
             throw new IllegalArgumentException("RPM format is #.##-#.## dBA");
         }else {
             String formatted = noise.replaceAll("\\s|dBA", "");
@@ -225,7 +230,7 @@ public class Cooler extends Component {
 
             setCoreNoise(Double.parseDouble(split[0]));
             setMaxNoise(Double.parseDouble(split[1]));
-            this.noise.set(getCoreRPM() + "-" + getMaxRPM() + " dBA");
+            this.noise.set(getCoreNoise() + "-" + getMaxNoise());
         }
     }
 
@@ -256,7 +261,7 @@ public class Cooler extends Component {
     }
 
     public void setRPM(String rpm){
-        if(!rpm.matches("[1-9]\\.[0-9]{1,2}[/\\-][1-9]\\.[0-9]{1,2}((\\s)?dBA)?")){
+        if(!rpm.matches("[1-9][0-9]+(\\.[0-9]*)?[/\\-][1-9][0-9]+(\\.[0-9]*)?((\\s)?RPM)?")){
             throw new IllegalArgumentException("RPM format is #.##-#.## dBA");
         }else {
             String formatted = rpm.replaceAll("\\s|dBA", "");
@@ -266,6 +271,18 @@ public class Cooler extends Component {
             setMaxRPM(Double.parseDouble(split[1]));
             this.rpm.set(getCoreRPM() + "-" + getMaxRPM() + " dBA");
         }
+    }
+
+    public String toCSV(){
+        return Formatter.toCSV(
+                getComponentType(),
+                getManufacturer(),
+                getModel(),
+                getDimension(),
+                getRPM(),
+                getNoise(),
+                getPrice()
+        );
     }
 
     @Override
