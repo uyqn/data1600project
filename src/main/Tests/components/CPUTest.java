@@ -37,6 +37,9 @@ class CPUTest {
         test.setSocket("PGA988");
         test.setSocket("sTR4");
         test.setSocket("sTRX4");
+
+        assertThrows(IllegalArgumentException.class, () -> test.setSocket(""));
+        assertThrows(IllegalArgumentException.class, () -> test.setSocket(" "));
     }
 
     @Test
