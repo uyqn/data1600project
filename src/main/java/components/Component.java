@@ -27,7 +27,7 @@ public class Component{
         return name.getValue();
     }
 
-    public void setName() {
+    private void setName() {
         this.name.set(getManufacturer() + " " + getModel());
     }
 
@@ -39,7 +39,8 @@ public class Component{
         if(!manufacturer.matches("[A-Z][A-Za-z ]+|[A-Z][A-Za-z]+")){
             throw new IllegalArgumentException("Invalid name format for manufacturer");
         }
-        this.manufacturer.set(manufacturer);
+        this.manufacturer.set(manufacturer.replaceAll("\\s{2,}", " ").trim());
+        setName();
     }
 
     public String getModel() {
@@ -47,10 +48,11 @@ public class Component{
     }
 
     public void setModel(String model) {
-        if(!model.matches("[A-Za-z0-9 \\-]+")){
+        if(!model.matches("[A-Za-z0-9 \\-]+") || model.isBlank() || model.isEmpty()){
             throw new IllegalArgumentException("Invalid name format for model");
         }
-        this.model.set(model);
+        this.model.set(model.replaceAll("\\s{2,}", " "));
+        setName();
     }
 
     public double getPrice() {
@@ -98,6 +100,11 @@ public class Component{
 
     public String getDimension() {
         return dimension.getValue().toString();
+    }
+
+    public void setDimension(double width, double depth){
+        dimension.getValue().setWidth(width);
+        dimension.getValue().setDepth(depth);
     }
 
     public void setDimension(double width, double depth, double height){

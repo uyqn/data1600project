@@ -1,7 +1,6 @@
 package components;
 
 import fileManager.Formatter;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 
@@ -12,7 +11,6 @@ public class Cooler extends Component {
     private transient SimpleDoubleProperty maxRPM = new SimpleDoubleProperty();
     private transient SimpleDoubleProperty coreNoise = new SimpleDoubleProperty();
     private transient SimpleDoubleProperty maxNoise = new SimpleDoubleProperty();
-
     private transient SimpleStringProperty rpm = new SimpleStringProperty();
     private transient SimpleStringProperty noise = new SimpleStringProperty();
 
@@ -261,7 +259,7 @@ public class Cooler extends Component {
     }
 
     public void setRPM(String rpm){
-        if(!rpm.matches("[1-9][0-9]+(\\.[0-9]*)?[/\\-][1-9][0-9]+(\\.[0-9]*)?((\\s)?RPM)?")){
+        if(!rpm.matches("[1-9][0-9]+(\\.[0-9]*)?[/\\-~][1-9][0-9]+(\\.[0-9]*)?((\\s)?RPM)?")){
             throw new IllegalArgumentException("RPM format is #.##-#.## dBA");
         }else {
             String formatted = rpm.replaceAll("\\s|dBA", "");

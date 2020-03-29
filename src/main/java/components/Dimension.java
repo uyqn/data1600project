@@ -61,8 +61,8 @@ public class Dimension {
     }
 
     public void setDimension(String dimension){
-        String rDouble = "[0-9]+(\\.[0-9]*)?";
-        String rX = "[Xx\\s,*;/]";
+        String rDouble = "([-+])?[0-9]+(\\.[0-9]*)?";
+        String rX = "[Xx\\s,*;/]+";
 
         if(!dimension.matches(rDouble+rX+rDouble + "|" + rDouble + rX + rDouble + rX + rDouble)){
             throw new IllegalArgumentException("Invalid format for specifying dimension correct format is #x# or " +

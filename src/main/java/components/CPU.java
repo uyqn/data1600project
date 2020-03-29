@@ -1,6 +1,5 @@
 package components;
 
-import fileManager.FileOpenerCSV;
 import fileManager.Formatter;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -13,7 +12,7 @@ public class CPU extends Component{
     private transient SimpleIntegerProperty coreCount = new SimpleIntegerProperty();
     private transient SimpleDoubleProperty coreClock = new SimpleDoubleProperty();
     private transient SimpleDoubleProperty boostClock = new SimpleDoubleProperty();
-    private transient SimpleIntegerProperty power = new SimpleIntegerProperty();
+    private transient SimpleIntegerProperty tdp = new SimpleIntegerProperty();
 
     private transient SimpleStringProperty clockSpeed = new SimpleStringProperty();
 
@@ -22,14 +21,14 @@ public class CPU extends Component{
                String socket,
                int coreCount,
                String clockSpeed,
-               int power,
+               int tdp,
                double price) {
         super(manufacturer, model, price);
 
         setSocket(socket);
         setCoreCount(coreCount);
         setClockSpeed(clockSpeed);
-        setPower(power);
+        setTdp(tdp);
     }
 
     public CPU(String manufacturer,
@@ -38,7 +37,7 @@ public class CPU extends Component{
                int coreCount,
                double coreClock,
                double boostClock,
-               int power,
+               int tdp,
                double price) {
         super(manufacturer, model, price);
 
@@ -46,7 +45,7 @@ public class CPU extends Component{
         setCoreCount(coreCount);
         setCoreClock(coreClock);
         setBoostClock(boostClock);
-        setPower(power);
+        setTdp(tdp);
 
         this.clockSpeed.set(this.coreClock+"/"+this.boostClock+" GHz");
     }
@@ -60,7 +59,7 @@ public class CPU extends Component{
     }
 
     public void setSocket(String socket) {
-        if(!socket.matches("[a-z]?[A-Z]{1,3}([1-9][+]|[1-9][0-9]{1,3}([-][1-9])?)")){
+        if(!socket.matches("[a-z]?[A-Z]{1,3}([1-9][+]|[1-9][0-9]{0,3}([-][1-9])?)")){
             throw new IllegalArgumentException("Format of socket type is invalid");
         }
         this.socket.set(socket);
@@ -72,15 +71,26 @@ public class CPU extends Component{
 
     public void setCoreCount(int coreCount) {
         boolean invalid = true;
-        for(int i = 0 ; i < 17 ; i += 2){
-            if(coreCount == 1 || coreCount == i){
+
+        for(int i = 1 ; i < 4 ; i++){
+            if(coreCount == i){
                 invalid = false;
                 break;
             }
         }
 
-        if(invalid){
-            throw new IllegalArgumentException("Number of cores must be 1, 2, 4, 8, 16, 32 or 64");
+        for(int i = 4 ; i < 25 ; i += 2){
+            if(coreCount == i){
+                invalid = false;
+                break;
+            }
+        }
+
+        if(invalid && coreCount !=32 && coreCount !=64){
+            throw new IllegalArgumentException("Number of cores must be either one of these:\n" +
+                    "- A number between 1 and 3\n" +
+                    "- An even number between 4 and 24\n" +
+                    "- 32 or 64");
         }
         this.coreCount.set(coreCount);
     }
@@ -90,9 +100,14 @@ public class CPU extends Component{
     }
 
     public void setCoreClock(double coreClock) {
-        if(coreClock < 1){
-            throw new IllegalArgumentException("Core clock frequency must be 1 or greater");
+        if(coreClock < 1.1 || coreClock > 4.7){
+            throw new IllegalArgumentException("Core clock frequency should be between or equal to 1.1 and "
+                    + getBoostClock() + " GHz");
         }
+        if(coreClock > getBoostClock()){
+            setBoostClock(coreClock);
+        }
+
         this.coreClock.set(coreClock);
     }
 
@@ -101,25 +116,39 @@ public class CPU extends Component{
     }
 
     public void setBoostClock(double boostClock) {
-        if(boostClock < coreClock.getValue()){
-            throw new IllegalArgumentException("Overclocked speed must be greater than core clock frequency");
+        if(boostClock < 1.1 || boostClock > 5.0){
+            throw new IllegalArgumentException("Overclocked speed should be between or equal to " + getCoreClock() +
+                    " and 5.0 GHz");
         }
+        if(boostClock < getCoreClock()){
+            setCoreClock(boostClock);
+        }
+
         this.boostClock.set(boostClock);
     }
 
-    public int getPower() {
-        return power.getValue();
+    public int getTdp() {
+        return tdp.getValue();
     }
 
-    public void setPower(int power) {
-        if(power <= 0){
-            throw new IllegalArgumentException("Power requirement must be greater than 0");
+    public void setTdp(int tdp) {
+        if(tdp < 10 || tdp > 300){
+            throw new IllegalArgumentException("Thermal design power must be between 10 and 300");
         }
-        this.power.set(power);
+        this.tdp.set(tdp);
     }
 
     public String getClockSpeed() {
         return clockSpeed.getValue();
+    }
+
+    public void setClockSpeed(double core, double boost){
+        if(core > boost){
+            throw new IllegalArgumentException("Core clock speed should be greater than the boost clock speed");
+        }
+
+        setCoreClock(core);
+        setBoostClock(boost);
     }
 
     public void setClockSpeed(String clockSpeed) {
@@ -145,7 +174,7 @@ public class CPU extends Component{
                 getCoreCount(),
                 getCoreClock(),
                 getBoostClock(),
-                getPower(),
+                getTdp(),
                 getPrice()
         );
     }
@@ -158,6 +187,6 @@ public class CPU extends Component{
                 "Clock speed: %s\n" +
                 "Power usage: %s\n" +
                 "Price: %s NOK",
-                getCOMPONENT_TYPE(), getName(), getSocket(), getCoreCount(), getClockSpeed(), getPower(), getPrice());
+                getCOMPONENT_TYPE(), getName(), getSocket(), getCoreCount(), getClockSpeed(), getTdp(), getPrice());
     }
 }

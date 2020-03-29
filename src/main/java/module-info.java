@@ -4,4 +4,7 @@ module main {
 
     opens main to javafx.fxml;
     exports main;
+
+    opens components;
+    exports components;
 }
