@@ -1,6 +1,5 @@
 package components;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -67,10 +66,10 @@ class CPUTest {
 
     @Test
     void setTdp() {
-        test.setTdp(10);
-        test.setTdp(300);
+        test.setPowerConsumption(10);
+        test.setPowerConsumption(300);
 
-        assertThrows(IllegalArgumentException.class, () -> test.setTdp(9));
-        assertThrows(IllegalArgumentException.class, () -> test.setTdp(301));
+        assertThrows(IllegalArgumentException.class, () -> test.setPowerConsumption(9));
+        assertThrows(IllegalArgumentException.class, () -> test.setPowerConsumption(301));
     }
 }

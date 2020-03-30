@@ -12,7 +12,7 @@ public class CPU extends Component{
     private transient SimpleIntegerProperty coreCount = new SimpleIntegerProperty();
     private transient SimpleDoubleProperty coreClock = new SimpleDoubleProperty();
     private transient SimpleDoubleProperty boostClock = new SimpleDoubleProperty();
-    private transient SimpleIntegerProperty tdp = new SimpleIntegerProperty();
+    private transient SimpleIntegerProperty powerConsumption = new SimpleIntegerProperty();
 
     private transient SimpleStringProperty clockSpeed = new SimpleStringProperty();
 
@@ -21,14 +21,14 @@ public class CPU extends Component{
                String socket,
                int coreCount,
                String clockSpeed,
-               int tdp,
+               int powerConsumption,
                double price) {
         super(manufacturer, model, price);
 
         setSocket(socket);
         setCoreCount(coreCount);
         setClockSpeed(clockSpeed);
-        setTdp(tdp);
+        setPowerConsumption(powerConsumption);
     }
 
     public CPU(String manufacturer,
@@ -37,7 +37,7 @@ public class CPU extends Component{
                int coreCount,
                double coreClock,
                double boostClock,
-               int tdp,
+               int powerConsumption,
                double price) {
         super(manufacturer, model, price);
 
@@ -45,7 +45,7 @@ public class CPU extends Component{
         setCoreCount(coreCount);
         setCoreClock(coreClock);
         setBoostClock(boostClock);
-        setTdp(tdp);
+        setPowerConsumption(powerConsumption);
 
         this.clockSpeed.set(this.coreClock+"/"+this.boostClock+" GHz");
     }
@@ -59,7 +59,7 @@ public class CPU extends Component{
     }
 
     public void setSocket(String socket) {
-        if(!socket.matches("[a-z]?[A-Z]{1,3}([1-9][+]|[1-9][0-9]{0,3}([-][1-9])?)")){
+        if(!socket.matches("[a-z]?[A-Z]{1,3}(\\s)?([1-9][+]|[1-9][0-9]{0,3}([-][1-9])?)")){
             throw new IllegalArgumentException("Format of socket type is invalid");
         }
         this.socket.set(socket);
@@ -127,15 +127,15 @@ public class CPU extends Component{
         this.boostClock.set(boostClock);
     }
 
-    public int getTdp() {
-        return tdp.getValue();
+    public int getPowerConsumption() {
+        return powerConsumption.getValue();
     }
 
-    public void setTdp(int tdp) {
-        if(tdp < 10 || tdp > 300){
+    public void setPowerConsumption(int powerConsumption) {
+        if(powerConsumption < 10 || powerConsumption > 300){
             throw new IllegalArgumentException("Thermal design power must be between 10 and 300");
         }
-        this.tdp.set(tdp);
+        this.powerConsumption.set(powerConsumption);
     }
 
     public String getClockSpeed() {
@@ -149,14 +149,15 @@ public class CPU extends Component{
 
         setCoreClock(core);
         setBoostClock(boost);
+        this.clockSpeed.set(getCoreClock() + "/" + getBoostClock() + " GHz");
     }
 
     public void setClockSpeed(String clockSpeed) {
-        if(!clockSpeed.matches("[1-9]\\.[0-9]{1,2}/[1-9]\\.[0-9]{1,2}((\\s)?GHz)?")){
+        if(!clockSpeed.matches("([-+])?[1-9]\\.[0-9]{1,2}((\\s)?[Gg][Hh][Zz])?(\\s)?[/\\-~](\\s)?([-+])?[1-9]\\.[0-9]{1,2}((\\s)?[Gg][Hh][Zz])?")){
             throw new IllegalArgumentException("Clock speed format is #.##/#.## GHz");
         }else {
-            String formatted = clockSpeed.replaceAll("\\s|GHz", "");
-            String[] split = formatted.split("[/\\-]");
+            String formatted = clockSpeed.replaceAll("\\s|[Gg][Hh][Zz]", "");
+            String[] split = formatted.split("[/\\-~]");
 
             setCoreClock(Double.parseDouble(split[0]));
             setBoostClock(Double.parseDouble(split[1]));
@@ -172,9 +173,8 @@ public class CPU extends Component{
                 getModel(),
                 getSocket(),
                 getCoreCount(),
-                getCoreClock(),
-                getBoostClock(),
-                getTdp(),
+                getClockSpeed(),
+                getPowerConsumption(),
                 getPrice()
         );
     }
@@ -187,6 +187,6 @@ public class CPU extends Component{
                 "Clock speed: %s\n" +
                 "Power usage: %s\n" +
                 "Price: %s NOK",
-                getCOMPONENT_TYPE(), getName(), getSocket(), getCoreCount(), getClockSpeed(), getTdp(), getPrice());
+                getCOMPONENT_TYPE(), getName(), getSocket(), getCoreCount(), getClockSpeed(), getPowerConsumption(), getPrice());
     }
 }
