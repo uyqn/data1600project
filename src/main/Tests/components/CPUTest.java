@@ -57,11 +57,13 @@ class CPUTest {
     void setClockSpeed() {
         test.setClockSpeed(1.2,4.99);
         test.setClockSpeed("1.2/4.99 GHz");
+        test.setClockSpeed("1.2 / 4.99");
+        test.setClockSpeed("1.2GHz-4.9GHz");
+        test.setClockSpeed("1.2");
 
         assertThrows(IllegalArgumentException.class, () -> test.setClockSpeed(4.99, 1.2));
-        assertThrows(IllegalArgumentException.class, () -> test.setClockSpeed("4.99/1.2"));
-        assertThrows(IllegalArgumentException.class, () -> test.setClockSpeed("1.2"));
         assertThrows(IllegalArgumentException.class, () -> test.setClockSpeed(1.09,5.01));
+        assertThrows(IllegalArgumentException.class, () -> test.setClockSpeed("-1.2"));
     }
 
     @Test

@@ -100,7 +100,7 @@ public class CPU extends Component{
     }
 
     public void setCoreClock(double coreClock) {
-        if(coreClock < 1.1 || coreClock > 4.7){
+        if(coreClock < 1.1 || coreClock > 5.0){
             throw new IllegalArgumentException("Core clock frequency should be between or equal to 1.1 and "
                     + getBoostClock() + " GHz");
         }
@@ -153,16 +153,38 @@ public class CPU extends Component{
     }
 
     public void setClockSpeed(String clockSpeed) {
-        if(!clockSpeed.matches("([-+])?[1-9]\\.[0-9]{1,2}((\\s)?[Gg][Hh][Zz])?(\\s)?[/\\-~](\\s)?([-+])?[1-9]\\.[0-9]{1,2}((\\s)?[Gg][Hh][Zz])?")){
+        if(!clockSpeed.matches(
+                "([-+])?[1-9](\\.[0-9]{1,2})?((\\s)?[Gg][Hh][Zz])?|" +
+                        "([-+])?[1-9](\\.[0-9]{1,2})?((\\s)?[Gg][Hh][Zz])?" +
+                        "((\\s)?[/\\-~](\\s)?)" +
+                        "([-+])?[1-9](\\.[0-9]{1,2})?((\\s)?[Gg][Hh][Zz])?")){
             throw new IllegalArgumentException("Clock speed format is #.##/#.## GHz");
-        }else {
-            String formatted = clockSpeed.replaceAll("\\s|[Gg][Hh][Zz]", "");
-            String[] split = formatted.split("[/\\-~]");
-
-            setCoreClock(Double.parseDouble(split[0]));
-            setBoostClock(Double.parseDouble(split[1]));
-            this.clockSpeed.set(getCoreClock() + "/" + getBoostClock() + " GHz");
         }
+
+        double coreClock, boostClock;
+        String formatted = clockSpeed.replaceAll("[ ]|[Gg][Hh][Zz]", "");
+
+        if(clockSpeed.matches("([-+])?[1-9](\\.[0-9]{1,2})?((\\s)?[Gg][Hh][Zz])?" +
+                "((\\s)?[/\\-~](\\s)?)" +
+                "([-+])?[1-9](\\.[0-9]{1,2})?((\\s)?[Gg][Hh][Zz])?")) {
+
+            String[] split = formatted.trim().split("[/\\-~]");
+
+            coreClock = Double.parseDouble(split[0]);
+            boostClock = Double.parseDouble(split[1]);
+        } else {
+            coreClock = boostClock = Double.parseDouble(formatted);
+        }
+
+        setCoreClock(coreClock);
+        setBoostClock(boostClock);
+
+        if(coreClock != boostClock) {
+            this.clockSpeed.set(getCoreClock() + "/" + getBoostClock() + " GHz");
+        } else {
+            this.clockSpeed.set(getCoreClock() + " GHz");
+        }
+
     }
 
 
