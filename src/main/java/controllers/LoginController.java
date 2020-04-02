@@ -1,6 +1,8 @@
-package main;
+package controllers;
 
-import controllers.*;
+import controllers.user.EndUserController;
+import controllers.user.RootUserController;
+import controllers.user.SuperUserController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -8,6 +10,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import users.User;
 import users.UserList;
+
 import java.io.IOException;
 
 public class LoginController {
@@ -17,26 +20,25 @@ public class LoginController {
     @FXML
     void signIn(ActionEvent event) throws IOException {
         User user = fetchUser();
-        if(user != null){
-            switch (user.getAccessLevel()){
+        if (user != null) {
+            switch (user.getAccessLevel()) {
                 case 0:
-                    GUI<RootUserController> toRoot = new GUI<>(event, "rootUser");
+                    GUI<RootUserController> toRoot = new GUI<>(event, "user/rootUser");
                     toRoot.getController().setUser(user);
                     toRoot.switchScene();
                     break;
                 case 1:
-                    GUI<SuperUserController> toSuper = new GUI<>(event, "superUser");
+                    GUI<SuperUserController> toSuper = new GUI<>(event, "user/superUser");
                     toSuper.getController().setUser(user);
                     toSuper.switchScene();
                     break;
                 case 2:
-                    GUI<EndUserController> toEnd = new GUI<>(event, "endUser");
+                    GUI<EndUserController> toEnd = new GUI<>(event, "user/endUser");
                     toEnd.getController().setUser(user);
                     toEnd.switchScene();
                     break;
             }
-        }
-        else{
+        } else {
             Alert error = new Alert(Alert.AlertType.ERROR);
             error.setTitle("Cannot sign in");
             error.setHeaderText("Unable to sign in with " + getString("usernameInput"));
@@ -51,16 +53,16 @@ public class LoginController {
         toRegister.switchScene();
     }
 
-    private String getString(String id){
-        return ((TextField) loginGUI.lookup("#"+id)).getText();
+    private String getString(String id) {
+        return ((TextField) loginGUI.lookup("#" + id)).getText();
     }
 
-    private User fetchUser(){
+    private User fetchUser() {
         String usernameInput = getString("usernameInput");
         String passwordInput = getString("passwordInput");
 
-        for(User user : UserList.getMembers()){
-            if(usernameInput.equals(user.getUsername()) && passwordInput.equals(user.getPassword())){
+        for (User user : UserList.getMembers()) {
+            if (usernameInput.equals(user.getUsername()) && passwordInput.equals(user.getPassword())) {
                 return user;
             }
         }

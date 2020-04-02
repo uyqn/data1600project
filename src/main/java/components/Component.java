@@ -1,30 +1,32 @@
 package components;
 
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 
-public class Component {
+public class Component{
+    private transient SimpleStringProperty manufacturer = new SimpleStringProperty();
+    private transient SimpleStringProperty model = new SimpleStringProperty();
+    private transient SimpleDoubleProperty price = new SimpleDoubleProperty();
 
-    private SimpleStringProperty name, manufacturer, model;
-    private SimpleDoubleProperty price;
-    private SimpleDoubleProperty height;
-    private SimpleDoubleProperty width;
-    private SimpleDoubleProperty length;
+    private transient SimpleStringProperty name = new SimpleStringProperty();
+    private transient SimpleObjectProperty<Dimension> dimension = new SimpleObjectProperty<>(new Dimension());
 
-    public Component(String name, String manufacturer, String model,
+    public Component(String manufacturer, String model,
                      double price) {
-        this.name = new SimpleStringProperty(name);
-        this.manufacturer = new SimpleStringProperty(manufacturer);
-        this.model = new SimpleStringProperty(model);
-        this.price = new SimpleDoubleProperty(price);
+        setManufacturer(manufacturer);
+        setModel(model);
+        setPrice(price);
+
+        setName();
     }
 
     public String getName() {
         return name.getValue();
     }
 
-    public void setName(String name) {
-        this.name.set(name);
+    private void setName() {
+        this.name.set(getManufacturer() + " " + getModel());
     }
 
     public String getManufacturer() {
@@ -32,7 +34,11 @@ public class Component {
     }
 
     public void setManufacturer(String manufacturer) {
-        this.manufacturer.set(manufacturer);
+        if(!manufacturer.matches("[A-Z][A-Za-z ]+|[A-Z][A-Za-z]+")){
+            throw new IllegalArgumentException("Invalid name format for manufacturer");
+        }
+        this.manufacturer.set(manufacturer.replaceAll("\\s{2,}", " ").trim());
+        setName();
     }
 
     public String getModel() {
@@ -40,7 +46,11 @@ public class Component {
     }
 
     public void setModel(String model) {
-        this.model.set(model);
+        if(!model.matches("[A-Za-z0-9 \\-]+") || model.isBlank() || model.isEmpty()){
+            throw new IllegalArgumentException("Invalid name format for model");
+        }
+        this.model.set(model.replaceAll("\\s{2,}", " "));
+        setName();
     }
 
     public double getPrice() {
@@ -48,37 +58,64 @@ public class Component {
     }
 
     public void setPrice(double price) {
+        if(price < 0){
+            throw new IllegalArgumentException("Price cannot be negative");
+        }
         this.price.set(price);
     }
 
-    public double getHeight() {
-        return height.getValue();
+    public void setWidth(double width){
+        dimension.getValue().setWidth(width);
     }
 
-    public void setHeight(double height) {
-        this.height.set(height);
+    public double getWidth(){
+        return dimension.getValue().getWidth();
     }
 
-    public double getWidth() {
-        return width.getValue();
+    public void setDepth(double depth){
+        dimension.getValue().setDepth(depth);
     }
 
-    public void setWidth(double width) {
-        this.width.set(width);
+    public double getDepth(){
+        return dimension.getValue().getDepth();
     }
 
-    public double getLength() {
-        return length.getValue();
+    public void setHeight(double height){
+        dimension.getValue().setHeight(height);
     }
 
-    public void setLength(double length) {
-        this.length.set(length);
+    public double getHeight(){
+        return dimension.getValue().getHeight();
     }
 
-
-    @Override
-    public String toString(){
-        return "Component" + name +":";
+    public double getArea(){
+        return dimension.getValue().getArea();
     }
 
+    public double getVolume(){
+        return dimension.getValue().getVolume();
+    }
+
+    public String getDimension() {
+        return dimension.getValue().toString();
+    }
+
+    public void setDimension(double width, double depth){
+        dimension.getValue().setWidth(width);
+        dimension.getValue().setDepth(depth);
+    }
+
+    public void setDimension(double width, double depth, double height){
+        dimension.getValue().setWidth(width);
+        dimension.getValue().setDepth(depth);
+        dimension.getValue().setHeight(height);
+    }
+
+    public void setDimension(String dimension){
+        this.dimension.getValue().setDimension(dimension);
+    }
+
+    public void setDimension(Dimension dimension) {
+        this.dimension.set(dimension);
+    }
 }

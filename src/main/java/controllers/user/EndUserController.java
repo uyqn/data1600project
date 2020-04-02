@@ -1,9 +1,10 @@
-package controllers;
+package controllers.user;
 
+import controllers.GUI;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import main.LoginController;
+import controllers.LoginController;
 import users.User;
 
 import java.io.IOException;
