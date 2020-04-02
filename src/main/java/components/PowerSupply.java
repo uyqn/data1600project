@@ -19,4 +19,8 @@ public class PowerSupply extends Component {
     private void setPowerCapacity(int PowerCapacity){
         this.PowerCapacity.set(PowerCapacity);
     }
+
+    public String ToString(){
+        return "PowerSupply: " + getName() + "Power Capacity: " +PowerCapacity+" W";
+    }
 }

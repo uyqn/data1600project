@@ -19,4 +19,8 @@ public class Monitor extends Component{
     private void setRefreshRate(int RefreshRate){
         this.RefreshRate.set(RefreshRate);
     }
+
+    public String ToString(){
+        return "Monitor: " + getName() + "RefreshRate " +RefreshRate+" Hz";
+    }
 }
