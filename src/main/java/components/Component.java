@@ -5,8 +5,6 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 public class Component{
-    public static final transient String DELIMITER = ",";
-
     private transient SimpleStringProperty manufacturer = new SimpleStringProperty();
     private transient SimpleStringProperty model = new SimpleStringProperty();
     private transient SimpleDoubleProperty price = new SimpleDoubleProperty();
