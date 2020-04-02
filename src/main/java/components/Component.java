@@ -19,9 +19,7 @@ public class Component {
         this.price = new SimpleDoubleProperty(price);
     }
 
-    public String getName() {
-        return name.getValue();
-    }
+    public String getName() { return name.getValue(); }
 
     public void setName(String name) {
         this.name.set(name);
