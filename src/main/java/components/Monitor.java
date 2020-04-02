@@ -6,8 +6,8 @@ public class Monitor extends Component{
 
     private SimpleIntegerProperty RefreshRate;
 
-    public Monitor(String name, String manufacturer, String model, double price, int RefreshRate) {
-        super(name, manufacturer, model, price);
+    public Monitor(String manufacturer, String model, double price, int RefreshRate) {
+        super(manufacturer, model, price);
 
         setRefreshRate(RefreshRate);
     }

@@ -9,9 +9,9 @@ public class Motherboard extends Component {
     private SimpleIntegerProperty MaxRamSize;
     private SimpleStringProperty SoundType;
 
-    public Motherboard(String name, String manufacturer, String model, double price, int ProcessorSpaces, int MaxRamSize,
+    public Motherboard(String manufacturer, String model, double price, int ProcessorSpaces, int MaxRamSize,
                        String SoundType) {
-        super(name, manufacturer, model, price);
+        super(manufacturer, model, price);
 
         setProcessorSpaces(ProcessorSpaces);
         setMaxRamSize(MaxRamSize);

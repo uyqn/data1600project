@@ -6,8 +6,8 @@ public class PowerSupply extends Component {
 
     private SimpleIntegerProperty PowerCapacity;
 
-    public PowerSupply(String name, String manufacturer, String model, double price, int PowerCapacity){
-        super(name, manufacturer, model, price);
+    public PowerSupply(String manufacturer, String model, double price, int PowerCapacity){
+        super(manufacturer, model, price);
 
         setPowerCapacity(PowerCapacity);
     }

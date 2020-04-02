@@ -10,8 +10,8 @@ public class Mouse extends Component{
     private SimpleBooleanProperty ergonomic;
     private SimpleBooleanProperty wireless;
 
-    public Mouse(String name, String manufacturer, String model, double price, int numberButtons, int dpi, boolean ergonomic, boolean wireless) {
-        super(name, manufacturer, model, price);
+    public Mouse(String manufacturer, String model, double price, int numberButtons, int dpi, boolean ergonomic, boolean wireless) {
+        super(manufacturer, model, price);
 
         setNumberButtons(numberButtons);
         setDpi(dpi);
