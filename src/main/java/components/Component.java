@@ -23,9 +23,7 @@ public class Component{
         setName();
     }
 
-    public String getName() {
-        return name.getValue();
-    }
+    public String getName() { return name.getValue(); }
 
     private void setName() {
         this.name.set(getManufacturer() + " " + getModel());
