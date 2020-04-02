@@ -1,5 +1,6 @@
 package controllers;
 
+import controllers.guiManager.GUI;
 import controllers.user.EndUserController;
 import controllers.user.RootUserController;
 import controllers.user.SuperUserController;

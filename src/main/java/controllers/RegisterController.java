@@ -1,5 +1,6 @@
 package controllers;
 
+import controllers.guiManager.GUI;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;

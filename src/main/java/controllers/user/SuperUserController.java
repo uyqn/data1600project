@@ -1,6 +1,6 @@
 package controllers.user;
 
-import controllers.GUI;
+import controllers.guiManager.GUI;
 import controllers.LoginController;
 import controllers.component.ComponentController;
 import javafx.event.ActionEvent;
@@ -21,6 +21,13 @@ public class SuperUserController {
     void addComponent(ActionEvent event) throws IOException {
         GUI<ComponentController> addComponentWindow = new GUI<>(event, "user/component");
         addComponentWindow.newWindow();
+        addComponentWindow.getController().setSuperHome(superHome);
+        addComponentWindow.getStage().setOnCloseRequest(windowEvent -> {
+            windowEvent.consume();
+            addComponentWindow.getStage().close();
+            superHome.lookup("#addComponent").setDisable(false);
+        });
+        superHome.lookup("#addComponent").setDisable(true);
     }
 
     @FXML

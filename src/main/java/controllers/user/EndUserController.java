@@ -1,6 +1,6 @@
 package controllers.user;
 
-import controllers.GUI;
+import controllers.guiManager.GUI;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
