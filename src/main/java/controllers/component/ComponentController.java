@@ -83,6 +83,6 @@ public class ComponentController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Limit.text2int(addCPUgui, "coreInput", "powerInput");
-        Limit.text2double(addCPUgui, "coreClockSpeed", "boostClockSpeed", "priceInput");
+        Limit.text2double(addCPUgui,"coreClockInput", "boostClockInput", "priceInput");
     }
 }
