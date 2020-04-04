@@ -327,6 +327,7 @@ public class Cooler extends Component {
         }
     }
 
+    @Override
     public String toCSV(){
         return Formatter.toCSV(
                 getComponentType(),

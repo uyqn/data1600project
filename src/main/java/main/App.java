@@ -1,6 +1,7 @@
 package main;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -19,6 +20,11 @@ public class App extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/main/login.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setScene(scene);
+
+        stage.setOnCloseRequest(windowEvent -> {
+            Platform.exit();
+        });
+
         stage.show();
     }
 
@@ -27,7 +33,7 @@ public class App extends Application {
     }
 
     private void initiateCoreUsers(){
-        User uyqn = new User("uyqn", "s341864",1);
-        UserList.add(uyqn);
+        User admin = new User("admin", "super",1);
+        UserList.add(admin);
     }
 }

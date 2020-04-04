@@ -1,12 +1,15 @@
 package controllers.component;
 
+import components.CPU;
 import controllers.guiManager.Limit;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -58,14 +61,42 @@ public class ComponentController implements Initializable {
 
     @FXML
     void addCPU(ActionEvent event) {
+        try {
+            String manufacturer = getString(addCPUgui, "manufacturerInput");
+            String model = getString(addCPUgui, "modelInput");
+            String socket = getString(addCPUgui, "socketInput");
+            int coreCount = getInt(addCPUgui, "coreInput");
+            String clockSpeed = getString(addCPUgui, "coreClockInput") + "/"
+                    + getString(addCPUgui, "boostClockInput");
+            int powerConsumption = getInt(addCPUgui, "powerInput");
+            double price = getDouble(addCPUgui, "priceInput");
 
+            CPU cpu = new CPU(manufacturer, model, socket, coreCount, clockSpeed, powerConsumption, price);
+
+            Alert info = new Alert(Alert.AlertType.INFORMATION);
+            info.setTitle("CPU successfully added");
+            info.setHeaderText("The following CPU was added:");
+            info.setContentText(cpu.toString());
+            info.showAndWait();
+
+            resetGui(addCPUgui,
+                    "manufacturerInput",
+                    "modelInput",
+                    "socketInput",
+                    "coreInput",
+                    "coreClockInput",
+                    "boostClockInput",
+                    "powerInput",
+                    "priceInput");
+        } catch (IllegalArgumentException e){
+            Alert error = new Alert(Alert.AlertType.ERROR);
+            error.setTitle(e.getClass().toString());
+            error.setContentText(e.getMessage());
+            error.showAndWait();
+        }
     }
 
-    @FXML
-    void close(ActionEvent event) {
-        superHome.lookup("#addComponent").setDisable(false);
-        ((Stage) ((Node) event.getSource()).getScene().getWindow()).close();
-    }
+
 
     public void setSuperHome(GridPane superHome) {
         this.superHome = superHome;
@@ -78,6 +109,27 @@ public class ComponentController implements Initializable {
             }
         }
         return array.length;
+    }
+
+    private String getString(Pane pane, String id){
+        return ((TextField) pane.lookup("#" + id)).getText();
+    }
+    private int getInt(Pane pane, String id){
+        return Integer.parseInt(((TextField) pane.lookup("#" + id)).getText());
+    }
+    private double getDouble(Pane pane, String id){
+        return Double.parseDouble(((TextField) pane.lookup("#" + id)).getText());
+    }
+    private void resetGui(Pane pane, String... id){
+        for(String str : id){
+            ((TextField) pane.lookup("#" + str)).setText("");
+        }
+    }
+
+    @FXML
+    void close(ActionEvent event) {
+        superHome.lookup("#addComponent").setDisable(false);
+        ((Stage) ((Node) event.getSource()).getScene().getWindow()).close();
     }
 
     @Override

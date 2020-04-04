@@ -1,12 +1,13 @@
 package components;
 
+import fileManager.Formatter;
 import javafx.beans.property.SimpleIntegerProperty;
 
 public class Monitor extends Component{
 
     private SimpleIntegerProperty RefreshRate;
 
-    public Monitor(String manufacturer, String model, double price, int RefreshRate) {
+    public Monitor(String manufacturer, String model, int RefreshRate, double price) {
         super(manufacturer, model, price);
 
         setRefreshRate(RefreshRate);
@@ -20,7 +21,18 @@ public class Monitor extends Component{
         this.RefreshRate.set(RefreshRate);
     }
 
-    public String ToString(){
+    @Override
+    public String toString(){
         return "Monitor: " + getName() + "RefreshRate " +RefreshRate+" Hz";
+    }
+
+    @Override
+    String toCSV() {
+        return Formatter.toCSV(
+                getManufacturer(),
+                getModel(),
+                getRefreshRate(),
+                getPrice()
+        );
     }
 }
