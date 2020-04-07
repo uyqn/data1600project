@@ -1,5 +1,6 @@
 package components;
 
+import controllers.guiManager.Extract;
 import fileManager.Formatter;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -13,7 +14,6 @@ public class Cooler extends Component {
     private transient SimpleDoubleProperty coreNoise = new SimpleDoubleProperty();
     private transient SimpleDoubleProperty maxNoise = new SimpleDoubleProperty();
     private transient SimpleStringProperty rpm = new SimpleStringProperty();
-    private transient SimpleStringProperty noise = new SimpleStringProperty();
     private transient SimpleDoubleProperty powerConsumption = new SimpleDoubleProperty();
 
     public Cooler(String manufacturer,
@@ -24,7 +24,7 @@ public class Cooler extends Component {
                    double powerConsumption,
                    double price) {
         super(manufacturer, model, price);
-        super.setDimension(dimension);
+        setDimension(dimension);
         setRPM(rpm);
         setNoise(noise);
         setPowerConsumption(powerConsumption);
@@ -39,7 +39,7 @@ public class Cooler extends Component {
                   int maxRPM,
                   double coreNoise,
                   double maxNoise,
-                  int powerConsumption,
+                  double powerConsumption,
                   double price) {
         super(manufacturer, model, price);
         super.setDimension(width, depth, height);
@@ -47,10 +47,21 @@ public class Cooler extends Component {
         setMaxRPM(maxRPM);
         setCoreNoise(coreNoise);
         setMaxNoise(maxNoise);
+        setPowerConsumption(powerConsumption);
     }
 
     public static String getComponentType() {
         return COMPONENT_TYPE.getValue();
+    }
+
+    @Override
+    public void setDimension(String dimension){
+        if(Extract.doubles(dimension).size() < 3){
+            throw new IllegalArgumentException("All three fields of dimension must be specified");
+        }
+        super.setWidth(Extract.doubles(dimension).get(0));
+        super.setDepth(Extract.doubles(dimension).get(1));
+        super.setHeight(Extract.doubles(dimension).get(2));
     }
 
     public double getCoreNoise() {
@@ -82,43 +93,31 @@ public class Cooler extends Component {
     }
 
     public String getNoise() {
-        return noise.getValue();
+        return (getCoreNoise() != getMaxNoise()) ?
+                getCoreNoise() + " - " + getMaxNoise() :
+                String.valueOf(getCoreNoise());
     }
 
     public void setNoise(String noise) {
-        if(!noise.matches(
-                "[0](\\.[0]{1,2})?((\\s)?[Dd][Bb][Aa])?|" +
-                "[0-9]{1,2}(\\.[0-9]{1,2})?((\\s)?[Dd][Bb][Aa])?|"+
-                "[0-9]{1,2}(\\.[0-9]{1,2})?((\\s)?[Dd][Bb][Aa])?[/\\-~][0-9]{1,2}(\\.[0-9]{1,2})?((\\s)?[Dd][Bb][Aa])?"
-        )){
-            throw new IllegalArgumentException("Invalid input for noise level");
+        if(noise.matches(" - ")){
+            throw new IllegalArgumentException("Base noise and max noise are empty\n" +
+                    "One of the fields must be filled");
         }
 
-        double coreNoise;
-        double maxNoise;
-
-        if(noise.matches("[0-9]{1,2}(\\.[0-9]{1,2})?((\\s)?[Dd][Bb][Aa])?[/\\-~][0-9]{1,2}(\\.[0-9]{1,2})?((\\s)?[Dd][Bb][Aa])?")){
-            String formatted = noise.replaceAll("\\s|[Dd][Bb][Aa]", "");
-            String[] split = formatted.split("[/\\-]");
-
-            coreNoise = Double.parseDouble(split[0]);
-            maxNoise = Double.parseDouble(split[1]);
-        } else if (noise.matches("[0-9]{1,2}(\\.[0-9]{1,2})?((\\s)?[Dd][Bb][Aa])?|")){
-            String formatted = noise.replaceAll("\\s|[Dd][Bb][Aa]", "");
-            coreNoise = maxNoise = Double.parseDouble(formatted);
-        } else{
-            coreNoise = maxNoise = 0;
+        if(Extract.doubles(noise).size() == 1){
+            setCoreNoise(Extract.doubles(noise).get(0));
+            setMaxNoise(Extract.doubles(noise).get(0));
         }
-
-        setCoreNoise(coreNoise);
-        setMaxNoise(maxNoise);
-
-        if(getCoreNoise() != getMaxNoise()) {
-            this.noise.set(getCoreNoise() + "-" + getMaxNoise() + " dBA");
-        } else {
-            this.noise.set(getCoreNoise() + " dBA");
+        else {
+            setCoreNoise(
+                    Math.min(Extract.doubles(noise).get(0),
+                            Extract.doubles(noise).get(1))
+            );
+            setMaxNoise(
+                    Math.max(Extract.doubles(noise).get(0),
+                            Extract.doubles(noise).get(1))
+            );
         }
-
     }
 
     public double getCoreRPM() {
@@ -151,39 +150,30 @@ public class Cooler extends Component {
     }
 
     public String getRPM(){
-        return coreRPM.getValue() + "-" + maxRPM.getValue();
+        return (getCoreRPM() != getMaxRPM()) ?
+                getCoreRPM() + " - " + getMaxRPM() :
+                String.valueOf(getCoreRPM());
     }
 
     public void setRPM(String rpm){
-        if(!rpm.matches("[1-9][0-9]{2,4}((\\s)?[Rr][Pp][Mm])?|[0]((\\s)?[Rr][Pp][Mm])?|[1-9][0-9]{2,4}((\\s)?[Rr][Pp][Mm])" +
-                "?[/\\-~][1-9][0-9]{2,4}((\\s)?[Rr][Pp][Mm])?")){
-            throw new IllegalArgumentException("RPM format is #.##-#.## dBA");
+        if(rpm.matches(" - ")){
+            throw new IllegalArgumentException("Base rpm and max rpm are empty\n" +
+                    "One of the fields must be filled");
         }
 
-        int coreRPM;
-        int maxRPM;
-
-        if(rpm.matches("[1-9][0-9]{2,4}((\\s)?[Rr][Pp][Mm])?[/\\-~][1-9][0-9]{2,4}((\\s)?[Rr][Pp][Mm])?")) {
-            String formatted = rpm.replaceAll("\\s|[Rr][Pp][Mm]", "");
-            String[] split = formatted.split("[/\\-]");
-
-            coreRPM = Integer.parseInt(split[0]);
-            maxRPM = Integer.parseInt(split[1]);
-        } else if(rpm.matches("[1-9][0-9]{2,4}((\\s)?[Rr][Pp][Mm])?")) {
-            String formatted = rpm.replaceAll("\\s|[Rr][Pp][Mm]", "");
-            coreRPM = maxRPM = Integer.parseInt(formatted);
-        } else{
-            coreRPM = maxRPM = 0;
+        if(Extract.ints(rpm).size() == 1){
+            setCoreRPM(Extract.ints(rpm).get(0));
+            setMaxRPM(Extract.ints(rpm).get(0));
+        }
+        else {
+            setCoreRPM(Math.min(Extract.ints(rpm).get(0),
+                    Extract.ints(rpm).get(Extract.ints(rpm).size() - 1))
+            );
+            setMaxRPM(Math.max(Extract.ints(rpm).get(0),
+                    Extract.ints(rpm).get(Extract.ints(rpm).size() - 1))
+            );
         }
 
-        setCoreRPM(coreRPM);
-        setMaxRPM(maxRPM);
-
-        if(getCoreRPM() != getMaxRPM()) {
-            this.rpm.set(getCoreRPM() + "~" + getMaxRPM() + " RPM");
-        } else{
-            this.rpm.set(getCoreRPM() + " RPM");
-        }
     }
 
     public double getPowerConsumption(){
@@ -214,7 +204,7 @@ public class Cooler extends Component {
     @Override
     public String toString() {
         return String.format("%s: %s\n" +
-                        "Dimension: %s\n" +
+                        "Dimension: %s cm\n" +
                         "RPM: %s RPM\n" +
                         "Noise: %s dBA\n" +
                         "Power consumption: %s W\n" +

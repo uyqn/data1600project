@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 
 public class TestEnvironment {
     public static void main(String[] args){
-        String test = "2.77 GHz";
+        String test = "650 - 1800";
 
         Pattern pattern = Pattern.compile("[-+]?\\.\\d+|[-+]?\\d+(\\.?\\d+)");
         Matcher matcher = pattern.matcher(test);

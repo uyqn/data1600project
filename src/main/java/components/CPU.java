@@ -155,10 +155,21 @@ public class CPU extends Component{
             throw new IllegalArgumentException("Core clock speed and boost clock speed are empty\n" +
             "One of the fields must be filled");
         }
-        setCoreClock(Extract.numbers(clockSpeed).get(0));
-        setBoostClock(Extract.numbers(clockSpeed).get(
-                Extract.numbers(clockSpeed).size() - 1
-        ));
+
+        if(Extract.doubles(clockSpeed).size() == 1){
+            setCoreClock(Extract.doubles(clockSpeed).get(0));
+            setBoostClock(Extract.doubles(clockSpeed).get(0));
+        }
+        else {
+            setCoreClock(
+                    Math.min(Extract.doubles(clockSpeed).get(0),
+                            Extract.doubles(clockSpeed).get(Extract.doubles(clockSpeed).size() - 1))
+            );
+            setBoostClock(
+                    Math.max(Extract.doubles(clockSpeed).get(0),
+                            Extract.doubles(clockSpeed).get(Extract.doubles(clockSpeed).size() - 1))
+            );
+        }
     }
 
     @Override

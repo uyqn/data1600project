@@ -1,6 +1,7 @@
 package controllers.component;
 
 import components.CPU;
+import components.Cooler;
 import controllers.guiManager.Limit;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -28,7 +29,7 @@ public class ComponentController implements Initializable {
         int[] validCoreCount = {1, 2, 3, 4, 6, 8, 10, 12, 14, 16,
                 18, 20, 22, 24, 26, 28, 30, 32, 64};
 
-        TextField str = (TextField) addCpuGui.lookup("#coreInput");
+        TextField str = (TextField) addCpuGui.lookup("#core");
         if(str.getText().isBlank()|| str.getText().isEmpty()){
             str.setText("1");
         }
@@ -46,7 +47,7 @@ public class ComponentController implements Initializable {
         int[] validCoreCount = {1, 2, 3, 4, 6, 8, 10, 12, 14, 16,
                 18, 20, 22, 24, 26, 28, 30, 32, 64};
 
-        TextField str = (TextField) addCpuGui.lookup("#coreInput");
+        TextField str = (TextField) addCpuGui.lookup("#core");
         if(str.getText().isBlank()|| str.getText().isEmpty()){
             str.setText("1");
         }
@@ -63,14 +64,13 @@ public class ComponentController implements Initializable {
     @FXML
     void addCPU(ActionEvent event) {
         try {
-            String manufacturer = getString(addCpuGui, "manufacturerInput");
-            String model = getString(addCpuGui, "modelInput");
-            String socket = getString(addCpuGui, "socketInput");
-            int coreCount = getInt(addCpuGui, "coreInput");
-            String clockSpeed = getString(addCpuGui, "coreClockInput") + "/"
-                    + getString(addCpuGui, "boostClockInput");
-            int powerConsumption = getInt(addCpuGui, "powerInput");
-            double price = getDouble(addCpuGui, "priceInput");
+            String manufacturer = getString(addCpuGui, "manufacturer");
+            String model = getString(addCpuGui, "model");
+            String socket = getString(addCpuGui, "socket");
+            int coreCount = getInt(addCpuGui, "core");
+            String clockSpeed =  getString(addCpuGui, "coreClock") + "/" + getString(addCpuGui, "boostClock");
+            int powerConsumption = getInt(addCpuGui, "power");
+            double price = getDouble(addCpuGui, "price");
 
             CPU cpu = new CPU(manufacturer, model, socket, coreCount, clockSpeed, powerConsumption, price);
 
@@ -81,14 +81,14 @@ public class ComponentController implements Initializable {
             info.showAndWait();
 
             resetGui(addCpuGui,
-                    "manufacturerInput",
-                    "modelInput",
-                    "socketInput",
-                    "coreInput",
-                    "coreClockInput",
-                    "boostClockInput",
-                    "powerInput",
-                    "priceInput");
+                    "manufacturer",
+                    "model",
+                    "socket",
+                    "core",
+                    "coreClock",
+                    "boostClock",
+                    "power",
+                    "price");
         } catch (IllegalArgumentException e){
             Alert error = new Alert(Alert.AlertType.ERROR);
             error.setTitle(e.getClass().toString());
@@ -97,7 +97,49 @@ public class ComponentController implements Initializable {
         }
     }
 
+    @FXML
+    void addCooler(ActionEvent event) {
+        try{
+            String manufacturer = getString(addCoolerGui, "manufacturer");
+            String model = getString(addCoolerGui, "model");
+            String dimension = getString(addCoolerGui, "width") + " x " +
+                    getString(addCoolerGui, "depth") + " x " +
+                    getString(addCoolerGui, "height");
+            String rpm = getString(addCoolerGui, "baseRpm") + " - " + getString(addCoolerGui, "maxRpm");
+            String noise = getString(addCoolerGui, "baseNoise") + " - " + getString(addCoolerGui, "maxNoise");
+            double power = getDouble(addCoolerGui, "power");
+            double price = getDouble(addCoolerGui, "price");
 
+            System.out.println(getString(addCoolerGui, "baseRpm"));
+            System.out.println(getString(addCoolerGui, "maxRpm"));
+
+            Cooler cooler = new Cooler(manufacturer, model, dimension, rpm, noise, power, price);
+
+            Alert info = new Alert(Alert.AlertType.INFORMATION);
+            info.setTitle("Cooler successfully added");
+            info.setHeaderText("The following cooler was added:");
+            info.setContentText(cooler.toString());
+            info.showAndWait();
+
+            resetGui(addCoolerGui,
+                    "manufacturer",
+                    "model",
+                    "width",
+                    "depth",
+                    "height",
+                    "baseRpm",
+                    "maxRpm",
+                    "baseNoise",
+                    "maxNoise",
+                    "power",
+                    "price");
+        } catch (IllegalArgumentException e) {
+            Alert error = new Alert(Alert.AlertType.ERROR);
+            error.setTitle(e.getClass().toString());
+            error.setContentText(e.getMessage());
+            error.showAndWait();
+        }
+    }
 
     public void setSuperHome(GridPane superHome) {
         this.superHome = superHome;
