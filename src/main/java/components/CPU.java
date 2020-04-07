@@ -13,14 +13,14 @@ public class CPU extends Component{
     private transient SimpleIntegerProperty coreCount = new SimpleIntegerProperty();
     private transient SimpleDoubleProperty coreClock = new SimpleDoubleProperty();
     private transient SimpleDoubleProperty boostClock = new SimpleDoubleProperty();
-    private transient SimpleIntegerProperty powerConsumption = new SimpleIntegerProperty();
+    private transient SimpleDoubleProperty powerConsumption = new SimpleDoubleProperty();
 
     public CPU(String manufacturer,
                String model,
                String socket,
                int coreCount,
                String clockSpeed,
-               int powerConsumption,
+               double powerConsumption,
                double price) {
         super(manufacturer, model, price);
 
@@ -36,7 +36,7 @@ public class CPU extends Component{
                int coreCount,
                double coreClock,
                double boostClock,
-               int powerConsumption,
+               double powerConsumption,
                double price) {
         super(manufacturer, model, price);
 
@@ -124,11 +124,11 @@ public class CPU extends Component{
         this.boostClock.set(boostClock);
     }
 
-    public int getPowerConsumption() {
+    public double getPowerConsumption() {
         return powerConsumption.getValue();
     }
 
-    public void setPowerConsumption(int powerConsumption) {
+    public void setPowerConsumption(double powerConsumption) {
         if(powerConsumption < 10 || powerConsumption > 300){
             throw new IllegalArgumentException("Thermal design power must be between 10 and 300");
         }

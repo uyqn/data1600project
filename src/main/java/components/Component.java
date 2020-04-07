@@ -119,5 +119,5 @@ public abstract class Component{
         this.dimension.set(dimension);
     }
 
-    abstract String toCSV();
+    public abstract String toCSV();
 }

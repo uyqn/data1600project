@@ -64,11 +64,11 @@ public class Mouse extends Component{
 
     @Override
     public String toString(){
-        return "Mouse: " + getModel();
+        return getComponentType() + ": " + getName();
     }
 
     @Override
-    String toCSV() {
+    public String toCSV() {
         return Formatter.toCSV( getComponentType(),
                 getManufacturer(),
                 getModel(),

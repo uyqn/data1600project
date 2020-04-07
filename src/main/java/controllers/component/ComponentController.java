@@ -16,18 +16,19 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class ComponentController implements Initializable {
+
     @FXML
     private GridPane superHome;
 
     @FXML
-    private GridPane addCPUgui;
+    private GridPane addCpuGui, addCoolerGui;
 
     @FXML
     void increaseCore(ActionEvent event){
         int[] validCoreCount = {1, 2, 3, 4, 6, 8, 10, 12, 14, 16,
                 18, 20, 22, 24, 26, 28, 30, 32, 64};
 
-        TextField str = (TextField) addCPUgui.lookup("#coreInput");
+        TextField str = (TextField) addCpuGui.lookup("#coreInput");
         if(str.getText().isBlank()|| str.getText().isEmpty()){
             str.setText("1");
         }
@@ -45,7 +46,7 @@ public class ComponentController implements Initializable {
         int[] validCoreCount = {1, 2, 3, 4, 6, 8, 10, 12, 14, 16,
                 18, 20, 22, 24, 26, 28, 30, 32, 64};
 
-        TextField str = (TextField) addCPUgui.lookup("#coreInput");
+        TextField str = (TextField) addCpuGui.lookup("#coreInput");
         if(str.getText().isBlank()|| str.getText().isEmpty()){
             str.setText("1");
         }
@@ -62,14 +63,14 @@ public class ComponentController implements Initializable {
     @FXML
     void addCPU(ActionEvent event) {
         try {
-            String manufacturer = getString(addCPUgui, "manufacturerInput");
-            String model = getString(addCPUgui, "modelInput");
-            String socket = getString(addCPUgui, "socketInput");
-            int coreCount = getInt(addCPUgui, "coreInput");
-            String clockSpeed = getString(addCPUgui, "coreClockInput") + "/"
-                    + getString(addCPUgui, "boostClockInput");
-            int powerConsumption = getInt(addCPUgui, "powerInput");
-            double price = getDouble(addCPUgui, "priceInput");
+            String manufacturer = getString(addCpuGui, "manufacturerInput");
+            String model = getString(addCpuGui, "modelInput");
+            String socket = getString(addCpuGui, "socketInput");
+            int coreCount = getInt(addCpuGui, "coreInput");
+            String clockSpeed = getString(addCpuGui, "coreClockInput") + "/"
+                    + getString(addCpuGui, "boostClockInput");
+            int powerConsumption = getInt(addCpuGui, "powerInput");
+            double price = getDouble(addCpuGui, "priceInput");
 
             CPU cpu = new CPU(manufacturer, model, socket, coreCount, clockSpeed, powerConsumption, price);
 
@@ -79,7 +80,7 @@ public class ComponentController implements Initializable {
             info.setContentText(cpu.toString());
             info.showAndWait();
 
-            resetGui(addCPUgui,
+            resetGui(addCpuGui,
                     "manufacturerInput",
                     "modelInput",
                     "socketInput",
@@ -134,7 +135,10 @@ public class ComponentController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        Limit.text2int(addCPUgui, "coreInput", "powerInput");
-        Limit.text2double(addCPUgui,"coreClockInput", "boostClockInput", "priceInput");
+        Limit.text2int(addCpuGui, "core");
+        Limit.text2double(addCpuGui,"coreClock", "boostClock", "power", "price");
+
+        Limit.text2int(addCoolerGui, "baseRpm", "maxRpm");
+        Limit.text2double(addCoolerGui, "width", "depth", "baseNoise", "maxNoise", "height", "power", "price");
     }
 }

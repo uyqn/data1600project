@@ -5,7 +5,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 public class Motherboard extends Component {
-    private transient final static SimpleStringProperty COMPONENT_TYPE = new SimpleStringProperty("MB");
+    private transient final static SimpleStringProperty COMPONENT_TYPE = new SimpleStringProperty("Motherboard");
 
     private SimpleIntegerProperty ProcessorSpaces;
     private SimpleIntegerProperty MaxRamSize;
@@ -25,7 +25,7 @@ public class Motherboard extends Component {
     }
 
     public int getProcessorSpaces() {
-        return ProcessorSpaces.get();
+        return ProcessorSpaces.getValue();
     }
 
     public void setProcessorSpaces(int processorSpaces) {
@@ -33,7 +33,7 @@ public class Motherboard extends Component {
     }
 
     public int getMaxRamSize() {
-        return MaxRamSize.get();
+        return MaxRamSize.getValue();
     }
 
     public void setMaxRamSize(int maxRamSize) {
@@ -41,7 +41,7 @@ public class Motherboard extends Component {
     }
 
     public String getSoundType() {
-        return SoundType.get();
+        return SoundType.getValue();
     }
 
     public void setSoundType(String soundType) {
@@ -49,12 +49,14 @@ public class Motherboard extends Component {
     }
 
     public String ToString(){
-        return "Motherboard: " + getName() + "Processor Spaces: " + getProcessorSpaces()
-                + " Max Ram: " + getMaxRamSize() + " GB" + " SoundType: " + getSoundType();
+        return getComponentType() + ": " + getName() + "\n" +
+                "Processor Spaces: " + getProcessorSpaces() + "\n" +
+                " Max Ram: " + getMaxRamSize() + " GB" + "\n" +
+                " SoundType: " + getSoundType();
     }
 
     @Override
-    String toCSV() {
+    public String toCSV() {
         return Formatter.toCSV(getComponentType(),
                 getManufacturer(),
                 getModel(),

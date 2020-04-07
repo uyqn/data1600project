@@ -14,112 +14,20 @@ public class Cooler extends Component {
     private transient SimpleDoubleProperty maxNoise = new SimpleDoubleProperty();
     private transient SimpleStringProperty rpm = new SimpleStringProperty();
     private transient SimpleStringProperty noise = new SimpleStringProperty();
-
-    public Cooler(String manufacturer,
-                  String model,
-                  Dimension dimension,
-                  int coreRPM,
-                  int maxRPM,
-                  double coreNoise,
-                  double maxNoise,
-                  double price) {
-        super(manufacturer, model, price);
-        super.setDimension(dimension);
-
-        setCoreRPM(coreRPM);
-        setMaxRPM(maxRPM);
-        setCoreNoise(coreNoise);
-        setMaxNoise(maxNoise);
-    }
-
-    public Cooler(String manufacturer,
-                  String model,
-                  Dimension dimension,
-                  int coreRPM,
-                  int maxRPM,
-                  String noise,
-                  double price) {
-        super(manufacturer, model, price);
-        super.setDimension(dimension);
-
-        setCoreRPM(coreRPM);
-        setMaxRPM(maxRPM);
-        setNoise(noise);
-    }
-
-    public Cooler(String manufacturer,
-                  String model,
-                  Dimension dimension,
-                  String rpm,
-                  double coreNoise,
-                  double maxNoise,
-                  double price) {
-        super(manufacturer, model, price);
-        super.setDimension(dimension);
-
-        setRPM(rpm);
-        setCoreNoise(coreNoise);
-        setMaxNoise(maxNoise);
-    }
-
-    public Cooler(String manufacturer,
-                  String model,
-                  String dimension,
-                  int coreRPM,
-                  int maxRPM,
-                  double coreNoise,
-                  double maxNoise,
-                  double price) {
-        super(manufacturer, model, price);
-        super.setDimension(dimension);
-
-        setCoreRPM(coreRPM);
-        setMaxRPM(maxRPM);
-        setCoreNoise(coreNoise);
-        setMaxNoise(maxNoise);
-    }
-
-    public Cooler(String manufacturer,
-                  String model,
-                  String dimension,
-                  int coreRPM,
-                  int maxRPM,
-                  String noise,
-                  double price) {
-        super(manufacturer, model, price);
-        super.setDimension(dimension);
-
-        setCoreRPM(coreRPM);
-        setMaxRPM(maxRPM);
-        setNoise(noise);
-    }
-
-    public Cooler(String manufacturer,
-                  String model,
-                  String dimension,
-                  String rpm,
-                  double coreNoise,
-                  double maxNoise,
-                  double price) {
-        super(manufacturer, model, price);
-        super.setDimension(dimension);
-
-        setRPM(rpm);
-        setCoreNoise(coreNoise);
-        setMaxNoise(maxNoise);
-    }
+    private transient SimpleDoubleProperty powerConsumption = new SimpleDoubleProperty();
 
     public Cooler(String manufacturer,
                    String model,
                    String dimension,
                    String rpm,
                    String noise,
+                   double powerConsumption,
                    double price) {
         super(manufacturer, model, price);
         super.setDimension(dimension);
-
         setRPM(rpm);
         setNoise(noise);
+        setPowerConsumption(powerConsumption);
     }
 
     public Cooler(String manufacturer,
@@ -131,63 +39,14 @@ public class Cooler extends Component {
                   int maxRPM,
                   double coreNoise,
                   double maxNoise,
+                  int powerConsumption,
                   double price) {
         super(manufacturer, model, price);
         super.setDimension(width, depth, height);
-
         setCoreRPM(coreRPM);
         setMaxRPM(maxRPM);
         setCoreNoise(coreNoise);
         setMaxNoise(maxNoise);
-    }
-
-    public Cooler(String manufacturer,
-                  String model,
-                  double width,
-                  double depth,
-                  double height,
-                  int coreRPM,
-                  int maxRPM,
-                  String noise,
-                  double price) {
-        super(manufacturer, model, price);
-        super.setDimension(width, depth, height);
-
-        setCoreRPM(coreRPM);
-        setMaxRPM(maxRPM);
-        setNoise(noise);
-    }
-
-    public Cooler(String manufacturer,
-                  String model,
-                  double width,
-                  double depth,
-                  double height,
-                  String rpm,
-                  double coreNoise,
-                  double maxNoise,
-                  double price) {
-        super(manufacturer, model, price);
-        super.setDimension(width, depth, height);
-
-        setRPM(rpm);
-        setCoreNoise(coreNoise);
-        setMaxNoise(maxNoise);
-    }
-
-    public Cooler(String manufacturer,
-                  String model,
-                  double width,
-                  double depth,
-                  double height,
-                  String rpm,
-                  String noise,
-                  double price) {
-        super(manufacturer, model, price);
-        super.setDimension(width, depth, height);
-
-        setRPM(rpm);
-        setNoise(noise);
     }
 
     public static String getComponentType() {
@@ -327,6 +186,17 @@ public class Cooler extends Component {
         }
     }
 
+    public double getPowerConsumption(){
+        return powerConsumption.getValue();
+    }
+
+    public void setPowerConsumption(double powerConsumption){
+        if(powerConsumption < 0){
+            throw new IllegalArgumentException("Power consumption cannot be negative");
+        }
+        this.powerConsumption.set(powerConsumption);
+    }
+
     @Override
     public String toCSV(){
         return Formatter.toCSV(
@@ -336,6 +206,7 @@ public class Cooler extends Component {
                 getDimension(),
                 getRPM(),
                 getNoise(),
+                getPowerConsumption(),
                 getPrice()
         );
     }
@@ -346,8 +217,9 @@ public class Cooler extends Component {
                         "Dimension: %s\n" +
                         "RPM: %s RPM\n" +
                         "Noise: %s dBA\n" +
+                        "Power consumption: %s W\n" +
                         "Price: %s NOK",
-                getComponentType(), getName(), getDimension(), getRPM(), getNoise(), getPrice()
+                getComponentType(), getName(), getDimension(), getRPM(), getNoise(), getPowerConsumption(), getPrice()
                 );
     }
 }

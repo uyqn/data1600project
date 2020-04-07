@@ -8,7 +8,7 @@ public class Keyboard extends Component {
     }
 
     @Override
-    String toCSV() {
+    public String toCSV() {
         return null;
     }
 }

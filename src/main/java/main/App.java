@@ -21,9 +21,7 @@ public class App extends Application {
         Scene scene = new Scene(fxmlLoader.load());
         stage.setScene(scene);
 
-        stage.setOnCloseRequest(windowEvent -> {
-            Platform.exit();
-        });
+        stage.setOnCloseRequest(windowEvent -> Platform.exit());
 
         stage.show();
     }
@@ -34,6 +32,8 @@ public class App extends Application {
 
     private void initiateCoreUsers(){
         User admin = new User("admin", "super",1);
+        User uyqn = new User("uyqn", "s341864", 1);
+        UserList.add(uyqn);
         UserList.add(admin);
     }
 }

@@ -60,6 +60,17 @@ public class Dimension {
         this.height.set(height);
     }
 
+    public void setDimension(double width, double height){
+        setWidth(width);
+        setHeight(height);
+    }
+
+    public void setDimension(double width, double height, double depth){
+        setWidth(width);
+        setHeight(height);
+        setDepth(depth);
+    }
+
     public void setDimension(String dimension){
         String rDouble = "([-+])?[0-9]+(\\.[0-9]*)?";
         String rX = "[Xx\\s,*;/]+";
