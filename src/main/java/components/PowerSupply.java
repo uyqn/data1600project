@@ -25,7 +25,12 @@ public class PowerSupply extends Component {
     }
 
     private void setPowerCapacity(int PowerCapacity){
-        this.PowerCapacity.set(PowerCapacity);
+        if(PowerCapacity < 0 ){
+            throw new IllegalArgumentException("Power capacity cannot be negative");
+        }
+        else {
+            this.PowerCapacity.set(PowerCapacity);
+        }
     }
 
     public String ToString(){

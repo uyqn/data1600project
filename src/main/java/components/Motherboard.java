@@ -9,15 +9,13 @@ public class Motherboard extends Component {
 
     private SimpleIntegerProperty ProcessorSpaces;
     private SimpleIntegerProperty MaxRamSize;
-    private SimpleStringProperty SoundType;
 
     public Motherboard(String manufacturer, String model, int ProcessorSpaces, int MaxRamSize,
-                       String SoundType, double price) {
+                       double price) {
         super(manufacturer, model, price);
 
         setProcessorSpaces(ProcessorSpaces);
         setMaxRamSize(MaxRamSize);
-        setSoundType(SoundType);
     }
 
     public static String getComponentType() {
@@ -28,31 +26,33 @@ public class Motherboard extends Component {
         return ProcessorSpaces.getValue();
     }
 
-    public void setProcessorSpaces(int processorSpaces) {
-        this.ProcessorSpaces.set(processorSpaces);
+    private void setProcessorSpaces(int processorSpaces) {
+
+        if(processorSpaces<1 || processorSpaces>6){
+            throw new IllegalArgumentException("No motherboard can have less than 1 or more than 6 sockets");
+        }
+        else {
+            this.ProcessorSpaces.set(processorSpaces);
+        }
     }
 
     public int getMaxRamSize() {
         return MaxRamSize.getValue();
     }
 
-    public void setMaxRamSize(int maxRamSize) {
+    private void setMaxRamSize(int maxRamSize) {
+
+        if(maxRamSize % 4 != 0 || maxRamSize<4){
+            throw new IllegalArgumentException("Must be a valid number of RAM-Size (16,32,64 etc.)");
+        }
         this.MaxRamSize.set(maxRamSize);
     }
 
-    public String getSoundType() {
-        return SoundType.getValue();
-    }
-
-    public void setSoundType(String soundType) {
-        this.SoundType.set(soundType);
-    }
 
     public String ToString(){
         return getComponentType() + ": " + getName() + "\n" +
                 "Processor Spaces: " + getProcessorSpaces() + "\n" +
-                " Max Ram: " + getMaxRamSize() + " GB" + "\n" +
-                " SoundType: " + getSoundType();
+                " Max Ram: " + getMaxRamSize() + " GB";
     }
 
     @Override
@@ -62,7 +62,6 @@ public class Motherboard extends Component {
                 getModel(),
                 getProcessorSpaces(),
                 getMaxRamSize(),
-                getSoundType(),
                 getPrice());
     }
 }

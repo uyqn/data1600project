@@ -32,7 +32,13 @@ public class Mouse extends Component{
     }
 
     private void setNumberButtons(int numberButtons) {
-        this.numberButtons.set(numberButtons);
+
+        if(numberButtons < 0 ){
+            throw new IllegalArgumentException("Number of buttons on a mouse cannot be negative");
+        }
+        else {
+            this.numberButtons.set(numberButtons);
+        }
     }
 
     public int getDpi() {
@@ -41,13 +47,17 @@ public class Mouse extends Component{
 
 
     private void setDpi(int dpi) {
-        this.dpi.set(dpi);
+        if(dpi < 0 ){
+            throw new IllegalArgumentException("DPI cannot be negative");
+        }
+        else {
+            this.dpi.set(dpi);
+        }
     }
 
     public boolean isErgonomic() {
         return ergonomic.getValue();
     }
-
 
     private void setErgonomic(boolean ergonomic) {
         this.ergonomic.set(ergonomic);
@@ -56,7 +66,6 @@ public class Mouse extends Component{
     public boolean isWireless() {
         return wireless.getValue();
     }
-
 
     private void setWireless(boolean wireless) {
         this.wireless.set(wireless);

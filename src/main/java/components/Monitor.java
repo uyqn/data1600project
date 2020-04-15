@@ -24,13 +24,19 @@ public class Monitor extends Component{
     }
 
     private void setRefreshRate(int RefreshRate){
-        this.refreshRate.set(RefreshRate);
+
+        if (RefreshRate<0) {
+            throw new IllegalArgumentException("Refresh rate cannot be negative");
+        }
+        else{
+            this.refreshRate.set(RefreshRate);
+        }
     }
 
     @Override
     public String toString(){
         return getComponentType() + ": " + getName() + "\n" +
-                "RefreshRate " +getRefreshRate()+" Hz";
+                "Refresh rate " +getRefreshRate()+" Hz";
     }
 
     @Override
