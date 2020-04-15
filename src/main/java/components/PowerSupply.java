@@ -1,5 +1,6 @@
 package components;
 
+import fileManager.Formatter;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
@@ -8,11 +9,16 @@ public class PowerSupply extends Component {
     private transient static final SimpleStringProperty COMPONENT_TYPE = new SimpleStringProperty("Power Supply");
     private SimpleIntegerProperty PowerCapacity;
 
+    public static String getComponentType(){
+        return COMPONENT_TYPE.get();
+    }
+
     public PowerSupply(String manufacturer, String model, double price, int PowerCapacity){
         super(manufacturer, model, price);
 
         setPowerCapacity(PowerCapacity);
     }
+
 
     public int getPowerCapacity(){
         return PowerCapacity.get();
@@ -28,6 +34,12 @@ public class PowerSupply extends Component {
 
     @Override
     public String toCSV() {
-        return null;
+        return Formatter.toCSV(
+                getComponentType(),
+                getManufacturer(),
+                getModel(),
+                getPowerCapacity(),
+                getPrice()
+        );
     }
 }
