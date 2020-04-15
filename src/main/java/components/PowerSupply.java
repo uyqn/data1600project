@@ -1,9 +1,11 @@
 package components;
 
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 
 public class PowerSupply extends Component {
 
+    private transient static final SimpleStringProperty COMPONENT_TYPE = new SimpleStringProperty("Power Supply");
     private SimpleIntegerProperty PowerCapacity;
 
     public PowerSupply(String manufacturer, String model, double price, int PowerCapacity){
