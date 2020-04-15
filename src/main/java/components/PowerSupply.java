@@ -23,4 +23,9 @@ public class PowerSupply extends Component {
     public String ToString(){
         return "PowerSupply: " + getName() + "Power Capacity: " +PowerCapacity+" W";
     }
+
+    @Override
+    public String toCSV() {
+        return null;
+    }
 }

@@ -1,5 +1,6 @@
 package components;
 
+import controllers.guiManager.Extract;
 import fileManager.Formatter;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -12,16 +13,14 @@ public class CPU extends Component{
     private transient SimpleIntegerProperty coreCount = new SimpleIntegerProperty();
     private transient SimpleDoubleProperty coreClock = new SimpleDoubleProperty();
     private transient SimpleDoubleProperty boostClock = new SimpleDoubleProperty();
-    private transient SimpleIntegerProperty powerConsumption = new SimpleIntegerProperty();
-
-    private transient SimpleStringProperty clockSpeed = new SimpleStringProperty();
+    private transient SimpleDoubleProperty powerConsumption = new SimpleDoubleProperty();
 
     public CPU(String manufacturer,
                String model,
                String socket,
                int coreCount,
                String clockSpeed,
-               int powerConsumption,
+               double powerConsumption,
                double price) {
         super(manufacturer, model, price);
 
@@ -37,7 +36,7 @@ public class CPU extends Component{
                int coreCount,
                double coreClock,
                double boostClock,
-               int powerConsumption,
+               double powerConsumption,
                double price) {
         super(manufacturer, model, price);
 
@@ -46,8 +45,6 @@ public class CPU extends Component{
         setCoreClock(coreClock);
         setBoostClock(boostClock);
         setPowerConsumption(powerConsumption);
-
-        this.clockSpeed.set(this.coreClock+"/"+this.boostClock+" GHz");
     }
 
     public String getCOMPONENT_TYPE() {
@@ -127,11 +124,11 @@ public class CPU extends Component{
         this.boostClock.set(boostClock);
     }
 
-    public int getPowerConsumption() {
+    public double getPowerConsumption() {
         return powerConsumption.getValue();
     }
 
-    public void setPowerConsumption(int powerConsumption) {
+    public void setPowerConsumption(double powerConsumption) {
         if(powerConsumption < 10 || powerConsumption > 300){
             throw new IllegalArgumentException("Thermal design power must be between 10 and 300");
         }
@@ -139,7 +136,9 @@ public class CPU extends Component{
     }
 
     public String getClockSpeed() {
-        return clockSpeed.getValue();
+        return (getCoreClock() != getBoostClock()) ?
+                getCoreClock() + "/" + getBoostClock():
+                String.valueOf(getCoreClock());
     }
 
     public void setClockSpeed(double core, double boost){
@@ -149,45 +148,31 @@ public class CPU extends Component{
 
         setCoreClock(core);
         setBoostClock(boost);
-        this.clockSpeed.set(getCoreClock() + "/" + getBoostClock() + " GHz");
     }
 
     public void setClockSpeed(String clockSpeed) {
-        if(!clockSpeed.matches(
-                "([-+])?[1-9](\\.[0-9]{1,2})?((\\s)?[Gg][Hh][Zz])?|" +
-                        "([-+])?[1-9](\\.[0-9]{1,2})?((\\s)?[Gg][Hh][Zz])?" +
-                        "((\\s)?[/\\-~](\\s)?)" +
-                        "([-+])?[1-9](\\.[0-9]{1,2})?((\\s)?[Gg][Hh][Zz])?")){
-            throw new IllegalArgumentException("Clock speed format is #.##/#.## GHz");
+        if(clockSpeed.matches("/")){
+            throw new IllegalArgumentException("Core clock speed and boost clock speed are empty\n" +
+            "One of the fields must be filled");
         }
 
-        double coreClock, boostClock;
-        String formatted = clockSpeed.replaceAll("[ ]|[Gg][Hh][Zz]", "");
-
-        if(clockSpeed.matches("([-+])?[1-9](\\.[0-9]{1,2})?((\\s)?[Gg][Hh][Zz])?" +
-                "((\\s)?[/\\-~](\\s)?)" +
-                "([-+])?[1-9](\\.[0-9]{1,2})?((\\s)?[Gg][Hh][Zz])?")) {
-
-            String[] split = formatted.trim().split("[/\\-~]");
-
-            coreClock = Double.parseDouble(split[0]);
-            boostClock = Double.parseDouble(split[1]);
-        } else {
-            coreClock = boostClock = Double.parseDouble(formatted);
+        if(Extract.doubles(clockSpeed).size() == 1){
+            setCoreClock(Extract.doubles(clockSpeed).get(0));
+            setBoostClock(Extract.doubles(clockSpeed).get(0));
         }
-
-        setCoreClock(coreClock);
-        setBoostClock(boostClock);
-
-        if(coreClock != boostClock) {
-            this.clockSpeed.set(getCoreClock() + "/" + getBoostClock() + " GHz");
-        } else {
-            this.clockSpeed.set(getCoreClock() + " GHz");
+        else {
+            setCoreClock(
+                    Math.min(Extract.doubles(clockSpeed).get(0),
+                            Extract.doubles(clockSpeed).get(Extract.doubles(clockSpeed).size() - 1))
+            );
+            setBoostClock(
+                    Math.max(Extract.doubles(clockSpeed).get(0),
+                            Extract.doubles(clockSpeed).get(Extract.doubles(clockSpeed).size() - 1))
+            );
         }
-
     }
 
-
+    @Override
     public String toCSV() {
         return Formatter.toCSV(
                 getCOMPONENT_TYPE(),
@@ -205,9 +190,9 @@ public class CPU extends Component{
     public String toString() {
         return String.format("%s: %s\n" +
                 "Socket: %s\n" +
-                "Number of cores: %s\n" +
-                "Clock speed: %s\n" +
-                "Power usage: %s\n" +
+                "Number of cores: %s cores\n" +
+                "Clock speed: %s GHz\n" +
+                "Power usage: %s W\n" +
                 "Price: %s NOK",
                 getCOMPONENT_TYPE(), getName(), getSocket(), getCoreCount(), getClockSpeed(), getPowerConsumption(), getPrice());
     }

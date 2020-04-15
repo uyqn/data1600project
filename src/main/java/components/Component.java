@@ -4,7 +4,7 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 
-public class Component{
+public abstract class Component{
     private transient SimpleStringProperty manufacturer = new SimpleStringProperty();
     private transient SimpleStringProperty model = new SimpleStringProperty();
     private transient SimpleDoubleProperty price = new SimpleDoubleProperty();
@@ -118,4 +118,6 @@ public class Component{
     public void setDimension(Dimension dimension) {
         this.dimension.set(dimension);
     }
+
+    public abstract String toCSV();
 }

@@ -3,7 +3,6 @@ package fileManager;
 import components.CPU;
 import components.Component;
 import components.Cooler;
-import javafx.scene.control.Alert;
 
 public class Formatter<T> {
     public static final String DELIMITER = ",";
@@ -59,9 +58,10 @@ public class Formatter<T> {
             String dimension = csv[3];
             String rpm = csv[4];
             String noise = csv[5];
-            double price = Double.parseDouble(csv[6]);
+            double power = Double.parseDouble(csv[6]);
+            double price = Double.parseDouble(csv[7]);
 
-            return new Cooler(manufacturer, model, dimension, rpm, noise, price);
+            return new Cooler(manufacturer, model, dimension, rpm, noise, power, price);
         }catch (IllegalArgumentException e){
             throw new IllegalArgumentException(e.getMessage());
         }

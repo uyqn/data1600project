@@ -1,14 +1,20 @@
 package main;
 
-import components.*;
-import javafx.beans.property.SimpleStringProperty;
+import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class TestEnvironment {
     public static void main(String[] args){
-        Cooler test = new Cooler("Cooler Master", "MasterFan SF360R", "36x12x2.5", "650-1800", "8-30", 483);
+        String test = "650 - 1800";
 
-        SimpleStringProperty str = new SimpleStringProperty();
+        Pattern pattern = Pattern.compile("[-+]?\\.\\d+|[-+]?\\d+(\\.?\\d+)");
+        Matcher matcher = pattern.matcher(test);
 
-        System.out.println(str.getValue());
+        ArrayList<String> list = new ArrayList<>();
+
+        while(matcher.find()){
+            System.out.println(matcher.group());
+        }
     }
 }

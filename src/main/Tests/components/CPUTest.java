@@ -8,6 +8,30 @@ class CPUTest {
     CPU test = new CPU("Manufacturer", "Model", "S1", 1, 1.1, 2, 10,0);
 
     @Test
+    void setManufacturer() {
+        test.setManufacturer("AMD");
+        test.setManufacturer("Intel");
+
+        assertThrows(IllegalArgumentException.class, () -> test.setManufacturer(""));
+        assertThrows(IllegalArgumentException.class, () -> test.setManufacturer(" "));
+    }
+
+    @Test
+    void setModel() {
+        test.setModel("Ryzen 5 3600");
+        test.setModel("Ryzen 5 PRO 2600");
+        test.setModel("Ryzen 5 3400G");
+        test.setModel("Ryzen 9 3950X");
+        test.setModel("Core i7-4960X Extreme Edition");
+        test.setModel("Core i9-9900K");
+        test.setModel("Core i9-9900KS");
+        test.setModel("Core i9-10900X");
+
+        assertThrows(IllegalArgumentException.class, () -> test.setModel(""));
+        assertThrows(IllegalArgumentException.class, () -> test.setModel(" "));
+    }
+
+    @Test
     void setSocket() {
         test.setSocket("AM1");
         test.setSocket("AM2+");
@@ -58,7 +82,7 @@ class CPUTest {
         test.setClockSpeed(1.2,4.99);
         test.setClockSpeed("1.2/4.99 GHz");
         test.setClockSpeed("1.2 / 4.99");
-        test.setClockSpeed("1.2GHz-4.9GHz");
+        test.setClockSpeed("1.2GHz 4.9GHz");
         test.setClockSpeed("1.2");
 
         assertThrows(IllegalArgumentException.class, () -> test.setClockSpeed(4.99, 1.2));
