@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="624.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.component.ComponentController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="663.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.component.ComponentController">
    <bottom>
       <Button mnemonicParsing="false" onAction="#close" text="Close" BorderPane.alignment="CENTER">
          <BorderPane.margin>
@@ -296,6 +296,36 @@
                     <Label text=" Hz" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                     <Button contentDisplay="CENTER" mnemonicParsing="false" text="Add Monitor" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                 </GridPane>
+            </TitledPane>
+            <TitledPane animated="false" text="Keyboard">
+               <content>
+                  <GridPane prefHeight="69.0" prefWidth="578.0">
+                     <columnConstraints>
+                        <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints maxHeight="70.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="70.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="70.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="70.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="70.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <TextField promptText="Enter manufacturer here" GridPane.columnIndex="1" />
+                        <TextField promptText="Enter model name here" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <TextField promptText="Enter price here" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Label alignment="BOTTOM_LEFT" text="Tactile:" textAlignment="RIGHT" GridPane.rowIndex="2" />
+                        <Label alignment="BOTTOM_LEFT" text="Model: " textAlignment="RIGHT" GridPane.rowIndex="1" />
+                        <Label alignment="BOTTOM_LEFT" text="Price: " textAlignment="RIGHT" GridPane.rowIndex="3" />
+                        <Label alignment="BOTTOM_LEFT" text="Manufacturer: " textAlignment="RIGHT" />
+                        <Button mnemonicParsing="false" text="Add Power Supply" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <CheckBox mnemonicParsing="false" text="Yes" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <CheckBox mnemonicParsing="false" text="No" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                     </children>
+                  </GridPane>
+               </content>
             </TitledPane>
         </panes>
       </Accordion>
