@@ -2,6 +2,7 @@ package controllers.component;
 
 import components.CPU;
 import components.Cooler;
+import components.GraphicCard;
 import controllers.guiManager.Limit;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -22,7 +23,7 @@ public class ComponentController implements Initializable {
     private GridPane superHome;
 
     @FXML
-    private GridPane addCpuGui, addCoolerGui;
+    private GridPane addCpuGui, addCoolerGui, addGraphicCardGui;
 
     @FXML
     void increaseCore(ActionEvent event){
@@ -141,6 +142,43 @@ public class ComponentController implements Initializable {
         }
     }
 
+    @FXML
+    void addGraphicCard(ActionEvent event) {
+
+        try{
+            String manufacturer = getString(addGraphicCardGui, "manufacturer");
+            String model=getString(addGraphicCardGui, "model");
+            int memory=getInt(addGraphicCardGui,"memory");
+            String memoryType=getString(addGraphicCardGui, "memoryType");
+            String clockSpeed=getString(addGraphicCardGui,"baseClock") + "/" + getString(addGraphicCardGui, "boostClock");
+            double price=getDouble(addGraphicCardGui, "price");
+
+            GraphicCard graphicCard=new GraphicCard(manufacturer, model, price, memory, memoryType, clockSpeed);
+
+            Alert info=new Alert(Alert.AlertType.INFORMATION);
+            info.setTitle("Graphic card successfully added");
+            info.setHeaderText("The following graphic card was added:");
+            info.setContentText(graphicCard.toString());
+            info.showAndWait();
+
+            resetGui(addGraphicCardGui,
+                    "manufacturer",
+                    "model",
+                    "memory",
+                    "memoryType",
+                    "baseClock",
+                    "boostClock",
+                    "price"
+                    );
+        }catch (IllegalArgumentException e){
+            Alert error=new Alert(Alert.AlertType.ERROR);
+            error.setTitle(e.getClass().toString());
+            error.setContentText(e.getMessage());
+            error.showAndWait();
+        }
+
+
+    }
     public void setSuperHome(GridPane superHome) {
         this.superHome = superHome;
     }
