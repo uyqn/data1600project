@@ -4,33 +4,36 @@ import controllers.guiManager.Extract;
 import fileManager.Formatter;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 
 public class GraphicCard extends Component {
     private static final transient SimpleStringProperty COMPONENT_TYPE = new SimpleStringProperty("Graphic Card");
 
-    private transient SimpleStringProperty memory = new SimpleStringProperty();
+    private transient SimpleIntegerProperty memory = new SimpleIntegerProperty();
+    private transient SimpleStringProperty memoryType=new SimpleStringProperty();
     private transient SimpleDoubleProperty baseClock = new SimpleDoubleProperty();
     private transient SimpleDoubleProperty boostClock = new SimpleDoubleProperty();
-    //private transient SimpleDoubleProperty RDNACores = new SimpleDoubleProperty();
-    //private transient SimpleStringProperty type=new SimpleStringProperty();
 
-    public GraphicCard(String manufacturer, String model, double price, String memory, double baseClock, double boostClock){
+
+    public GraphicCard(String manufacturer, String model, double price, int memory, String memoryType, double baseClock, double boostClock){
 
         super(manufacturer,model,price);
 
         setMemory(memory);
+        setMemoryType(memoryType);
         setBaseClock(baseClock);
         setBoostClock(boostClock);
 
 
     }
 
-    public GraphicCard(String manufacturer, String model, double price, String memory, String clockSpeed){
+    public GraphicCard(String manufacturer, String model, double price, int memory, String memoryType, String clockSpeed){
 
 
         super(manufacturer,model,price);
 
         setMemory(memory);
+        setMemoryType(memoryType);
         setClockSpeed(clockSpeed);
     }
 
@@ -69,13 +72,25 @@ public class GraphicCard extends Component {
         this.boostClock.set(boostClock);
     }
 
-    public String getMemory() {
+    public int getMemory() {
         return memory.getValue();
     }
 
-    public void setMemory(String memory) {
-
+    public void setMemory(int memory) {
+        if(memory<0 || memory>64){
+            throw new IllegalArgumentException("Memory must be a whole number beteen 1 and 64");
+        }
         this.memory.set(memory);
+    }
+
+    public String getMemoryType(){ return memoryType.getValue();}
+
+    public void setMemoryType(String memoryType){
+
+        if(!memoryType.matches("[A-Z]")){
+            throw new IllegalArgumentException("Memory format is invalid");
+        }
+        this.memoryType.set(memoryType);
     }
 
     public String getClockSpeed() {
@@ -122,6 +137,7 @@ public class GraphicCard extends Component {
                 getManufacturer(),
                 getModel(),
                 getMemory(),
+                getMemoryType(),
                 getClockSpeed()
         );
     }
@@ -129,9 +145,11 @@ public class GraphicCard extends Component {
     @Override
     public String toString(){
         return String.format("%s: %s\n"+
-                "Memory: %s\n"+
+                "Memory: %s GB %s\n"+
                 "Clock Speed: %s GHz\n"
                 +"Price: %s NOK\n",
-                getCOMPONENT_TYPE(), getName(), getMemory(), getClockSpeed(), getPrice());
+                getCOMPONENT_TYPE(), getName(), getMemory(), getMemoryType(), getClockSpeed(), getPrice());
     }
 }
+
+
