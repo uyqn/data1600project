@@ -399,21 +399,25 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
                         <Label text="Manufacturer: " />
                         <Label text="Model: " GridPane.rowIndex="1" />
                         <Label text="Number of Ram:" GridPane.rowIndex="2" />
-                        <Label text="Price: " GridPane.rowIndex="4" />
+                        <Label text="Price: " GridPane.rowIndex="5" />
                         <TextField id="manufacturer" promptText="Enter manufacturer" GridPane.columnIndex="1" />
                         <TextField id="model" promptText="Enter model" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <TextField id="RAM" promptText="Enter RAM" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <TextField id="price" promptText="Enter price of component" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                        <Label text=" NOK" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-                        <Button mnemonicParsing="false" onAction="#addMemory" text="Add Memory" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                        <Label text="Speed tech" GridPane.rowIndex="3" />
-                        <TextField id="speed" promptText="Enter speed tech" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <TextField id="price" promptText="Enter price of component" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <Label text=" NOK" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+                        <Button mnemonicParsing="false" onAction="#addMemory" text="Add Memory" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                        <Label text="Speed tech" GridPane.rowIndex="4" />
+                        <TextField id="speedTech" promptText="Enter speed tech" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                         <Label text="GB" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                        <Label text="Speed" GridPane.rowIndex="3" />
+                        <TextField id="speed" promptText="Enter speed" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Label text="MHz" GridPane.columnIndex="2" GridPane.rowIndex="3" />
                      </children>
                   </GridPane>
                </content>

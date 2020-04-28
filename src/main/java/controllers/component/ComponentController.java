@@ -190,11 +190,12 @@ public class ComponentController implements Initializable {
             String manufacturer= getString(addMemoryGui, "manufacturer");
             String model=getString(addMemoryGui, "model");
             int RAM=getInt(addMemoryGui, "RAM");
-            String speed=getString(addMemoryGui, "speed");
+            String speedTech=getString(addMemoryGui, "speedTech");
+            int speed=getInt(addMemoryGui, "speed");
             double price=getDouble(addMemoryGui, "price");
 
 
-            Memory memory=new Memory(manufacturer,model,price, RAM, speed);
+            Memory memory=new Memory(manufacturer,model,price, RAM, speedTech, speed);
 
             Alert info= new Alert(Alert.AlertType.INFORMATION);
             info.setTitle("Memory was successfully added");
@@ -202,7 +203,7 @@ public class ComponentController implements Initializable {
             info.setContentText(memory.toString());
             info.showAndWait();
 
-            resetGui(addMemoryGui,"manufacturer", "model", "RAM", "speed", "price");
+            resetGui(addMemoryGui,"manufacturer", "model", "RAM", "speed", "speedTech", "price");
 
 
         }catch (IllegalArgumentException e) {
