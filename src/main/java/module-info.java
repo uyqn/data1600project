@@ -18,4 +18,10 @@ module main {
 
     opens controllers.component to javafx.fxml;
     exports controllers.component;
+
+    opens fileManager to javafx.fxml;
+    exports fileManager;
+
+    opens listManager to javafx.fxml;
+    exports listManager;
 }

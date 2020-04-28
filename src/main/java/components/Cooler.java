@@ -24,7 +24,7 @@ public class Cooler extends Component {
                    double powerConsumption,
                    double price) {
         super(manufacturer, model, price);
-        setDimension(dimension);
+        super.setDimension(dimension);
         setRPM(rpm);
         setNoise(noise);
         setPowerConsumption(powerConsumption);
