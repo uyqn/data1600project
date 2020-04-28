@@ -1,5 +1,5 @@
 package components;
-
+//Graphics Card
 import controllers.guiManager.Extract;
 import fileManager.Formatter;
 import javafx.beans.property.SimpleDoubleProperty;
