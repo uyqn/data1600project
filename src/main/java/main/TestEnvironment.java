@@ -1,20 +1,27 @@
 package main;
 
-import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import components.CPU;
+import components.Component;
+import components.Cooler;
+import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.stage.Stage;
 
-public class TestEnvironment {
+public class TestEnvironment extends Application {
     public static void main(String[] args){
-        String test = "650 - 1800";
+        launch();
+    }
 
-        Pattern pattern = Pattern.compile("[-+]?\\.\\d+|[-+]?\\d+(\\.?\\d+)");
-        Matcher matcher = pattern.matcher(test);
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        //All testing av koder og shit går her:
+        Component cpu = new CPU("AMD", "Ryzen 7 3800X", "AM4", 8, "3.9/4.5", 105, 4219);
+        Cooler cooler = new Cooler("Cooler Master", "MasterFan SF360R ARGB", "36 12 2.5", "650 1800", "30 8", 6.48,
+                499);
 
-        ArrayList<String> list = new ArrayList<>();
+        App.componentList.add(cpu);
+        App.componentList.add(cooler);
 
-        while(matcher.find()){
-            System.out.println(matcher.group());
-        }
+        Platform.exit(); //Ikke fjern denne
     }
 }

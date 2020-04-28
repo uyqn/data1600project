@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 
 public class Extract {
     public static ArrayList<Double> doubles(String str){
-        Pattern pattern = Pattern.compile("[-+]?\\.\\d+|[-+]?\\d+(\\.?\\d+)");
+        Pattern pattern = Pattern.compile("[-+]?\\.\\d+|[-+]?\\d+(\\.?\\d+)?");
         Matcher matcher = pattern.matcher(str);
 
         ArrayList<Double> extractedNumbers = new ArrayList<>();

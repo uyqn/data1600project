@@ -1,10 +1,12 @@
 package main;
 
+import fileManager.FileManager;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import listManager.ComponentList;
 import users.User;
 import users.UserList;
 
@@ -14,6 +16,9 @@ import java.io.IOException;
  * JavaFX App
  */
 public class App extends Application {
+    public static FileManager fileManager = new FileManager();
+    public static ComponentList componentList = new ComponentList();
+
     @Override
     public void start(Stage stage) throws IOException {
         initiateCoreUsers();
