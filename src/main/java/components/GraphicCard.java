@@ -87,9 +87,9 @@ public class GraphicCard extends Component {
 
     public void setMemoryType(String memoryType){
 
-        if(!memoryType.matches("[A-Z]")){
-            throw new IllegalArgumentException("Memory format is invalid");
-        }
+        /*if(!memoryType.matches("[A-Z]")){
+            throw new IllegalArgumentException("Memory type format is invalid");
+        }*/
         this.memoryType.set(memoryType);
     }
 

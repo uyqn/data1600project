@@ -3,6 +3,7 @@ package controllers.component;
 import components.CPU;
 import components.Cooler;
 import components.GraphicCard;
+import components.Memory;
 import controllers.guiManager.Limit;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,6 +16,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.net.URL;
+import java.util.Random;
 import java.util.ResourceBundle;
 
 public class ComponentController implements Initializable {
@@ -23,7 +25,7 @@ public class ComponentController implements Initializable {
     private GridPane superHome;
 
     @FXML
-    private GridPane addCpuGui, addCoolerGui, addGraphicCardGui;
+    private GridPane addCpuGui, addCoolerGui, addGraphicCardGui, addMemoryGui;
 
     @FXML
     void increaseCore(ActionEvent event){
@@ -179,6 +181,42 @@ public class ComponentController implements Initializable {
 
 
     }
+
+
+    @FXML
+    void addMemory(ActionEvent event) {
+
+        try {
+            String manufacturer= getString(addMemoryGui, "manufacturer");
+            String model=getString(addMemoryGui, "model");
+            int RAM=getInt(addMemoryGui, "RAM");
+            String speed=getString(addMemoryGui, "speed");
+            double price=getDouble(addMemoryGui, "price");
+
+
+            Memory memory=new Memory(manufacturer,model,price, RAM, speed);
+
+            Alert info= new Alert(Alert.AlertType.INFORMATION);
+            info.setTitle("Memory was successfully added");
+            info.setHeaderText("The following component was added:");
+            info.setContentText(memory.toString());
+            info.showAndWait();
+
+            resetGui(addMemoryGui,"manufacturer", "model", "RAM", "speed", "price");
+
+
+        }catch (IllegalArgumentException e) {
+            Alert error = new Alert(Alert.AlertType.ERROR);
+            error.setTitle(e.getClass().toString());
+            error.setContentText(e.getMessage());
+            error.showAndWait();
+
+        }
+
+
+    }
+
+
     public void setSuperHome(GridPane superHome) {
         this.superHome = superHome;
     }
