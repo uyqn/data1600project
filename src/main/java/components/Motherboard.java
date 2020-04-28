@@ -1,6 +1,7 @@
 package components;
 
 import fileManager.Formatter;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
@@ -9,6 +10,8 @@ public class Motherboard extends Component {
 
     private SimpleIntegerProperty ProcessorSpaces;
     private SimpleIntegerProperty MaxRamSize;
+    private SimpleStringProperty boostType;
+    private SimpleStringProperty socket;
 
     public Motherboard(String manufacturer, String model, int ProcessorSpaces, int MaxRamSize,
                        double price) {
