@@ -39,7 +39,6 @@ public class App extends Application {
         User admin = new User("admin", "super",1);
         User uyqn = new User("uyqn", "s341864", 1);
         User helene=new User("hele", "s341873", 1);
-        User end = new User("end", "password", 2);
         UserList.add(uyqn);
         UserList.add(admin);
         UserList.add(helene);

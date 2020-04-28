@@ -12,6 +12,9 @@ public class Motherboard extends Component {
     private SimpleIntegerProperty MaxRamSize;
     private SimpleStringProperty boostType;
     private SimpleStringProperty socket;
+    private String[] sockets = {"AM1","AM2", "AM3","AM4", "BGA413", "BGA559","BGA1023","C32","FM1","FM2","G34"
+                                ,"LGA771","LGA775","LGA1150","LGA1151","LGA1356","LGA1366","LGA2011","LGA2011-3","LGA2066",
+                                "PGA988","sTR4"};
 
     public Motherboard(String manufacturer, String model, int ProcessorSpaces, int MaxRamSize,
                        double price) {
@@ -51,6 +54,36 @@ public class Motherboard extends Component {
         this.MaxRamSize.set(maxRamSize);
     }
 
+    public String getBoostType() {
+        return boostType.get();
+    }
+
+    public void setBoostType(String boostType) {
+        if(boostType.equals("2")|| boostType.equals("3") || boostType.equals("4")) {
+            this.boostType.set("PCIe "+boostType);
+        }else{
+            throw new IllegalArgumentException("Valid boosttypes include values 2-4");
+        }
+    }
+
+    public String getSocket() {
+        return socket.get();
+    }
+
+
+    public void setSocket(String socket) {
+
+        for(int i = 0; i<sockets.length; i++){
+            if(sockets[i].toLowerCase().equals(socket.toLowerCase())){
+                this.socket.set(socket);
+                break;
+            }
+        }
+
+        if (this.socket == null){
+            throw new IllegalArgumentException("This socket type is not valid");
+        }
+    }
 
     public String ToString(){
         return getComponentType() + ": " + getName() + "\n" +
