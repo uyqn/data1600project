@@ -7,13 +7,22 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 public class CPU extends Component{
-    private static final transient SimpleStringProperty COMPONENT_TYPE = new SimpleStringProperty("CPU");
+    public static final transient String COMPONENT_TYPE = "CPU";
 
     private transient SimpleStringProperty socket = new SimpleStringProperty();
     private transient SimpleIntegerProperty coreCount = new SimpleIntegerProperty();
     private transient SimpleDoubleProperty coreClock = new SimpleDoubleProperty();
     private transient SimpleDoubleProperty boostClock = new SimpleDoubleProperty();
     private transient SimpleDoubleProperty powerConsumption = new SimpleDoubleProperty();
+
+    public CPU(String[] csv){
+        super(csv[1], csv[2], Double.parseDouble(csv[7]));
+
+        setSocket(csv[3]);
+        setCoreCount(Integer.parseInt(csv[4]));
+        setClockSpeed(csv[5]);
+        setPowerConsumption(Double.parseDouble(csv[6]));
+    }
 
     public CPU(String manufacturer,
                String model,
@@ -45,10 +54,6 @@ public class CPU extends Component{
         setCoreClock(coreClock);
         setBoostClock(boostClock);
         setPowerConsumption(powerConsumption);
-    }
-
-    public String getCOMPONENT_TYPE() {
-        return COMPONENT_TYPE.getValue();
     }
 
     public String getSocket() {
@@ -175,7 +180,7 @@ public class CPU extends Component{
     @Override
     public String toCSV() {
         return Formatter.toCSV(
-                getCOMPONENT_TYPE(),
+                COMPONENT_TYPE,
                 getManufacturer(),
                 getModel(),
                 getSocket(),
@@ -194,6 +199,6 @@ public class CPU extends Component{
                 "Clock speed: %s GHz\n" +
                 "Power usage: %s W\n" +
                 "Price: %s NOK",
-                getCOMPONENT_TYPE(), getName(), getSocket(), getCoreCount(), getClockSpeed(), getPowerConsumption(), getPrice());
+                COMPONENT_TYPE, getName(), getSocket(), getCoreCount(), getClockSpeed(), getPowerConsumption(), getPrice());
     }
 }

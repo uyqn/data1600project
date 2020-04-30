@@ -1,5 +1,6 @@
 package fileManager;
 
+import components.Component;
 import controllers.guiManager.DialogBox;
 import javafx.scene.control.Alert;
 import javafx.stage.FileChooser;
@@ -10,6 +11,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 
 public class FileManager {
     private Path path;
@@ -104,5 +106,51 @@ public class FileManager {
                 DialogBox.error(e.getCause().toString(), null ,e.getMessage());
             }
         }
+    }
+
+    public ArrayList<Component> open(){
+        File openFromPath = fileChooser.showOpenDialog(new Stage());
+
+        if(openFromPath != null){
+            setPath(openFromPath);
+            setSaved(true);
+            return readFile();
+        }
+        else{
+            return null;
+        }
+    }
+
+    private ArrayList<Component> readFile() {
+        FileOpener opener = null;
+
+        switch (getExtension()){
+            case ".csv":
+                opener = new FileOpenerCSV();
+                break;
+            default:
+                Alert error = new Alert(Alert.AlertType.ERROR);
+                error.setTitle("Open error");
+                error.setHeaderText("Unable to open file");
+                error.setContentText("Unavailable extension: " + getExtension());
+                error.showAndWait();
+        }
+
+        if(opener != null){
+            try {
+                return opener.open();
+            } catch (IOException e) {
+                Alert error = new Alert(Alert.AlertType.ERROR);
+                error.setTitle(e.getCause().toString());
+                error.setHeaderText("Unable to open file");
+                error.setContentText("Cause: " + e.getMessage());
+                error.showAndWait();
+                return null;
+            }
+        }
+        else{
+            return null;
+        }
+
     }
 }

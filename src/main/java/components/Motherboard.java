@@ -1,7 +1,6 @@
 package components;
 
 import fileManager.Formatter;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
@@ -85,7 +84,7 @@ public class Motherboard extends Component {
         }
     }
 
-    public String ToString(){
+    public String toString(){
         return getComponentType() + ": " + getName() + "\n" +
                 "Processor Spaces: " + getProcessorSpaces() + "\n" +
                 " Max Ram: " + getMaxRamSize() + " GB";

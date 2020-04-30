@@ -7,7 +7,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 public class Cooler extends Component {
-    private static final transient SimpleStringProperty COMPONENT_TYPE = new SimpleStringProperty("Cooler");
+    public static final String COMPONENT_TYPE = "Cooler";
 
     private transient SimpleIntegerProperty coreRPM = new SimpleIntegerProperty();
     private transient SimpleIntegerProperty maxRPM = new SimpleIntegerProperty();
@@ -15,6 +15,15 @@ public class Cooler extends Component {
     private transient SimpleDoubleProperty maxNoise = new SimpleDoubleProperty();
     private transient SimpleStringProperty rpm = new SimpleStringProperty();
     private transient SimpleDoubleProperty powerConsumption = new SimpleDoubleProperty();
+
+    public Cooler(String[] csv){
+        super(csv[1], csv[2], Double.parseDouble(csv[7]));
+
+        setDimension(csv[3]);
+        setRPM(csv[4]);
+        setNoise(csv[5]);
+        setPowerConsumption(Double.parseDouble(csv[6]));
+    }
 
     public Cooler(String manufacturer,
                    String model,
@@ -48,10 +57,6 @@ public class Cooler extends Component {
         setCoreNoise(coreNoise);
         setMaxNoise(maxNoise);
         setPowerConsumption(powerConsumption);
-    }
-
-    public static String getComponentType() {
-        return COMPONENT_TYPE.getValue();
     }
 
     @Override
@@ -190,7 +195,7 @@ public class Cooler extends Component {
     @Override
     public String toCSV(){
         return Formatter.toCSV(
-                getComponentType(),
+                COMPONENT_TYPE,
                 getManufacturer(),
                 getModel(),
                 getDimension(),
@@ -209,7 +214,7 @@ public class Cooler extends Component {
                         "Noise: %s dBA\n" +
                         "Power consumption: %s W\n" +
                         "Price: %s NOK",
-                getComponentType(), getName(), getDimension(), getRPM(), getNoise(), getPowerConsumption(), getPrice()
+                COMPONENT_TYPE, getName(), getDimension(), getRPM(), getNoise(), getPowerConsumption(), getPrice()
                 );
     }
 }
