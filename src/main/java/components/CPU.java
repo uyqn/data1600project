@@ -6,7 +6,12 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
-public class CPU extends Component{
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+
+public class CPU extends Component implements Serializable {
     public static final transient String COMPONENT_TYPE = "CPU";
 
     private transient SimpleStringProperty socket = new SimpleStringProperty();
@@ -200,5 +205,44 @@ public class CPU extends Component{
                 "Power usage: %s W\n" +
                 "Price: %s NOK",
                 COMPONENT_TYPE, getName(), getSocket(), getCoreCount(), getClockSpeed(), getPowerConsumption(), getPrice());
+    }
+
+    //Serialisering:
+    private void writeObject(ObjectOutputStream objectOutputStream) throws IOException {
+        objectOutputStream.defaultWriteObject();
+
+        //Super component
+        objectOutputStream.writeUTF(getManufacturer());
+        objectOutputStream.writeUTF(getModel());
+        objectOutputStream.writeDouble(getPrice());
+
+        objectOutputStream.writeUTF(getSocket());
+        objectOutputStream.writeInt(getCoreCount());
+        objectOutputStream.writeDouble(getCoreClock());
+        objectOutputStream.writeDouble(getBoostClock());
+        objectOutputStream.writeDouble(getPowerConsumption());
+    }
+
+    private void readObject(ObjectInputStream objectInputStream) throws IOException, ClassNotFoundException {
+        String manufacturer = objectInputStream.readUTF();
+        String model = objectInputStream.readUTF();
+        double price = objectInputStream.readDouble();
+        String socket = objectInputStream.readUTF();
+        int coreCount = objectInputStream.readInt();
+        double coreClock = objectInputStream.readDouble();
+        double boostClock = objectInputStream.readDouble();
+        double powerConsumption = objectInputStream.readDouble();
+
+        this.socket = new SimpleStringProperty();
+        this.coreCount = new SimpleIntegerProperty();
+        this.coreClock = new SimpleDoubleProperty();
+        this.boostClock = new SimpleDoubleProperty();
+        this.powerConsumption = new SimpleDoubleProperty();
+
+        setSocket(socket);
+        setCoreCount(coreCount);
+        setCoreClock(coreClock);
+        setBoostClock(boostClock);
+        setPowerConsumption(powerConsumption);
     }
 }
