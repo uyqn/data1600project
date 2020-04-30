@@ -7,7 +7,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
 public class GraphicCard extends Component {
-    private static final transient SimpleStringProperty COMPONENT_TYPE = new SimpleStringProperty("Graphic Card");
+    private static final transient String COMPONENT_TYPE = "Graphic Card";
 
     private transient SimpleIntegerProperty memory = new SimpleIntegerProperty();
     private transient SimpleStringProperty memoryType=new SimpleStringProperty();
@@ -37,7 +37,7 @@ public class GraphicCard extends Component {
         setClockSpeed(clockSpeed);
     }
 
-    public String getCOMPONENT_TYPE(){return COMPONENT_TYPE.getValue();}
+    public String getCOMPONENT_TYPE(){return COMPONENT_TYPE;}
 
 
     public double getBaseClock() {

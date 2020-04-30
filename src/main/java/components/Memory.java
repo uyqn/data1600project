@@ -6,7 +6,7 @@ import javafx.beans.property.SimpleStringProperty;
 
 public class Memory extends Component{
 
-    private static final transient SimpleStringProperty COMPONENT_TYPE = new SimpleStringProperty("Memory");
+    private static final String COMPONENT_TYPE = "Memory";
 
     private transient SimpleIntegerProperty RAM=new SimpleIntegerProperty();
     private transient SimpleStringProperty speedTech=new SimpleStringProperty();
@@ -25,7 +25,7 @@ public class Memory extends Component{
 
     }
 
-    public String getCOMPONENT_TYPE(){return COMPONENT_TYPE.getValue();}
+    public String getCOMPONENT_TYPE(){return COMPONENT_TYPE;}
 
     public int getRAM(){ return RAM.getValue();}
 
@@ -33,7 +33,7 @@ public class Memory extends Component{
 
         boolean invalid=true;
 
-        for (int i=2; i<=128; i=i*2){
+        for (int i=2; i<=256; i=i*2){
             if(RAM==i){
                 invalid=false;
                 break;
