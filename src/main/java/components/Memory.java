@@ -4,6 +4,10 @@ import fileManager.Formatter;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
 public class Memory extends Component{
 
     private static final String COMPONENT_TYPE = "Memory";
@@ -83,5 +87,38 @@ public class Memory extends Component{
                 "Price: %s", getCOMPONENT_TYPE(), getName(), getRAM(),getSpeed(), getSpeedTech(), getPrice());
     }
 
+    //Serialisering:
+
+    private void writeObject(ObjectOutputStream objectOutputStream) throws IOException {
+        objectOutputStream.defaultWriteObject();
+
+        objectOutputStream.writeUTF(getManufacturer());
+        objectOutputStream.writeUTF(getModel());
+        objectOutputStream.writeDouble(getPrice());
+
+        objectOutputStream.writeInt(getRAM());
+        objectOutputStream.writeUTF(getSpeedTech());
+        objectOutputStream.writeInt(getSpeed());
+
+    }
+
+    private void readObject(ObjectInputStream objectInputStream) throws IOException, ClassNotFoundException{
+        String manufacturer= objectInputStream.readUTF();
+        String model=objectInputStream.readUTF();
+        double price=objectInputStream.readDouble();
+        int RAM=objectInputStream.readInt();
+        String speedTech= objectInputStream.readUTF();
+        int speed=objectInputStream.readInt();
+
+        this.RAM = new SimpleIntegerProperty();
+        this.speedTech = new SimpleStringProperty();
+        this.speed=new SimpleIntegerProperty();
+
+        setRAM(RAM);
+        setSpeedTech(speedTech);
+        setSpeed(speed);
+
+
+    }
 
 }
