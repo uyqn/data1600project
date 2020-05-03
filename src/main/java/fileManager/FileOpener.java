@@ -1,10 +1,10 @@
 package fileManager;
 
 import components.Component;
+import javafx.collections.ObservableList;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 public interface FileOpener {
-    ArrayList<Component> open() throws IOException;
+    ObservableList<Component> open() throws IOException, ClassNotFoundException;
 }

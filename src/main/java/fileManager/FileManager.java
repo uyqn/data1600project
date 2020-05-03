@@ -2,6 +2,7 @@ package fileManager;
 
 import components.Component;
 import controllers.guiManager.DialogBox;
+import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -11,7 +12,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 
 public class FileManager {
     private Path path;
@@ -108,7 +108,7 @@ public class FileManager {
         }
     }
 
-    public ArrayList<Component> open(){
+    public ObservableList<Component> open(){
         File openFromPath = fileChooser.showOpenDialog(new Stage());
 
         if(openFromPath != null){
@@ -121,12 +121,15 @@ public class FileManager {
         }
     }
 
-    private ArrayList<Component> readFile() {
+    private ObservableList<Component> readFile() {
         FileOpener opener = null;
 
         switch (getExtension()){
             case ".csv":
                 opener = new FileOpenerCSV();
+                break;
+            case ".bin":
+                opener = new FileOpenerBin();
                 break;
             default:
                 Alert error = new Alert(Alert.AlertType.ERROR);
@@ -139,7 +142,7 @@ public class FileManager {
         if(opener != null){
             try {
                 return opener.open();
-            } catch (IOException e) {
+            } catch (IOException | ClassNotFoundException e) {
                 Alert error = new Alert(Alert.AlertType.ERROR);
                 error.setTitle(e.getCause().toString());
                 error.setHeaderText("Unable to open file");

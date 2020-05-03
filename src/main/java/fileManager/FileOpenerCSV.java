@@ -3,18 +3,19 @@ package fileManager;
 import components.CPU;
 import components.Component;
 import components.Cooler;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import main.App;
 
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.ArrayList;
 import java.util.List;
 
 public class FileOpenerCSV implements FileOpener{
     @Override
-    public ArrayList<Component> open() throws IOException {
+    public ObservableList<Component> open() throws IOException {
         List<String> list = Files.readAllLines(App.fileManager.getPath());
-        ArrayList<Component> tempList = new ArrayList<>();
+        ObservableList<Component> tempList = FXCollections.observableArrayList();
 
         for (String csvString : list) {
             switch (csvString.split(Formatter.DELIMITER)[0]) {

@@ -123,19 +123,23 @@ public abstract class Component implements Serializable {
         objectOutputStream.writeUTF(getManufacturer());
         objectOutputStream.writeUTF(getModel());
         objectOutputStream.writeDouble(getPrice());
+        objectOutputStream.writeObject(this.dimension.getValue());
     }
 
     private void readObject(ObjectInputStream objectInputStream) throws IOException, ClassNotFoundException {
         String manufacturer = objectInputStream.readUTF();
         String model = objectInputStream.readUTF();
         double price = objectInputStream.readDouble();
+        Dimension dimension = (Dimension) objectInputStream.readObject();
 
         this.manufacturer = new SimpleStringProperty();
         this.model = new SimpleStringProperty();
         this.price = new SimpleDoubleProperty();
+        this.dimension = new SimpleObjectProperty<>();
 
         setManufacturer(manufacturer);
         setModel(model);
         setPrice(price);
+        setDimension(dimension);
     }
 }

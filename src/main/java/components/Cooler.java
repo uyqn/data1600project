@@ -6,6 +6,10 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
 public class Cooler extends Component {
     public static final String COMPONENT_TYPE = "Cooler";
 
@@ -125,7 +129,7 @@ public class Cooler extends Component {
         }
     }
 
-    public double getCoreRPM() {
+    public int getCoreRPM() {
         return coreRPM.getValue();
     }
 
@@ -139,7 +143,7 @@ public class Cooler extends Component {
         this.coreRPM.set(coreRPM);
     }
 
-    public double getMaxRPM() {
+    public int getMaxRPM() {
         return maxRPM.getValue();
     }
 
@@ -216,5 +220,46 @@ public class Cooler extends Component {
                         "Price: %s NOK",
                 COMPONENT_TYPE, getName(), getDimension(), getRPM(), getNoise(), getPowerConsumption(), getPrice()
                 );
+    }
+
+    private void writeObject(ObjectOutputStream objectOutputStream) throws IOException {
+        objectOutputStream.defaultWriteObject();
+
+        //Super component
+        objectOutputStream.writeUTF(getManufacturer());
+        objectOutputStream.writeUTF(getModel());
+        objectOutputStream.writeDouble(getPrice());
+        objectOutputStream.writeUTF(getDimension());
+
+        objectOutputStream.writeInt(getCoreRPM());
+        objectOutputStream.writeInt(getMaxRPM());
+        objectOutputStream.writeDouble(getCoreNoise());
+        objectOutputStream.writeDouble(getMaxNoise());
+        objectOutputStream.writeDouble(getPowerConsumption());
+    }
+
+    private void readObject(ObjectInputStream objectInputStream) throws IOException, ClassNotFoundException {
+        String manufacturer = objectInputStream.readUTF();
+        String model = objectInputStream.readUTF();
+        double price = objectInputStream.readDouble();
+        String dimension = objectInputStream.readUTF();
+
+        int coreRPM = objectInputStream.readInt();
+        int maxRPM = objectInputStream.readInt();
+        double coreNoise = objectInputStream.readDouble();
+        double maxNoise = objectInputStream.readDouble();
+        double powerConsumption = objectInputStream.readDouble();
+
+        this.coreRPM = new SimpleIntegerProperty();
+        this.maxRPM = new SimpleIntegerProperty();
+        this.coreNoise = new SimpleDoubleProperty();
+        this.maxNoise = new SimpleDoubleProperty();
+        this.powerConsumption = new SimpleDoubleProperty();
+
+        setCoreRPM(coreRPM);
+        setMaxRPM(maxRPM);
+        setCoreNoise(coreNoise);
+        setMaxNoise(maxNoise);
+        setPowerConsumption(powerConsumption);
     }
 }

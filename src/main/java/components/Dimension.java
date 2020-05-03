@@ -2,9 +2,12 @@ package components;
 
 import javafx.beans.property.SimpleDoubleProperty;
 
-public class Dimension {
-    private static final transient  String DELIMITER = " x ";
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
+public class Dimension implements Serializable {
     private transient SimpleDoubleProperty width = new SimpleDoubleProperty();
     private transient SimpleDoubleProperty depth = new SimpleDoubleProperty();
     private transient SimpleDoubleProperty height = new SimpleDoubleProperty();
@@ -103,5 +106,28 @@ public class Dimension {
         return (getHeight() == 0) ?
                 getWidth() + " x " + getDepth() :
                 getWidth() + " x " + getDepth() + " x " + getHeight();
+    }
+
+    private void writeObject(ObjectOutputStream objectOutputStream) throws IOException {
+        objectOutputStream.defaultWriteObject();
+
+        //Super component
+        objectOutputStream.writeDouble(getWidth());
+        objectOutputStream.writeDouble(getDepth());
+        objectOutputStream.writeDouble(getHeight());
+    }
+
+    private void readObject(ObjectInputStream objectInputStream) throws IOException, ClassNotFoundException {
+        double width = objectInputStream.readDouble();
+        double depth = objectInputStream.readDouble();
+        double height = objectInputStream.readDouble();
+
+        this.width = new SimpleDoubleProperty();
+        this.depth = new SimpleDoubleProperty();
+        this.height = new SimpleDoubleProperty();
+
+        setWidth(width);
+        setDepth(depth);
+        setHeight(height);
     }
 }
