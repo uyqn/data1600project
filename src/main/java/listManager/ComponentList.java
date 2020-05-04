@@ -3,6 +3,7 @@ package listManager;
 import components.Component;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.TableView;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -26,6 +27,10 @@ public class ComponentList implements Serializable, ItemList {
 
     public void remove(Component component){
         components.remove(component);
+    }
+
+    public void setTableView(TableView<Component> tableView){
+        tableView.setItems(components);
     }
 
     @Override

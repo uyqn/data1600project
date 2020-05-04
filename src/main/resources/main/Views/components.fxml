@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.views.ComponentView">
+   <center>
+      <TableView fx:id="componentView" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <columns>
+          <TableColumn fx:id="typeCol" prefWidth="75.0" text="Type" />
+          <TableColumn fx:id="manufacturerCol" prefWidth="106.0" text="Manufacturer" />
+            <TableColumn fx:id="modelCol" prefWidth="75.0" text="Model" />
+            <TableColumn fx:id="priceCol" prefWidth="75.0" text="Price" />
+        </columns>
+      </TableView>
+   </center>
+</BorderPane>
