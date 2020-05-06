@@ -4,12 +4,15 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 
-public abstract class Component{
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+
+public abstract class Component implements Serializable {
     private transient SimpleStringProperty manufacturer = new SimpleStringProperty();
     private transient SimpleStringProperty model = new SimpleStringProperty();
     private transient SimpleDoubleProperty price = new SimpleDoubleProperty();
-
-    private transient SimpleStringProperty name = new SimpleStringProperty();
     private transient SimpleObjectProperty<Dimension> dimension = new SimpleObjectProperty<>(new Dimension());
 
     public Component(String manufacturer, String model,
@@ -17,16 +20,10 @@ public abstract class Component{
         setManufacturer(manufacturer);
         setModel(model);
         setPrice(price);
-
-        setName();
     }
 
     public String getName() {
-        return name.getValue();
-    }
-
-    private void setName() {
-        this.name.set(getManufacturer() + " " + getModel());
+        return getManufacturer() + " " + getModel();
     }
 
     public String getManufacturer() {
@@ -34,11 +31,10 @@ public abstract class Component{
     }
 
     public void setManufacturer(String manufacturer) {
-        if(!manufacturer.matches("[A-Z][A-Za-z ]+|[A-Z][A-Za-z]+")){
+        if(!manufacturer.matches("[A-Z][A-Za-z. ]+|[A-Z][A-Za-z]+")){
             throw new IllegalArgumentException("Invalid name format for manufacturer");
         }
         this.manufacturer.set(manufacturer.replaceAll("\\s{2,}", " ").trim());
-        setName();
     }
 
     public String getModel() {
@@ -50,7 +46,6 @@ public abstract class Component{
             throw new IllegalArgumentException("Invalid name format for model");
         }
         this.model.set(model.replaceAll("\\s{2,}", " "));
-        setName();
     }
 
     public double getPrice() {
@@ -120,4 +115,31 @@ public abstract class Component{
     }
 
     public abstract String toCSV();
+
+    private void writeObject(ObjectOutputStream objectOutputStream) throws IOException {
+        objectOutputStream.defaultWriteObject();
+
+        //Super component
+        objectOutputStream.writeUTF(getManufacturer());
+        objectOutputStream.writeUTF(getModel());
+        objectOutputStream.writeDouble(getPrice());
+        objectOutputStream.writeObject(this.dimension.getValue());
+    }
+
+    private void readObject(ObjectInputStream objectInputStream) throws IOException, ClassNotFoundException {
+        String manufacturer = objectInputStream.readUTF();
+        String model = objectInputStream.readUTF();
+        double price = objectInputStream.readDouble();
+        Dimension dimension = (Dimension) objectInputStream.readObject();
+
+        this.manufacturer = new SimpleStringProperty();
+        this.model = new SimpleStringProperty();
+        this.price = new SimpleDoubleProperty();
+        this.dimension = new SimpleObjectProperty<>();
+
+        setManufacturer(manufacturer);
+        setModel(model);
+        setPrice(price);
+        setDimension(dimension);
+    }
 }

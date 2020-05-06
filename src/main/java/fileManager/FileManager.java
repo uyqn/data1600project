@@ -1,6 +1,8 @@
 package fileManager;
 
+import components.Component;
 import controllers.guiManager.DialogBox;
+import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -104,5 +106,54 @@ public class FileManager {
                 DialogBox.error(e.getCause().toString(), null ,e.getMessage());
             }
         }
+    }
+
+    public ObservableList<Component> open(){
+        File openFromPath = fileChooser.showOpenDialog(new Stage());
+
+        if(openFromPath != null){
+            setPath(openFromPath);
+            setSaved(true);
+            return readFile();
+        }
+        else{
+            return null;
+        }
+    }
+
+    private ObservableList<Component> readFile() {
+        FileOpener opener = null;
+
+        switch (getExtension()){
+            case ".csv":
+                opener = new FileOpenerCSV();
+                break;
+            case ".bin":
+                opener = new FileOpenerBin();
+                break;
+            default:
+                Alert error = new Alert(Alert.AlertType.ERROR);
+                error.setTitle("Open error");
+                error.setHeaderText("Unable to open file");
+                error.setContentText("Unavailable extension: " + getExtension());
+                error.showAndWait();
+        }
+
+        if(opener != null){
+            try {
+                return opener.open();
+            } catch (IOException | ClassNotFoundException e) {
+                Alert error = new Alert(Alert.AlertType.ERROR);
+                error.setTitle(e.getCause().toString());
+                error.setHeaderText("Unable to open file");
+                error.setContentText("Cause: " + e.getMessage());
+                error.showAndWait();
+                return null;
+            }
+        }
+        else{
+            return null;
+        }
+
     }
 }

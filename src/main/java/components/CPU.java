@@ -6,14 +6,28 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
-public class CPU extends Component{
-    private static final transient SimpleStringProperty COMPONENT_TYPE = new SimpleStringProperty("CPU");
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+
+public class CPU extends Component implements Serializable {
+    public static final transient String COMPONENT_TYPE = "CPU";
 
     private transient SimpleStringProperty socket = new SimpleStringProperty();
     private transient SimpleIntegerProperty coreCount = new SimpleIntegerProperty();
     private transient SimpleDoubleProperty coreClock = new SimpleDoubleProperty();
     private transient SimpleDoubleProperty boostClock = new SimpleDoubleProperty();
     private transient SimpleDoubleProperty powerConsumption = new SimpleDoubleProperty();
+
+    public CPU(String[] csv){
+        super(csv[1], csv[2], Double.parseDouble(csv[7]));
+
+        setSocket(csv[3]);
+        setCoreCount(Integer.parseInt(csv[4]));
+        setClockSpeed(csv[5]);
+        setPowerConsumption(Double.parseDouble(csv[6]));
+    }
 
     public CPU(String manufacturer,
                String model,
@@ -47,8 +61,8 @@ public class CPU extends Component{
         setPowerConsumption(powerConsumption);
     }
 
-    public String getCOMPONENT_TYPE() {
-        return COMPONENT_TYPE.getValue();
+    public static String getComponentType() {
+        return COMPONENT_TYPE;
     }
 
     public String getSocket() {
@@ -175,7 +189,7 @@ public class CPU extends Component{
     @Override
     public String toCSV() {
         return Formatter.toCSV(
-                getCOMPONENT_TYPE(),
+                COMPONENT_TYPE,
                 getManufacturer(),
                 getModel(),
                 getSocket(),
@@ -194,6 +208,45 @@ public class CPU extends Component{
                 "Clock speed: %s GHz\n" +
                 "Power usage: %s W\n" +
                 "Price: %s NOK",
-                getCOMPONENT_TYPE(), getName(), getSocket(), getCoreCount(), getClockSpeed(), getPowerConsumption(), getPrice());
+                COMPONENT_TYPE, getName(), getSocket(), getCoreCount(), getClockSpeed(), getPowerConsumption(), getPrice());
+    }
+
+    //Serialisering:
+    private void writeObject(ObjectOutputStream objectOutputStream) throws IOException {
+        objectOutputStream.defaultWriteObject();
+
+        //Super component
+        objectOutputStream.writeUTF(getManufacturer());
+        objectOutputStream.writeUTF(getModel());
+        objectOutputStream.writeDouble(getPrice());
+
+        objectOutputStream.writeUTF(getSocket());
+        objectOutputStream.writeInt(getCoreCount());
+        objectOutputStream.writeDouble(getCoreClock());
+        objectOutputStream.writeDouble(getBoostClock());
+        objectOutputStream.writeDouble(getPowerConsumption());
+    }
+
+    private void readObject(ObjectInputStream objectInputStream) throws IOException, ClassNotFoundException {
+        String manufacturer = objectInputStream.readUTF();
+        String model = objectInputStream.readUTF();
+        double price = objectInputStream.readDouble();
+        String socket = objectInputStream.readUTF();
+        int coreCount = objectInputStream.readInt();
+        double coreClock = objectInputStream.readDouble();
+        double boostClock = objectInputStream.readDouble();
+        double powerConsumption = objectInputStream.readDouble();
+
+        this.socket = new SimpleStringProperty();
+        this.coreCount = new SimpleIntegerProperty();
+        this.coreClock = new SimpleDoubleProperty();
+        this.boostClock = new SimpleDoubleProperty();
+        this.powerConsumption = new SimpleDoubleProperty();
+
+        setSocket(socket);
+        setCoreCount(coreCount);
+        setCoreClock(coreClock);
+        setBoostClock(boostClock);
+        setPowerConsumption(powerConsumption);
     }
 }
