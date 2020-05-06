@@ -8,14 +8,15 @@ import javafx.beans.property.SimpleStringProperty;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
-public class Motherboard extends Component {
+public class Motherboard extends Component implements Serializable {
     private transient final static SimpleStringProperty COMPONENT_TYPE = new SimpleStringProperty("Motherboard");
 
-    private SimpleIntegerProperty ProcessorSpaces = new SimpleIntegerProperty();
-    private SimpleIntegerProperty MaxRamSize = new SimpleIntegerProperty();
-    private SimpleStringProperty boostType = new SimpleStringProperty();
-    private SimpleStringProperty socket = new SimpleStringProperty();
+    private transient SimpleIntegerProperty ProcessorSpaces = new SimpleIntegerProperty();
+    private transient SimpleIntegerProperty MaxRamSize = new SimpleIntegerProperty();
+    private transient SimpleStringProperty boostType = new SimpleStringProperty();
+    private transient SimpleStringProperty socket = new SimpleStringProperty();
 
     private String[] sockets = {"AM1","AM2", "AM3","AM4", "BGA413", "BGA559","BGA1023","C32","FM1","FM2","G34"
                                 ,"LGA771","LGA775","LGA1150","LGA1151","LGA1356","LGA1366","LGA2011","LGA2011-3","LGA2066",

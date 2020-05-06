@@ -8,8 +8,9 @@ import javafx.beans.property.SimpleStringProperty;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
-public class Monitor extends Component{
+public class Monitor extends Component implements Serializable {
     private transient static final SimpleStringProperty COMPONENT_TYPE = new SimpleStringProperty("Monitor");
 
     private transient SimpleIntegerProperty refreshRate = new SimpleIntegerProperty();

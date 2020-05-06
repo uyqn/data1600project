@@ -9,8 +9,9 @@ import javafx.beans.property.SimpleStringProperty;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
-public class Cooler extends Component {
+public class Cooler extends Component implements Serializable {
     public static final String COMPONENT_TYPE = "Cooler";
 
     private transient SimpleIntegerProperty coreRPM = new SimpleIntegerProperty();

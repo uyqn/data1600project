@@ -2,7 +2,9 @@ package components;
 
 import javafx.beans.property.SimpleStringProperty;
 
-public class Case extends Component {
+import java.io.Serializable;
+
+public class Case extends Component implements Serializable {
     public static final String COMPONENT_TYPE = "Case";
     private transient SimpleStringProperty formFactor = new SimpleStringProperty();
     private transient String[] formFactorList = {"ATX", "EATX", "flex ATX", "HPTX", "Micro ATX", "Mini ITX",

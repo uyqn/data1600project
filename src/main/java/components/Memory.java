@@ -7,8 +7,9 @@ import javafx.beans.property.SimpleStringProperty;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
-public class Memory extends Component{
+public class Memory extends Component implements Serializable {
 
     private static final String COMPONENT_TYPE = "Memory";
 

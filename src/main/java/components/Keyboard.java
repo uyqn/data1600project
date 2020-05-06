@@ -9,11 +9,12 @@ import javafx.beans.property.SimpleStringProperty;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
-public class Keyboard extends Component {
+public class Keyboard extends Component implements Serializable {
 
     private transient static final SimpleStringProperty COMPONENT_TYPE = new SimpleStringProperty("Keyboard");
-    private SimpleBooleanProperty Tactile;
+    private transient SimpleBooleanProperty Tactile;
 
     public Keyboard(String [] csv) {
         super(csv[1], csv[2], Double.parseDouble(csv[4]));

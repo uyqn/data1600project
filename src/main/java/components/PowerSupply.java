@@ -8,11 +8,12 @@ import javafx.beans.property.SimpleStringProperty;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
-public class PowerSupply extends Component {
+public class PowerSupply extends Component implements Serializable {
 
     private transient static final SimpleStringProperty COMPONENT_TYPE = new SimpleStringProperty("Power Supply");
-    private SimpleIntegerProperty PowerCapacity;
+    private transient SimpleIntegerProperty PowerCapacity;
 
     public static String getComponentType(){
         return COMPONENT_TYPE.get();

@@ -9,14 +9,15 @@ import javafx.beans.property.SimpleStringProperty;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
-public class Mouse extends Component{
+public class Mouse extends Component implements Serializable {
     private transient static final SimpleStringProperty COMPONENT_TYPE = new SimpleStringProperty("Mouse");
 
-    private SimpleIntegerProperty numberButtons = new SimpleIntegerProperty();
-    private SimpleIntegerProperty dpi = new SimpleIntegerProperty();
-    private SimpleBooleanProperty ergonomic = new SimpleBooleanProperty();
-    private SimpleBooleanProperty wireless = new SimpleBooleanProperty();
+    private transient SimpleIntegerProperty numberButtons = new SimpleIntegerProperty();
+    private transient SimpleIntegerProperty dpi = new SimpleIntegerProperty();
+    private transient SimpleBooleanProperty ergonomic = new SimpleBooleanProperty();
+    private transient SimpleBooleanProperty wireless = new SimpleBooleanProperty();
 
     public Mouse(String manufacturer, String model, int numberButtons, int dpi, boolean ergonomic, boolean wireless,
                  double price) {
