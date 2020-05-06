@@ -18,7 +18,6 @@ public class Computer {
         //setContent(csv[0]));
         setName(csv[1]);
         setPrice(Double.parseDouble(csv[2]));
-
     }
 
     public Double getPrice() {
