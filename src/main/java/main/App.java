@@ -22,9 +22,11 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         initiateCoreUsers();
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/main/login.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/main/views/components.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setScene(scene);
+
+        componentList.getList().addAll(fileManager.open());
 
         stage.setOnCloseRequest(windowEvent -> Platform.exit());
 
@@ -38,7 +40,7 @@ public class App extends Application {
     private void initiateCoreUsers(){
         User admin = new User("admin", "super",1);
         User uyqn = new User("uyqn", "s341864", 1);
-        User helene=new User("hele", "s341873", 1);
+        User helene = new User("hele", "s341873", 1);
         /*User end=new User("end", "passord", 2);*/
         UserList.add(uyqn);
         UserList.add(admin);

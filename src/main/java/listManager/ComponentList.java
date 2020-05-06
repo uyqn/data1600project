@@ -12,7 +12,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ComponentList implements Serializable, ItemList {
+public class ComponentList extends attachTableView implements Serializable, ItemList {
     private transient ObservableList<Component> components = FXCollections.observableArrayList();
 
     @Override
@@ -29,7 +29,9 @@ public class ComponentList implements Serializable, ItemList {
         components.remove(component);
     }
 
-    public void setTableView(TableView<Component> tableView){
+    @SuppressWarnings("unchecked")
+    @Override
+    public void setTableView(TableView tableView){
         tableView.setItems(components);
     }
 

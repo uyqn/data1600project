@@ -3,9 +3,10 @@ package controllers.views;
 import components.Component;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TableColumn;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import main.App;
 
 import java.net.URL;
@@ -17,21 +18,25 @@ public class ComponentView implements Initializable {
     private TableView<Component> componentView;
 
     @FXML
-    private TableColumn<Component, String> typeCol;
+    private Label detailedView;
 
     @FXML
-    private TableColumn<Component, String> manufacturerCol;
+    void viewDetailsKey(KeyEvent event) {
+        detailedView.setText(
+                componentView.getSelectionModel().getSelectedItem().toString()
+        );
+    }
 
     @FXML
-    private TableColumn<Component, String> modelCol;
+    void viewDetailsMouse(MouseEvent event) {
+        detailedView.setText(
+                componentView.getSelectionModel().getSelectedItem().toString()
+        );
+    }
 
-    @FXML
-    private TableColumn<Component, Double> priceCol;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         App.componentList.setTableView(componentView);
-
-        typeCol.setCellValueFactory(new PropertyValueFactory<>("COMPONENT_TYPE"));
     }
 }

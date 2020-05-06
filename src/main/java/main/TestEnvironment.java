@@ -1,7 +1,10 @@
 package main;
 
+import components.Component;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 public class TestEnvironment extends Application {
@@ -13,9 +16,10 @@ public class TestEnvironment extends Application {
     public void start(Stage primaryStage) throws Exception {
         //All testing av koder og shit går her:
 
-        App.componentList.getList().addAll(App.fileManager.open());
+        String name = "java.lang.String";
 
-        System.out.println(App.componentList.getList());
+        TableColumn<?, ?> test = new TableColumn<Component, Integer>("Test");
+        test.setCellValueFactory(new PropertyValueFactory<>("price"));
 
         //------------------------------------
         Platform.exit(); //Ikke fjern denne!

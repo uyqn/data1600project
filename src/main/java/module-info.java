@@ -19,6 +19,9 @@ module main {
     opens controllers.component to javafx.fxml;
     exports controllers.component;
 
+    opens controllers.views to javafx.fxml;
+    exports controllers.views;
+
     opens fileManager to javafx.fxml;
     exports fileManager;
 

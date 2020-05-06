@@ -208,7 +208,8 @@ public class CPU extends Component implements Serializable {
                 "Clock speed: %s GHz\n" +
                 "Power usage: %s W\n" +
                 "Price: %s NOK",
-                COMPONENT_TYPE, getName(), getSocket(), getCoreCount(), getClockSpeed(), getPowerConsumption(), getPrice());
+                COMPONENT_TYPE, getName(), getSocket(), getCoreCount(), getClockSpeed(), getPowerConsumption(),
+                String.format("%.2f",getPrice()));
     }
 
     //Serialisering:

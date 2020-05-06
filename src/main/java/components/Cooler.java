@@ -63,6 +63,10 @@ public class Cooler extends Component {
         setPowerConsumption(powerConsumption);
     }
 
+    public static String getComponentType() {
+        return COMPONENT_TYPE;
+    }
+
     @Override
     public void setDimension(String dimension){
         if(Extract.doubles(dimension).size() < 3){
@@ -218,7 +222,8 @@ public class Cooler extends Component {
                         "Noise: %s dBA\n" +
                         "Power consumption: %s W\n" +
                         "Price: %s NOK",
-                COMPONENT_TYPE, getName(), getDimension(), getRPM(), getNoise(), getPowerConsumption(), getPrice()
+                COMPONENT_TYPE, getName(), getDimension(), getRPM(), getNoise(), getPowerConsumption(),
+                String.format("%.2f",getPrice())
                 );
     }
 
