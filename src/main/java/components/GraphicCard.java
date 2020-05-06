@@ -1,4 +1,6 @@
 package components;
+
+
 //Graphics Card
 import controllers.guiManager.Extract;
 import fileManager.Formatter;
