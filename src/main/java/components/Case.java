@@ -3,7 +3,7 @@ package components;
 import javafx.beans.property.SimpleStringProperty;
 
 public class Case extends Component {
-    private transient static final SimpleStringProperty COMPONENT_TYPE = new SimpleStringProperty("Case");
+    public static final String COMPONENT_TYPE = "Case";
     private transient SimpleStringProperty formFactor = new SimpleStringProperty();
     private transient String[] formFactorList = {"ATX", "EATX", "flex ATX", "HPTX", "Micro ATX", "Mini ITX",
             "Thin Mini ITX", "Mini DTX", "SSI CEB", "SSI EEB", "XL ATX"};

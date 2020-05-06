@@ -3,6 +3,7 @@ package controllers.user;
 import controllers.guiManager.GUI;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import controllers.LoginController;
 import users.User;
@@ -13,6 +14,26 @@ public class EndUserController{
 
     @FXML
     private Label centerLabel;
+
+    @FXML
+    private Button btnBuild;
+
+    @FXML
+    private Button btnPrev;
+
+    @FXML
+    private Label lblWelcome;
+
+    @FXML
+    void buildPc(ActionEvent event) {
+
+
+    }
+
+    @FXML
+    void showPrev(ActionEvent event) {
+
+    }
 
     @FXML
     void signOut(ActionEvent event) throws IOException {

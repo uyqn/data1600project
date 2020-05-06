@@ -5,10 +5,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.BorderPane?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
-            prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="controllers.user.EndUserController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.user.EndUserController">
    <center>
       <Label fx:id="centerLabel" BorderPane.alignment="CENTER" />
    </center>
@@ -19,4 +16,13 @@
          </BorderPane.margin>
       </Button>
    </bottom>
+   <left>
+      <Button fx:id="btnBuild" mnemonicParsing="false" onAction="#buildPc" text="Build your own PC" BorderPane.alignment="CENTER" />
+   </left>
+   <right>
+      <Button fx:id="btnPrev" mnemonicParsing="false" onAction="#showPrev" text="Show previous projects" BorderPane.alignment="CENTER" />
+   </right>
+   <top>
+      <Label fx:id="lblWelcome" text="Welcome, user_name" BorderPane.alignment="CENTER" />
+   </top>
 </BorderPane>
