@@ -1,4 +1,6 @@
 package components;
+
+
 //Graphics Card
 import controllers.guiManager.Extract;
 import fileManager.Formatter;
@@ -6,7 +8,12 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
-public class GraphicCard extends Component {
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+
+public class GraphicCard extends Component implements Serializable {
     private static final transient String COMPONENT_TYPE = "Graphic Card";
 
     private transient SimpleIntegerProperty memory = new SimpleIntegerProperty();
@@ -149,6 +156,48 @@ public class GraphicCard extends Component {
                 "Clock Speed: %s GHz\n"
                 +"Price: %s NOK\n",
                 getCOMPONENT_TYPE(), getName(), getMemory(), getMemoryType(), getClockSpeed(), getPrice());
+    }
+
+    //Serialisering
+
+    private void writeObject(ObjectOutputStream objectOutputStream) throws IOException{
+
+        objectOutputStream.defaultWriteObject();
+
+
+        objectOutputStream.writeUTF(getManufacturer()); //String
+        objectOutputStream.writeUTF(getModel()); //int
+        objectOutputStream.writeDouble(getPrice()); //Double
+
+        objectOutputStream.writeInt(getMemory());
+        objectOutputStream.writeUTF(getMemoryType());
+        objectOutputStream.writeDouble(getBaseClock());
+        objectOutputStream.writeDouble(getBoostClock());
+
+    }
+
+    private void readObject(ObjectInputStream objecInputStream) throws IOException, ClassNotFoundException{
+
+        String manufacturer = objecInputStream.readUTF();
+        String model = objecInputStream.readUTF();
+        double price = objecInputStream.readDouble();
+
+        int memory= objecInputStream.readInt();
+        String memoryType= objecInputStream.readUTF();
+        double baseClock= objecInputStream.readDouble();
+        double boostClock = objecInputStream.readDouble();
+
+
+        this.memory=new SimpleIntegerProperty();
+        this.memoryType=new SimpleStringProperty();
+        this.baseClock=new SimpleDoubleProperty();
+        this.boostClock= new SimpleDoubleProperty();
+
+        setMemory(memory);
+        setMemoryType(memoryType);
+        setBaseClock(baseClock);
+        setBoostClock(boostClock);
+
     }
 }
 
