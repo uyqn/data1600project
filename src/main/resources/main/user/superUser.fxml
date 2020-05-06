@@ -29,7 +29,7 @@
                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
            </rowConstraints>
            <Button id="addComponent" mnemonicParsing="false" onAction="#addComponent" text="Add components" />
-         <Button mnemonicParsing="false" onAction="#viewComponents" text="View Components" GridPane.rowIndex="1" />
+         <Button mnemonicParsing="false" text="View Components" GridPane.rowIndex="1" />
        </GridPane>
    </center>
    <top>
