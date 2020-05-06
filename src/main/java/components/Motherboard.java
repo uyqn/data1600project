@@ -1,16 +1,22 @@
 package components;
 
 import fileManager.Formatter;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 public class Motherboard extends Component {
     private transient final static SimpleStringProperty COMPONENT_TYPE = new SimpleStringProperty("Motherboard");
 
-    private SimpleIntegerProperty ProcessorSpaces;
-    private SimpleIntegerProperty MaxRamSize;
-    private SimpleStringProperty boostType;
-    private SimpleStringProperty socket;
+    private SimpleIntegerProperty ProcessorSpaces = new SimpleIntegerProperty();
+    private SimpleIntegerProperty MaxRamSize = new SimpleIntegerProperty();
+    private SimpleStringProperty boostType = new SimpleStringProperty();
+    private SimpleStringProperty socket = new SimpleStringProperty();
+
     private String[] sockets = {"AM1","AM2", "AM3","AM4", "BGA413", "BGA559","BGA1023","C32","FM1","FM2","G34"
                                 ,"LGA771","LGA775","LGA1150","LGA1151","LGA1356","LGA1366","LGA2011","LGA2011-3","LGA2066",
                                 "PGA988","sTR4"};
@@ -98,5 +104,40 @@ public class Motherboard extends Component {
                 getProcessorSpaces(),
                 getMaxRamSize(),
                 getPrice());
+    }
+
+    private void writeObject(ObjectOutputStream objectOutputStream) throws IOException {
+        objectOutputStream.defaultWriteObject();
+
+        //Super component
+        objectOutputStream.writeUTF(getManufacturer());
+        objectOutputStream.writeUTF(getModel());
+        objectOutputStream.writeDouble(getPrice());
+
+        objectOutputStream.writeInt(getProcessorSpaces());
+        objectOutputStream.writeInt(getMaxRamSize());
+        objectOutputStream.writeUTF(getBoostType());
+        objectOutputStream.writeUTF(getSocket());
+    }
+
+    private void readObject(ObjectInputStream objectInputStream) throws IOException, ClassNotFoundException {
+        String manufacturer = objectInputStream.readUTF();
+        String model = objectInputStream.readUTF();
+        double price = objectInputStream.readDouble();
+
+        int ProcessorSpaces = objectInputStream.readInt();
+        int MaxRamSize = objectInputStream.readInt();
+        String boostType = objectInputStream.readUTF();
+        String socket = objectInputStream.readUTF();
+
+        this.ProcessorSpaces = new SimpleIntegerProperty();
+        this.MaxRamSize = new SimpleIntegerProperty();
+        this.boostType = new SimpleStringProperty();
+        this.socket = new SimpleStringProperty();
+
+        setProcessorSpaces(ProcessorSpaces);
+        setMaxRamSize(MaxRamSize);
+        setBoostType(boostType);
+        setSocket(socket);
     }
 }
