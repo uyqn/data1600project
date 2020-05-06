@@ -15,12 +15,12 @@ public class Motherboard extends Component {
                                 ,"LGA771","LGA775","LGA1150","LGA1151","LGA1356","LGA1366","LGA2011","LGA2011-3","LGA2066",
                                 "PGA988","sTR4"};
 
-    public Motherboard(String manufacturer, String model, int ProcessorSpaces, int MaxRamSize,
-                       double price) {
-        super(manufacturer, model, price);
+    public Motherboard(String[] csv // manufacturer, String model, int ProcessorSpaces, int MaxRamSize,
+                       /*double price*/) {
+        super(csv[1], csv[2], Double.parseDouble(csv[5]));
 
-        setProcessorSpaces(ProcessorSpaces);
-        setMaxRamSize(MaxRamSize);
+        setProcessorSpaces(Integer.parseInt(csv[3]));
+        setMaxRamSize(Integer.parseInt(csv[4]));
     }
 
     public static String getComponentType() {

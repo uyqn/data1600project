@@ -1,9 +1,11 @@
 package components;
 
+import fileManager.Formatter;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Computer {
 
@@ -12,15 +14,18 @@ public class Computer {
     public SimpleDoubleProperty Price;
     public ArrayList<Component> Content = new ArrayList<Component>();
 
-    public Computer(Double price, ArrayList<Component> list){
+    public Computer(String[] csv) {
+        //setContent(csv[0]));
+        setName(csv[1]);
+        setPrice(Double.parseDouble(csv[2]));
 
     }
 
-    public Double getPrice(){
+    public Double getPrice() {
         return Price.get();
     }
 
-    public void setPrice(Double price){
+    public void setPrice(Double price) {
         this.Price.set(price);
     }
 
@@ -39,5 +44,13 @@ public class Computer {
 
     public void setName(String name) {
         this.Name.set(name);
+    }
+
+    public String toCSV() {
+        return Formatter.toCSV(
+                getContent(),
+                getName(),
+                getPrice()
+        );
     }
 }

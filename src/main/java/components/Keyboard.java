@@ -9,10 +9,10 @@ public class Keyboard extends Component {
     private transient static final SimpleStringProperty COMPONENT_TYPE = new SimpleStringProperty("Keyboard");
     private SimpleBooleanProperty Tactile;
 
-    public Keyboard(String manufacturer, String model, double price, boolean Tactile) {
-        super(manufacturer, model, price);
+    public Keyboard(String [] csv) {
+        super(csv[1], csv[2], Double.parseDouble(csv[4]));
 
-        setTactile(Tactile);
+        setTactile(Boolean.parseBoolean(csv[3]));
     }
 
     public boolean isTactile() {

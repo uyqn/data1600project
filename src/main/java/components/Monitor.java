@@ -9,10 +9,10 @@ public class Monitor extends Component{
 
     private transient SimpleIntegerProperty refreshRate = new SimpleIntegerProperty();
 
-    public Monitor(String manufacturer, String model, int refreshRate, double price) {
-        super(manufacturer, model, price);
+    public Monitor(String[] csv) {
+        super(csv[0], csv[1], Double.parseDouble(csv[3]));
 
-        setRefreshRate(refreshRate);
+        setRefreshRate(Integer.parseInt(csv[2]));
     }
 
     public static String getComponentType() {
