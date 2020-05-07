@@ -138,6 +138,11 @@ public class GraphicCard extends Component implements Serializable {
     }
 
     @Override
+    public String getComponentType() {
+        return COMPONENT_TYPE;
+    }
+
+    @Override
     public String toCSV(){
         return Formatter.toCSV(
                 getCOMPONENT_TYPE(),

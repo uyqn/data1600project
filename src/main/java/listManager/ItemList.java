@@ -1,12 +1,11 @@
 package listManager;
 
-import components.Component;
 import javafx.collections.ObservableList;
 
 import java.io.Serializable;
 
-public interface ItemList extends Serializable {
+public interface ItemList<S> extends Serializable {
     String toCSV();
-    ObservableList<Component> getList();
-    void add(Component component);
+    ObservableList<S> getList();
+    void add(S item);
 }

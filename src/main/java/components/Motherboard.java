@@ -30,7 +30,7 @@ public class Motherboard extends Component implements Serializable {
         setMaxRamSize(Integer.parseInt(csv[4]));
     }
 
-    public static String getComponentType() {
+    public String getComponentType() {
         return COMPONENT_TYPE.getValue();
     }
 

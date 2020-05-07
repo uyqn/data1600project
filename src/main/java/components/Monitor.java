@@ -21,7 +21,7 @@ public class Monitor extends Component implements Serializable {
         setRefreshRate(Integer.parseInt(csv[2]));
     }
 
-    public static String getComponentType() {
+    public String getComponentType() {
         return COMPONENT_TYPE.getValue();
     }
 

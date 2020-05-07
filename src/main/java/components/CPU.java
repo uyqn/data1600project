@@ -61,7 +61,8 @@ public class CPU extends Component implements Serializable {
         setPowerConsumption(powerConsumption);
     }
 
-    public static String getComponentType() {
+    @Override
+    public String getComponentType() {
         return COMPONENT_TYPE;
     }
 
@@ -208,7 +209,8 @@ public class CPU extends Component implements Serializable {
                 "Clock speed: %s GHz\n" +
                 "Power usage: %s W\n" +
                 "Price: %s NOK",
-                COMPONENT_TYPE, getName(), getSocket(), getCoreCount(), getClockSpeed(), getPowerConsumption(), getPrice());
+                COMPONENT_TYPE, getName(), getSocket(), getCoreCount(), getClockSpeed(), getPowerConsumption(),
+                String.format("%.2f",getPrice()));
     }
 
     //Serialisering:

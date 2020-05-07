@@ -4,7 +4,6 @@ import controllers.guiManager.Extract;
 import fileManager.Formatter;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -18,7 +17,6 @@ public class Cooler extends Component implements Serializable {
     private transient SimpleIntegerProperty maxRPM = new SimpleIntegerProperty();
     private transient SimpleDoubleProperty coreNoise = new SimpleDoubleProperty();
     private transient SimpleDoubleProperty maxNoise = new SimpleDoubleProperty();
-    private transient SimpleStringProperty rpm = new SimpleStringProperty();
     private transient SimpleDoubleProperty powerConsumption = new SimpleDoubleProperty();
 
     public Cooler(String[] csv){
@@ -62,6 +60,11 @@ public class Cooler extends Component implements Serializable {
         setCoreNoise(coreNoise);
         setMaxNoise(maxNoise);
         setPowerConsumption(powerConsumption);
+    }
+
+    @Override
+    public String getComponentType() {
+        return COMPONENT_TYPE;
     }
 
     @Override
@@ -177,10 +180,10 @@ public class Cooler extends Component implements Serializable {
         }
         else {
             setCoreRPM(Math.min(Extract.ints(rpm).get(0),
-                    Extract.ints(rpm).get(Extract.ints(rpm).size() - 1))
+                    Extract.ints(rpm).get(1))
             );
             setMaxRPM(Math.max(Extract.ints(rpm).get(0),
-                    Extract.ints(rpm).get(Extract.ints(rpm).size() - 1))
+                    Extract.ints(rpm).get(1))
             );
         }
 
@@ -219,7 +222,8 @@ public class Cooler extends Component implements Serializable {
                         "Noise: %s dBA\n" +
                         "Power consumption: %s W\n" +
                         "Price: %s NOK",
-                COMPONENT_TYPE, getName(), getDimension(), getRPM(), getNoise(), getPowerConsumption(), getPrice()
+                COMPONENT_TYPE, getName(), getDimension(), getRPM(), getNoise(), getPowerConsumption(),
+                String.format("%.2f",getPrice())
                 );
     }
 

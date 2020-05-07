@@ -15,7 +15,7 @@ public class PowerSupply extends Component implements Serializable {
     private transient static final SimpleStringProperty COMPONENT_TYPE = new SimpleStringProperty("Power Supply");
     private transient SimpleIntegerProperty PowerCapacity;
 
-    public static String getComponentType(){
+    public String getComponentType(){
         return COMPONENT_TYPE.get();
     }
 

@@ -19,13 +19,13 @@ public class Extract {
     }
 
     public static ArrayList<Integer> ints(String str){
-        Pattern pattern = Pattern.compile("[-+]?\\d+");
+        Pattern pattern = Pattern.compile("[-+]?\\d+((\\.)\\d{1,2})?");
         Matcher matcher = pattern.matcher(str);
 
         ArrayList<Integer> extractedNumbers = new ArrayList<>();
 
         while(matcher.find()){
-            extractedNumbers.add(Integer.parseInt(matcher.group()));
+            extractedNumbers.add((int) Double.parseDouble(matcher.group()));
         }
 
         return extractedNumbers;

@@ -29,7 +29,7 @@ public class Mouse extends Component implements Serializable {
         setWireless(wireless);
     }
 
-    public static String getComponentType() {
+    public String getComponentType() {
         return COMPONENT_TYPE.getValue();
     }
 

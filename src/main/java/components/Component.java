@@ -22,6 +22,8 @@ public abstract class Component implements Serializable {
         setPrice(price);
     }
 
+    public abstract String getComponentType();
+
     public String getName() {
         return getManufacturer() + " " + getModel();
     }
