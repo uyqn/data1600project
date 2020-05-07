@@ -15,7 +15,7 @@ public class Monitor extends Component{
         setRefreshRate(refreshRate);
     }
 
-    public static String getComponentType() {
+    public String getComponentType() {
         return COMPONENT_TYPE.getValue();
     }
 

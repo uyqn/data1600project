@@ -1,6 +1,6 @@
 package controllers.views;
 
-import components.Component;
+import components.CPU;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -15,7 +15,7 @@ import java.util.ResourceBundle;
 public class ComponentView implements Initializable {
 
     @FXML
-    private TableView<Component> componentView;
+    private TableView<CPU> componentView;
 
     @FXML
     private Label detailedView;
@@ -37,6 +37,7 @@ public class ComponentView implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        App.componentList.setTableView(componentView);
+        App.componentList.getList().addAll(App.fileManager.open());
+
     }
 }

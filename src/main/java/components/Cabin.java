@@ -37,6 +37,11 @@ public class Cabin extends Component {
     }
 
     @Override
+    public String getComponentType() {
+        return COMPONENT_TYPE.getValue();
+    }
+
+    @Override
     public String toCSV() {
         return null;
     }

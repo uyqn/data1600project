@@ -4,7 +4,6 @@ import controllers.guiManager.Extract;
 import fileManager.Formatter;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -17,7 +16,6 @@ public class Cooler extends Component {
     private transient SimpleIntegerProperty maxRPM = new SimpleIntegerProperty();
     private transient SimpleDoubleProperty coreNoise = new SimpleDoubleProperty();
     private transient SimpleDoubleProperty maxNoise = new SimpleDoubleProperty();
-    private transient SimpleStringProperty rpm = new SimpleStringProperty();
     private transient SimpleDoubleProperty powerConsumption = new SimpleDoubleProperty();
 
     public Cooler(String[] csv){
@@ -63,7 +61,8 @@ public class Cooler extends Component {
         setPowerConsumption(powerConsumption);
     }
 
-    public static String getComponentType() {
+    @Override
+    public String getComponentType() {
         return COMPONENT_TYPE;
     }
 
@@ -180,10 +179,10 @@ public class Cooler extends Component {
         }
         else {
             setCoreRPM(Math.min(Extract.ints(rpm).get(0),
-                    Extract.ints(rpm).get(Extract.ints(rpm).size() - 1))
+                    Extract.ints(rpm).get(1))
             );
             setMaxRPM(Math.max(Extract.ints(rpm).get(0),
-                    Extract.ints(rpm).get(Extract.ints(rpm).size() - 1))
+                    Extract.ints(rpm).get(1))
             );
         }
 

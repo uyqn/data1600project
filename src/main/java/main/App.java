@@ -1,5 +1,6 @@
 package main;
 
+import components.Component;
 import fileManager.FileManager;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -17,7 +18,7 @@ import java.io.IOException;
  */
 public class App extends Application {
     public static FileManager fileManager = new FileManager();
-    public static ComponentList componentList = new ComponentList();
+    public static ComponentList<Component> componentList = new ComponentList<>();
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -25,8 +26,6 @@ public class App extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/main/views/components.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setScene(scene);
-
-        componentList.getList().addAll(fileManager.open());
 
         stage.setOnCloseRequest(windowEvent -> Platform.exit());
 

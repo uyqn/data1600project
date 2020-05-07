@@ -9,7 +9,7 @@ public class PowerSupply extends Component {
     private transient static final SimpleStringProperty COMPONENT_TYPE = new SimpleStringProperty("Power Supply");
     private SimpleIntegerProperty PowerCapacity;
 
-    public static String getComponentType(){
+    public String getComponentType(){
         return COMPONENT_TYPE.get();
     }
 

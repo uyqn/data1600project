@@ -23,7 +23,7 @@ public class Motherboard extends Component {
         setMaxRamSize(MaxRamSize);
     }
 
-    public static String getComponentType() {
+    public String getComponentType() {
         return COMPONENT_TYPE.getValue();
     }
 

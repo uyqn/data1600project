@@ -61,7 +61,8 @@ public class CPU extends Component implements Serializable {
         setPowerConsumption(powerConsumption);
     }
 
-    public static String getComponentType() {
+    @Override
+    public String getComponentType() {
         return COMPONENT_TYPE;
     }
 

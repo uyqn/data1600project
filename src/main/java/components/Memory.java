@@ -25,7 +25,8 @@ public class Memory extends Component{
 
     }
 
-    public String getCOMPONENT_TYPE(){return COMPONENT_TYPE;}
+    @Override
+    public String getComponentType(){return COMPONENT_TYPE;}
 
     public int getRAM(){ return RAM.getValue();}
 
@@ -72,7 +73,7 @@ public class Memory extends Component{
 
     @Override
     public String toCSV(){
-        return Formatter.toCSV(getCOMPONENT_TYPE(),getManufacturer(),getModel(),getPrice(),getRAM(),getSpeedTech(), getSpeed());
+        return Formatter.toCSV(getComponentType(),getManufacturer(),getModel(),getPrice(),getRAM(),getSpeedTech(), getSpeed());
     }
 
     @Override
@@ -80,7 +81,7 @@ public class Memory extends Component{
         return String.format("%s: %s\n"+
                 "RAM: %s GB\n"+
                 "Speed: %sMHz %s\n"+
-                "Price: %s", getCOMPONENT_TYPE(), getName(), getRAM(),getSpeed(), getSpeedTech(), getPrice());
+                "Price: %s", getComponentType(), getName(), getRAM(),getSpeed(), getSpeedTech(), getPrice());
     }
 
 

@@ -23,8 +23,8 @@ public class Keyboard extends Component {
         this.Tactile.set(tactile);
     }
 
-    public static String getComponentType(){
-        return COMPONENT_TYPE.get();
+    public String getComponentType(){
+        return COMPONENT_TYPE.getValue();
     }
 
     @Override
