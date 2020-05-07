@@ -5,6 +5,19 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Extract {
+    public static ArrayList<String> strings(String str){
+        Pattern pattern = Pattern.compile("\\w+");
+        Matcher matcher = pattern.matcher(str);
+
+        ArrayList<String> extractedStrings = new ArrayList<>();
+
+        while(matcher.find()){
+            extractedStrings.add(matcher.group());
+        }
+
+        return extractedStrings;
+    }
+
     public static ArrayList<Double> doubles(String str){
         Pattern pattern = Pattern.compile("[-+]?\\.\\d+|[-+]?\\d+(\\.?\\d+)?");
         Matcher matcher = pattern.matcher(str);

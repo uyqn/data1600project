@@ -26,9 +26,9 @@ public class TestEnvironment extends Application {
 
         //------------------------------------
 
-        list1.addAll(cpu, cooler);
+        String test = "microTX";
 
-        System.out.println(list1);
+        System.out.println(test.toLowerCase().substring(0,test.toLowerCase().lastIndexOf("a")));
 
         Platform.exit(); //Ikke fjern denne!
     }

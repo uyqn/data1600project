@@ -1,7 +1,6 @@
 package components;
 
 import fileManager.Formatter;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
@@ -10,7 +9,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
-public class Motherboard extends Component implements Serializable {
+public class Motherboard extends Component implements Serializable, Connectable {
     private transient final static SimpleStringProperty COMPONENT_TYPE = new SimpleStringProperty("Motherboard");
 
     private transient SimpleIntegerProperty ProcessorSpaces = new SimpleIntegerProperty();
@@ -73,7 +72,7 @@ public class Motherboard extends Component implements Serializable {
     }
 
     public String getSocket() {
-        return socket.get();
+        return socket.getValue();
     }
 
 
@@ -140,5 +139,19 @@ public class Motherboard extends Component implements Serializable {
         setMaxRamSize(MaxRamSize);
         setBoostType(boostType);
         setSocket(socket);
+    }
+
+    @Override
+    public boolean connect(Connectable item) {
+        if(item.getClass() == CPU.class){
+            return ((CPU) item).getSocket().equals(getSocket());
+        }
+        else{
+            throw new IllegalArgumentException("Motherboards can only connect with the following components:\n" +
+                    "- CPU \n " +
+                    "- GraphicCards \n" +
+                    "- MemoryCards \n" +
+                    "- Cabins");
+        }
     }
 }

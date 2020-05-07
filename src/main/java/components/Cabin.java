@@ -1,17 +1,15 @@
 package components;
 
+import fileManager.Formatter;
 import javafx.beans.property.SimpleStringProperty;
 
-public class Cabin extends Component {
-    private transient static final SimpleStringProperty COMPONENT_TYPE = new SimpleStringProperty("Cabin");
+public class Cabin extends Component implements Connectable {
+    private transient static final String COMPONENT_TYPE = "Cabin";
     private transient SimpleStringProperty formFactor = new SimpleStringProperty();
-    private transient String[] formFactorList = {"ATX", "EATX", "flex ATX", "HPTX", "Micro ATX", "Mini ITX",
-            "Thin Mini ITX", "Mini DTX", "SSI CEB", "SSI EEB", "XL ATX"};
 
-    public Cabin(String manufacturer, String model, String maxFormFactor, double price) {
+    public Cabin(String manufacturer, String model, String formFactor, double price) {
         super(manufacturer, model, price);
-
-        setFormFactor(maxFormFactor);
+        setFormFactor(formFactor);
     }
 
     public String getFormFactor() {
@@ -19,30 +17,39 @@ public class Cabin extends Component {
     }
 
     public void setFormFactor(String formFactor) {
-        boolean validFormFactor = false;
-        int formFactorIndex = 0;
-
-        for(int i = 0 ; i < formFactorList.length ; i++){
-            if(formFactor.toLowerCase().equals(formFactorList[i].toLowerCase())){
-                validFormFactor = true;
-                formFactorIndex = i;
-                break;
-            }
+        if(!formFactor.matches("([A-Za-z]{4}\\s)?(" +
+                "([Ee][Xx][Tt][Ee][Nn][Dd][Ee][Dd]|[A-Za-z]{1,5})(\\s|-)?)?[A-Za-z]{2,4}")){
+            throw new IllegalArgumentException("The format for form factor is not recognizable.");
         }
-
-        if(!validFormFactor){
-            throw new IllegalArgumentException("Specified form factor is not available");
-        }
-        this.formFactor.set(formFactorList[formFactorIndex]);
+        this.formFactor.set(formFactor);
     }
 
     @Override
     public String getComponentType() {
-        return COMPONENT_TYPE.getValue();
+        return COMPONENT_TYPE;
     }
 
     @Override
     public String toCSV() {
-        return null;
+        return Formatter.toCSV(
+                getComponentType(),
+                getManufacturer(),
+                getModel(),
+                getFormFactor(),
+                getPrice()
+        );
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s: %s\n" +
+                        "Form factor: %s\n" +
+                        "Price: %s NOK",
+                COMPONENT_TYPE, getName(), formFactor, String.format("%.2f",getPrice()));
+    }
+
+    @Override
+    public boolean connect(Connectable item) {
+        return false;
     }
 }

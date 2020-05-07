@@ -11,7 +11,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
-public class CPU extends Component implements Serializable {
+public class CPU extends Component implements Serializable, Connectable {
     public static final transient String COMPONENT_TYPE = "CPU";
 
     private transient SimpleStringProperty socket = new SimpleStringProperty();
@@ -213,6 +213,8 @@ public class CPU extends Component implements Serializable {
                 String.format("%.2f",getPrice()));
     }
 
+
+
     //Serialisering:
     private void writeObject(ObjectOutputStream objectOutputStream) throws IOException {
         objectOutputStream.defaultWriteObject();
@@ -250,5 +252,13 @@ public class CPU extends Component implements Serializable {
         setCoreClock(coreClock);
         setBoostClock(boostClock);
         setPowerConsumption(powerConsumption);
+    }
+
+    @Override
+    public boolean connect(Connectable item) {
+        if(item.getClass() != Motherboard.class){
+            throw new IllegalArgumentException("CPU can only connect to a Motherboard");
+        }
+        return ((Motherboard) item).getSocket().equals(getSocket());
     }
 }

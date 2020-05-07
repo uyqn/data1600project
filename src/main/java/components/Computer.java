@@ -12,9 +12,6 @@ public class Computer {
     public SimpleDoubleProperty Price;
     ArrayList<Component> listOfComponents;
 
-    Motherboard mb;
-    Case c;
-
     public Computer(String name, double price){
         Name = new SimpleStringProperty(name);
         Price = new SimpleDoubleProperty(price);
