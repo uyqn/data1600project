@@ -18,7 +18,7 @@ public class SSD extends Storage{
 
     }
 
-    public static String getComponentType() {
+    public String getComponentType() {
         return COMPONENT_TYPE;
     }
 
