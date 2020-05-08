@@ -1,34 +1,84 @@
 package components;
 
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
+import listManager.ComponentList;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Computer {
+public class Computer extends ComponentList<Component> {
 
-    public SimpleStringProperty Name;
-    public SimpleDoubleProperty Price;
+    public SimpleStringProperty name;
+    public SimpleDoubleProperty price;
     ArrayList<Component> listOfComponents;
 
-    public Computer(String name, double price){
-        Name = new SimpleStringProperty(name);
-        Price = new SimpleDoubleProperty(price);
+    //Step 1: Pick CPU
+    public transient SimpleObjectProperty<CPU> cpu = new SimpleObjectProperty<>();
+
+    //Step 2: Pick GPU
+    public transient SimpleObjectProperty<GraphicCard> gpu = new SimpleObjectProperty<>();
+
+    //Step 3: Pick Motherboard
+    public transient SimpleObjectProperty<Motherboard> mb = new SimpleObjectProperty<>();
+
+    //Step 4: Select one or multiple of RAMs
+
+
+
+    public Computer(String name){
+        this.name = new SimpleStringProperty(name);
     }
 
     public Computer(String[] csv) {
-        //setContent(csv[0]));
         setName(csv[1]);
-        setPrice(Double.parseDouble(csv[2]));
+    }
+
+    public void setCpu(CPU cpu) {
+        if(this.mb.getValue() != null){
+            if(!this.mb.getValue().compatible(cpu)){
+                throw new IllegalArgumentException("Motherboard: " + this.mb.getValue().getName() +
+                        "\n is not compatible with \n" +
+                        "CPU: " + cpu.getName());
+            }
+        }
+        this.cpu.set(cpu);
+    }
+
+    public void setGpu(GraphicCard gpu){
+        if(this.mb.getValue() != null){
+            if(!this.mb.getValue().compatible(gpu)){
+                throw new IllegalArgumentException("Motherboard: " + this.mb.getValue().getName() +
+                        "\n is not compatible with \n" +
+                        "GPU: " + gpu.getName());
+            }
+        }
+        this.gpu.set(gpu);
+    }
+
+    public void setMotherboard(Motherboard motherboard){
+        if(this.cpu.getValue() != null){
+            if(!this.cpu.getValue().compatible(motherboard)){
+                throw new IllegalArgumentException("Motherboard: " + this.mb.getValue().getName() +
+                        "\n is not compatible with \n" +
+                        "CPU: " + cpu.getName());
+            }
+        }
+
+        if(this.gpu.getValue() != null){
+            if(!this.gpu.getValue().compatible(motherboard)){
+                throw new IllegalArgumentException("Motherboard: " + this.mb.getValue().getName() +
+                        "\n is not compatible with \n" +
+                        "GPU: " + gpu.getName());
+            }
+        }
+
+        this.mb.setValue(motherboard);
     }
 
     public Double getPrice() {
-        return Price.get();
-    }
-
-    public void setPrice(Double price) {
-        this.Price.set(price);
+        return this.price.getValue();
     }
 
     public ArrayList<Component> getContent() {
@@ -40,12 +90,12 @@ public class Computer {
     }
 
     public String getName() {
-        return Name.get();
+        return this.name.getValue();
     }
 
 
     public void setName(String name) {
-        this.Name.set(name);
+        this.name.set(name);
     }
 
     public String toCSV() {

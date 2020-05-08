@@ -26,10 +26,6 @@ public class TestEnvironment extends Application {
 
         //------------------------------------
 
-        String test = "microTX";
-
-        System.out.println(test.toLowerCase().substring(0,test.toLowerCase().lastIndexOf("a")));
-
         Platform.exit(); //Ikke fjern denne!
     }
 }

@@ -16,7 +16,6 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.net.URL;
-import java.util.Random;
 import java.util.ResourceBundle;
 
 public class ComponentController implements Initializable {

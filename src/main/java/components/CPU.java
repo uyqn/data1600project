@@ -11,7 +11,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
-public class CPU extends Component implements Serializable, Connectable {
+public class CPU extends Component implements Serializable, Compatible {
     public static final transient String COMPONENT_TYPE = "CPU";
 
     private transient SimpleStringProperty socket = new SimpleStringProperty();
@@ -74,6 +74,7 @@ public class CPU extends Component implements Serializable, Connectable {
         if(!socket.matches("[a-z]?[A-Z]{1,3}(\\s)?([1-9][+]|[1-9][0-9]{0,3}([-][1-9])?)")){
             throw new IllegalArgumentException("Format of socket type is invalid");
         }
+
         this.socket.set(socket);
     }
 
@@ -255,10 +256,10 @@ public class CPU extends Component implements Serializable, Connectable {
     }
 
     @Override
-    public boolean connect(Connectable item) {
-        if(item.getClass() != Motherboard.class){
+    public boolean compatible(Compatible motherboard) {
+        if(motherboard.getClass() != Motherboard.class){
             throw new IllegalArgumentException("CPU can only connect to a Motherboard");
         }
-        return ((Motherboard) item).getSocket().equals(getSocket());
+        return ((Motherboard) motherboard).getSocket().equals(getSocket());
     }
 }

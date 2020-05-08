@@ -13,25 +13,28 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
-public class GraphicCard extends Component implements Serializable {
+public class GraphicCard extends Component implements Serializable, Compatible {
     private static final transient String COMPONENT_TYPE = "Graphic Card";
 
+    private transient SimpleStringProperty bussType = new SimpleStringProperty();
     private transient SimpleIntegerProperty memory = new SimpleIntegerProperty();
     private transient SimpleStringProperty memoryType=new SimpleStringProperty();
     private transient SimpleDoubleProperty baseClock = new SimpleDoubleProperty();
     private transient SimpleDoubleProperty boostClock = new SimpleDoubleProperty();
 
+    private transient double bussVersion;
+    private transient int bussSlots;
 
-    public GraphicCard(String manufacturer, String model, double price, int memory, String memoryType, double baseClock, double boostClock){
 
+    public GraphicCard(String manufacturer, String model, String bussType, int memory, String memoryType,
+                       double baseClock, double boostClock, double price){
         super(manufacturer,model,price);
 
+        setBussType(bussType);
         setMemory(memory);
         setMemoryType(memoryType);
         setBaseClock(baseClock);
         setBoostClock(boostClock);
-
-
     }
 
     public GraphicCard(String manufacturer, String model, double price, int memory, String memoryType, String clockSpeed){
@@ -61,6 +64,56 @@ public class GraphicCard extends Component implements Serializable {
         }
 
         this.baseClock.set(baseClock);
+    }
+
+    public String getBussType(){
+        return bussType.getValue();
+    }
+
+    public void setBussType(String bussType) {
+        if(!bussType.matches(
+                "[Pp][Cc][Ii](\\s|-)?([Ee]|" +
+                        "[Ee][Xx][Pp][Rr][Ee][Ss][Ss])" +
+                        "(\\s)?\\d(\\.\\d)(\\s)?[Xx ](\\s?)\\d{1,2}")){
+            throw new IllegalArgumentException("Busstype not recognized");
+        }
+
+        setBussVersion(Extract.doubles(bussType).get(0));
+        setBussSlots(Extract.ints(bussType).get(1));
+
+        this.bussType.set("PCIe " + getBussVersion() + "x" + getBussSlots());
+    }
+
+    public int getBussSlots() {
+        return bussSlots;
+    }
+
+    public double getBussVersion() {
+        return bussVersion;
+    }
+
+    private void setBussSlots(Integer integer) {
+        boolean valid = false;
+
+        for(int i = 1 ; i < 64 ; i *= 2){
+            if (integer == i) {
+                valid = true;
+                break;
+            }
+        }
+
+        if(!valid){
+            throw new IllegalArgumentException("Buss slots must be between 1 and 32 and a multiple of 2");
+        }
+
+        this.bussSlots = integer;
+    }
+
+    private void setBussVersion(Double aDouble) {
+        if(aDouble < 1.0 || aDouble > 6.0){
+            throw new IllegalArgumentException("Buss version must be between 1.0 and 6.0");
+        }
+        this.bussVersion = aDouble;
     }
 
     public double getBoostClock() {
@@ -93,10 +146,9 @@ public class GraphicCard extends Component implements Serializable {
     public String getMemoryType(){ return memoryType.getValue();}
 
     public void setMemoryType(String memoryType){
-
-        /*if(!memoryType.matches("[A-Z]")){
-            throw new IllegalArgumentException("Memory type format is invalid");
-        }*/
+        if(memoryType.isEmpty() || memoryType.isBlank()){
+            throw new IllegalArgumentException("Memory type cannot be empty");
+        }
         this.memoryType.set(memoryType);
     }
 
@@ -148,23 +200,26 @@ public class GraphicCard extends Component implements Serializable {
                 getCOMPONENT_TYPE(),
                 getManufacturer(),
                 getModel(),
+                getBussType(),
                 getMemory(),
                 getMemoryType(),
-                getClockSpeed()
+                getClockSpeed(),
+                getPrice()
         );
     }
 
     @Override
     public String toString(){
-        return String.format("%s: %s\n"+
-                "Memory: %s GB %s\n"+
-                "Clock Speed: %s GHz\n"
-                +"Price: %s NOK\n",
-                getCOMPONENT_TYPE(), getName(), getMemory(), getMemoryType(), getClockSpeed(), getPrice());
+        return String.format("%s: %s\n" +
+                "Busstype: %s \n" +
+                "Memory: %s GB %s\n" +
+                "Clock Speed: %s GHz\n" +
+                "Price: %s NOK\n",
+                getCOMPONENT_TYPE(), getName(), getBussType(), getMemory(), getMemoryType(), getClockSpeed(),
+                getPrice());
     }
 
     //Serialisering
-
     private void writeObject(ObjectOutputStream objectOutputStream) throws IOException{
 
         objectOutputStream.defaultWriteObject();
@@ -203,6 +258,15 @@ public class GraphicCard extends Component implements Serializable {
         setBaseClock(baseClock);
         setBoostClock(boostClock);
 
+    }
+
+    @Override
+    public boolean compatible(Compatible motherboard) {
+        if(motherboard.getClass() != Motherboard.class){
+            throw new IllegalArgumentException("This component can only connect to a Motherboard");
+        }
+
+        return ((Motherboard) motherboard).getBussType().equals(getBussType());
     }
 }
 

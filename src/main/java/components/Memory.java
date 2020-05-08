@@ -1,5 +1,6 @@
 package components;
 
+import controllers.guiManager.Extract;
 import fileManager.Formatter;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -9,25 +10,24 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
-public class Memory extends Component implements Serializable {
+public class Memory extends Component implements Serializable, Compatible {
 
     private static final String COMPONENT_TYPE = "Memory";
 
     private transient SimpleIntegerProperty RAM=new SimpleIntegerProperty();
-    private transient SimpleStringProperty speedTech=new SimpleStringProperty();
+    private transient SimpleStringProperty memoryTech =new SimpleStringProperty();
     private transient SimpleIntegerProperty speed=new SimpleIntegerProperty();
 
+    private transient int techNumber;
 
-    public Memory(String manufacturer, String model, double price, int RAM, String speedTech, int speed){
+
+    public Memory(String manufacturer, String model, double price, int RAM, String memoryTech, int speed){
 
         super(manufacturer, model, price);
 
         setRAM(RAM);
-        setSpeedTech(speedTech);
+        setMemoryTech(memoryTech);
         setSpeed(speed);
-
-
-
     }
 
     @Override
@@ -52,18 +52,39 @@ public class Memory extends Component implements Serializable {
         this.RAM.set(RAM);
     }
 
-    public String getSpeedTech(){ return speedTech.getValue();}
+    public String getMemoryTech(){ return memoryTech.getValue();}
 
-    public void setSpeedTech(String speedTech){
-        if(speedTech.matches("/")){
-            throw new IllegalArgumentException("Speed technology must be valid. \n(for example: DDR4-2400\n" +
-                    "DDR4-2666\n" +
-                    "DDR4-3000\n" +
-                    "DDR4-3200)"
+    public void setMemoryTech(String memoryTech){
+        if(memoryTech.matches("[/\\s-]")){
+            throw new IllegalArgumentException("Speed technology must be valid. \n(for example: DDR\n" +
+                    "DDR2\n" +
+                    "DDR3\n" +
+                    "DDR4)"
                     );
         }
-        this.speedTech.set(speedTech);
 
+        if(Extract.ints(memoryTech).size() == 0){
+            setTechNumber(1);
+        }
+        else if(Extract.ints(memoryTech).get(0) == 1){
+            setTechNumber(1);
+        }
+        else {
+            setTechNumber(Extract.ints(memoryTech).get(0));
+        }
+
+        this.memoryTech.set("DDR"+ getTechNumber());
+    }
+
+    public int getTechNumber() {
+        return techNumber;
+    }
+
+    private void setTechNumber(Integer integer) {
+        if(integer < 1 || integer > 4){
+            throw new IllegalArgumentException("Memory technology number must either be empty or between 1 and 4");
+        }
+        this.techNumber = integer;
     }
 
     public int getSpeed(){ return speed.getValue();}
@@ -78,7 +99,7 @@ public class Memory extends Component implements Serializable {
 
     @Override
     public String toCSV(){
-        return Formatter.toCSV(getComponentType(),getManufacturer(),getModel(),getPrice(),getRAM(),getSpeedTech(), getSpeed());
+        return Formatter.toCSV(getComponentType(),getManufacturer(),getModel(),getPrice(),getRAM(), getMemoryTech(), getSpeed());
     }
 
     @Override
@@ -86,7 +107,7 @@ public class Memory extends Component implements Serializable {
         return String.format("%s: %s\n"+
                 "RAM: %s GB\n"+
                 "Speed: %sMHz %s\n"+
-                "Price: %s", getComponentType(), getName(), getRAM(),getSpeed(), getSpeedTech(), getPrice());
+                "Price: %s", getComponentType(), getName(), getRAM(),getSpeed(), getMemoryTech(), getPrice());
     }
 
     //Serialisering:
@@ -99,7 +120,7 @@ public class Memory extends Component implements Serializable {
         objectOutputStream.writeDouble(getPrice());
 
         objectOutputStream.writeInt(getRAM());
-        objectOutputStream.writeUTF(getSpeedTech());
+        objectOutputStream.writeUTF(getMemoryTech());
         objectOutputStream.writeInt(getSpeed());
 
     }
@@ -113,14 +134,20 @@ public class Memory extends Component implements Serializable {
         int speed=objectInputStream.readInt();
 
         this.RAM = new SimpleIntegerProperty();
-        this.speedTech = new SimpleStringProperty();
+        this.memoryTech = new SimpleStringProperty();
         this.speed=new SimpleIntegerProperty();
 
         setRAM(RAM);
-        setSpeedTech(speedTech);
+        setMemoryTech(speedTech);
         setSpeed(speed);
-
-
     }
 
+    @Override
+    public boolean compatible(Compatible motherboard) {
+        if(motherboard.getClass() != Motherboard.class) {
+            throw new IllegalArgumentException("Memories can only connect to motherboards");
+        }
+
+        return ((Motherboard) motherboard).getTechNumber() == getTechNumber();
+    }
 }

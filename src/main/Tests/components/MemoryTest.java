@@ -56,24 +56,24 @@ class MemoryTest {
 
     @Test
     void setSpeedTech(){
-        test.setSpeedTech("DDR4");
-        test.setSpeedTech("DDR");
-        test.setSpeedTech("");
-        test.setSpeedTech("");
-        test.setSpeedTech("");
+        test.setMemoryTech("DDR4");
+        test.setMemoryTech("DDR");
+        test.setMemoryTech("");
+        test.setMemoryTech("");
+        test.setMemoryTech("");
     }
 
 
     @Test
     void setSpeed(){
         test.setSpeed(2000);
-        test.setSpeed(9999);
         test.setSpeed(3455);
 
 
-        assertThrows(IllegalArgumentException.class, ()-> test.setSpeed(1));
-        assertThrows(IllegalArgumentException.class, ()-> test.setSpeed(-23));
-        assertThrows(IllegalArgumentException.class, ()-> test.setSpeed(100023));
+        assertThrows(IllegalArgumentException.class, () -> test.setSpeed(1));
+        assertThrows(IllegalArgumentException.class, () -> test.setSpeed(-23));
+        assertThrows(IllegalArgumentException.class, () -> test.setSpeed(100023));
+        assertThrows(IllegalArgumentException.class, () -> test.setSpeed(9999));
 
 
     }

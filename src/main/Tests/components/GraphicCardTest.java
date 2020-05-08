@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 class GraphicCardTest{
-    GraphicCard test = new GraphicCard("Manufacturer","Model", 0, 1, "DDR", 1.1, 2);
+    GraphicCard test = new GraphicCard("Manufacturer","Model", "PCIe 3.0x16",0, "DDR", 1.1, 2.2,2);
 
     @Test
     void setManufacturer(){
