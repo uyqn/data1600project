@@ -21,6 +21,17 @@ public class Monitor extends Component implements Serializable {
         setRefreshRate(Integer.parseInt(csv[2]));
     }
 
+    public Monitor(String manufacturer,
+                   String model,
+                   int refreshRate,
+                   double price){
+
+        super(manufacturer, model, price);
+
+        setPrice(price);
+
+    }
+
     public String getComponentType() {
         return COMPONENT_TYPE.getValue();
     }

@@ -4,18 +4,25 @@ import components.CPU;
 import components.Cooler;
 import components.GraphicCard;
 import components.Memory;
+import components.Monitor;
+import components.Mouse;
+import components.Keyboard;
 import controllers.guiManager.Limit;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
+
 import java.net.URL;
+import java.security.Key;
 import java.util.Random;
 import java.util.ResourceBundle;
 
@@ -25,11 +32,20 @@ public class ComponentController implements Initializable {
     private GridPane superHome;
 
     @FXML
-    private GridPane addCpuGui, addCoolerGui, addGraphicCardGui, addMemoryGui, addStorageGui;
+    private GridPane addCpuGui, addCoolerGui, addGraphicCardGui, addMemoryGui, addStorageGui, addMonitorGui, addMouseGui, addKeyboardGui;
 
 
     @FXML
     private TextField txtRpm;
+
+    @FXML
+    private RadioButton isTactile;
+
+    @FXML
+    private ToggleGroup Tactile;
+
+    @FXML
+    private RadioButton notTactile;
 
 
     //Increase and decrease cores of Cpu buttons
@@ -277,15 +293,92 @@ public class ComponentController implements Initializable {
     @FXML
     void addMonitor(ActionEvent event) {
 
+        try {
+            String manufacturer = getString(addMonitorGui, "manufacturer");
+            String model = getString(addMonitorGui, "model");
+            int refreshRate = getInt(addMonitorGui, "refreshRate");
+            double price = getDouble(addMonitorGui, "price");
+
+            Monitor monitor = new Monitor(manufacturer, model, refreshRate, price);
+
+            Alert info = new Alert(Alert.AlertType.INFORMATION);
+            info.setTitle("Monitor was successfully added");
+            info.setHeaderText("The following monitor was added:");
+            info.setContentText(monitor.toString());
+            info.showAndWait();
+
+            resetGui(addMonitorGui,
+                    "manufacturer",
+                    "model",
+                    "refreshRate",
+                    "price");
+
+
+        } catch (IllegalArgumentException e){
+            Alert error = new Alert(Alert.AlertType.ERROR);
+            error.setTitle(e.getClass().toString());
+            error.setContentText(e.getMessage());
+            error.showAndWait();
+        }
+
     }
 
     @FXML
     void addMouse(ActionEvent event) {
 
+        try {
+            String manufacturer=getString(addMouseGui, "manufacturer");
+            String model = getString(addMouseGui, "model");
+
+
+        }catch (IllegalArgumentException e){
+
+            Alert error=new Alert(Alert.AlertType.ERROR);
+            error.setTitle(e.getClass().toString());
+            error.setContentText(e.getMessage());
+            error.showAndWait();
+        }
+
+
     }
 
     @FXML
     void addPowerSupply(ActionEvent event) {
+
+    }
+
+    @FXML
+    void addKeyboard(ActionEvent event){
+
+        try {
+
+            String manufacturer = getString(addKeyboardGui, "manufacturer");
+            String model = getString(addKeyboardGui, "model");
+
+            boolean tactile;
+            tactile= isTactile.isSelected();
+
+            double price = getDouble(addKeyboardGui, "price");
+
+            Keyboard keyboard = new Keyboard(manufacturer, model, tactile, price);
+
+            Alert info= new Alert(Alert.AlertType.INFORMATION);
+            info.setTitle("Keyboard was successfully added");
+            info.setHeaderText("The following component was added:");
+            info.setContentText(keyboard.toString());
+            info.showAndWait();
+
+            resetGui(addKeyboardGui,"manufacturer", "model", "double");
+
+
+
+        }catch (IllegalArgumentException e){
+
+            Alert error=new Alert(Alert.AlertType.ERROR);
+            error.setTitle(e.getClass().toString());
+            error.setContentText(e.getMessage());
+            error.showAndWait();
+        }
 
     }
 
@@ -340,3 +433,4 @@ public class ComponentController implements Initializable {
         Limit.text2double(addMemoryGui, "price");
     }
 }
+

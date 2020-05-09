@@ -429,8 +429,12 @@
                         <Label alignment="BOTTOM_LEFT" text="Price: " textAlignment="RIGHT" GridPane.rowIndex="3" />
                         <Label alignment="BOTTOM_LEFT" text="Manufacturer: " textAlignment="RIGHT" />
                         <Button mnemonicParsing="false" onAction="#addPowerSupply" text="Add Power Supply" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                        <CheckBox mnemonicParsing="false" text="Yes" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <CheckBox mnemonicParsing="false" text="No" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                        <RadioButton fx:id="isTactile" mnemonicParsing="false" text="Yes" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="Tactile" />
+                           </toggleGroup>
+                        </RadioButton>
+                        <RadioButton fx:id="notTactile" mnemonicParsing="false" text="No" toggleGroup="$Tactile" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                      </children>
                   </GridPane>
                </content>

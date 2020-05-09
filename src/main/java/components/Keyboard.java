@@ -22,6 +22,16 @@ public class Keyboard extends Component implements Serializable {
         setTactile(Boolean.parseBoolean(csv[3]));
     }
 
+    public Keyboard(String manufacturer,
+                    String model,
+                    boolean tactile,
+                    double price){
+        super(manufacturer, model, price);
+
+        setTactile(tactile);
+
+    }
+
     public boolean isTactile() {
         return Tactile.get();
     }
@@ -34,6 +44,11 @@ public class Keyboard extends Component implements Serializable {
         return COMPONENT_TYPE.getValue();
     }
 
+    @Override
+    public String toString(){
+        return String.format("%s: %s\n"+
+                "Tactile: %s", getComponentType(),getName(), isTactile());
+    }
     @Override
     public String toCSV() {
         return Formatter.toCSV(getComponentType(),
@@ -60,7 +75,7 @@ public class Keyboard extends Component implements Serializable {
         String model = objectInputStream.readUTF();
         double price = objectInputStream.readDouble();
 
-        Boolean Tactile = objectInputStream.readBoolean();
+        boolean Tactile = objectInputStream.readBoolean();
 
         this.Tactile = new SimpleBooleanProperty();
 
