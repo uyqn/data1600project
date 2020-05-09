@@ -16,6 +16,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.net.URL;
+import java.util.Random;
 import java.util.ResourceBundle;
 
 public class ComponentController implements Initializable {
@@ -24,8 +25,14 @@ public class ComponentController implements Initializable {
     private GridPane superHome;
 
     @FXML
-    private GridPane addCpuGui, addCoolerGui, addGraphicCardGui, addMemoryGui;
+    private GridPane addCpuGui, addCoolerGui, addGraphicCardGui, addMemoryGui, addStorageGui;
 
+
+    @FXML
+    private TextField txtRpm;
+
+
+    //Increase and decrease cores of Cpu buttons
     @FXML
     void increaseCore(ActionEvent event){
         int[] validCoreCount = {1, 2, 3, 4, 6, 8, 10, 12, 14, 16,
@@ -63,6 +70,7 @@ public class ComponentController implements Initializable {
         }
     }
 
+    //Add Components
     @FXML
     void addCPU(ActionEvent event) {
         try {
@@ -217,6 +225,72 @@ public class ComponentController implements Initializable {
     }
 
 
+    @FXML
+    void ssdBtn(ActionEvent event){
+        txtRpm.setDisable(true);
+    }
+    @FXML
+    void hddBtn(ActionEvent event){
+        txtRpm.setDisable(false);
+    }
+
+    @FXML
+    void addStorage(ActionEvent event){
+
+        if (txtRpm.isDisabled()){
+            try {
+
+                String manufacturer=getString(addStorageGui, "manufacturer");
+                String model = getString(addStorageGui, "model");
+                double capacity = getDouble(addStorageGui, "capacity");
+                double price= getDouble(addStorageGui, "price");
+
+
+
+            }catch (IllegalArgumentException e){
+                Alert error = new Alert(Alert.AlertType.ERROR);
+                error.setTitle(e.getClass().toString());
+                error.setContentText(e.getMessage());
+                error.showAndWait();
+            }
+        }else {
+            try {
+
+                String manufacturer=getString(addStorageGui, "manufacturer");
+                String model = getString(addStorageGui, "model");
+                double capacity = getDouble(addStorageGui, "capacity");
+                int rpm= getInt(addStorageGui, "rpm");
+                double price= getDouble(addStorageGui, "price");
+
+            }catch (IllegalArgumentException e){
+                Alert error = new Alert(Alert.AlertType.ERROR);
+                error.setTitle(e.getClass().toString());
+                error.setContentText(e.getMessage());
+                error.showAndWait();
+            }
+        }
+
+    }
+
+
+
+    @FXML
+    void addMonitor(ActionEvent event) {
+
+    }
+
+    @FXML
+    void addMouse(ActionEvent event) {
+
+    }
+
+    @FXML
+    void addPowerSupply(ActionEvent event) {
+
+    }
+
+
+
     public void setSuperHome(GridPane superHome) {
         this.superHome = superHome;
     }
@@ -258,5 +332,11 @@ public class ComponentController implements Initializable {
 
         Limit.text2int(addCoolerGui, "baseRpm", "maxRpm");
         Limit.text2double(addCoolerGui, "width", "depth", "baseNoise", "maxNoise", "height", "power", "price");
+
+        Limit.text2int(addGraphicCardGui, "memory");
+        Limit.text2double(addGraphicCardGui, "price");
+
+        Limit.text2int(addMemoryGui, "RAM", "speed");
+        Limit.text2double(addMemoryGui, "price");
     }
 }
