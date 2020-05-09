@@ -173,12 +173,14 @@ public class ComponentController implements Initializable {
         try{
             String manufacturer = getString(addGraphicCardGui, "manufacturer");
             String model=getString(addGraphicCardGui, "model");
+            String bussType = getString(addGraphicCardGui, "bussType");
             int memory=getInt(addGraphicCardGui,"memory");
             String memoryType=getString(addGraphicCardGui, "memoryType");
             String clockSpeed=getString(addGraphicCardGui,"baseClock") + "/" + getString(addGraphicCardGui, "boostClock");
             double price=getDouble(addGraphicCardGui, "price");
 
-            GraphicCard graphicCard=new GraphicCard(manufacturer, model, price, memory, memoryType, clockSpeed);
+
+            GraphicCard graphicCard=new GraphicCard(manufacturer, model, bussType, memory, memoryType, clockSpeed, price);
 
             Alert info=new Alert(Alert.AlertType.INFORMATION);
             info.setTitle("Graphic card successfully added");

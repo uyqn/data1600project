@@ -25,6 +25,18 @@ public class GraphicCard extends Component implements Serializable, Compatible {
     private transient double bussVersion;
     private transient int bussSlots;
 
+    public GraphicCard(String[] csv //String manufacturer, String model, String bussType,
+                       // int memory,  String memoryType, String clockSpeed, double price)
+    ){
+        super(csv[1], csv[2], Double.parseDouble(csv[7]));
+
+        setBussType(csv[3]);
+        setMemory(Integer.parseInt(csv[4]));
+        setMemoryType(csv[5]);
+        setClockSpeed(csv[6]);
+
+    }
+
 
     public GraphicCard(String manufacturer, String model, String bussType, int memory, String memoryType,
                        double baseClock, double boostClock, double price){
@@ -37,11 +49,12 @@ public class GraphicCard extends Component implements Serializable, Compatible {
         setBoostClock(boostClock);
     }
 
-    public GraphicCard(String manufacturer, String model, double price, int memory, String memoryType, String clockSpeed){
+    public GraphicCard(String manufacturer, String model, String bussType, int memory,  String memoryType, String clockSpeed, double price){
 
 
         super(manufacturer,model,price);
 
+        setBussType(bussType);
         setMemory(memory);
         setMemoryType(memoryType);
         setClockSpeed(clockSpeed);

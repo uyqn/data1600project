@@ -20,6 +20,14 @@ public class Memory extends Component implements Serializable, Compatible {
 
     private transient int techNumber;
 
+    public Memory(String[] csv){
+        super(csv[1], csv[2], Double.parseDouble(csv[3]));
+
+        setRAM(Integer.parseInt(csv[4]));
+        setMemoryTech(csv[5]);
+        setSpeed(Integer.parseInt(csv[6]));
+    }
+
 
     public Memory(String manufacturer, String model, double price, int RAM, String memoryTech, int speed){
 

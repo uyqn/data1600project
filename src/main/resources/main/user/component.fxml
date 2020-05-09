@@ -97,114 +97,115 @@
                 </GridPane>
             </TitledPane>
           <TitledPane animated="false" text="Motherboard" />
-          <TitledPane animated="false" text="Graphics Card">
-               <content>
-                  <GridPane fx:id="addGraphicCardGui">
-                     <columnConstraints>
-                        <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                     </columnConstraints>
-                     <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                     </rowConstraints>
-                     <children>
-                        <Label text="Manufacturer: " />
-                        <Label text="Model: " GridPane.rowIndex="1" />
-                        <Label text="Memory:" GridPane.rowIndex="2" />
-                        <Label text="Clockspeed: " GridPane.rowIndex="4" />
-                        <Label text="Price: " GridPane.rowIndex="5" />
-                        <TextField id="manufacturer" promptText="Enter manufacturer" GridPane.columnIndex="1" />
-                        <TextField id="model" promptText="Enter model" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <TextField id="memory" promptText="Enter memory" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <GridPane GridPane.columnIndex="1" GridPane.rowIndex="4">
-                           <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                           </columnConstraints>
-                           <rowConstraints>
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                           </rowConstraints>
-                           <children>
-                              <Label text="/" GridPane.columnIndex="1">
-                                 <font>
-                                    <Font size="20.0" />
-                                 </font>
-                              </Label>
-                              <TextField id="baseClock" promptText="Base speed" />
-                              <TextField id="boostClock" promptText="Boost speed" GridPane.columnIndex="2" />
-                           </children>
-                        </GridPane>
-                        <Label text=" GHz" GridPane.columnIndex="2" GridPane.rowIndex="4">
-                           <GridPane.margin>
-                              <Insets />
-                           </GridPane.margin>
+            <TitledPane animated="false" text="Graphics Card">
+                <GridPane fx:id="addGraphicCardGui">
+                    <columnConstraints>
+                        <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                    </rowConstraints>
+                    <Label text="Manufacturer: "/>
+                    <Label text="Model: " GridPane.rowIndex="1"/>
+                    <Label text="Memory:" GridPane.rowIndex="3"/>
+                    <Label text="Clockspeed: " GridPane.rowIndex="5"/>
+                    <Label text="Price: " GridPane.rowIndex="6"/>
+                    <TextField id="manufacturer" promptText="Enter manufacturer" GridPane.columnIndex="1"/>
+                    <TextField id="model" promptText="Enter model" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                    <TextField id="memory" promptText="Enter memory" GridPane.columnIndex="1"
+                               GridPane.rowIndex="3"/>
+                    <GridPane GridPane.columnIndex="1" GridPane.rowIndex="5">
+                        <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0"/>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                        </columnConstraints>
+                        <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        </rowConstraints>
+                        <Label text="/" GridPane.columnIndex="1">
+                            <font>
+                                <Font size="20.0"/>
+                            </font>
                         </Label>
-                        <TextField id="price" promptText="Enter price of component" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                        <Label text=" NOK" GridPane.columnIndex="2" GridPane.rowIndex="5" />
-                        <Button mnemonicParsing="false" onAction="#addGraphicCard" text="Add Graphic Card" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                        <Label text="Memory type: " GridPane.rowIndex="3" />
-                        <TextField id="memoryType" promptText="Enter memory type" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                     </children>
-                  </GridPane>
-               </content></TitledPane>
+                        <TextField id="baseClock" promptText="Base speed"/>
+                        <TextField id="boostClock" promptText="Boost speed" GridPane.columnIndex="2"/>
+                    </GridPane>
+                    <Label text=" GHz" GridPane.columnIndex="2" GridPane.rowIndex="5">
+                        <GridPane.margin>
+                            <Insets/>
+                        </GridPane.margin>
+                    </Label>
+                    <TextField id="price" promptText="Enter price of component" GridPane.columnIndex="1"
+                               GridPane.rowIndex="6"/>
+                    <Label text=" NOK" GridPane.columnIndex="2" GridPane.rowIndex="6"/>
+                    <Button mnemonicParsing="false" onAction="#addGraphicCard" text="Add Graphic Card"
+                            GridPane.columnIndex="1" GridPane.rowIndex="7"/>
+                    <Label text="Memory type: " GridPane.rowIndex="4"/>
+                    <TextField id="memoryType" promptText="Enter memory type" GridPane.columnIndex="1"
+                               GridPane.rowIndex="4"/>
+                    <Label text="Buss type:" GridPane.rowIndex="2"/>
+                    <TextField id="BussType" promptText="Enter bus type" GridPane.columnIndex="1"
+                               GridPane.rowIndex="2"/>
+                </GridPane>
+            </TitledPane>
             <TitledPane animated="false" text="Storage">
-               <content>
-                  <GridPane fx:id="addStorage">
-                     <columnConstraints>
-                        <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                     </columnConstraints>
-                     <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                     </rowConstraints>
-                     <children>
-                        <Label text="Manufacturer: " />
-                        <Label text="Model: " GridPane.rowIndex="1" />
-                        <TextField id="manufacturer" promptText="Enter manufacturer" GridPane.columnIndex="1" />
-                        <TextField id="model" promptText="Enter model" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <Button mnemonicParsing="false" onAction="#addStorage" text="Add Storage" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                        <Label text="Choose storage type: " GridPane.rowIndex="2" />
-                        <GridPane GridPane.columnIndex="1" GridPane.rowIndex="2">
-                          <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                          </columnConstraints>
-                          <rowConstraints>
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                          </rowConstraints>
-                           <children>
-                              <RadioButton mnemonicParsing="false" onAction="#hddBtn" selected="true" text="Harddrive">
-                                 <toggleGroup>
-                                    <ToggleGroup fx:id="Storages" />
-                                 </toggleGroup>
-                              </RadioButton>
-                              <RadioButton mnemonicParsing="false" onAction="#ssdBtn" text="SSD" toggleGroup="$Storages" GridPane.columnIndex="1" />
-                           </children>
-                        </GridPane>
-                        <Label text="Capacity:" GridPane.rowIndex="3" />
-                        <TextField id="capacity" promptText="Enter capacity" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                        <Label text="TB" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                        <Label text="RPM" GridPane.rowIndex="4" />
-                        <TextField id="rpm" fx:id="txtRpm" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                     </children>
-                  </GridPane>
-               </content></TitledPane>
+                <GridPane fx:id="addStorage">
+                    <columnConstraints>
+                        <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                    </rowConstraints>
+                    <Label text="Manufacturer: "/>
+                    <Label text="Model: " GridPane.rowIndex="1"/>
+                    <TextField id="manufacturer" promptText="Enter manufacturer" GridPane.columnIndex="1"/>
+                    <TextField id="model" promptText="Enter model" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                    <Button mnemonicParsing="false" onAction="#addStorage" text="Add Storage"
+                            GridPane.columnIndex="1" GridPane.rowIndex="7"/>
+                    <Label text="Choose storage type: " GridPane.rowIndex="2"/>
+                    <GridPane GridPane.columnIndex="1" GridPane.rowIndex="2">
+                        <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                        </columnConstraints>
+                        <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        </rowConstraints>
+                        <RadioButton mnemonicParsing="false" onAction="#hddBtn" selected="true" text="Harddrive">
+                            <toggleGroup>
+                                <ToggleGroup fx:id="Storages"/>
+                            </toggleGroup>
+                        </RadioButton>
+                        <RadioButton mnemonicParsing="false" onAction="#ssdBtn" text="SSD" toggleGroup="$Storages"
+                                     GridPane.columnIndex="1"/>
+                    </GridPane>
+                    <Label text="Capacity:" GridPane.rowIndex="3"/>
+                    <TextField id="capacity" promptText="Enter capacity" GridPane.columnIndex="1"
+                               GridPane.rowIndex="3"/>
+                    <Label text="TB" GridPane.columnIndex="2" GridPane.rowIndex="3"/>
+                    <Label text="RPM" GridPane.rowIndex="4"/>
+                    <TextField id="rpm" fx:id="txtRpm" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+                </GridPane>
+            </TitledPane>
             <TitledPane animated="false" text="Cooler">
                 <GridPane fx:id="addCoolerGui">
                     <columnConstraints>
@@ -406,76 +407,76 @@
                 </GridPane>
             </TitledPane>
             <TitledPane animated="false" text="Keyboard">
-               <content>
-                  <GridPane fx:id="addKeyboardGui" prefHeight="69.0" prefWidth="578.0">
-                     <columnConstraints>
-                        <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                     </columnConstraints>
-                     <rowConstraints>
-                        <RowConstraints maxHeight="70.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="70.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="70.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="70.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="70.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
-                     </rowConstraints>
-                     <children>
-                        <TextField id="manufacturer" promptText="Enter manufacturer here" GridPane.columnIndex="1" />
-                        <TextField id="model" promptText="Enter model name here" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <TextField id="price" promptText="Enter price here" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                        <Label alignment="BOTTOM_LEFT" text="Tactile:" textAlignment="RIGHT" GridPane.rowIndex="2" />
-                        <Label alignment="BOTTOM_LEFT" text="Model: " textAlignment="RIGHT" GridPane.rowIndex="1" />
-                        <Label alignment="BOTTOM_LEFT" text="Price: " textAlignment="RIGHT" GridPane.rowIndex="3" />
-                        <Label alignment="BOTTOM_LEFT" text="Manufacturer: " textAlignment="RIGHT" />
-                        <Button mnemonicParsing="false" onAction="#addPowerSupply" text="Add Power Supply" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                        <RadioButton fx:id="isTactile" mnemonicParsing="false" text="Yes" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                           <toggleGroup>
-                              <ToggleGroup fx:id="Tactile" />
-                           </toggleGroup>
-                        </RadioButton>
-                        <RadioButton fx:id="notTactile" mnemonicParsing="false" text="No" toggleGroup="$Tactile" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                     </children>
-                  </GridPane>
-               </content>
+                <GridPane fx:id="addKeyboardGui" prefHeight="69.0" prefWidth="578.0">
+                    <columnConstraints>
+                        <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints maxHeight="70.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES"/>
+                        <RowConstraints maxHeight="70.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES"/>
+                        <RowConstraints maxHeight="70.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES"/>
+                        <RowConstraints maxHeight="70.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES"/>
+                        <RowConstraints maxHeight="70.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES"/>
+                    </rowConstraints>
+                    <TextField id="manufacturer" promptText="Enter manufacturer here" GridPane.columnIndex="1"/>
+                    <TextField id="model" promptText="Enter model name here" GridPane.columnIndex="1"
+                               GridPane.rowIndex="1"/>
+                    <TextField id="price" promptText="Enter price here" GridPane.columnIndex="1"
+                               GridPane.rowIndex="3"/>
+                    <Label alignment="BOTTOM_LEFT" text="Tactile:" textAlignment="RIGHT" GridPane.rowIndex="2"/>
+                    <Label alignment="BOTTOM_LEFT" text="Model: " textAlignment="RIGHT" GridPane.rowIndex="1"/>
+                    <Label alignment="BOTTOM_LEFT" text="Price: " textAlignment="RIGHT" GridPane.rowIndex="3"/>
+                    <Label alignment="BOTTOM_LEFT" text="Manufacturer: " textAlignment="RIGHT"/>
+                    <Button mnemonicParsing="false" onAction="#addPowerSupply" text="Add Power Supply"
+                            GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+                    <RadioButton fx:id="isTactile" mnemonicParsing="false" text="Yes" GridPane.columnIndex="1"
+                                 GridPane.rowIndex="2">
+                        <toggleGroup>
+                            <ToggleGroup fx:id="Tactile"/>
+                        </toggleGroup>
+                    </RadioButton>
+                    <RadioButton fx:id="notTactile" mnemonicParsing="false" text="No" toggleGroup="$Tactile"
+                                 GridPane.columnIndex="2" GridPane.rowIndex="2"/>
+                </GridPane>
             </TitledPane>
             <TitledPane animated="false" text="Memory">
-               <content>
-                  <GridPane fx:id="addMemoryGui">
-                     <columnConstraints>
-                        <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                     </columnConstraints>
-                     <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                     </rowConstraints>
-                     <children>
-                        <Label text="Manufacturer: " />
-                        <Label text="Model: " GridPane.rowIndex="1" />
-                        <Label text="Number of Ram:" GridPane.rowIndex="2" />
-                        <Label text="Price: " GridPane.rowIndex="5" />
-                        <TextField id="manufacturer" promptText="Enter manufacturer" GridPane.columnIndex="1" />
-                        <TextField id="model" promptText="Enter model" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <TextField id="RAM" promptText="Enter RAM" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <TextField id="price" promptText="Enter price of component" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                        <Label text=" NOK" GridPane.columnIndex="2" GridPane.rowIndex="5" />
-                        <Button mnemonicParsing="false" onAction="#addMemory" text="Add Memory" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                        <Label text="Speed tech" GridPane.rowIndex="4" />
-                        <TextField id="speedTech" promptText="Enter speed tech" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                        <Label text="GB" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                        <Label text="Speed" GridPane.rowIndex="3" />
-                        <TextField id="speed" promptText="Enter speed" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                        <Label text="MHz" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                     </children>
-                  </GridPane>
-               </content>
+                <GridPane fx:id="addMemoryGui">
+                    <columnConstraints>
+                        <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                    </rowConstraints>
+                    <Label text="Manufacturer: "/>
+                    <Label text="Model: " GridPane.rowIndex="1"/>
+                    <Label text="Number of Ram:" GridPane.rowIndex="2"/>
+                    <Label text="Price: " GridPane.rowIndex="5"/>
+                    <TextField id="manufacturer" promptText="Enter manufacturer" GridPane.columnIndex="1"/>
+                    <TextField id="model" promptText="Enter model" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                    <TextField id="RAM" promptText="Enter RAM" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                    <TextField id="price" promptText="Enter price of component" GridPane.columnIndex="1"
+                               GridPane.rowIndex="5"/>
+                    <Label text=" NOK" GridPane.columnIndex="2" GridPane.rowIndex="5"/>
+                    <Button mnemonicParsing="false" onAction="#addMemory" text="Add Memory" GridPane.columnIndex="1"
+                            GridPane.rowIndex="6"/>
+                    <Label text="Speed tech" GridPane.rowIndex="4"/>
+                    <TextField id="speedTech" promptText="Enter speed tech" GridPane.columnIndex="1"
+                               GridPane.rowIndex="4"/>
+                    <Label text="GB" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
+                    <Label text="Speed" GridPane.rowIndex="3"/>
+                    <TextField id="speed" promptText="Enter speed" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+                    <Label text="MHz" GridPane.columnIndex="2" GridPane.rowIndex="3"/>
+                </GridPane>
             </TitledPane>
         </panes>
       </Accordion>
