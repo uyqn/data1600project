@@ -15,9 +15,12 @@ public class PowerSupply extends Component implements Serializable {
     private transient static final SimpleStringProperty COMPONENT_TYPE = new SimpleStringProperty("Power Supply");
     private transient SimpleIntegerProperty PowerCapacity;
 
-    public String getComponentType(){
-        return COMPONENT_TYPE.get();
+    public PowerSupply(String[] csv){
+        super(csv[1], csv[2], Double.parseDouble(csv[3]));
+
+        setPowerCapacity(Integer.parseInt(csv[4]));
     }
+
 
     public PowerSupply(String manufacturer, String model, double price, int PowerCapacity){
         super(manufacturer, model, price);
@@ -25,6 +28,9 @@ public class PowerSupply extends Component implements Serializable {
         setPowerCapacity(PowerCapacity);
     }
 
+    public String getComponentType(){
+        return COMPONENT_TYPE.get();
+    }
 
     public int getPowerCapacity(){
         return PowerCapacity.get();

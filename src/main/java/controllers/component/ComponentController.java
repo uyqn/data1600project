@@ -7,6 +7,7 @@ import components.Memory;
 import components.Monitor;
 import components.Mouse;
 import components.Keyboard;
+import components.PowerSupply;
 import controllers.guiManager.Limit;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -32,7 +33,7 @@ public class ComponentController implements Initializable {
     private GridPane superHome;
 
     @FXML
-    private GridPane addCpuGui, addCoolerGui, addGraphicCardGui, addMemoryGui, addStorageGui, addMonitorGui, addMouseGui, addKeyboardGui;
+    private GridPane addCpuGui, addCoolerGui, addGraphicCardGui, addMemoryGui, addStorageGui, addMonitorGui, addMouseGui, addKeyboardGui, addPowerSupplyGui;
 
 
     @FXML
@@ -346,6 +347,32 @@ public class ComponentController implements Initializable {
 
     @FXML
     void addPowerSupply(ActionEvent event) {
+
+        try{
+            String manufacturer=getString(addPowerSupplyGui, "manufacturer");
+            String model = getString(addPowerSupplyGui, "model");
+            int powerCapacity = getInt(addPowerSupplyGui, "powerCapacity");
+            double price= getDouble(addPowerSupplyGui, "price");
+
+            PowerSupply powerSupply = new PowerSupply(manufacturer, model, price, powerCapacity);
+
+            Alert info = new Alert(Alert.AlertType.INFORMATION);
+            info.setTitle("Power supply successfully added");
+            info.setHeaderText("The following powersupply was added:");
+            info.setContentText(powerSupply.toString());
+            info.showAndWait();
+
+            resetGui(addPowerSupplyGui,
+                    "manufacturer",
+                    "model",
+                    "powerCapacity",
+                    "price");
+        } catch (IllegalArgumentException e){
+            Alert error = new Alert(Alert.AlertType.ERROR);
+            error.setTitle(e.getClass().toString());
+            error.setContentText(e.getMessage());
+            error.showAndWait();
+        }
 
     }
 
