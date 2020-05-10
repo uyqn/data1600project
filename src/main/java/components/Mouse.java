@@ -18,7 +18,22 @@ public class Mouse extends Component implements Serializable {
     private transient SimpleBooleanProperty ergonomic = new SimpleBooleanProperty();
     private transient SimpleBooleanProperty wireless = new SimpleBooleanProperty();
 
-    public Mouse(String manufacturer, String model, int numberButtons, int dpi, boolean ergonomic, boolean wireless,
+    public Mouse(String [] csv) {
+        super(csv[1], csv[2], Double.parseDouble(csv[7]));
+
+        setNumberButtons(Integer.parseInt(csv[3]));
+        setDpi(Integer.parseInt(csv[4]));
+        setErgonomic(Boolean.parseBoolean(csv[5]));
+        setWireless(Boolean.parseBoolean(csv[6]));
+
+    }
+
+    public Mouse(String manufacturer,
+                 String model,
+                 int numberButtons,
+                 int dpi,
+                 boolean ergonomic,
+                 boolean wireless,
                  double price) {
         super(manufacturer, model, price);
 

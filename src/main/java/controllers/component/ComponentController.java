@@ -456,6 +456,7 @@ public class ComponentController implements Initializable {
 
             resetGui(addKeyboardGui,"manufacturer", "model", "double");
             ((RadioButton) addKeyboardGui.lookup("#tactileYes")).setSelected(true);
+
         }catch (IllegalArgumentException e){
             DialogBox.error(e.getClass().toString(), null,
                     e.getMessage());

@@ -12,7 +12,7 @@ import java.io.Serializable;
 public class Keyboard extends Component implements Serializable {
 
     private transient static final SimpleStringProperty COMPONENT_TYPE = new SimpleStringProperty("Keyboard");
-    private transient SimpleBooleanProperty Tactile;
+    private transient SimpleBooleanProperty tactile = new SimpleBooleanProperty();
 
     public Keyboard(String [] csv) {
         super(csv[1], csv[2], Double.parseDouble(csv[4]));
@@ -30,17 +30,18 @@ public class Keyboard extends Component implements Serializable {
 
     }
 
-    public boolean isTactile() {
-        return Tactile.get();
-    }
-
-    public void setTactile(boolean tactile) {
-        this.Tactile.set(tactile);
-    }
-
     public String getComponentType(){
         return COMPONENT_TYPE.getValue();
     }
+
+    public boolean isTactile() {
+        return tactile.getValue();
+    }
+
+    public void setTactile(boolean tactile) {
+        this.tactile.set(tactile);
+    }
+
 
     @Override
     public String toString(){
@@ -77,7 +78,7 @@ public class Keyboard extends Component implements Serializable {
 
         boolean Tactile = objectInputStream.readBoolean();
 
-        this.Tactile = new SimpleBooleanProperty();
+        this.tactile = new SimpleBooleanProperty();
 
         setTactile(Tactile);
     }
