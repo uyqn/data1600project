@@ -2,13 +2,17 @@ package components.Storage;
 
 import components.Component;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 public abstract class Storage extends Component {
 
 
     private transient SimpleDoubleProperty capacity=new SimpleDoubleProperty();
-    private transient SimpleStringProperty form=new SimpleStringProperty();
 
 
     public Storage(String manufacturer, String model, double capacity, double price){
@@ -28,14 +32,31 @@ public abstract class Storage extends Component {
 
     }
 
-    public String getForm(){return form.getValue();}
 
-    public void setForm(String form){
+    //Serialisering
+    private void writeObject(ObjectOutputStream objectOutputStream) throws IOException {
+        objectOutputStream.defaultWriteObject();
 
-        this.form.set(form);
+        objectOutputStream.writeUTF(getManufacturer());
+        objectOutputStream.writeUTF(getModel());
+        objectOutputStream.writeDouble(getPrice());
+        objectOutputStream.writeDouble(getCapacity());
+
 
     }
 
+    private void readObject(ObjectInputStream objectInputStream) throws IOException, ClassNotFoundException{
+        String manufacturer = objectInputStream.readUTF();
+        String model = objectInputStream.readUTF();
+        double price = objectInputStream.readDouble();
+        double capacity = objectInputStream.readDouble();
+
+        this.capacity=new SimpleDoubleProperty();
+
+        setCapacity(capacity);
+
+
+    }
 
 
 }

@@ -323,8 +323,8 @@ public class ComponentController implements Initializable {
 
                 Storage hdd = new HDD(manufacturer, model, capacity, rpm, price);
 
-                DialogBox.info("HDD successfully added",
-                        "The following HDD was added:",
+                DialogBox.info("Harddrive successfully added",
+                        "The following Harddrive was added:",
                         hdd.toString());
 
                 App.componentList.add(hdd);
