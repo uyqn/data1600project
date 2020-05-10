@@ -2,7 +2,6 @@ package components;
 
 import fileManager.Formatter;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleStringProperty;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
