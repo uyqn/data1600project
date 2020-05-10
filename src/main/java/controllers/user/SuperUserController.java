@@ -1,8 +1,9 @@
 package controllers.user;
 
-import controllers.guiManager.GUI;
 import controllers.LoginController;
 import controllers.component.ComponentController;
+import controllers.guiManager.GUI;
+import controllers.views.ComponentView;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.layout.GridPane;
@@ -28,6 +29,18 @@ public class SuperUserController {
             superHome.lookup("#addComponent").setDisable(false);
         });
         superHome.lookup("#addComponent").setDisable(true);
+    }
+
+    @FXML
+    void viewComponents(ActionEvent event) throws IOException {
+        GUI<ComponentView> addViewComponentWindow = new GUI<>(event, "views/components");
+        addViewComponentWindow.newWindow();
+        addViewComponentWindow.getStage().setOnCloseRequest(windowEvent -> {
+            windowEvent.consume();
+            addViewComponentWindow.getStage().close();
+            superHome.lookup("#viewComponents").setDisable(false);
+        });
+        superHome.lookup("#viewComponents").setDisable(false);
     }
 
     @FXML

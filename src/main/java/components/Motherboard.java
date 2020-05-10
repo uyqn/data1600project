@@ -47,9 +47,9 @@ public class Motherboard extends Component implements Serializable, Compatible {
                        String model,
                        String socket,
                        String bussType,
-                       int maxRamSize,
-                       String memoryTech,
                        int ramSlots,
+                       String memoryTech,
+                       int maxRamSize,
                        String formFactor,
                        double price){
         super(manufacturer, model, price);

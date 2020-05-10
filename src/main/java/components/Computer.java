@@ -24,7 +24,7 @@ public class Computer extends ComponentList<Component> {
     public transient SimpleObjectProperty<Motherboard> mb = new SimpleObjectProperty<>();
 
     //Step 4: Select one or multiple of RAMs
-
+    public transient SimpleObjectProperty<Memory[]> memories = new SimpleObjectProperty<>();
 
 
     public Computer(String name){
@@ -34,6 +34,8 @@ public class Computer extends ComponentList<Component> {
     public Computer(String[] csv) {
         setName(csv[1]);
     }
+
+
 
     public void setCpu(CPU cpu) {
         if(this.mb.getValue() != null){

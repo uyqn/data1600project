@@ -2,7 +2,6 @@ package components;
 
 import fileManager.Formatter;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
@@ -79,7 +78,15 @@ public class Mouse extends Component implements Serializable {
 
     @Override
     public String toString(){
-        return getComponentType() + ": " + getName();
+        String ergonomic = isErgonomic() ? "Yes" : "No";
+        String wireless = isWireless() ? "Yes" : "No";
+
+        return getComponentType() + ": " + getName() + "\n" +
+                "Buttons: " + getNumberButtons() + "\n" +
+                "Polling rate: " + getDpi() + "DPI \n" +
+                "Ergonomic: " + ergonomic + "\n" +
+                "Wireless: " + wireless + "\n" +
+                "Price: " + getPrice();
     }
 
     @Override
@@ -114,8 +121,8 @@ public class Mouse extends Component implements Serializable {
         double price = objectInputStream.readDouble();
         int numberButtons = objectInputStream.readInt();
         int dpi = objectInputStream.readInt();
-        Boolean ergonomic = objectInputStream.readBoolean();
-        Boolean wireless = objectInputStream.readBoolean();
+        boolean ergonomic = objectInputStream.readBoolean();
+        boolean wireless = objectInputStream.readBoolean();
 
         this.numberButtons = new SimpleIntegerProperty();
         this.dpi = new SimpleIntegerProperty();

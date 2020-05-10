@@ -18,7 +18,7 @@ public class Memory extends Component implements Serializable, Compatible {
     private transient SimpleStringProperty memoryTech =new SimpleStringProperty();
     private transient SimpleIntegerProperty speed=new SimpleIntegerProperty();
 
-    private transient int techNumber;
+    private transient int techNumber; //DDR#
 
     public Memory(String[] csv){
         super(csv[1], csv[2], Double.parseDouble(csv[3]));

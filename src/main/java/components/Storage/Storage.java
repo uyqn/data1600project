@@ -11,15 +11,10 @@ public abstract class Storage extends Component {
     private transient SimpleStringProperty form=new SimpleStringProperty();
 
 
-    public Storage(String manufacturer, String model, double price, double capacity, String form){
+    public Storage(String manufacturer, String model, double capacity, double price){
 
         super(manufacturer, model, price);
-
         setCapacity(capacity);
-
-
-
-
     }
 
     public double getCapacity(){return capacity.getValue();}

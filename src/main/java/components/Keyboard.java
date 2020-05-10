@@ -2,8 +2,6 @@ package components;
 
 import fileManager.Formatter;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 import java.io.IOException;
@@ -47,7 +45,9 @@ public class Keyboard extends Component implements Serializable {
     @Override
     public String toString(){
         return String.format("%s: %s\n"+
-                "Tactile: %s", getComponentType(),getName(), isTactile());
+                "Tactile: %s\n" +
+                "Price: %s", getComponentType(),getName(),
+                isTactile() ? "Yes" : "No", getPrice());
     }
     @Override
     public String toCSV() {

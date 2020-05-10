@@ -1,7 +1,6 @@
 package components;
 
 import fileManager.Formatter;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
@@ -22,7 +21,7 @@ public class PowerSupply extends Component implements Serializable {
     }
 
 
-    public PowerSupply(String manufacturer, String model, double price, int PowerCapacity){
+    public PowerSupply(String manufacturer, String model, int PowerCapacity, double price){
         super(manufacturer, model, price);
 
         setPowerCapacity(PowerCapacity);

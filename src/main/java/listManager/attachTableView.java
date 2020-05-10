@@ -43,17 +43,15 @@ public abstract class attachTableView<S> {
     }
 
     private TableColumn<S, ?> createColumn(Class<? extends Component> className, String parameter) throws NoSuchMethodException {
-        if(identifyReturnType(className, parameter) == String.class){
+        if (identifyReturnType(className, parameter) == String.class) {
             TableColumn<S, String> tableColumn = new TableColumn<>(columnName(parameter));
             tableColumn.setCellValueFactory(new PropertyValueFactory<>(parameter));
             return tableColumn;
-        }
-        else if(identifyReturnType(className, parameter) == Double.class){
+        } else if (identifyReturnType(className, parameter) == Double.class) {
             TableColumn<S, Double> tableColumn = new TableColumn<>(columnName(parameter));
             tableColumn.setCellValueFactory(new PropertyValueFactory<>(parameter));
             return tableColumn;
-        }
-        else{
+        } else {
             TableColumn<S, Integer> tableColumn = new TableColumn<>(columnName(parameter));
             tableColumn.setCellValueFactory(new PropertyValueFactory<>(parameter));
             return tableColumn;

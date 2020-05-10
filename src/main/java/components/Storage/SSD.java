@@ -10,11 +10,10 @@ public class SSD extends Storage{
 
     public SSD(String manufacturer,
                String model,
-               double price,
                double capacity,
-               String form){
+               double price){
 
-        super(manufacturer, model, price, capacity, form);
+        super(manufacturer, model, capacity, price);
 
     }
 

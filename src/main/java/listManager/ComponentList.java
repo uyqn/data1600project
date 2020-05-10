@@ -17,17 +17,23 @@ public class ComponentList<S extends Component>
     private transient ObservableList<S> list = FXCollections.observableArrayList();
     private transient ObservableList<? extends S> subList;
 
+    public void setList(ObservableList<S> list){
+        this.list = list;
+    }
+
     @Override
     public ObservableList<S> getList(){
         return list;
     }
 
     @SuppressWarnings("unchecked")
-    public <E extends S> ObservableList<E> getSubList(Class<E> className) {
+    public <E extends S> ComponentList<E> getSubList(Class<E> className) {
         setSubList(className);
+        ComponentList<E> subList = new ComponentList<>();
+        subList.setList((ObservableList<E>) this.subList);
 
-        if(subList != null) {
-            return (ObservableList<E>) subList;
+        if(this.subList != null) {
+            return subList;
         }
         else {
             return null;
@@ -37,11 +43,6 @@ public class ComponentList<S extends Component>
     @Override
     public void add(S item){
         list.add(item);
-    }
-
-    @SafeVarargs
-    public final void addAll(S... items){
-        list.addAll(items);
     }
 
     public void remove(S item){
@@ -63,7 +64,7 @@ public class ComponentList<S extends Component>
     }
 
     @SuppressWarnings("unchecked")
-    public <E extends S> void setSubList(Class<E> className) {
+    private <E extends S> void setSubList(Class<E> className) {
         ObservableList<E> filteredList = FXCollections.observableArrayList();
 
         if(className.equals(Component.class)){

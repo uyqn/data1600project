@@ -1,30 +1,22 @@
 package controllers.component;
 
-import components.CPU;
-import components.Cooler;
-import components.GraphicCard;
-import components.Memory;
-import components.Monitor;
-import components.Mouse;
-import components.Keyboard;
-import components.PowerSupply;
+import components.*;
+import components.Storage.HDD;
+import components.Storage.SSD;
+import components.Storage.Storage;
+import controllers.guiManager.DialogBox;
 import controllers.guiManager.Limit;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-
+import main.App;
 
 import java.net.URL;
-import java.security.Key;
-import java.util.Random;
 import java.util.ResourceBundle;
 
 public class ComponentController implements Initializable {
@@ -33,20 +25,23 @@ public class ComponentController implements Initializable {
     private GridPane superHome;
 
     @FXML
-    private GridPane addCpuGui, addCoolerGui, addGraphicCardGui, addMemoryGui, addStorageGui, addMonitorGui, addMouseGui, addKeyboardGui, addPowerSupplyGui;
+    private GridPane
+            addCpuGui,
+            addMbGui,
+            addCoolerGui,
+            addGraphicCardGui,
+            addMemoryGui,
+            addStorageGui,
+            addMonitorGui,
+            addMouseGui,
+            addKeyboardGui,
+            addPowerSupplyGui;
 
+    @FXML
+    private ChoiceBox<String> ramTech;
 
     @FXML
     private TextField txtRpm;
-
-    @FXML
-    private RadioButton isTactile;
-
-    @FXML
-    private ToggleGroup Tactile;
-
-    @FXML
-    private RadioButton notTactile;
 
 
     //Increase and decrease cores of Cpu buttons
@@ -89,6 +84,45 @@ public class ComponentController implements Initializable {
 
     //Add Components
     @FXML
+    void addMb(ActionEvent event) {
+        try {
+            String manufacturer = getString(addMbGui, "manufacturer");
+            String model = getString(addMbGui, "model");
+            String socket = getString(addMbGui, "socket");
+            String bussType = getString(addMbGui, "bussType");
+            int availableRamSlots = getInt(addMbGui, "numSlots");
+            String memoryTech = getString(addMbGui, "ramTech");
+            int maxRamSize = getInt(addMbGui, "maxRamSize");
+            String formFactor = getString(addMbGui, "formFactor");
+            double price = getDouble(addMbGui, "price");
+
+            Motherboard mb = new Motherboard(manufacturer, model, socket, bussType, availableRamSlots,
+                    memoryTech, maxRamSize, formFactor, price);
+
+            DialogBox.info("Motherboard successfully added",
+                    "The following motherboard was added:",
+                    mb.toString());
+
+            App.componentList.add(mb);
+
+            resetGui(addMbGui,
+                    "manufacturer",
+                    "model",
+                    "socket",
+                    "bussType",
+                    "numSlots",
+                    "ramTech",
+                    "maxRamSize",
+                    "formFactor",
+                    "price");
+
+        } catch (IllegalArgumentException e){
+            DialogBox.error(e.getClass().toString(), null,
+                    e.getMessage());
+        }
+    }
+
+    @FXML
     void addCPU(ActionEvent event) {
         try {
             String manufacturer = getString(addCpuGui, "manufacturer");
@@ -101,11 +135,11 @@ public class ComponentController implements Initializable {
 
             CPU cpu = new CPU(manufacturer, model, socket, coreCount, clockSpeed, powerConsumption, price);
 
-            Alert info = new Alert(Alert.AlertType.INFORMATION);
-            info.setTitle("CPU successfully added");
-            info.setHeaderText("The following CPU was added:");
-            info.setContentText(cpu.toString());
-            info.showAndWait();
+            DialogBox.info("CPU successfully added",
+                    "The following CPU was added:",
+                    cpu.toString());
+
+            App.componentList.add(cpu);
 
             resetGui(addCpuGui,
                     "manufacturer",
@@ -117,10 +151,8 @@ public class ComponentController implements Initializable {
                     "power",
                     "price");
         } catch (IllegalArgumentException e){
-            Alert error = new Alert(Alert.AlertType.ERROR);
-            error.setTitle(e.getClass().toString());
-            error.setContentText(e.getMessage());
-            error.showAndWait();
+            DialogBox.error(e.getClass().toString(), null,
+                    e.getMessage());
         }
     }
 
@@ -142,11 +174,11 @@ public class ComponentController implements Initializable {
 
             Cooler cooler = new Cooler(manufacturer, model, dimension, rpm, noise, power, price);
 
-            Alert info = new Alert(Alert.AlertType.INFORMATION);
-            info.setTitle("Cooler successfully added");
-            info.setHeaderText("The following cooler was added:");
-            info.setContentText(cooler.toString());
-            info.showAndWait();
+            DialogBox.info("Cooler successfully added",
+                    "The following cooler was added:",
+                    cooler.toString());
+
+            App.componentList.add(cooler);
 
             resetGui(addCoolerGui,
                     "manufacturer",
@@ -161,10 +193,8 @@ public class ComponentController implements Initializable {
                     "power",
                     "price");
         } catch (IllegalArgumentException e) {
-            Alert error = new Alert(Alert.AlertType.ERROR);
-            error.setTitle(e.getClass().toString());
-            error.setContentText(e.getMessage());
-            error.showAndWait();
+            DialogBox.error(e.getClass().toString(), null,
+                    e.getMessage());
         }
     }
 
@@ -183,11 +213,11 @@ public class ComponentController implements Initializable {
 
             GraphicCard graphicCard=new GraphicCard(manufacturer, model, bussType, memory, memoryType, clockSpeed, price);
 
-            Alert info=new Alert(Alert.AlertType.INFORMATION);
-            info.setTitle("Graphic card successfully added");
-            info.setHeaderText("The following graphic card was added:");
-            info.setContentText(graphicCard.toString());
-            info.showAndWait();
+            DialogBox.info("GPU successfully added",
+                    "The following gpu was added:",
+                    graphicCard.toString());
+
+            App.componentList.add(graphicCard);
 
             resetGui(addGraphicCardGui,
                     "manufacturer",
@@ -199,14 +229,14 @@ public class ComponentController implements Initializable {
                     "price"
                     );
         }catch (IllegalArgumentException e){
-            Alert error=new Alert(Alert.AlertType.ERROR);
-            error.setTitle(e.getClass().toString());
-            error.setContentText(e.getMessage());
-            error.showAndWait();
+            DialogBox.error(e.getClass().toString(), null,
+                    e.getMessage());
         }
 
 
     }
+
+
 
 
     @FXML
@@ -223,20 +253,17 @@ public class ComponentController implements Initializable {
 
             Memory memory=new Memory(manufacturer,model,price, RAM, speedTech, speed);
 
-            Alert info= new Alert(Alert.AlertType.INFORMATION);
-            info.setTitle("Memory was successfully added");
-            info.setHeaderText("The following component was added:");
-            info.setContentText(memory.toString());
-            info.showAndWait();
+            DialogBox.info("RAM successfully added",
+                    "The following RAM was added:",
+                    memory.toString());
+
+            App.componentList.add(memory);
 
             resetGui(addMemoryGui,"manufacturer", "model", "RAM", "speed", "speedTech", "price");
 
-
         }catch (IllegalArgumentException e) {
-            Alert error = new Alert(Alert.AlertType.ERROR);
-            error.setTitle(e.getClass().toString());
-            error.setContentText(e.getMessage());
-            error.showAndWait();
+            DialogBox.error(e.getClass().toString(), null,
+                    e.getMessage());
 
         }
 
@@ -247,10 +274,12 @@ public class ComponentController implements Initializable {
     @FXML
     void ssdBtn(ActionEvent event){
         txtRpm.setDisable(true);
+        ((Label) addStorageGui.lookup("#capacityUnit")).setText(" GB");
     }
     @FXML
     void hddBtn(ActionEvent event){
         txtRpm.setDisable(false);
+        ((Label) addStorageGui.lookup("#capacityUnit")).setText(" TB");
     }
 
     @FXML
@@ -264,13 +293,17 @@ public class ComponentController implements Initializable {
                 double capacity = getDouble(addStorageGui, "capacity");
                 double price= getDouble(addStorageGui, "price");
 
+                Storage ssd = new SSD(manufacturer, model, capacity, price);
 
+                DialogBox.info("SSD successfully added",
+                        "The following SSD was added:",
+                        ssd.toString());
+
+                App.componentList.add(ssd);
 
             }catch (IllegalArgumentException e){
-                Alert error = new Alert(Alert.AlertType.ERROR);
-                error.setTitle(e.getClass().toString());
-                error.setContentText(e.getMessage());
-                error.showAndWait();
+                DialogBox.error(e.getClass().toString(), null,
+                        e.getMessage());
             }
         }else {
             try {
@@ -281,11 +314,17 @@ public class ComponentController implements Initializable {
                 int rpm= getInt(addStorageGui, "rpm");
                 double price= getDouble(addStorageGui, "price");
 
+                Storage hdd = new HDD(manufacturer, model, capacity, rpm, price);
+
+                DialogBox.info("HDD successfully added",
+                        "The following HDD was added:",
+                        hdd.toString());
+
+                App.componentList.add(hdd);
+
             }catch (IllegalArgumentException e){
-                Alert error = new Alert(Alert.AlertType.ERROR);
-                error.setTitle(e.getClass().toString());
-                error.setContentText(e.getMessage());
-                error.showAndWait();
+                DialogBox.error(e.getClass().toString(), null,
+                        e.getMessage());
             }
         }
 
@@ -305,10 +344,12 @@ public class ComponentController implements Initializable {
             Monitor monitor = new Monitor(manufacturer, model, refreshRate, price);
 
             Alert info = new Alert(Alert.AlertType.INFORMATION);
-            info.setTitle("Monitor was successfully added");
-            info.setHeaderText("The following monitor was added:");
-            info.setContentText(monitor.toString());
-            info.showAndWait();
+
+            DialogBox.info("Monitor successfully added",
+                    "The following monitor was added:",
+                    monitor.toString());
+
+            App.componentList.add(monitor);
 
             resetGui(addMonitorGui,
                     "manufacturer",
@@ -318,10 +359,8 @@ public class ComponentController implements Initializable {
 
 
         } catch (IllegalArgumentException e){
-            Alert error = new Alert(Alert.AlertType.ERROR);
-            error.setTitle(e.getClass().toString());
-            error.setContentText(e.getMessage());
-            error.showAndWait();
+            DialogBox.error(e.getClass().toString(), null,
+                    e.getMessage());
         }
 
     }
@@ -332,14 +371,33 @@ public class ComponentController implements Initializable {
         try {
             String manufacturer=getString(addMouseGui, "manufacturer");
             String model = getString(addMouseGui, "model");
+            int numButtons = getInt(addMouseGui, "numButtons");
+            int dpi = getInt(addMouseGui, "dpi");
+            boolean ergonomic = ((RadioButton) addMouseGui.lookup("#ergonomicYes")).isSelected();
+            boolean wireless = ((RadioButton) addMouseGui.lookup("#wirelessYes")).isSelected();
+            double price = getDouble(addMouseGui, "price");
 
+            Mouse mouse = new Mouse(manufacturer, model, numButtons, dpi, ergonomic, wireless, price);
+
+            DialogBox.info("Mouse was successfully added",
+                    "The following mouse was added:",
+                    mouse.toString());
+
+            App.componentList.add(mouse);
+
+            resetGui(addMouseGui,
+                    "manufacturer",
+                    "model",
+                    "numButtons",
+                    "dpi",
+                    "price");
+
+            ((RadioButton) addMouseGui.lookup("#ergonomicYes")).setSelected(true);
+            ((RadioButton) addMouseGui.lookup("#wirelessNo")).setSelected(true);
 
         }catch (IllegalArgumentException e){
-
-            Alert error=new Alert(Alert.AlertType.ERROR);
-            error.setTitle(e.getClass().toString());
-            error.setContentText(e.getMessage());
-            error.showAndWait();
+            DialogBox.error(e.getClass().toString(), null,
+                    e.getMessage());
         }
 
 
@@ -354,13 +412,13 @@ public class ComponentController implements Initializable {
             int powerCapacity = getInt(addPowerSupplyGui, "powerCapacity");
             double price= getDouble(addPowerSupplyGui, "price");
 
-            PowerSupply powerSupply = new PowerSupply(manufacturer, model, price, powerCapacity);
+            PowerSupply powerSupply = new PowerSupply(manufacturer, model, powerCapacity, price);
 
-            Alert info = new Alert(Alert.AlertType.INFORMATION);
-            info.setTitle("Power supply successfully added");
-            info.setHeaderText("The following powersupply was added:");
-            info.setContentText(powerSupply.toString());
-            info.showAndWait();
+            DialogBox.info("PSU successfully added",
+                    "The following PSU was added:",
+                    powerSupply.toString());
+
+            App.componentList.add(powerSupply);
 
             resetGui(addPowerSupplyGui,
                     "manufacturer",
@@ -368,10 +426,8 @@ public class ComponentController implements Initializable {
                     "powerCapacity",
                     "price");
         } catch (IllegalArgumentException e){
-            Alert error = new Alert(Alert.AlertType.ERROR);
-            error.setTitle(e.getClass().toString());
-            error.setContentText(e.getMessage());
-            error.showAndWait();
+            DialogBox.error(e.getClass().toString(), null,
+                    e.getMessage());
         }
 
     }
@@ -380,33 +436,24 @@ public class ComponentController implements Initializable {
     void addKeyboard(ActionEvent event){
 
         try {
-
             String manufacturer = getString(addKeyboardGui, "manufacturer");
             String model = getString(addKeyboardGui, "model");
-
-            boolean tactile;
-            tactile= isTactile.isSelected();
-
+            boolean tactile = ((RadioButton) addKeyboardGui.lookup("#tactileYes")).isSelected();
             double price = getDouble(addKeyboardGui, "price");
 
             Keyboard keyboard = new Keyboard(manufacturer, model, tactile, price);
 
-            Alert info= new Alert(Alert.AlertType.INFORMATION);
-            info.setTitle("Keyboard was successfully added");
-            info.setHeaderText("The following component was added:");
-            info.setContentText(keyboard.toString());
-            info.showAndWait();
+            DialogBox.info("Keyboard successfully added",
+                    "The following keyboard was added:",
+                    keyboard.toString());
+
+            App.componentList.add(keyboard);
 
             resetGui(addKeyboardGui,"manufacturer", "model", "double");
-
-
-
+            ((RadioButton) addKeyboardGui.lookup("#tactileYes")).setSelected(true);
         }catch (IllegalArgumentException e){
-
-            Alert error=new Alert(Alert.AlertType.ERROR);
-            error.setTitle(e.getClass().toString());
-            error.setContentText(e.getMessage());
-            error.showAndWait();
+            DialogBox.error(e.getClass().toString(), null,
+                    e.getMessage());
         }
 
     }
@@ -430,10 +477,18 @@ public class ComponentController implements Initializable {
         return ((TextField) pane.lookup("#" + id)).getText();
     }
     private int getInt(Pane pane, String id){
-        return Integer.parseInt(((TextField) pane.lookup("#" + id)).getText());
+        try {
+            return Integer.parseInt(((TextField) pane.lookup("#" + id)).getText());
+        } catch (NumberFormatException e){
+            throw new IllegalArgumentException("Could not convert this number: " + ((TextField) pane.lookup("#" + id)).getText());
+        }
     }
     private double getDouble(Pane pane, String id){
-        return Double.parseDouble(((TextField) pane.lookup("#" + id)).getText());
+        try {
+            return Double.parseDouble(((TextField) pane.lookup("#" + id)).getText());
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Could not convert this number: " + ((TextField) pane.lookup("#" + id)).getText());
+        }
     }
     private void resetGui(Pane pane, String... id){
         for(String str : id){
@@ -460,6 +515,10 @@ public class ComponentController implements Initializable {
 
         Limit.text2int(addMemoryGui, "RAM", "speed");
         Limit.text2double(addMemoryGui, "price");
+
+        ramTech.getItems().addAll("DDR", "DDR2", "DDR3", "DDR4");
+
+        addPowerSupplyGui.setDisable(true);
     }
 }
 
