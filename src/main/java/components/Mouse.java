@@ -11,7 +11,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 public class Mouse extends Component implements Serializable {
-    private transient static final SimpleStringProperty COMPONENT_TYPE = new SimpleStringProperty("Mouse");
+    private transient static final String COMPONENT_TYPE = "Mouse";
 
     private transient SimpleIntegerProperty numberButtons = new SimpleIntegerProperty();
     private transient SimpleIntegerProperty dpi = new SimpleIntegerProperty();
@@ -44,7 +44,7 @@ public class Mouse extends Component implements Serializable {
     }
 
     public String getComponentType() {
-        return COMPONENT_TYPE.getValue();
+        return COMPONENT_TYPE;
     }
 
     public int getNumberButtons() {

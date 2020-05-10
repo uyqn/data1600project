@@ -25,9 +25,8 @@ public class GraphicCard extends Component implements Serializable, Compatible {
     private transient double bussVersion;
     private transient int bussSlots;
 
-    public GraphicCard(String[] csv //String manufacturer, String model, String bussType,
-                       // int memory,  String memoryType, String clockSpeed, double price)
-    ){
+    public GraphicCard(String[] csv)
+    {
         super(csv[1], csv[2], Double.parseDouble(csv[7]));
 
         setBussType(csv[3]);

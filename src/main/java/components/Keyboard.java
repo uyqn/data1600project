@@ -11,7 +11,7 @@ import java.io.Serializable;
 
 public class Keyboard extends Component implements Serializable {
 
-    private transient static final SimpleStringProperty COMPONENT_TYPE = new SimpleStringProperty("Keyboard");
+    private transient static final String COMPONENT_TYPE = "Keyboard";
     private transient SimpleBooleanProperty tactile = new SimpleBooleanProperty();
 
     public Keyboard(String [] csv) {
@@ -31,7 +31,7 @@ public class Keyboard extends Component implements Serializable {
     }
 
     public String getComponentType(){
-        return COMPONENT_TYPE.getValue();
+        return COMPONENT_TYPE;
     }
 
     public boolean isTactile() {

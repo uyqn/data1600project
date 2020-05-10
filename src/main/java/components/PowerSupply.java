@@ -11,7 +11,7 @@ import java.io.Serializable;
 
 public class PowerSupply extends Component implements Serializable {
 
-    private transient static final SimpleStringProperty COMPONENT_TYPE = new SimpleStringProperty("Power Supply");
+    private transient static final String COMPONENT_TYPE = "Power Supply";
     private transient SimpleIntegerProperty PowerCapacity;
 
     public PowerSupply(String[] csv){
@@ -28,7 +28,7 @@ public class PowerSupply extends Component implements Serializable {
     }
 
     public String getComponentType(){
-        return COMPONENT_TYPE.get();
+        return COMPONENT_TYPE;
     }
 
     public int getPowerCapacity(){
@@ -44,7 +44,7 @@ public class PowerSupply extends Component implements Serializable {
         }
     }
 
-    public String ToString(){
+    public String toString(){
         return "PowerSupply: " + getName() + "Power Capacity: " +PowerCapacity+" W";
     }
 

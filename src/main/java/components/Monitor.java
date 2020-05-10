@@ -11,7 +11,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 public class Monitor extends Component implements Serializable {
-    private transient static final SimpleStringProperty COMPONENT_TYPE = new SimpleStringProperty("Monitor");
+    private transient static final String COMPONENT_TYPE = "Monitor";
 
     private transient SimpleIntegerProperty refreshRate = new SimpleIntegerProperty();
 
@@ -28,12 +28,12 @@ public class Monitor extends Component implements Serializable {
 
         super(manufacturer, model, price);
 
-        setPrice(price);
+        setRefreshRate(refreshRate);
 
     }
 
     public String getComponentType() {
-        return COMPONENT_TYPE.getValue();
+        return COMPONENT_TYPE;
     }
 
     public int getRefreshRate(){

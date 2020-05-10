@@ -12,7 +12,7 @@ import java.io.Serializable;
 
 public class Memory extends Component implements Serializable, Compatible {
 
-    private static final String COMPONENT_TYPE = "Memory";
+    private static final transient String COMPONENT_TYPE = "Memory";
 
     private transient SimpleIntegerProperty RAM=new SimpleIntegerProperty();
     private transient SimpleStringProperty memoryTech =new SimpleStringProperty();
