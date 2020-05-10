@@ -35,10 +35,11 @@ public class ComponentController implements Initializable {
             addMonitorGui,
             addMouseGui,
             addKeyboardGui,
+            addCabinGui,
             addPowerSupplyGui;
 
     @FXML
-    private ChoiceBox<String> ramTech;
+    private ChoiceBox<String> ramTech, speedTech;
 
     @FXML
     private TextField txtRpm;
@@ -49,38 +50,26 @@ public class ComponentController implements Initializable {
     void increaseCore(ActionEvent event){
         int[] validCoreCount = {1, 2, 3, 4, 6, 8, 10, 12, 14, 16,
                 18, 20, 22, 24, 26, 28, 30, 32, 64};
-
-        TextField str = (TextField) addCpuGui.lookup("#core");
-        if(str.getText().isBlank()|| str.getText().isEmpty()){
-            str.setText("1");
-        }
-        else {
-            try {
-                int index = getIndexOf(validCoreCount, Integer.parseInt(str.getText()));
-                str.setText(validCoreCount[++index] + "");
-            }catch (IndexOutOfBoundsException e){
-                str.setText("64");
-            }
-        }
+        increase(validCoreCount, addCpuGui, "core");
     }
     @FXML
     void decreaseCore(ActionEvent event){
         int[] validCoreCount = {1, 2, 3, 4, 6, 8, 10, 12, 14, 16,
                 18, 20, 22, 24, 26, 28, 30, 32, 64};
 
-        TextField str = (TextField) addCpuGui.lookup("#core");
-        if(str.getText().isBlank()|| str.getText().isEmpty()){
-            str.setText("1");
-        }
-        else {
-            try {
-                int index = getIndexOf(validCoreCount, Integer.parseInt(str.getText()));
-                str.setText(validCoreCount[--index] + "");
-            }catch (IndexOutOfBoundsException e){
-                str.setText("1");
-            }
-        }
+        decrease(validCoreCount, addCpuGui, "core");
     }
+    @FXML
+    void increaseRamSlots(ActionEvent event){
+        int[] validRamSlots = {1, 2, 4, 6, 8, 12, 16};
+        increase(validRamSlots, addMbGui, "numSlots");
+    }
+    @FXML
+    void decreaseRamSlots(ActionEvent event){
+        int[] validRamSlots = {1, 2, 4, 6, 8, 12, 16};
+        decrease(validRamSlots, addMbGui, "numSlots");
+    }
+
 
     //Add Components
     @FXML
@@ -91,7 +80,7 @@ public class ComponentController implements Initializable {
             String socket = getString(addMbGui, "socket");
             String bussType = getString(addMbGui, "bussType");
             int availableRamSlots = getInt(addMbGui, "numSlots");
-            String memoryTech = getString(addMbGui, "ramTech");
+            String memoryTech = ramTech.getSelectionModel().getSelectedItem();
             int maxRamSize = getInt(addMbGui, "maxRamSize");
             String formFactor = getString(addMbGui, "formFactor");
             double price = getDouble(addMbGui, "price");
@@ -123,6 +112,27 @@ public class ComponentController implements Initializable {
     }
 
     @FXML
+    void addCabin(ActionEvent event){
+        try{
+            String manufacturer = getString(addCabinGui, "manufacturer");
+            String model = getString(addCabinGui, "model");
+            String formFactor = getString(addCabinGui, "formFactor");
+            double price = getDouble(addCabinGui, "price");
+
+            Cabin cabin = new Cabin(manufacturer, model, formFactor, price);
+
+            App.componentList.add(cabin);
+
+            DialogBox.info("Cabin successfully added",
+                    "The following cabin was added:",
+                    cabin.toString());
+        } catch (IllegalArgumentException e){
+            DialogBox.error(e.getClass().toString(), null,
+                    e.getMessage());
+        }
+    }
+
+    @FXML
     void addCPU(ActionEvent event) {
         try {
             String manufacturer = getString(addCpuGui, "manufacturer");
@@ -130,7 +140,7 @@ public class ComponentController implements Initializable {
             String socket = getString(addCpuGui, "socket");
             int coreCount = getInt(addCpuGui, "core");
             String clockSpeed =  getString(addCpuGui, "coreClock") + "/" + getString(addCpuGui, "boostClock");
-            int powerConsumption = getInt(addCpuGui, "power");
+            double powerConsumption = getDouble(addCpuGui, "power");
             double price = getDouble(addCpuGui, "price");
 
             CPU cpu = new CPU(manufacturer, model, socket, coreCount, clockSpeed, powerConsumption, price);
@@ -236,9 +246,6 @@ public class ComponentController implements Initializable {
 
     }
 
-
-
-
     @FXML
     void addMemory(ActionEvent event) {
 
@@ -246,7 +253,7 @@ public class ComponentController implements Initializable {
             String manufacturer= getString(addMemoryGui, "manufacturer");
             String model=getString(addMemoryGui, "model");
             int RAM=getInt(addMemoryGui, "RAM");
-            String speedTech=getString(addMemoryGui, "speedTech");
+            String speedTech = this.speedTech.getSelectionModel().getSelectedItem();
             int speed=getInt(addMemoryGui, "speed");
             double price=getDouble(addMemoryGui, "price");
 
@@ -270,12 +277,12 @@ public class ComponentController implements Initializable {
 
     }
 
-
     @FXML
     void ssdBtn(ActionEvent event){
         txtRpm.setDisable(true);
         ((Label) addStorageGui.lookup("#capacityUnit")).setText(" GB");
     }
+
     @FXML
     void hddBtn(ActionEvent event){
         txtRpm.setDisable(false);
@@ -329,8 +336,6 @@ public class ComponentController implements Initializable {
         }
 
     }
-
-
 
     @FXML
     void addMonitor(ActionEvent event) {
@@ -458,10 +463,38 @@ public class ComponentController implements Initializable {
 
     }
 
-
-
     public void setSuperHome(GridPane superHome) {
         this.superHome = superHome;
+    }
+
+    private void increase(int[] validNumbers,
+                           GridPane gridPane,
+                           String id){
+        TextField str = (TextField) gridPane.lookup("#" + id);
+        if(str.getText().isBlank()|| str.getText().isEmpty()){
+            str.setText(String.valueOf(validNumbers[0]));
+        }
+        else {
+            int index = getIndexOf(validNumbers, Integer.parseInt(str.getText()));
+            str.setText(String.valueOf(validNumbers[++index % validNumbers.length]));
+        }
+    }
+
+    private void decrease(int[] validNumbers,
+                          GridPane gridPane,
+                          String id){
+        TextField str = (TextField) gridPane.lookup("#" + id);
+        if(str.getText().isBlank()|| str.getText().isEmpty()){
+            str.setText(String.valueOf(validNumbers[0]));
+        }
+        else {
+            try {
+                int index = getIndexOf(validNumbers, Integer.parseInt(str.getText()));
+                str.setText(String.valueOf(validNumbers[--index % validNumbers.length]));
+            } catch (IndexOutOfBoundsException e){
+                str.setText(String.valueOf(validNumbers[validNumbers.length - 1]));
+            }
+        }
     }
 
     private int getIndexOf(int[] array, int number){
@@ -504,21 +537,40 @@ public class ComponentController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        Limit.text2double(addMbGui, "price");
+        Limit.text2int(addMbGui, "numSlots", "maxRamSize");
+
         Limit.text2int(addCpuGui, "core");
         Limit.text2double(addCpuGui,"coreClock", "boostClock", "power", "price");
 
-        Limit.text2int(addCoolerGui, "baseRpm", "maxRpm");
-        Limit.text2double(addCoolerGui, "width", "depth", "baseNoise", "maxNoise", "height", "power", "price");
-
         Limit.text2int(addGraphicCardGui, "memory");
-        Limit.text2double(addGraphicCardGui, "price");
+        Limit.text2double(addGraphicCardGui, "price", "baseClock", "boostClock");
 
         Limit.text2int(addMemoryGui, "RAM", "speed");
         Limit.text2double(addMemoryGui, "price");
 
-        ramTech.getItems().addAll("DDR", "DDR2", "DDR3", "DDR4");
+        Limit.text2int(addStorageGui, "rpm");
+        Limit.text2double(addStorageGui, "capacity", "price");
 
-        addPowerSupplyGui.setDisable(true);
+        Limit.text2int(addCoolerGui, "baseRpm", "maxRpm");
+        Limit.text2double(addCoolerGui, "width", "depth", "baseNoise", "maxNoise", "height", "power", "price");
+
+        Limit.text2double(addPowerSupplyGui, "price");
+        Limit.text2int(addPowerSupplyGui, "powerCapacity");
+
+        Limit.text2double(addCabinGui, "price");
+        Limit.text2int(addMouseGui, "numButtons", "dpi");
+
+        Limit.text2double(addMouseGui, "price");
+        Limit.text2int(addMonitorGui, "refreshRate");
+
+        Limit.text2double(addMonitorGui, "price");
+        Limit.text2double(addKeyboardGui, "price");
+
+        ramTech.getItems().addAll("DDR", "DDR2", "DDR3", "DDR4");
+        ramTech.setValue("DDR");
+        speedTech.getItems().addAll("DDR", "DDR2", "DDR3", "DDR4");
+        speedTech.setValue("DDR");
     }
 }
 

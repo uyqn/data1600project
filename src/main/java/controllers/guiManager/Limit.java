@@ -8,13 +8,12 @@ public class Limit {
         for(String str : id){
             TextField textField = (TextField) pane.lookup("#" + str);
             textField.textProperty().addListener((observableValue, s, t1) -> {
-                if(!t1.matches("[+-]?\\d*")){
+                if(!t1.matches("\\d*")){
                     textField.setText(s);
                 }
             });
         }
     }
-
     public static void text2double(Pane pane, String... id){
         for(String str : id){
             TextField textField = (TextField) pane.lookup("#" + str);

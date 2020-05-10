@@ -20,7 +20,7 @@
    <center>
       <Accordion prefHeight="618.0" prefWidth="458.0" BorderPane.alignment="CENTER">
         <panes>
-            <TitledPane animated="false" text="Processor">
+            <TitledPane text="Processor">
                 <GridPane fx:id="addCpuGui">
                     <columnConstraints>
                         <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -56,7 +56,7 @@
                         <rowConstraints>
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         </rowConstraints>
-                        <TextField id="core" alignment="CENTER" promptText="# of core(s)" GridPane.columnIndex="1" />
+                        <TextField id="core" alignment="CENTER" editable="false" promptText="# of core(s)" GridPane.columnIndex="1" />
                         <Button id="decreaseCore" mnemonicParsing="false" onAction="#decreaseCore" prefWidth="25.0" text="-" />
                         <Button id="increaseCore" mnemonicParsing="false" onAction="#increaseCore" text="+" GridPane.columnIndex="2" />
                     </GridPane>
@@ -89,7 +89,7 @@
                     <Button mnemonicParsing="false" onAction="#addCPU" text="Add CPU" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                 </GridPane>
             </TitledPane>
-            <TitledPane animated="false" text="Graphics Card">
+            <TitledPane text="Graphics Card">
                 <GridPane fx:id="addGraphicCardGui">
                     <columnConstraints>
                         <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -145,7 +145,7 @@
                     <Label text="Buss type: " GridPane.rowIndex="2" />
                 </GridPane>
             </TitledPane>
-          <TitledPane animated="false" text="Motherboard">
+          <TitledPane text="Motherboard">
                <content>
                   <GridPane fx:id="addMbGui">
                      <columnConstraints>
@@ -188,26 +188,12 @@
                            </rowConstraints>
                            <children>
                               <TextField id="numSlots" alignment="CENTER" promptText="# of slots" GridPane.columnIndex="1" />
-                              <Button id="decreaseCore" mnemonicParsing="false" onAction="#decreaseCore" prefWidth="25.0" text="-" />
-                              <Button id="increaseCore" mnemonicParsing="false" onAction="#increaseCore" text="+" GridPane.columnIndex="2" />
+                              <Button id="decreaseCore" mnemonicParsing="false" onAction="#decreaseRamSlots" prefWidth="25.0" text="-" />
+                              <Button id="increaseCore" mnemonicParsing="false" onAction="#increaseRamSlots" text="+" GridPane.columnIndex="2" />
                            </children>
                         </GridPane>
                         <ChoiceBox id="ramTech" fx:id="ramTech" prefHeight="25.0" prefWidth="190.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                        <GridPane GridPane.columnIndex="1" GridPane.rowIndex="6">
-                           <columnConstraints>
-                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" />
-                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" />
-                           </columnConstraints>
-                           <rowConstraints>
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                           </rowConstraints>
-                           <children>
-                              <TextField id="maxRamSize" alignment="CENTER" promptText="Max ram size" GridPane.columnIndex="1" />
-                              <Button id="decreaseCore" mnemonicParsing="false" onAction="#decreaseCore" prefWidth="25.0" text="-" />
-                              <Button id="increaseCore" mnemonicParsing="false" onAction="#increaseCore" text="+" GridPane.columnIndex="2" />
-                           </children>
-                        </GridPane>
+                        <TextField id="maxRamSize" promptText="Max ram size" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                         <TextField id="formFactor" promptText="Form factor" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                         <TextField id="price" promptText="Enter price of component" GridPane.columnIndex="1" GridPane.rowIndex="8" />
                         <Label text=" NOK" GridPane.columnIndex="2" GridPane.rowIndex="8" />
@@ -218,7 +204,7 @@
                      </children>
                   </GridPane>
                </content></TitledPane>
-            <TitledPane animated="false" text="Memory">
+            <TitledPane text="Memory">
                 <GridPane fx:id="addMemoryGui">
                     <columnConstraints>
                         <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -244,15 +230,15 @@
                     <TextField id="price" promptText="Enter price of component" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                     <Label text=" NOK" GridPane.columnIndex="2" GridPane.rowIndex="5" />
                     <Button mnemonicParsing="false" onAction="#addMemory" text="Add Memory" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                    <Label text="Speed tech: " GridPane.rowIndex="4" />
-                    <TextField id="speedTech" promptText="Enter speed tech" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                    <Label text="GB" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                    <Label text="Memory technology: " GridPane.rowIndex="4" />
+                    <Label text=" GB" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                     <Label text="Speed: " GridPane.rowIndex="3" />
                     <TextField id="speed" promptText="Enter speed" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                    <Label text="MHz" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                    <Label text=" MHz" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                  <ChoiceBox id="speedTech" fx:id="speedTech" prefHeight="25.0" prefWidth="180.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                 </GridPane>
             </TitledPane>
-            <TitledPane animated="false" text="Storage">
+            <TitledPane text="Storage">
                 <GridPane fx:id="addStorageGui">
                     <columnConstraints>
                         <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -298,7 +284,7 @@
                   <Label text=" Hz" GridPane.columnIndex="2" GridPane.rowIndex="4" />
                 </GridPane>
             </TitledPane>
-            <TitledPane animated="false" text="Cooler">
+            <TitledPane text="Cooler">
                 <GridPane fx:id="addCoolerGui">
                     <columnConstraints>
                         <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -428,7 +414,7 @@
                   </GridPane>
                </content>
             </TitledPane>
-            <TitledPane animated="false" text="Cabin">
+            <TitledPane text="Cabin">
                <content>
                   <GridPane fx:id="addCabinGui">
                      <columnConstraints>
@@ -458,7 +444,7 @@
                   </GridPane>
                </content>
             </TitledPane>
-            <TitledPane animated="false" text="Mouse">
+            <TitledPane text="Mouse">
                 <GridPane fx:id="addMouseGui">
                     <columnConstraints>
                         <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -524,7 +510,7 @@
                   <Label text=" NOK" GridPane.columnIndex="2" GridPane.rowIndex="6" />
                 </GridPane>
             </TitledPane>
-            <TitledPane animated="false" text="Monitor">
+            <TitledPane text="Monitor">
                 <GridPane fx:id="addMonitorGui">
                     <columnConstraints>
                         <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -550,7 +536,7 @@
                     <Button contentDisplay="CENTER" mnemonicParsing="false" onAction="#addMonitor" text="Add Monitor" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                 </GridPane>
             </TitledPane>
-            <TitledPane animated="false" text="Keyboard">
+            <TitledPane text="Keyboard">
                 <GridPane fx:id="addKeyboardGui" prefHeight="69.0" prefWidth="578.0">
                     <columnConstraints>
                         <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
