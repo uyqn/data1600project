@@ -33,21 +33,34 @@
        </GridPane>
    </center>
    <top>
-       <MenuBar BorderPane.alignment="CENTER">
-           <Menu mnemonicParsing="false" text="File">
-            <items>
-               <MenuItem mnemonicParsing="false" text="Open" />
-               <MenuItem mnemonicParsing="false" text="Save" />
-               <MenuItem mnemonicParsing="false" text="Save as" />
-            </items>
-           </Menu>
-           <Menu mnemonicParsing="false" text="View">
-               <MenuItem mnemonicParsing="false" text="Components" />
-            <MenuItem mnemonicParsing="false" text="Users" />
-           </Menu>
-           <Menu mnemonicParsing="false" text="Help">
-               <MenuItem mnemonicParsing="false" text="About" />
-           </Menu>
-       </MenuBar>
+      <GridPane BorderPane.alignment="CENTER">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+             <MenuBar>
+                 <Menu mnemonicParsing="false" text="File">
+                  <items>
+                     <MenuItem mnemonicParsing="false" onAction="#open" text="Open" />
+                     <MenuItem mnemonicParsing="false" onAction="#save" text="Save" />
+                     <MenuItem mnemonicParsing="false" onAction="#saveAs" text="Save as" />
+                  </items>
+                 </Menu>
+                 <Menu mnemonicParsing="false" text="View">
+                     <MenuItem mnemonicParsing="false" onAction="#viewComponents" text="Components" />
+                  <MenuItem mnemonicParsing="false" text="Users" />
+                 </Menu>
+             </MenuBar>
+            <MenuBar nodeOrientation="RIGHT_TO_LEFT" GridPane.columnIndex="1">
+              <menus>
+                <Menu fx:id="userAccount" mnemonicParsing="false" text="UserName" />
+              </menus>
+            </MenuBar>
+         </children>
+      </GridPane>
    </top>
 </BorderPane>

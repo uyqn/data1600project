@@ -11,22 +11,22 @@ public class HDD extends Storage implements Serializable {
 
     public static final transient String COMPONENT_TYPE ="HDD";
 
-    private transient SimpleIntegerProperty RPM = new SimpleIntegerProperty();
+    private transient SimpleIntegerProperty rpm = new SimpleIntegerProperty();
 
     public HDD(String[] csv){
         super(csv[1], csv[2], Double.parseDouble(csv[3]), Double.parseDouble(csv[5]));
-        setRPM(Integer.parseInt(csv[4]));
+        setRpm(Integer.parseInt(csv[4]));
     }
 
     public HDD(String manufacturer,
                String model,
                double capacity,
-               int RPM,
+               int rpm,
                double price){
 
         super(manufacturer, model, capacity, price);
 
-        setRPM(RPM);
+        setRpm(rpm);
 
     }
 
@@ -34,15 +34,267 @@ public class HDD extends Storage implements Serializable {
         return COMPONENT_TYPE;
     }
 
-    public int getRPM(){return RPM.getValue();}
+    @Override
+    public int getRpm(){return rpm.getValue();}
 
-    public void setRPM(int RPM){
+    @Override
+    public void setRpm(int rpm){
 
-        if(RPM<0){
+        if(rpm <0){
             throw new IllegalArgumentException("RPM must be higher than 0!");
 
         }
-        this.RPM.set(RPM);
+        this.rpm.set(rpm);
+    }
+
+    @Override
+    public String getFormFactor() {
+        return null;
+    }
+
+    @Override
+    public void setFormFactor(String formFactor) {
+
+    }
+
+    @Override
+    public int getCoreRpm() {
+        return 0;
+    }
+
+    @Override
+    public void setCoreRpm(int coreRPM) {
+
+    }
+
+    @Override
+    public int getMaxRpm() {
+        return 0;
+    }
+
+    @Override
+    public void setMaxRpm(int maxRPM) {
+
+    }
+
+    @Override
+    public double getCoreNoise() {
+        return 0;
+    }
+
+    @Override
+    public void setCoreNoise(double coreNoise) {
+
+    }
+
+    @Override
+    public double getMaxNoise() {
+        return 0;
+    }
+
+    @Override
+    public void setMaxNoise(double noise) {
+
+    }
+
+    @Override
+    public double getPowerConsumption() {
+        return 0;
+    }
+
+    @Override
+    public void setPowerConsumption(double powerConsumption) {
+
+    }
+
+    @Override
+    public String getSocket() {
+        return null;
+    }
+
+    @Override
+    public void setSocket(String socket) {
+
+    }
+
+    @Override
+    public int getCoreCount() {
+        return 0;
+    }
+
+    @Override
+    public void setCoreCount(int coreCount) {
+
+    }
+
+    @Override
+    public double getCoreClock() {
+        return 0;
+    }
+
+    @Override
+    public void setCoreClock(double coreClock) {
+
+    }
+
+    @Override
+    public double getBoostClock() {
+        return 0;
+    }
+
+    @Override
+    public void setBoostClock(double boostClock) {
+
+    }
+
+    @Override
+    public String getBussType() {
+        return null;
+    }
+
+    @Override
+    public void setBussType(String bussType) {
+
+    }
+
+    @Override
+    public int getMemory() {
+        return 0;
+    }
+
+    @Override
+    public void setMemory(int memory) {
+
+    }
+
+    @Override
+    public String getMemoryType() {
+        return null;
+    }
+
+    @Override
+    public void setMemoryType(String memoryType) {
+
+    }
+
+    @Override
+    public boolean isTactile() {
+        return false;
+    }
+
+    @Override
+    public void setTactile(boolean tactile) {
+
+    }
+
+    @Override
+    public int getRam() {
+        return 0;
+    }
+
+    @Override
+    public void setRam(int ram) {
+
+    }
+
+    @Override
+    public String getMemoryTech() {
+        return null;
+    }
+
+    @Override
+    public void setMemoryTech(String memoryTech) {
+
+    }
+
+    @Override
+    public int getSpeed() {
+        return 0;
+    }
+
+    @Override
+    public void setSpeed(int speed) {
+
+    }
+
+    @Override
+    public int getRefreshRate() {
+        return 0;
+    }
+
+    @Override
+    public void setRefreshRate(int refreshRate) {
+
+    }
+
+    @Override
+    public int getRamSlots() {
+        return 0;
+    }
+
+    @Override
+    public void setRamSlots(int ramSlots) {
+
+    }
+
+    @Override
+    public int getMaxRamSize() {
+        return 0;
+    }
+
+    @Override
+    public void setMaxRamSize(int maxRamSize) {
+
+    }
+
+    @Override
+    public int getNumberButtons() {
+        return 0;
+    }
+
+    @Override
+    public void setNumberButtons(int numberButtons) {
+
+    }
+
+    @Override
+    public int getDpi() {
+        return 0;
+    }
+
+    @Override
+    public void setDpi(int dpi) {
+
+    }
+
+    @Override
+    public boolean isErgonomic() {
+        return false;
+    }
+
+    @Override
+    public void setErgonomic(boolean ergonomic) {
+
+    }
+
+    @Override
+    public boolean isWireless() {
+        return false;
+    }
+
+    @Override
+    public void setWireless(boolean wireless) {
+
+    }
+
+    @Override
+    public int getPowerCapacity() {
+        return 0;
+    }
+
+    @Override
+    public void setPowerCapacity(int powerCapacity) {
+
     }
 
     @Override
@@ -51,7 +303,7 @@ public class HDD extends Storage implements Serializable {
                 getComponentType(),
                 getManufacturer(),
                 getModel(),
-                getRPM(),
+                getRpm(),
                 getPrice()
         );
     }
@@ -65,7 +317,7 @@ public class HDD extends Storage implements Serializable {
         objectOutputStream.writeDouble(getPrice());
 
         objectOutputStream.writeDouble(getCapacity());
-        objectOutputStream.writeInt(getRPM());
+        objectOutputStream.writeInt(getRpm());
     }
 
     private void readObject(ObjectInputStream objectInputStream) throws IOException, ClassNotFoundException {
@@ -76,13 +328,13 @@ public class HDD extends Storage implements Serializable {
         double capacity = objectInputStream.readDouble();
         int rpm = objectInputStream.readInt();
 
-        this.RPM = new SimpleIntegerProperty();
+        this.rpm = new SimpleIntegerProperty();
 
         super.setManufacturer(manufacturer);
         super.setModel(model);
         super.setPrice(price);
 
         super.setCapacity(capacity);
-        setRPM(rpm);
+        setRpm(rpm);
     }
 }

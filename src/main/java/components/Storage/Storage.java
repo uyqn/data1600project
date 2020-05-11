@@ -20,8 +20,10 @@ public abstract class Storage extends Component implements Serializable {
         setCapacity(capacity);
     }
 
+    @Override
     public double getCapacity(){return capacity.getValue();}
 
+    @Override
     public void setCapacity(double capacity){
         if (capacity<0){
             throw new IllegalArgumentException("Capaity must be positive");

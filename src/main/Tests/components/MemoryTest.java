@@ -38,18 +38,18 @@ class MemoryTest {
 
     @Test
     void setRAM(){
-        test.setRAM(2);
-        test.setRAM(4);
-        test.setRAM(8);
-        test.setRAM(16);
-        test.setRAM(32);
-        test.setRAM(64);
-        test.setRAM(128);
-        test.setRAM(256);
+        test.setRam(2);
+        test.setRam(4);
+        test.setRam(8);
+        test.setRam(16);
+        test.setRam(32);
+        test.setRam(64);
+        test.setRam(128);
+        test.setRam(256);
 
-        assertThrows(IllegalArgumentException.class, () -> test.setRAM(0));
-        assertThrows(IllegalArgumentException.class, () -> test.setRAM(63));
-        assertThrows(IllegalArgumentException.class, ()-> test.setRAM(-13));
+        assertThrows(IllegalArgumentException.class, () -> test.setRam(0));
+        assertThrows(IllegalArgumentException.class, () -> test.setRam(63));
+        assertThrows(IllegalArgumentException.class, ()-> test.setRam(-13));
 
 
     }
