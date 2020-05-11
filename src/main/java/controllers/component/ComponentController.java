@@ -323,8 +323,8 @@ public class ComponentController implements Initializable {
 
                 Storage hdd = new HDD(manufacturer, model, capacity, rpm, price);
 
-                DialogBox.info("HDD successfully added",
-                        "The following HDD was added:",
+                DialogBox.info("Harddrive successfully added",
+                        "The following Harddrive was added:",
                         hdd.toString());
 
                 App.componentList.add(hdd);
@@ -456,6 +456,7 @@ public class ComponentController implements Initializable {
 
             resetGui(addKeyboardGui,"manufacturer", "model", "double");
             ((RadioButton) addKeyboardGui.lookup("#tactileYes")).setSelected(true);
+
         }catch (IllegalArgumentException e){
             DialogBox.error(e.getClass().toString(), null,
                     e.getMessage());
