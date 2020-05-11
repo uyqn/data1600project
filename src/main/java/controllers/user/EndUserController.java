@@ -36,7 +36,7 @@ public class EndUserController{
 
     @FXML
     void buildPc(ActionEvent event) throws IOException {
-            Parent view = FXMLLoader.load(getClass().getResource("buildPc.fxml"));
+            Parent view = FXMLLoader.load(getClass().getResource("/main/user/endUsers/buildPc.fxml"));
 
             Scene scene = new Scene(view);
 
@@ -49,7 +49,7 @@ public class EndUserController{
 
     @FXML
     void showPrev(ActionEvent event) throws IOException {
-        Parent view = FXMLLoader.load(getClass().getResource("prevPC.fxml"));
+        Parent view = FXMLLoader.load(getClass().getResource("/main/user/endUsers/prevPC.fxml"));
 
         Scene scene = new Scene(view);
 

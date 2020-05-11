@@ -16,6 +16,9 @@ module main {
     opens controllers.user to javafx.fxml;
     exports controllers.user;
 
+    opens controllers.user.endUsers to javafx.fxml;
+    exports controllers.user.endUsers;
+
     opens controllers.component to javafx.fxml;
     exports controllers.component;
 

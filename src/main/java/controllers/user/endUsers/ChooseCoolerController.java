@@ -1,5 +1,4 @@
 package controllers.user.endUsers;
 
-public class BuildPc {
-
+public class ChooseCoolerController {
 }

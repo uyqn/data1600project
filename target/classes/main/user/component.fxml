@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="726.0" prefWidth="558.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.component.ComponentController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="726.0" prefWidth="558.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.component.ComponentController">
    <center>
       <Accordion prefHeight="618.0" prefWidth="458.0" BorderPane.alignment="CENTER">
         <panes>
@@ -140,7 +140,7 @@
                         </GridPane.margin>
                     </Label>
                     <Label text=" NOK" GridPane.columnIndex="2" GridPane.rowIndex="6" />
-                    <Button mnemonicParsing="false" onAction="#addGraphicCard" text="Add Graphic Card" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                    <Button mnemonicParsing="false" onAction="#addGraphicCard" text="Add GPU" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                     <Label text="Memory type: " GridPane.rowIndex="4" />
                     <Label text="Buss type: " GridPane.rowIndex="2" />
                 </GridPane>
@@ -187,7 +187,7 @@
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                            </rowConstraints>
                            <children>
-                              <TextField id="numSlots" alignment="CENTER" promptText="# of slots" GridPane.columnIndex="1" />
+                              <TextField id="numSlots" alignment="CENTER" editable="false" promptText="# of slots" GridPane.columnIndex="1" />
                               <Button id="decreaseCore" mnemonicParsing="false" onAction="#decreaseRamSlots" prefWidth="25.0" text="-" />
                               <Button id="increaseCore" mnemonicParsing="false" onAction="#increaseRamSlots" text="+" GridPane.columnIndex="2" />
                            </children>
@@ -197,7 +197,7 @@
                         <TextField id="formFactor" promptText="Form factor" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                         <TextField id="price" promptText="Enter price of component" GridPane.columnIndex="1" GridPane.rowIndex="8" />
                         <Label text=" NOK" GridPane.columnIndex="2" GridPane.rowIndex="8" />
-                        <Button mnemonicParsing="false" onAction="#addMb" text="Add motherboard" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                        <Button mnemonicParsing="false" onAction="#addMb" text="Add Motherboard" GridPane.columnIndex="1" GridPane.rowIndex="9" />
                         <Label text="Memory technology: " GridPane.rowIndex="5" />
                         <Label text="Max memory size: " GridPane.rowIndex="6" />
                         <Label text=" GB" GridPane.columnIndex="2" GridPane.rowIndex="6" />
@@ -282,6 +282,9 @@
                     <Label text="RPM: " GridPane.rowIndex="4" />
                     <TextField id="rpm" fx:id="txtRpm" promptText="Enter RPM" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                   <Label text=" Hz" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                  <Label text="Price" GridPane.rowIndex="5" />
+                  <TextField id="price" promptText="Enter Price" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                  <Label text="NOK" GridPane.columnIndex="2" GridPane.rowIndex="5" />
                 </GridPane>
             </TitledPane>
             <TitledPane text="Cooler">
@@ -409,7 +412,7 @@
                         <TextField id="price" promptText="Enter price" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                         <Label text=" Watts" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                         <Label text=" NOK" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                        <Button mnemonicParsing="false" onAction="#addPowerSupply" text="Add power supply" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <Button mnemonicParsing="false" onAction="#addPowerSupply" text="Add PSU" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                      </children>
                   </GridPane>
                </content>
@@ -436,10 +439,10 @@
                         <Label text="Price: " GridPane.rowIndex="3" />
                         <TextField id="manufacturer" promptText="Enter manufacturer" GridPane.columnIndex="1" />
                         <TextField id="model" promptText="Enter model" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <TextField id="power" promptText="Enter power consumption" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <TextField id="formFactor" promptText="Enter power consumption" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                         <TextField id="price" promptText="Enter price of component" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                         <Label text=" NOK" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                        <Button mnemonicParsing="false" text="Add cooler" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <Button mnemonicParsing="false" onAction="#addCabin" text="Add Cabin" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                      </children>
                   </GridPane>
                </content>
@@ -473,16 +476,12 @@
                     <Label alignment="BOTTOM_LEFT" prefHeight="17.0" prefWidth="112.0" text="Number of buttons: " textAlignment="RIGHT" GridPane.rowIndex="2" />
                     <GridPane GridPane.columnIndex="1" GridPane.rowIndex="2">
                         <columnConstraints>
-                            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" />
                             <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" />
                         </columnConstraints>
                         <rowConstraints>
                             <RowConstraints vgrow="SOMETIMES" />
                         </rowConstraints>
-                        <TextField id="numButtons" alignment="CENTER" promptText="buttons" GridPane.columnIndex="1" />
-                        <Button mnemonicParsing="false" prefWidth="25.0" text="-" />
-                        <Button mnemonicParsing="false" text="+" GridPane.columnIndex="2" />
+                        <TextField id="numButtons" alignment="CENTER" promptText="buttons" />
                     </GridPane>
                     <Button mnemonicParsing="false" onAction="#addMouse" text="Add Mouse" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                   <Label text="Ergonomic:" GridPane.rowIndex="4" />
