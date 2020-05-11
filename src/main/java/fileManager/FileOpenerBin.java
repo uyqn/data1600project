@@ -4,24 +4,24 @@ import components.Component;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import listManager.ItemList;
-import main.App;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.nio.file.Files;
+import java.nio.file.Path;
 
-public class FileOpenerBin implements FileOpener {
+public class FileOpenerBin<S extends Component> implements FileOpener {
 
     @SuppressWarnings("unchecked")
     @Override
-    public ObservableList<Component> open() throws IOException, ClassNotFoundException {
+    public ObservableList<Component> open(Path path) throws IOException, ClassNotFoundException {
         ObservableList<Component> list = FXCollections.observableArrayList();
 
-        try (InputStream in = Files.newInputStream(App.fileManager.getPath());
+        try (InputStream in = Files.newInputStream(path);
              ObjectInputStream oin = new ObjectInputStream(in))
         {
-           ItemList tempList = (ItemList) oin.readObject();
+           ItemList<Component> tempList = (ItemList<Component>) oin.readObject();
            list.addAll(tempList.getList());
         }
 

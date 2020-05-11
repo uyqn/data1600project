@@ -261,6 +261,10 @@ public class Cooler extends Component implements Serializable {
         this.maxNoise = new SimpleDoubleProperty();
         this.powerConsumption = new SimpleDoubleProperty();
 
+        super.setManufacturer(manufacturer);
+        super.setModel(model);
+        super.setPrice(price);
+        super.setDimension(dimension);
         setCoreRPM(coreRPM);
         setMaxRPM(maxRPM);
         setCoreNoise(coreNoise);

@@ -1,19 +1,17 @@
 package components.Storage;
-import components.Component;
 import fileManager.Formatter;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
-public class HDD extends Storage{
+public class HDD extends Storage implements Serializable {
 
-    private static final transient String COMPONENT_TYPE ="Harddrive";
+    public static final transient String COMPONENT_TYPE ="HDD";
 
-    private transient SimpleIntegerProperty rpm = new SimpleIntegerProperty();
+    private transient SimpleIntegerProperty RPM = new SimpleIntegerProperty();
 
     public HDD(String[] csv){
         super(csv[1], csv[2], Double.parseDouble(csv[3]), Double.parseDouble(csv[5]));
@@ -23,12 +21,12 @@ public class HDD extends Storage{
     public HDD(String manufacturer,
                String model,
                double capacity,
-               int rpm,
+               int RPM,
                double price){
 
         super(manufacturer, model, capacity, price);
 
-        setRPM(rpm);
+        setRPM(RPM);
 
     }
 
@@ -36,7 +34,7 @@ public class HDD extends Storage{
         return COMPONENT_TYPE;
     }
 
-    public int getRPM(){return rpm.getValue();}
+    public int getRPM(){return RPM.getValue();}
 
     public void setRPM(int RPM){
 
@@ -44,56 +42,47 @@ public class HDD extends Storage{
             throw new IllegalArgumentException("RPM must be higher than 0!");
 
         }
-        this.rpm.set(RPM);
+        this.RPM.set(RPM);
     }
-
-    @Override
-    public String toString(){
-        return String.format("%s: %s\n"+
-                "Capacity: %s TB\n"+
-                "RPM: %s\n"+
-                "Price: %s Nok", COMPONENT_TYPE, getName(), getCapacity(), getRPM(), getPrice());
-    }
-
 
     @Override
     public String toCSV() {
         return Formatter.toCSV(
-                COMPONENT_TYPE,
+                getComponentType(),
                 getManufacturer(),
                 getModel(),
-                getCapacity(),
                 getRPM(),
                 getPrice()
         );
     }
 
-    //Serialisering:
-
-    private void writeObject(ObjectOutputStream objectOutputStream) throws IOException{
+    private void writeObject(ObjectOutputStream objectOutputStream) throws IOException {
         objectOutputStream.defaultWriteObject();
 
+        //Super component
         objectOutputStream.writeUTF(getManufacturer());
         objectOutputStream.writeUTF(getModel());
         objectOutputStream.writeDouble(getPrice());
 
         objectOutputStream.writeDouble(getCapacity());
         objectOutputStream.writeInt(getRPM());
-
-
     }
 
-    private void readObject(ObjectInputStream objectInputStream) throws IOException, ClassNotFoundException{
+    private void readObject(ObjectInputStream objectInputStream) throws IOException, ClassNotFoundException {
         String manufacturer = objectInputStream.readUTF();
         String model = objectInputStream.readUTF();
         double price = objectInputStream.readDouble();
+
         double capacity = objectInputStream.readDouble();
         int rpm = objectInputStream.readInt();
 
+        this.RPM = new SimpleIntegerProperty();
 
-        this.rpm=new SimpleIntegerProperty();
+        super.setManufacturer(manufacturer);
+        super.setModel(model);
+        super.setPrice(price);
 
+        super.setCapacity(capacity);
         setRPM(rpm);
     }
-
 }

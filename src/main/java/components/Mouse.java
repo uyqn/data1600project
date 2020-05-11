@@ -3,7 +3,6 @@ package components;
 import fileManager.Formatter;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -11,29 +10,23 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 public class Mouse extends Component implements Serializable {
-    private transient static final String COMPONENT_TYPE = "Mouse";
+    public transient static final String COMPONENT_TYPE = "Mouse";
 
     private transient SimpleIntegerProperty numberButtons = new SimpleIntegerProperty();
     private transient SimpleIntegerProperty dpi = new SimpleIntegerProperty();
     private transient SimpleBooleanProperty ergonomic = new SimpleBooleanProperty();
     private transient SimpleBooleanProperty wireless = new SimpleBooleanProperty();
 
-    public Mouse(String [] csv) {
+    public Mouse(String[] csv){
         super(csv[1], csv[2], Double.parseDouble(csv[7]));
 
         setNumberButtons(Integer.parseInt(csv[3]));
         setDpi(Integer.parseInt(csv[4]));
         setErgonomic(Boolean.parseBoolean(csv[5]));
         setWireless(Boolean.parseBoolean(csv[6]));
-
     }
 
-    public Mouse(String manufacturer,
-                 String model,
-                 int numberButtons,
-                 int dpi,
-                 boolean ergonomic,
-                 boolean wireless,
+    public Mouse(String manufacturer, String model, int numberButtons, int dpi, boolean ergonomic, boolean wireless,
                  double price) {
         super(manufacturer, model, price);
 
@@ -144,6 +137,9 @@ public class Mouse extends Component implements Serializable {
         this.ergonomic = new SimpleBooleanProperty();
         this.wireless = new SimpleBooleanProperty();
 
+        super.setManufacturer(manufacturer);
+        super.setModel(model);
+        super.setPrice(price);
         setNumberButtons(numberButtons);
         setDpi(dpi);
         setErgonomic(ergonomic);

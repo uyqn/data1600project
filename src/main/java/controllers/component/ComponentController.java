@@ -221,13 +221,13 @@ public class ComponentController implements Initializable {
             double price=getDouble(addGraphicCardGui, "price");
 
 
-            GraphicCard graphicCard=new GraphicCard(manufacturer, model, bussType, memory, memoryType, clockSpeed, price);
+            GPU GPU =new GPU(manufacturer, model, bussType, memory, memoryType, clockSpeed, price);
 
             DialogBox.info("GPU successfully added",
                     "The following gpu was added:",
-                    graphicCard.toString());
+                    GPU.toString());
 
-            App.componentList.add(graphicCard);
+            App.componentList.add(GPU);
 
             resetGui(addGraphicCardGui,
                     "manufacturer",
@@ -417,13 +417,13 @@ public class ComponentController implements Initializable {
             int powerCapacity = getInt(addPowerSupplyGui, "powerCapacity");
             double price= getDouble(addPowerSupplyGui, "price");
 
-            PowerSupply powerSupply = new PowerSupply(manufacturer, model, powerCapacity, price);
+            PSU PSU = new PSU(manufacturer, model, powerCapacity, price);
 
             DialogBox.info("PSU successfully added",
                     "The following PSU was added:",
-                    powerSupply.toString());
+                    PSU.toString());
 
-            App.componentList.add(powerSupply);
+            App.componentList.add(PSU);
 
             resetGui(addPowerSupplyGui,
                     "manufacturer",
@@ -551,7 +551,6 @@ public class ComponentController implements Initializable {
         Limit.text2double(addMemoryGui, "price");
 
         Limit.text2int(addStorageGui, "rpm");
-        Limit.text2double(addStorageGui, "capacity", "price");
 
         Limit.text2int(addCoolerGui, "baseRpm", "maxRpm");
         Limit.text2double(addCoolerGui, "width", "depth", "baseNoise", "maxNoise", "height", "power", "price");

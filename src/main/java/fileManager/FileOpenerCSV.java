@@ -1,40 +1,72 @@
 package fileManager;
 
-import components.CPU;
-import components.Component;
-import components.Cooler;
+import components.*;
+import components.Storage.HDD;
+import components.Storage.SSD;
+import controllers.guiManager.DialogBox;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import main.App;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 
-public class FileOpenerCSV implements FileOpener{
+public class FileOpenerCSV implements FileOpener {
+
     @Override
-    public ObservableList<Component> open() throws IOException {
-        List<String> list = Files.readAllLines(App.fileManager.getPath());
+    public ObservableList<Component> open(Path path) throws IOException, InvalidCsvException {
+        List<String> list = Files.readAllLines(path);
         ObservableList<Component> tempList = FXCollections.observableArrayList();
 
         for (String csvString : list) {
-            switch (csvString.split(Formatter.DELIMITER)[0]) {
-                case CPU.COMPONENT_TYPE:
-                    tempList.add(createCPU(csvString));
-                    break;
-                case Cooler.COMPONENT_TYPE:
-                    tempList.add(createCooler(csvString));
-                    break;
+            Component component = parseInfo(csvString);
+            if(component != null){
+                tempList.add(component);
             }
         }
+
         return tempList;
     }
 
-    private Component createCooler(String csv) {
-        return new Cooler(csv.split(Formatter.DELIMITER));
-    }
-
-    public CPU createCPU(String csv){
-        return new CPU(csv.split(Formatter.DELIMITER));
+    private Component parseInfo(String csvLine) throws InvalidCsvException {
+        String[] csv = csvLine.split(Formatter.DELIMITER);
+        try {
+            switch (csv[0]) {
+                case Cabin.COMPONENT_TYPE:
+                    return new Cabin(csv);
+                case Cooler.COMPONENT_TYPE:
+                    return new Cooler(csv);
+                case CPU.COMPONENT_TYPE:
+                    return new CPU(csv);
+                case GPU.COMPONENT_TYPE:
+                    return new GPU(csv);
+                case Keyboard.COMPONENT_TYPE:
+                    return new Keyboard(csv);
+                case Memory.COMPONENT_TYPE:
+                    return new Memory(csv);
+                case Monitor.COMPONENT_TYPE:
+                    return new Monitor(csv);
+                case Motherboard.COMPONENT_TYPE:
+                    return new Motherboard(csv);
+                case Mouse.COMPONENT_TYPE:
+                    return new Mouse(csv);
+                case PSU.COMPONENT_TYPE:
+                    return new PSU(csv);
+                case SSD.COMPONENT_TYPE:
+                    return new SSD(csv);
+                case HDD.COMPONENT_TYPE:
+                    return new HDD(csv);
+                default:
+                    DialogBox.error("Unrecognizable component",
+                            "The following component cannot be recognized: ",
+                            csvLine);
+                    return null;
+            }
+        } catch (NumberFormatException e){
+            throw new InvalidCsvException("The following csv: \n" + csvLine + "\n" +
+                    "has issues due to the following entry: " +
+                    e.getMessage().substring(e.getMessage().lastIndexOf(":")+2));
+        }
     }
 }

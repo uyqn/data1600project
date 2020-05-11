@@ -2,6 +2,8 @@ package main;
 
 import components.Component;
 import fileManager.FileManager;
+import fileManager.FileOpenerCSV;
+import fileManager.FileSaverCSV;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -12,6 +14,7 @@ import users.User;
 import users.UserList;
 
 import java.io.IOException;
+import java.nio.file.Paths;
 
 /**
  * JavaFX App
@@ -27,7 +30,19 @@ public class App extends Application {
         Scene scene = new Scene(fxmlLoader.load());
         stage.setScene(scene);
 
-        stage.setOnCloseRequest(windowEvent -> Platform.exit());
+        FileOpenerCSV tempOpener = new FileOpenerCSV();
+
+        componentList.setList(tempOpener.open(Paths.get("temp.csv")));
+
+        stage.setOnCloseRequest(windowEvent -> {
+            FileSaverCSV<Component> tempSaver = new FileSaverCSV<>();
+            try {
+                tempSaver.save(Paths.get("temp.csv"), componentList);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Platform.exit();
+        });
 
         stage.show();
     }

@@ -2,26 +2,25 @@ package components;
 
 import fileManager.Formatter;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
-public class PowerSupply extends Component implements Serializable {
+public class PSU extends Component implements Serializable {
 
-    private transient static final String COMPONENT_TYPE = "Power Supply";
+    public transient static final String COMPONENT_TYPE = "PSU";
     private transient SimpleIntegerProperty PowerCapacity;
 
-    public PowerSupply(String[] csv){
+    public PSU(String[] csv){
         super(csv[1], csv[2], Double.parseDouble(csv[3]));
 
         setPowerCapacity(Integer.parseInt(csv[4]));
     }
 
 
-    public PowerSupply(String manufacturer, String model, int PowerCapacity, double price){
+    public PSU(String manufacturer, String model, int PowerCapacity, double price){
         super(manufacturer, model, price);
 
         setPowerCapacity(PowerCapacity);
@@ -44,7 +43,7 @@ public class PowerSupply extends Component implements Serializable {
         }
     }
 
-    public String toString(){
+    public String ToString(){
         return "PowerSupply: " + getName() + "Power Capacity: " +PowerCapacity+" W";
     }
 
@@ -79,6 +78,9 @@ public class PowerSupply extends Component implements Serializable {
 
         this.PowerCapacity = new SimpleIntegerProperty();
 
+        super.setManufacturer(manufacturer);
+        super.setModel(model);
+        super.setPrice(price);
         setPowerCapacity(PowerCapacity);
     }
 }

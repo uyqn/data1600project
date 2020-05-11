@@ -1,9 +1,7 @@
 package components;
 
 import fileManager.Formatter;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -11,7 +9,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 public class Monitor extends Component implements Serializable {
-    private transient static final String COMPONENT_TYPE = "Monitor";
+    public transient static final String COMPONENT_TYPE = "Monitor";
 
     private transient SimpleIntegerProperty refreshRate = new SimpleIntegerProperty();
 
@@ -28,7 +26,7 @@ public class Monitor extends Component implements Serializable {
 
         super(manufacturer, model, price);
 
-        setRefreshRate(refreshRate);
+        setPrice(price);
 
     }
 
@@ -86,6 +84,9 @@ public class Monitor extends Component implements Serializable {
 
         this.refreshRate = new SimpleIntegerProperty();
 
+        super.setManufacturer(manufacturer);
+        super.setModel(model);
+        super.setPrice(price);
         setRefreshRate(refreshRate);
     }
 }

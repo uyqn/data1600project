@@ -248,6 +248,9 @@ public class CPU extends Component implements Serializable, Compatible {
         this.boostClock = new SimpleDoubleProperty();
         this.powerConsumption = new SimpleDoubleProperty();
 
+        super.setManufacturer(manufacturer);
+        super.setModel(model);
+        super.setPrice(price);
         setSocket(socket);
         setCoreCount(coreCount);
         setCoreClock(coreClock);

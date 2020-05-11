@@ -5,8 +5,8 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-class GraphicCardTest{
-    GraphicCard test = new GraphicCard("Manufacturer","Model", "PCIe 3.0x16",0, "DDR", 1.1, 2.2,2);
+class GPUTest {
+    GPU test = new GPU("Manufacturer","Model", "PCIe 3.0x16",0, "DDR", 1.1, 2.2,2);
 
     @Test
     void setManufacturer(){

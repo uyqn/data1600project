@@ -1,14 +1,15 @@
 package fileManager;
 
-import main.App;
+import components.Component;
 import listManager.ItemList;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 
-public class FileSaverCSV implements FileSaver{
+public class FileSaverCSV<S extends Component> implements FileSaver<S>{
     @Override
-    public void save(ItemList list) throws IOException {
-        Files.write(App.fileManager.getPath(), list.toCSV().getBytes());
+    public void save(Path path, ItemList<S> list) throws IOException {
+        Files.write(path, list.toCSV().getBytes());
     }
 }

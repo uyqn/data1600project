@@ -12,11 +12,11 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 public class Motherboard extends Component implements Serializable, Compatible {
-    private transient final static String COMPONENT_TYPE = "Motherboard";
+    public transient final static String COMPONENT_TYPE = "Motherboard";
 
     //These attributes must be serialized and specified in the constructor:
     private transient SimpleIntegerProperty ProcessorSpaces = new SimpleIntegerProperty();
-    private transient SimpleIntegerProperty MaxRamSize = new SimpleIntegerProperty();
+    private transient SimpleIntegerProperty maxRamSize = new SimpleIntegerProperty();
     private transient SimpleStringProperty boostType = new SimpleStringProperty();
     private transient SimpleStringProperty socket = new SimpleStringProperty();
     private transient SimpleStringProperty bussType = new SimpleStringProperty();
@@ -32,15 +32,18 @@ public class Motherboard extends Component implements Serializable, Compatible {
 
     //These attributes are meant to help out with building the Computer class:
     private transient SimpleObjectProperty<CPU> cpu = new SimpleObjectProperty<>();
-    private transient SimpleObjectProperty<GraphicCard> gpu = new SimpleObjectProperty<>();
+    private transient SimpleObjectProperty<GPU> gpu = new SimpleObjectProperty<>();
     private transient SimpleObjectProperty<Memory[]> memories = new SimpleObjectProperty<>();
 
-    public Motherboard(String[] csv // manufacturer, String model, int ProcessorSpaces, int MaxRamSize,
-                       /*double price*/) {
-        super(csv[1], csv[2], Double.parseDouble(csv[5]));
+    public Motherboard(String[] csv) {
+        super(csv[1], csv[2], Double.parseDouble(csv[9]));
 
-        setProcessorSpaces(Integer.parseInt(csv[3]));
-        setMaxRamSize(Integer.parseInt(csv[4]));
+        setSocket(csv[3]);
+        setBussType(csv[4]);
+        setRamSlots(Integer.parseInt(csv[5]));
+        setMemoryTech(csv[6]);
+        setMaxRamSize(Integer.parseInt(csv[7]));
+        setFormFactor(csv[8]);
     }
 
     public Motherboard(String manufacturer,
@@ -54,12 +57,12 @@ public class Motherboard extends Component implements Serializable, Compatible {
                        double price){
         super(manufacturer, model, price);
 
-        setMaxRamSize(maxRamSize);
         setSocket(socket);
         setBussType(bussType);
-        setMemoryTech(memoryTech);
-        setFormFactor(formFactor);
         setRamSlots(ramSlots);
+        setMemoryTech(memoryTech);
+        setMaxRamSize(maxRamSize);
+        setFormFactor(formFactor);
     }
 
     public double getTotalPrice(){
@@ -126,11 +129,11 @@ public class Motherboard extends Component implements Serializable, Compatible {
         availableRamSlots -= memories.length;
     }
 
-    public GraphicCard getGpu(){
+    public GPU getGpu(){
         return this.gpu.getValue();
     }
 
-    public void setGpu(GraphicCard gpu){
+    public void setGpu(GPU gpu){
         if(!compatible(gpu)){
             throw new IllegalArgumentException(gpu.getName() + " is not compatible with this Motherboard");
         }
@@ -282,7 +285,7 @@ public class Motherboard extends Component implements Serializable, Compatible {
     }
 
     public int getMaxRamSize() {
-        return MaxRamSize.getValue();
+        return maxRamSize.getValue();
     }
 
     private void setMaxRamSize(int maxRamSize) {
@@ -290,7 +293,7 @@ public class Motherboard extends Component implements Serializable, Compatible {
         if(maxRamSize % 4 != 0 || maxRamSize<4){
             throw new IllegalArgumentException("Must be a valid number of RAM-Size (16,32,64 etc.)");
         }
-        this.MaxRamSize.set(maxRamSize);
+        this.maxRamSize.set(maxRamSize);
     }
 
     public String getBoostType() {
@@ -328,11 +331,11 @@ public class Motherboard extends Component implements Serializable, Compatible {
         return Formatter.toCSV(getComponentType(),
                 getManufacturer(),
                 getModel(),
-                getProcessorSpaces(),
-                getMaxRamSize(),
                 getSocket(),
-                getMemoryTech(),
+                getBussType(),
                 getRamSlots(),
+                getMemoryTech(),
+                getMaxRamSize(),
                 getFormFactor(),
                 getPrice());
     }
@@ -344,32 +347,42 @@ public class Motherboard extends Component implements Serializable, Compatible {
         objectOutputStream.writeUTF(getManufacturer());
         objectOutputStream.writeUTF(getModel());
         objectOutputStream.writeDouble(getPrice());
-
-        objectOutputStream.writeInt(getProcessorSpaces());
-        objectOutputStream.writeInt(getMaxRamSize());
-        objectOutputStream.writeUTF(getBoostType());
         objectOutputStream.writeUTF(getSocket());
+        objectOutputStream.writeUTF(getBussType());
+        objectOutputStream.writeInt(getRamSlots());
+        objectOutputStream.writeUTF(getMemoryTech());
+        objectOutputStream.writeInt(getMaxRamSize());
+        objectOutputStream.writeUTF(getFormFactor());
     }
 
     private void readObject(ObjectInputStream objectInputStream) throws IOException, ClassNotFoundException {
         String manufacturer = objectInputStream.readUTF();
         String model = objectInputStream.readUTF();
         double price = objectInputStream.readDouble();
-
-        int ProcessorSpaces = objectInputStream.readInt();
-        int MaxRamSize = objectInputStream.readInt();
-        String boostType = objectInputStream.readUTF();
         String socket = objectInputStream.readUTF();
+        String bussType = objectInputStream.readUTF();
+        int ramSlots = objectInputStream.readInt();
+        String memoryTech = objectInputStream.readUTF();
+        int maxRamSize = objectInputStream.readInt();
+        String formFactor = objectInputStream.readUTF();
 
-        this.ProcessorSpaces = new SimpleIntegerProperty();
-        this.MaxRamSize = new SimpleIntegerProperty();
-        this.boostType = new SimpleStringProperty();
         this.socket = new SimpleStringProperty();
+        this.bussType = new SimpleStringProperty();
+        this.ramSlots = new SimpleIntegerProperty();
+        this.memoryTech = new SimpleStringProperty();
+        this.maxRamSize = new SimpleIntegerProperty();
+        this.formFactor = new SimpleStringProperty();
 
-        setProcessorSpaces(ProcessorSpaces);
-        setMaxRamSize(MaxRamSize);
-        setBoostType(boostType);
+        super.setManufacturer(manufacturer);
+        super.setModel(model);
+        super.setPrice(price);
+
         setSocket(socket);
+        setBussType(bussType);
+        setRamSlots(ramSlots);
+        setMemoryTech(memoryTech);
+        setMaxRamSize(maxRamSize);
+        setFormFactor(formFactor);
     }
 
     @Override
@@ -377,9 +390,9 @@ public class Motherboard extends Component implements Serializable, Compatible {
         if(component.getClass() == CPU.class){
             return ((CPU) component).getSocket().equals(getSocket());
         }
-        else if(component.getClass() == GraphicCard.class) {
-            return ((GraphicCard) component).getBussVersion() <= getBussVersion() &&
-                    ((GraphicCard) component).getBussSlots() == getBussSlots();
+        else if(component.getClass() == GPU.class) {
+            return ((GPU) component).getBussVersion() <= getBussVersion() &&
+                    ((GPU) component).getBussSlots() == getBussSlots();
         }
         else if(component.getClass() == Cabin.class) {
             return ((Cabin) component).getFormFactor().equals(getFormFactor());
