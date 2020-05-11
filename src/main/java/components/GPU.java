@@ -13,8 +13,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
-public class GraphicCard extends Component implements Serializable, Compatible {
-    private static final transient String COMPONENT_TYPE = "Graphic Card";
+public class GPU extends Component implements Serializable, Compatible {
+    public static final transient String COMPONENT_TYPE = "GPU";
 
     private transient SimpleStringProperty bussType = new SimpleStringProperty();
     private transient SimpleIntegerProperty memory = new SimpleIntegerProperty();
@@ -25,8 +25,8 @@ public class GraphicCard extends Component implements Serializable, Compatible {
     private transient double bussVersion;
     private transient int bussSlots;
 
-    public GraphicCard(String[] csv //String manufacturer, String model, String bussType,
-                       // int memory,  String memoryType, String clockSpeed, double price)
+    public GPU(String[] csv //String manufacturer, String model, String bussType,
+               // int memory,  String memoryType, String clockSpeed, double price)
     ){
         super(csv[1], csv[2], Double.parseDouble(csv[7]));
 
@@ -38,8 +38,8 @@ public class GraphicCard extends Component implements Serializable, Compatible {
     }
 
 
-    public GraphicCard(String manufacturer, String model, String bussType, int memory, String memoryType,
-                       double baseClock, double boostClock, double price){
+    public GPU(String manufacturer, String model, String bussType, int memory, String memoryType,
+               double baseClock, double boostClock, double price){
         super(manufacturer,model,price);
 
         setBussType(bussType);
@@ -49,7 +49,7 @@ public class GraphicCard extends Component implements Serializable, Compatible {
         setBoostClock(boostClock);
     }
 
-    public GraphicCard(String manufacturer, String model, String bussType, int memory,  String memoryType, String clockSpeed, double price){
+    public GPU(String manufacturer, String model, String bussType, int memory, String memoryType, String clockSpeed, double price){
 
 
         super(manufacturer,model,price);
@@ -234,9 +234,7 @@ public class GraphicCard extends Component implements Serializable, Compatible {
 
     //Serialisering
     private void writeObject(ObjectOutputStream objectOutputStream) throws IOException{
-
         objectOutputStream.defaultWriteObject();
-
 
         objectOutputStream.writeUTF(getManufacturer()); //String
         objectOutputStream.writeUTF(getModel()); //int
@@ -246,11 +244,9 @@ public class GraphicCard extends Component implements Serializable, Compatible {
         objectOutputStream.writeUTF(getMemoryType());
         objectOutputStream.writeDouble(getBaseClock());
         objectOutputStream.writeDouble(getBoostClock());
-
     }
 
     private void readObject(ObjectInputStream objecInputStream) throws IOException, ClassNotFoundException{
-
         String manufacturer = objecInputStream.readUTF();
         String model = objecInputStream.readUTF();
         double price = objecInputStream.readDouble();
@@ -260,12 +256,14 @@ public class GraphicCard extends Component implements Serializable, Compatible {
         double baseClock= objecInputStream.readDouble();
         double boostClock = objecInputStream.readDouble();
 
-
         this.memory=new SimpleIntegerProperty();
         this.memoryType=new SimpleStringProperty();
         this.baseClock=new SimpleDoubleProperty();
         this.boostClock= new SimpleDoubleProperty();
 
+        super.setManufacturer(manufacturer);
+        super.setModel(model);
+        super.setPrice(price);
         setMemory(memory);
         setMemoryType(memoryType);
         setBaseClock(baseClock);

@@ -1,13 +1,22 @@
 package components.Storage;
+import fileManager.Formatter;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
 
-public class HDD extends Storage{
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
-    private static final transient String COMPONENT_TYPE ="HDD";
+public class HDD extends Storage implements Serializable {
 
-    private transient SimpleStringProperty busType = new SimpleStringProperty();
+    public static final transient String COMPONENT_TYPE ="HDD";
+
     private transient SimpleIntegerProperty RPM = new SimpleIntegerProperty();
+
+    public HDD(String[] csv){
+        super(csv[1], csv[2], Double.parseDouble(csv[3]), Double.parseDouble(csv[5]));
+        setRPM(Integer.parseInt(csv[4]));
+    }
 
     public HDD(String manufacturer,
                String model,
@@ -36,9 +45,44 @@ public class HDD extends Storage{
         this.RPM.set(RPM);
     }
 
-
     @Override
     public String toCSV() {
-        return null;
+        return Formatter.toCSV(
+                getComponentType(),
+                getManufacturer(),
+                getModel(),
+                getRPM(),
+                getPrice()
+        );
+    }
+
+    private void writeObject(ObjectOutputStream objectOutputStream) throws IOException {
+        objectOutputStream.defaultWriteObject();
+
+        //Super component
+        objectOutputStream.writeUTF(getManufacturer());
+        objectOutputStream.writeUTF(getModel());
+        objectOutputStream.writeDouble(getPrice());
+
+        objectOutputStream.writeDouble(getCapacity());
+        objectOutputStream.writeInt(getRPM());
+    }
+
+    private void readObject(ObjectInputStream objectInputStream) throws IOException, ClassNotFoundException {
+        String manufacturer = objectInputStream.readUTF();
+        String model = objectInputStream.readUTF();
+        double price = objectInputStream.readDouble();
+
+        double capacity = objectInputStream.readDouble();
+        int rpm = objectInputStream.readInt();
+
+        this.RPM = new SimpleIntegerProperty();
+
+        super.setManufacturer(manufacturer);
+        super.setModel(model);
+        super.setPrice(price);
+
+        super.setCapacity(capacity);
+        setRPM(rpm);
     }
 }

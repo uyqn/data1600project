@@ -18,7 +18,7 @@ public class Computer extends ComponentList<Component> {
     public transient SimpleObjectProperty<CPU> cpu = new SimpleObjectProperty<>();
 
     //Step 2: Pick GPU
-    public transient SimpleObjectProperty<GraphicCard> gpu = new SimpleObjectProperty<>();
+    public transient SimpleObjectProperty<GPU> gpu = new SimpleObjectProperty<>();
 
     //Step 3: Pick Motherboard
     public transient SimpleObjectProperty<Motherboard> mb = new SimpleObjectProperty<>();
@@ -48,7 +48,7 @@ public class Computer extends ComponentList<Component> {
         this.cpu.set(cpu);
     }
 
-    public void setGpu(GraphicCard gpu){
+    public void setGpu(GPU gpu){
         if(this.mb.getValue() != null){
             if(!this.mb.getValue().compatible(gpu)){
                 throw new IllegalArgumentException("Motherboard: " + this.mb.getValue().getName() +

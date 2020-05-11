@@ -2,7 +2,6 @@ package components;
 
 import fileManager.Formatter;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleStringProperty;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -11,7 +10,7 @@ import java.io.Serializable;
 
 public class Keyboard extends Component implements Serializable {
 
-    private transient static final SimpleStringProperty COMPONENT_TYPE = new SimpleStringProperty("Keyboard");
+    public transient static final String COMPONENT_TYPE = "Keyboard";
     private transient SimpleBooleanProperty Tactile;
 
     public Keyboard(String [] csv) {
@@ -39,7 +38,7 @@ public class Keyboard extends Component implements Serializable {
     }
 
     public String getComponentType(){
-        return COMPONENT_TYPE.getValue();
+        return COMPONENT_TYPE;
     }
 
     @Override
@@ -79,6 +78,9 @@ public class Keyboard extends Component implements Serializable {
 
         this.Tactile = new SimpleBooleanProperty();
 
+        super.setManufacturer(manufacturer);
+        super.setModel(model);
+        super.setPrice(price);
         setTactile(Tactile);
     }
 

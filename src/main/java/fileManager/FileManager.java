@@ -99,7 +99,7 @@ public class FileManager {
 
         if(saver != null){
             try {
-                saver.save(list);
+                saver.save(getPath(), list);
                 DialogBox.info("Successfully saved file", null,
                         "File saved to path: " + path);
             } catch (IOException e) {
@@ -141,7 +141,7 @@ public class FileManager {
 
         if(opener != null){
             try {
-                return opener.open();
+                return opener.open(getPath());
             } catch (IOException | ClassNotFoundException e) {
                 Alert error = new Alert(Alert.AlertType.ERROR);
                 error.setTitle(e.getCause().toString());

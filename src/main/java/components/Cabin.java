@@ -4,11 +4,21 @@ import fileManager.Formatter;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 
-public class Cabin extends Component implements Compatible {
-    private transient static final String COMPONENT_TYPE = "Cabin";
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+
+public class Cabin extends Component implements Compatible, Serializable {
+    public transient static final String COMPONENT_TYPE = "Cabin";
     private transient SimpleStringProperty formFactor = new SimpleStringProperty();
 
     private transient SimpleObjectProperty<Motherboard> motherboard = new SimpleObjectProperty<>();
+
+    public Cabin(String[] csv){
+        super(csv[1], csv[2], Double.parseDouble(csv[4]));
+        setFormFactor(csv[3]);
+    }
 
     public Cabin(String manufacturer, String model, String formFactor, double price) {
         super(manufacturer, model, price);
@@ -77,11 +87,11 @@ public class Cabin extends Component implements Compatible {
         getMotherboard().setMemories(memories);
     }
 
-    public GraphicCard getGpu(){
+    public GPU getGpu(){
         return getMotherboard().getGpu();
     }
 
-    public void setGpu(GraphicCard gpu){
+    public void setGpu(GPU gpu){
         getMotherboard().setGpu(gpu);
     }
 
@@ -123,5 +133,29 @@ public class Cabin extends Component implements Compatible {
             throw new IllegalArgumentException("This component is not a connected Motherboard");
         }
         return ((Motherboard) motherboard).getFormFactor().equals(getFormFactor());
+    }
+
+    private void writeObject(ObjectOutputStream objectOutputStream) throws IOException {
+        objectOutputStream.defaultWriteObject();
+
+        //Super component
+        objectOutputStream.writeUTF(getManufacturer());
+        objectOutputStream.writeUTF(getModel());
+        objectOutputStream.writeDouble(getPrice());
+        objectOutputStream.writeUTF(getFormFactor());
+    }
+
+    private void readObject(ObjectInputStream objectInputStream) throws IOException, ClassNotFoundException {
+        String manufacturer = objectInputStream.readUTF();
+        String model = objectInputStream.readUTF();
+        double price = objectInputStream.readDouble();
+        String formFactor = objectInputStream.readUTF();
+
+        this.formFactor = new SimpleStringProperty();
+
+        super.setManufacturer(manufacturer);
+        super.setModel(model);
+        super.setPrice(price);
+        setFormFactor(formFactor);
     }
 }

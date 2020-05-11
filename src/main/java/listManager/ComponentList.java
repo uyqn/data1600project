@@ -100,5 +100,5 @@ public class ComponentList<S extends Component>
     @SuppressWarnings("unchecked")
     private void readObject(ObjectInputStream objectInputStream) throws IOException, ClassNotFoundException {
         List<Component> list = (List<Component>) objectInputStream.readObject();
-        list = FXCollections.observableArrayList(list); }
+        this.list = (ObservableList<S>) FXCollections.observableArrayList(list); }
 }
