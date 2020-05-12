@@ -30,7 +30,7 @@ public class Keyboard extends Component implements Serializable {
     }
 
     public boolean getTactile() {
-        return tactile.get();
+        return tactile.getValue();
     }
 
     public void setTactile(boolean tactile) {
@@ -154,6 +154,26 @@ public class Keyboard extends Component implements Serializable {
 
     @Override
     public void setPowerCapacity(int powerCapacity) {
+
+    }
+
+    @Override
+    public String getNoise() {
+        return null;
+    }
+
+    @Override
+    public void setNoise(String noise) {
+
+    }
+
+    @Override
+    public String getRpmString() {
+        return null;
+    }
+
+    @Override
+    public void setRpmString(String newValue) {
 
     }
 

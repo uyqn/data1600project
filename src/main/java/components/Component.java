@@ -22,6 +22,8 @@ public abstract class Component implements Serializable {
         setPrice(price);
     }
 
+
+
     public abstract String getComponentType();
 
     public String getName() {
@@ -215,4 +217,9 @@ public abstract class Component implements Serializable {
 
     public abstract int getPowerCapacity();
     public abstract void setPowerCapacity(int powerCapacity);
+
+    public abstract String getNoise();
+    public abstract void setNoise(String noise);
+    public abstract String getRpmString();
+    public abstract void setRpmString(String newValue);
 }

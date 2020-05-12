@@ -327,6 +327,26 @@ public class HDD extends Storage implements Serializable {
     }
 
     @Override
+    public String getNoise() {
+        return null;
+    }
+
+    @Override
+    public void setNoise(String noise) {
+
+    }
+
+    @Override
+    public String getRpmString() {
+        return null;
+    }
+
+    @Override
+    public void setRpmString(String newValue) {
+
+    }
+
+    @Override
     public String toCSV() {
         return Formatter.toCSV(
                 getComponentType(),

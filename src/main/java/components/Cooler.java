@@ -23,7 +23,7 @@ public class Cooler extends Component implements Serializable {
         super(csv[1], csv[2], Double.parseDouble(csv[7]));
 
         setDimension(csv[3]);
-        setRPM(csv[4]);
+        setRpmString(csv[4]);
         setNoise(csv[5]);
         setPowerConsumption(Double.parseDouble(csv[6]));
     }
@@ -37,7 +37,7 @@ public class Cooler extends Component implements Serializable {
                    double price) {
         super(manufacturer, model, price);
         super.setDimension(dimension);
-        setRPM(rpm);
+        setRpmString(rpm);
         setNoise(noise);
         setPowerConsumption(powerConsumption);
     }
@@ -193,7 +193,7 @@ public class Cooler extends Component implements Serializable {
 
     }
 
-    public void setRPM(String rpm){
+    public void setRpmString(String rpm){
         if(rpm.matches(" - ")){
             throw new IllegalArgumentException("Base rpm and max rpm are empty\n" +
                     "One of the fields must be filled");

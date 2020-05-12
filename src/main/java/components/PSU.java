@@ -44,6 +44,26 @@ public class PSU extends Component implements Serializable {
     }
 
     @Override
+    public String getNoise() {
+        return null;
+    }
+
+    @Override
+    public void setNoise(String noise) {
+
+    }
+
+    @Override
+    public String getRpmString() {
+        return null;
+    }
+
+    @Override
+    public void setRpmString(String newValue) {
+
+    }
+
+    @Override
     public String toString(){
         return "PowerSupply: " + getName() + "\n" +
                 "Power Capacity: " + getPowerCapacity() + " W\n" +

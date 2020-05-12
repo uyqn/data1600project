@@ -277,6 +277,26 @@ public class GPU extends Component implements Serializable, Compatible {
 
     }
 
+    @Override
+    public String getNoise() {
+        return null;
+    }
+
+    @Override
+    public void setNoise(String noise) {
+
+    }
+
+    @Override
+    public String getRpmString() {
+        return null;
+    }
+
+    @Override
+    public void setRpmString(String newValue) {
+
+    }
+
     public String getClockSpeed() {
         return (getCoreClock() != getBoostClock()) ?
                 getCoreClock() + "/" + getBoostClock():

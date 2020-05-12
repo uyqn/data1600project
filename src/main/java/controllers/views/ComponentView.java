@@ -1,7 +1,10 @@
 package controllers.views;
 
-import components.Component;
+import components.*;
+import components.Storage.HDD;
+import components.Storage.SSD;
 import controllers.guiManager.DialogBox;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -9,12 +12,14 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.util.converter.BooleanStringConverter;
 import javafx.util.converter.DoubleStringConverter;
 import javafx.util.converter.IntegerStringConverter;
 import main.App;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 public class ComponentView implements Initializable {
 
@@ -48,19 +53,1187 @@ public class ComponentView implements Initializable {
         }
     };
 
-    @FXML
-    void viewCpu(ActionEvent event) {
+    private BooleanStringConverter booleanStringConverter = new BooleanStringConverter();
 
+    @FXML
+    void viewAll(ActionEvent event) {
+        TableColumn<Component, String> typeCol = new TableColumn<>("Type");
+        typeCol.setCellValueFactory(new PropertyValueFactory<>("componentType"));
+
+        TableColumn<Component, String> manuCol = new TableColumn<>("Manufacturer");
+        manuCol.setCellValueFactory(new PropertyValueFactory<>("manufacturer"));
+        manuCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        manuCol.setOnEditCommit(edit -> {
+            try{
+                tableView.getSelectionModel().getSelectedItem().setManufacturer(edit.getNewValue());
+            } catch (IllegalArgumentException e){
+                inputError("manufacturer", e.getMessage());
+                tableView.getSelectionModel().getSelectedItem().setManufacturer(edit.getOldValue());
+            }
+            tableView.refresh();
+        });
+
+        TableColumn<Component, String> modelCol = new TableColumn<>("Model");
+        modelCol.setCellValueFactory(new PropertyValueFactory<>("model"));
+        modelCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        modelCol.setOnEditCommit(edit -> {
+            try{
+                tableView.getSelectionModel().getSelectedItem().setModel(edit.getNewValue());
+            } catch (IllegalArgumentException e){
+                inputError("model", e.getMessage());
+                tableView.getSelectionModel().getSelectedItem().setModel(edit.getOldValue());
+            }
+            tableView.refresh();
+        });
+
+        TableColumn<Component, Double> priceCol = new TableColumn<>("Price (NOK)");
+        priceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
+        priceCol.setCellFactory(TextFieldTableCell.forTableColumn(doubleStringConverter));
+        priceCol.setOnEditCommit(edit -> {
+            try{
+                tableView.getSelectionModel().getSelectedItem().setPrice(edit.getNewValue());
+            } catch (IllegalArgumentException e){
+                inputError("price", e.getMessage());
+                tableView.getSelectionModel().getSelectedItem().setPrice(edit.getOldValue());
+            }
+            tableView.refresh();
+        });
+
+        tableView.getColumns().setAll(typeCol, manuCol, modelCol, priceCol);
+
+        tableView.setItems(App.componentList.getList());
     }
 
+    @FXML
 
+    void viewCpu(ActionEvent event) {
+        TableColumn<Component, String> manuCol = new TableColumn<>("Manufacturer");
+        manuCol.setCellValueFactory(new PropertyValueFactory<>("manufacturer"));
+        manuCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        manuCol.setOnEditCommit(edit -> {
+            try {
+                tableView.getSelectionModel().getSelectedItem().setManufacturer(edit.getNewValue());
+            } catch (IllegalArgumentException e){
+                inputError("manufacturer", e.getMessage());
+                tableView.getSelectionModel().getSelectedItem().setManufacturer(edit.getNewValue());
+            }
+            tableView.refresh();
+        });
+
+        TableColumn<Component, String> modelCol = new TableColumn<>("Model");
+        modelCol.setCellValueFactory(new PropertyValueFactory<>("model"));
+        modelCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        modelCol.setOnEditCommit(edit -> {
+            try {
+                tableView.getSelectionModel().getSelectedItem().setModel(edit.getNewValue());
+            } catch (IllegalArgumentException e){
+                inputError("model", e.getMessage());
+                tableView.getSelectionModel().getSelectedItem().setModel(edit.getOldValue());
+            }
+            tableView.refresh();
+        });
+
+        TableColumn<Component, String> socketCol = new TableColumn<>("Socket");
+        socketCol.setCellValueFactory(new PropertyValueFactory<>("socket"));
+        socketCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        socketCol.setOnEditCommit(edit -> {
+            try{
+                tableView.getSelectionModel().getSelectedItem().setSocket(edit.getNewValue());
+            } catch (IllegalArgumentException e){
+                inputError("socket", e.getMessage());
+                tableView.getSelectionModel().getSelectedItem().setSocket(edit.getOldValue());
+            }
+            tableView.refresh();
+        });
+
+        TableColumn<Component, Integer> coreCol = new TableColumn<>("Cores");
+        coreCol.setCellValueFactory(new PropertyValueFactory<>("coreCount"));
+        coreCol.setCellFactory(TextFieldTableCell.forTableColumn(integerStringConverter));
+        coreCol.setOnEditCommit(edit -> {
+            try {
+                tableView.getSelectionModel().getSelectedItem().setCoreCount(edit.getNewValue());
+            } catch (IllegalArgumentException e){
+                inputError("cores", e.getMessage());
+                tableView.getSelectionModel().getSelectedItem().setCoreCount(edit.getOldValue());
+            }
+            tableView.refresh();
+        });
+
+        TableColumn<Component, Double> baseClockCol = new TableColumn<>("Base clock speed (Hz)");
+        baseClockCol.setCellValueFactory(new PropertyValueFactory<>("coreClock"));
+        baseClockCol.setCellFactory(TextFieldTableCell.forTableColumn(doubleStringConverter));
+        baseClockCol.setOnEditCommit(edit -> {
+            try {
+                tableView.getSelectionModel().getSelectedItem().setCoreClock(edit.getNewValue());
+            } catch (IllegalArgumentException e){
+                inputError("base clock", e.getMessage());
+                tableView.getSelectionModel().getSelectedItem().setCoreClock(edit.getOldValue());
+            }
+            tableView.refresh();
+        });
+
+        TableColumn<Component, Double> boostClockCol = new TableColumn<>("Boost clock speed (Hz)");
+        boostClockCol.setCellValueFactory(new PropertyValueFactory<>("coreClock"));
+        boostClockCol.setCellFactory(TextFieldTableCell.forTableColumn(doubleStringConverter));
+        boostClockCol.setOnEditCommit(edit -> {
+            try {
+                tableView.getSelectionModel().getSelectedItem().setBoostClock(edit.getNewValue());
+            } catch (IllegalArgumentException e){
+                inputError("boost clock", e.getMessage());
+                tableView.getSelectionModel().getSelectedItem().setBoostClock(edit.getOldValue());
+            }
+            tableView.refresh();
+        });
+
+        TableColumn<Component, Double> powerCol = new TableColumn<>("Power consumption (W)");
+        powerCol.setCellValueFactory(new PropertyValueFactory<>("powerConsumption"));
+        powerCol.setCellFactory(TextFieldTableCell.forTableColumn(doubleStringConverter));
+        powerCol.setOnEditCommit(edit -> {
+            try {
+                tableView.getSelectionModel().getSelectedItem().setPowerConsumption(edit.getNewValue());
+            } catch (IllegalArgumentException e){
+                inputError("power consumption", e.getMessage());
+                tableView.getSelectionModel().getSelectedItem().setPowerConsumption(edit.getOldValue());
+            }
+            tableView.refresh();
+        });
+
+        TableColumn<Component, Double> priceCol = new TableColumn<>("Price (NOK)");
+        priceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
+        priceCol.setCellFactory(TextFieldTableCell.forTableColumn(doubleStringConverter));
+        priceCol.setOnEditCommit(edit -> {
+            try{
+                tableView.getSelectionModel().getSelectedItem().setPrice(edit.getNewValue());
+            } catch (IllegalArgumentException e){
+                inputError("price", e.getMessage());
+                tableView.getSelectionModel().getSelectedItem().setPrice(edit.getOldValue());
+            }
+            tableView.refresh();
+        });
+
+        tableView.setItems(
+                App.componentList.getList().stream().filter(component ->
+                        component.getComponentType().equals(CPU.COMPONENT_TYPE)
+                ).collect(Collectors.toCollection(FXCollections::observableArrayList))
+        );
+
+        tableView.getColumns().setAll(
+                manuCol,
+                modelCol,
+                socketCol,
+                coreCol,
+                baseClockCol,
+                boostClockCol,
+                powerCol,
+                priceCol
+        );
+    }
+
+    @FXML
+    void viewGpu(ActionEvent event) {
+        TableColumn<Component, String> manuCol = new TableColumn<>("Manufacturer");
+        manuCol.setCellValueFactory(new PropertyValueFactory<>("manufacturer"));
+        manuCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        manuCol.setOnEditCommit(edit -> {
+            try {
+                tableView.getSelectionModel().getSelectedItem().setManufacturer(edit.getNewValue());
+            } catch (IllegalArgumentException e){
+                inputError("manufacturer", e.getMessage());
+                tableView.getSelectionModel().getSelectedItem().setManufacturer(edit.getNewValue());
+            }
+            tableView.refresh();
+        });
+
+        TableColumn<Component, String> modelCol = new TableColumn<>("Model");
+        modelCol.setCellValueFactory(new PropertyValueFactory<>("model"));
+        modelCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        modelCol.setOnEditCommit(edit -> {
+            try {
+                tableView.getSelectionModel().getSelectedItem().setModel(edit.getNewValue());
+            } catch (IllegalArgumentException e){
+                inputError("model", e.getMessage());
+                tableView.getSelectionModel().getSelectedItem().setModel(edit.getOldValue());
+            }
+            tableView.refresh();
+        });
+
+        TableColumn<Component, String> bussCol = new TableColumn<>("Buss type");
+        bussCol.setCellValueFactory(new PropertyValueFactory<>("bussType"));
+        bussCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        bussCol.setOnEditCommit(edit -> {
+            try {
+                tableView.getSelectionModel().getSelectedItem().setBussType(edit.getNewValue());
+            } catch (IllegalArgumentException e){
+                inputError("buss type", e.getMessage());
+                tableView.getSelectionModel().getSelectedItem().setBussType(edit.getOldValue());
+            }
+            tableView.refresh();
+        });
+
+        TableColumn<Component, Integer> memoryCol = new TableColumn<>("Memory (GB)");
+        memoryCol.setCellValueFactory(new PropertyValueFactory<>("memory"));
+        memoryCol.setCellFactory(TextFieldTableCell.forTableColumn(integerStringConverter));
+        memoryCol.setOnEditCommit(edit -> {
+            try {
+                tableView.getSelectionModel().getSelectedItem().setMemory(edit.getNewValue());
+            } catch (IllegalArgumentException e) {
+                inputError("memory", e.getMessage());
+                tableView.getSelectionModel().getSelectedItem().setMemory(edit.getOldValue());
+            }
+            tableView.refresh();
+        });
+
+        TableColumn<Component, String> memoryTypeCol = new TableColumn<>("Technology");
+        memoryTypeCol.setCellValueFactory(new PropertyValueFactory<>("memoryType"));
+        memoryTypeCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        memoryTypeCol.setOnEditCommit(edit -> {
+            try {
+                tableView.getSelectionModel().getSelectedItem().setMemoryType(edit.getNewValue());
+            } catch (IllegalArgumentException e){
+                inputError("buss type", e.getMessage());
+                tableView.getSelectionModel().getSelectedItem().setMemoryType(edit.getOldValue());
+            }
+            tableView.refresh();
+        });
+
+        TableColumn<Component, Integer> boostCol = new TableColumn<>("Boost clock (MHz)");
+        boostCol.setCellValueFactory(new PropertyValueFactory<>("boostSpeed"));
+        boostCol.setCellFactory(TextFieldTableCell.forTableColumn(integerStringConverter));
+        boostCol.setOnEditCommit(edit -> {
+            try {
+                tableView.getSelectionModel().getSelectedItem().setBoostSpeed(edit.getNewValue());
+            } catch (IllegalArgumentException e) {
+                inputError("boost clock", e.getMessage());
+                tableView.getSelectionModel().getSelectedItem().setBoostSpeed(edit.getOldValue());
+            }
+            tableView.refresh();
+        });
+
+        TableColumn<Component, Double> priceCol = new TableColumn<>("Price (NOK)");
+        priceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
+        priceCol.setCellFactory(TextFieldTableCell.forTableColumn(doubleStringConverter));
+        priceCol.setOnEditCommit(edit -> {
+            try{
+                tableView.getSelectionModel().getSelectedItem().setPrice(edit.getNewValue());
+            } catch (IllegalArgumentException e){
+                inputError("price", e.getMessage());
+                tableView.getSelectionModel().getSelectedItem().setPrice(edit.getOldValue());
+            }
+            tableView.refresh();
+        });
+
+        tableView.setItems(
+                App.componentList.getList().stream().filter(component ->
+                        component.getComponentType().equals(GPU.COMPONENT_TYPE)
+                ).collect(Collectors.toCollection(FXCollections::observableArrayList))
+        );
+
+        tableView.getColumns().setAll(
+                manuCol,
+                modelCol,
+                bussCol,
+                memoryCol,
+                memoryTypeCol,
+                boostCol,
+                priceCol
+        );
+    }
+
+    @FXML
+    void viewMb(ActionEvent event) {
+        TableColumn<Component, String> manuCol = new TableColumn<>("Manufacturer");
+        manuCol.setCellValueFactory(new PropertyValueFactory<>("manufacturer"));
+        manuCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        manuCol.setOnEditCommit(edit -> {
+            try {
+                tableView.getSelectionModel().getSelectedItem().setManufacturer(edit.getNewValue());
+            } catch (IllegalArgumentException e){
+                inputError("manufacturer", e.getMessage());
+                tableView.getSelectionModel().getSelectedItem().setManufacturer(edit.getNewValue());
+            }
+            tableView.refresh();
+        });
+
+        TableColumn<Component, String> modelCol = new TableColumn<>("Model");
+        modelCol.setCellValueFactory(new PropertyValueFactory<>("model"));
+        modelCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        modelCol.setOnEditCommit(edit -> {
+            try {
+                tableView.getSelectionModel().getSelectedItem().setModel(edit.getNewValue());
+            } catch (IllegalArgumentException e){
+                inputError("model", e.getMessage());
+                tableView.getSelectionModel().getSelectedItem().setModel(edit.getOldValue());
+            }
+            tableView.refresh();
+        });
+
+        TableColumn<Component, String> socketCol = new TableColumn<>("Socket");
+        socketCol.setCellValueFactory(new PropertyValueFactory<>("socket"));
+        socketCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        socketCol.setOnEditCommit(edit -> {
+            try{
+                tableView.getSelectionModel().getSelectedItem().setSocket(edit.getNewValue());
+            } catch (IllegalArgumentException e){
+                inputError("socket", e.getMessage());
+                tableView.getSelectionModel().getSelectedItem().setSocket(edit.getOldValue());
+            }
+            tableView.refresh();
+        });
+
+        TableColumn<Component, String> bussCol = new TableColumn<>("Buss type");
+        bussCol.setCellValueFactory(new PropertyValueFactory<>("bussType"));
+        bussCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        bussCol.setOnEditCommit(edit -> {
+            try {
+                tableView.getSelectionModel().getSelectedItem().setBussType(edit.getNewValue());
+            } catch (IllegalArgumentException e){
+                inputError("buss type", e.getMessage());
+                tableView.getSelectionModel().getSelectedItem().setBussType(edit.getOldValue());
+            }
+            tableView.refresh();
+        });
+
+        TableColumn<Component, Integer> ramSlotsCol = new TableColumn<>("Ram slots");
+        ramSlotsCol.setCellValueFactory(new PropertyValueFactory<>("ramSlots"));
+        ramSlotsCol.setCellFactory(TextFieldTableCell.forTableColumn(integerStringConverter));
+        ramSlotsCol.setOnEditCommit(edit -> {
+            try {
+                tableView.getSelectionModel().getSelectedItem().setRamSlots(edit.getNewValue());
+            } catch (IllegalArgumentException e) {
+                inputError("ram slots", e.getMessage());
+                tableView.getSelectionModel().getSelectedItem().setRamSlots(edit.getOldValue());
+            }
+            tableView.refresh();
+        });
+
+        TableColumn<Component, String> techCol = new TableColumn<>("Memory Technology");
+        techCol.setCellValueFactory(new PropertyValueFactory<>("memoryTech"));
+        techCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        techCol.setOnEditCommit(edit -> {
+            try {
+                tableView.getSelectionModel().getSelectedItem().setMemoryTech(edit.getNewValue());
+            } catch (IllegalArgumentException e) {
+                inputError("memory technology", e.getMessage());
+                tableView.getSelectionModel().getSelectedItem().setMemoryTech(edit.getOldValue());
+            }
+            tableView.refresh();
+        });
+
+        TableColumn<Component, Integer> maxRamCol = new TableColumn<>("Max RAM (GB)");
+        maxRamCol.setCellValueFactory(new PropertyValueFactory<>("maxRamSize"));
+        maxRamCol.setCellFactory(TextFieldTableCell.forTableColumn(integerStringConverter));
+        maxRamCol.setOnEditCommit(edit -> {
+            try {
+                tableView.getSelectionModel().getSelectedItem().setMaxRamSize(edit.getNewValue());
+            } catch (IllegalArgumentException e) {
+                inputError("max RAM", e.getMessage());
+                tableView.getSelectionModel().getSelectedItem().setMaxRamSize(edit.getOldValue());
+            }
+            tableView.refresh();
+        });
+
+        TableColumn<Component, String> formFactorCol = new TableColumn<>("Form factor");
+        formFactorCol.setCellValueFactory(new PropertyValueFactory<>("formFactor"));
+        formFactorCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        formFactorCol.setOnEditCommit(edit -> {
+            try {
+                tableView.getSelectionModel().getSelectedItem().setFormFactor(edit.getNewValue());
+            } catch (IllegalArgumentException e) {
+                inputError("form factor", e.getMessage());
+                tableView.getSelectionModel().getSelectedItem().setFormFactor(edit.getOldValue());
+            }
+            tableView.refresh();
+        });
+
+        TableColumn<Component, Double> priceCol = new TableColumn<>("Price (NOK)");
+        priceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
+        priceCol.setCellFactory(TextFieldTableCell.forTableColumn(doubleStringConverter));
+        priceCol.setOnEditCommit(edit -> {
+            try{
+                tableView.getSelectionModel().getSelectedItem().setPrice(edit.getNewValue());
+            } catch (IllegalArgumentException e){
+                inputError("price", e.getMessage());
+                tableView.getSelectionModel().getSelectedItem().setPrice(edit.getOldValue());
+            }
+            tableView.refresh();
+        });
+
+        tableView.setItems(
+                App.componentList.getList().stream().filter(component ->
+                        component.getComponentType().equals(Motherboard.COMPONENT_TYPE)
+                ).collect(Collectors.toCollection(FXCollections::observableArrayList))
+        );
+
+        tableView.getColumns().setAll(
+                manuCol,
+                modelCol,
+                socketCol,
+                bussCol,
+                ramSlotsCol,
+                techCol,
+                maxRamCol,
+                formFactorCol,
+                priceCol
+        );
+    }
+
+    @FXML
+    void viewRam(ActionEvent event) {
+        TableColumn<Component, String> manuCol = new TableColumn<>("Manufacturer");
+        manuCol.setCellValueFactory(new PropertyValueFactory<>("manufacturer"));
+        manuCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        manuCol.setOnEditCommit(edit -> {
+            try {
+                tableView.getSelectionModel().getSelectedItem().setManufacturer(edit.getNewValue());
+            } catch (IllegalArgumentException e){
+                inputError("manufacturer", e.getMessage());
+                tableView.getSelectionModel().getSelectedItem().setManufacturer(edit.getNewValue());
+            }
+            tableView.refresh();
+        });
+
+        TableColumn<Component, String> modelCol = new TableColumn<>("Model");
+        modelCol.setCellValueFactory(new PropertyValueFactory<>("model"));
+        modelCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        modelCol.setOnEditCommit(edit -> {
+            try {
+                tableView.getSelectionModel().getSelectedItem().setModel(edit.getNewValue());
+            } catch (IllegalArgumentException e){
+                inputError("model", e.getMessage());
+                tableView.getSelectionModel().getSelectedItem().setModel(edit.getOldValue());
+            }
+            tableView.refresh();
+        });
+
+        TableColumn<Component, Integer> ramCol = new TableColumn<>("RAM (GB)");
+        ramCol.setCellValueFactory(new PropertyValueFactory<>("ram"));
+        ramCol.setCellFactory(TextFieldTableCell.forTableColumn(integerStringConverter));
+        ramCol.setOnEditCommit(edit -> {
+            try {
+                tableView.getSelectionModel().getSelectedItem().setRam(edit.getNewValue());
+            } catch (IllegalArgumentException e) {
+                inputError("RAM", e.getMessage());
+                tableView.getSelectionModel().getSelectedItem().setRam(edit.getOldValue());
+            }
+            tableView.refresh();
+        });
+
+        TableColumn<Component, Integer> speedCol = new TableColumn<>("Speed (MHz)");
+        speedCol.setCellValueFactory(new PropertyValueFactory<>("ram"));
+        speedCol.setCellFactory(TextFieldTableCell.forTableColumn(integerStringConverter));
+        speedCol.setOnEditCommit(edit -> {
+            try {
+                tableView.getSelectionModel().getSelectedItem().setSpeed(edit.getNewValue());
+            } catch (IllegalArgumentException e) {
+                inputError("Speed", e.getMessage());
+                tableView.getSelectionModel().getSelectedItem().setSpeed(edit.getOldValue());
+            }
+            tableView.refresh();
+        });
+
+        TableColumn<Component, String> techCol = new TableColumn<>("Memory Technology");
+        techCol.setCellValueFactory(new PropertyValueFactory<>("memoryTech"));
+        techCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        techCol.setOnEditCommit(edit -> {
+            try {
+                tableView.getSelectionModel().getSelectedItem().setMemoryTech(edit.getNewValue());
+            } catch (IllegalArgumentException e) {
+                inputError("memory technology", e.getMessage());
+                tableView.getSelectionModel().getSelectedItem().setMemoryTech(edit.getOldValue());
+            }
+            tableView.refresh();
+        });
+
+        TableColumn<Component, Double> priceCol = new TableColumn<>("Price (NOK)");
+        priceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
+        priceCol.setCellFactory(TextFieldTableCell.forTableColumn(doubleStringConverter));
+        priceCol.setOnEditCommit(edit -> {
+            try{
+                tableView.getSelectionModel().getSelectedItem().setPrice(edit.getNewValue());
+            } catch (IllegalArgumentException e){
+                inputError("price", e.getMessage());
+                tableView.getSelectionModel().getSelectedItem().setPrice(edit.getOldValue());
+            }
+            tableView.refresh();
+        });
+
+        tableView.setItems(
+                App.componentList.getList().stream().filter(component ->
+                        component.getComponentType().equals(Memory.COMPONENT_TYPE)
+                ).collect(Collectors.toCollection(FXCollections::observableArrayList))
+        );
+
+        tableView.getColumns().setAll(
+                manuCol,
+                modelCol,
+                ramCol,
+                speedCol,
+                techCol,
+                priceCol
+        );
+    }
+
+    @FXML
+    void viewHdd(ActionEvent event) {
+        TableColumn<Component, String> manuCol = new TableColumn<>("Manufacturer");
+        manuCol.setCellValueFactory(new PropertyValueFactory<>("manufacturer"));
+        manuCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        manuCol.setOnEditCommit(edit -> {
+            try {
+                tableView.getSelectionModel().getSelectedItem().setManufacturer(edit.getNewValue());
+            } catch (IllegalArgumentException e){
+                inputError("manufacturer", e.getMessage());
+                tableView.getSelectionModel().getSelectedItem().setManufacturer(edit.getNewValue());
+            }
+            tableView.refresh();
+        });
+
+        TableColumn<Component, String> modelCol = new TableColumn<>("Model");
+        modelCol.setCellValueFactory(new PropertyValueFactory<>("model"));
+        modelCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        modelCol.setOnEditCommit(edit -> {
+            try {
+                tableView.getSelectionModel().getSelectedItem().setModel(edit.getNewValue());
+            } catch (IllegalArgumentException e){
+                inputError("model", e.getMessage());
+                tableView.getSelectionModel().getSelectedItem().setModel(edit.getOldValue());
+            }
+            tableView.refresh();
+        });
+
+        TableColumn<Component, Integer> capacityCol = new TableColumn<>("Capacity (GB)");
+        capacityCol.setCellValueFactory(new PropertyValueFactory<>("capacity"));
+        capacityCol.setCellFactory(TextFieldTableCell.forTableColumn(integerStringConverter));
+        capacityCol.setOnEditCommit(edit -> {
+            try {
+                tableView.getSelectionModel().getSelectedItem().setCapacity(edit.getNewValue());
+            } catch (IllegalArgumentException e) {
+                inputError("capacity", e.getMessage());
+                tableView.getSelectionModel().getSelectedItem().setCapacity(edit.getOldValue());
+            }
+            tableView.refresh();
+        });
+
+        TableColumn<Component, Integer> rpmCol = new TableColumn<>("RPM");
+        rpmCol.setCellValueFactory(new PropertyValueFactory<>("rpm"));
+        rpmCol.setCellFactory(TextFieldTableCell.forTableColumn(integerStringConverter));
+        rpmCol.setOnEditCommit(edit -> {
+            try {
+                tableView.getSelectionModel().getSelectedItem().setRpm(edit.getNewValue());
+            } catch (IllegalArgumentException e) {
+                inputError("capacity", e.getMessage());
+                tableView.getSelectionModel().getSelectedItem().setRpm(edit.getOldValue());
+            }
+            tableView.refresh();
+        });
+
+        TableColumn<Component, Double> priceCol = new TableColumn<>("Price (NOK)");
+        priceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
+        priceCol.setCellFactory(TextFieldTableCell.forTableColumn(doubleStringConverter));
+        priceCol.setOnEditCommit(edit -> {
+            try{
+                tableView.getSelectionModel().getSelectedItem().setPrice(edit.getNewValue());
+            } catch (IllegalArgumentException e){
+                inputError("price", e.getMessage());
+                tableView.getSelectionModel().getSelectedItem().setPrice(edit.getOldValue());
+            }
+            tableView.refresh();
+        });
+
+        tableView.setItems(
+                App.componentList.getList().stream().filter(component ->
+                        component.getComponentType().equals(HDD.COMPONENT_TYPE)
+                ).collect(Collectors.toCollection(FXCollections::observableArrayList))
+        );
+
+        tableView.getColumns().setAll(
+                manuCol,
+                modelCol,
+                capacityCol,
+                rpmCol,
+                priceCol
+        );
+    }
+
+    @FXML
+    void viewSsd(ActionEvent event) {
+        TableColumn<Component, String> manuCol = new TableColumn<>("Manufacturer");
+        manuCol.setCellValueFactory(new PropertyValueFactory<>("manufacturer"));
+        manuCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        manuCol.setOnEditCommit(edit -> {
+            try {
+                tableView.getSelectionModel().getSelectedItem().setManufacturer(edit.getNewValue());
+            } catch (IllegalArgumentException e){
+                inputError("manufacturer", e.getMessage());
+                tableView.getSelectionModel().getSelectedItem().setManufacturer(edit.getNewValue());
+            }
+            tableView.refresh();
+        });
+
+        TableColumn<Component, String> modelCol = new TableColumn<>("Model");
+        modelCol.setCellValueFactory(new PropertyValueFactory<>("model"));
+        modelCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        modelCol.setOnEditCommit(edit -> {
+            try {
+                tableView.getSelectionModel().getSelectedItem().setModel(edit.getNewValue());
+            } catch (IllegalArgumentException e){
+                inputError("model", e.getMessage());
+                tableView.getSelectionModel().getSelectedItem().setModel(edit.getOldValue());
+            }
+            tableView.refresh();
+        });
+
+        TableColumn<Component, Integer> capacityCol = new TableColumn<>("Capacity (GB)");
+        capacityCol.setCellValueFactory(new PropertyValueFactory<>("capacity"));
+        capacityCol.setCellFactory(TextFieldTableCell.forTableColumn(integerStringConverter));
+        capacityCol.setOnEditCommit(edit -> {
+            try {
+                tableView.getSelectionModel().getSelectedItem().setCapacity(edit.getNewValue());
+            } catch (IllegalArgumentException e) {
+                inputError("capacity", e.getMessage());
+                tableView.getSelectionModel().getSelectedItem().setCapacity(edit.getOldValue());
+            }
+            tableView.refresh();
+        });
+
+        TableColumn<Component, Double> priceCol = new TableColumn<>("Price (NOK)");
+        priceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
+        priceCol.setCellFactory(TextFieldTableCell.forTableColumn(doubleStringConverter));
+        priceCol.setOnEditCommit(edit -> {
+            try{
+                tableView.getSelectionModel().getSelectedItem().setPrice(edit.getNewValue());
+            } catch (IllegalArgumentException e){
+                inputError("price", e.getMessage());
+                tableView.getSelectionModel().getSelectedItem().setPrice(edit.getOldValue());
+            }
+            tableView.refresh();
+        });
+
+        tableView.setItems(
+                App.componentList.getList().stream().filter(component ->
+                        component.getComponentType().equals(SSD.COMPONENT_TYPE)
+                ).collect(Collectors.toCollection(FXCollections::observableArrayList))
+        );
+
+        tableView.getColumns().setAll(
+                manuCol,
+                modelCol,
+                capacityCol,
+                priceCol
+        );
+    }
+
+    @FXML
+    void viewCooler(ActionEvent event) {
+        TableColumn<Component, String> manuCol = new TableColumn<>("Manufacturer");
+        manuCol.setCellValueFactory(new PropertyValueFactory<>("manufacturer"));
+        manuCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        manuCol.setOnEditCommit(edit -> {
+            try {
+                tableView.getSelectionModel().getSelectedItem().setManufacturer(edit.getNewValue());
+            } catch (IllegalArgumentException e){
+                inputError("manufacturer", e.getMessage());
+                tableView.getSelectionModel().getSelectedItem().setManufacturer(edit.getNewValue());
+            }
+            tableView.refresh();
+        });
+
+        TableColumn<Component, String> modelCol = new TableColumn<>("Model");
+        modelCol.setCellValueFactory(new PropertyValueFactory<>("model"));
+        modelCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        modelCol.setOnEditCommit(edit -> {
+            try {
+                tableView.getSelectionModel().getSelectedItem().setModel(edit.getNewValue());
+            } catch (IllegalArgumentException e){
+                inputError("model", e.getMessage());
+                tableView.getSelectionModel().getSelectedItem().setModel(edit.getOldValue());
+            }
+            tableView.refresh();
+        });
+
+        TableColumn<Component, String> dimCol = new TableColumn<>("Dimension (cm)");
+        dimCol.setCellValueFactory(new PropertyValueFactory<>("dimension"));
+        dimCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        dimCol.setOnEditCommit(edit -> {
+            try {
+                tableView.getSelectionModel().getSelectedItem().setDimension(edit.getNewValue());
+            } catch (IllegalArgumentException e) {
+                inputError("dimension", e.getMessage());
+                tableView.getSelectionModel().getSelectedItem().setDimension(edit.getOldValue());
+            }
+            tableView.refresh();
+        });
+
+        TableColumn<Component, String> rpmCol = new TableColumn<>("RPM");
+        rpmCol.setCellValueFactory(new PropertyValueFactory<>("rpmString"));
+        rpmCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        rpmCol.setOnEditCommit(edit -> {
+            try {
+                tableView.getSelectionModel().getSelectedItem().setRpmString(edit.getNewValue());
+            } catch (IllegalArgumentException e) {
+                inputError("RPM", e.getMessage());
+                tableView.getSelectionModel().getSelectedItem().setRpmString(edit.getOldValue());
+            }
+            tableView.refresh();
+        });
+
+        TableColumn<Component, String> noiseCol = new TableColumn<>("Noise (dBA)");
+        noiseCol.setCellValueFactory(new PropertyValueFactory<>("noise"));
+        noiseCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        noiseCol.setOnEditCommit(edit -> {
+            try {
+                tableView.getSelectionModel().getSelectedItem().setNoise(edit.getNewValue());
+            } catch (IllegalArgumentException e) {
+                inputError("Noise", e.getMessage());
+                tableView.getSelectionModel().getSelectedItem().setNoise(edit.getOldValue());
+            }
+            tableView.refresh();
+        });
+
+        TableColumn<Component, Double> powerCol = new TableColumn<>("Power consumption (W)");
+        powerCol.setCellValueFactory(new PropertyValueFactory<>("powerConsumption"));
+        powerCol.setCellFactory(TextFieldTableCell.forTableColumn(doubleStringConverter));
+        powerCol.setOnEditCommit(edit -> {
+            try {
+                tableView.getSelectionModel().getSelectedItem().setPowerConsumption(edit.getNewValue());
+            } catch (IllegalArgumentException e){
+                inputError("power consumption", e.getMessage());
+                tableView.getSelectionModel().getSelectedItem().setPowerConsumption(edit.getOldValue());
+            }
+            tableView.refresh();
+        });
+
+        TableColumn<Component, Double> priceCol = new TableColumn<>("Price (NOK)");
+        priceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
+        priceCol.setCellFactory(TextFieldTableCell.forTableColumn(doubleStringConverter));
+        priceCol.setOnEditCommit(edit -> {
+            try{
+                tableView.getSelectionModel().getSelectedItem().setPrice(edit.getNewValue());
+            } catch (IllegalArgumentException e){
+                inputError("price", e.getMessage());
+                tableView.getSelectionModel().getSelectedItem().setPrice(edit.getOldValue());
+            }
+            tableView.refresh();
+        });
+
+        tableView.setItems(
+                App.componentList.getList().stream().filter(component ->
+                        component.getComponentType().equals(Cooler.COMPONENT_TYPE)
+                ).collect(Collectors.toCollection(FXCollections::observableArrayList))
+        );
+
+        tableView.getColumns().setAll(
+                manuCol,
+                modelCol,
+                dimCol,
+                rpmCol,
+                noiseCol,
+                powerCol,
+                priceCol
+        );
+    }
+
+    @FXML
+    void viewPsu(ActionEvent event) {
+        TableColumn<Component, String> manuCol = new TableColumn<>("Manufacturer");
+        manuCol.setCellValueFactory(new PropertyValueFactory<>("manufacturer"));
+        manuCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        manuCol.setOnEditCommit(edit -> {
+            try {
+                tableView.getSelectionModel().getSelectedItem().setManufacturer(edit.getNewValue());
+            } catch (IllegalArgumentException e){
+                inputError("manufacturer", e.getMessage());
+                tableView.getSelectionModel().getSelectedItem().setManufacturer(edit.getNewValue());
+            }
+            tableView.refresh();
+        });
+
+        TableColumn<Component, String> modelCol = new TableColumn<>("Model");
+        modelCol.setCellValueFactory(new PropertyValueFactory<>("model"));
+        modelCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        modelCol.setOnEditCommit(edit -> {
+            try {
+                tableView.getSelectionModel().getSelectedItem().setModel(edit.getNewValue());
+            } catch (IllegalArgumentException e){
+                inputError("model", e.getMessage());
+                tableView.getSelectionModel().getSelectedItem().setModel(edit.getOldValue());
+            }
+            tableView.refresh();
+        });
+
+        TableColumn<Component, Integer> powerCol = new TableColumn<>("Power capacity (W)");
+        powerCol.setCellValueFactory(new PropertyValueFactory<>("powerCapacity"));
+        powerCol.setCellFactory(TextFieldTableCell.forTableColumn(integerStringConverter));
+        powerCol.setOnEditCommit(edit -> {
+            try {
+                tableView.getSelectionModel().getSelectedItem().setPowerCapacity(edit.getNewValue());
+            } catch (IllegalArgumentException e){
+                inputError("power consumption", e.getMessage());
+                tableView.getSelectionModel().getSelectedItem().setPowerCapacity(edit.getOldValue());
+            }
+            tableView.refresh();
+        });
+
+        TableColumn<Component, Double> priceCol = new TableColumn<>("Price (NOK)");
+        priceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
+        priceCol.setCellFactory(TextFieldTableCell.forTableColumn(doubleStringConverter));
+        priceCol.setOnEditCommit(edit -> {
+            try{
+                tableView.getSelectionModel().getSelectedItem().setPrice(edit.getNewValue());
+            } catch (IllegalArgumentException e){
+                inputError("price", e.getMessage());
+                tableView.getSelectionModel().getSelectedItem().setPrice(edit.getOldValue());
+            }
+            tableView.refresh();
+        });
+
+        tableView.setItems(
+                App.componentList.getList().stream().filter(component ->
+                        component.getComponentType().equals(PSU.COMPONENT_TYPE)
+                ).collect(Collectors.toCollection(FXCollections::observableArrayList))
+        );
+
+        tableView.getColumns().setAll(
+                manuCol,
+                modelCol,
+                powerCol,
+                priceCol
+        );
+    }
+
+    @FXML
+    void viewCabin(ActionEvent event) {
+        TableColumn<Component, String> manuCol = new TableColumn<>("Manufacturer");
+        manuCol.setCellValueFactory(new PropertyValueFactory<>("manufacturer"));
+        manuCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        manuCol.setOnEditCommit(edit -> {
+            try {
+                tableView.getSelectionModel().getSelectedItem().setManufacturer(edit.getNewValue());
+            } catch (IllegalArgumentException e){
+                inputError("manufacturer", e.getMessage());
+                tableView.getSelectionModel().getSelectedItem().setManufacturer(edit.getNewValue());
+            }
+            tableView.refresh();
+        });
+
+        TableColumn<Component, String> modelCol = new TableColumn<>("Model");
+        modelCol.setCellValueFactory(new PropertyValueFactory<>("model"));
+        modelCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        modelCol.setOnEditCommit(edit -> {
+            try {
+                tableView.getSelectionModel().getSelectedItem().setModel(edit.getNewValue());
+            } catch (IllegalArgumentException e){
+                inputError("model", e.getMessage());
+                tableView.getSelectionModel().getSelectedItem().setModel(edit.getOldValue());
+            }
+            tableView.refresh();
+        });
+
+        TableColumn<Component, String> formFactorCol = new TableColumn<>("Form factor");
+        formFactorCol.setCellValueFactory(new PropertyValueFactory<>("formFactor"));
+        formFactorCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        formFactorCol.setOnEditCommit(edit -> {
+            try {
+                tableView.getSelectionModel().getSelectedItem().setFormFactor(edit.getNewValue());
+            } catch (IllegalArgumentException e) {
+                inputError("form factor", e.getMessage());
+                tableView.getSelectionModel().getSelectedItem().setFormFactor(edit.getOldValue());
+            }
+            tableView.refresh();
+        });
+
+        TableColumn<Component, Double> priceCol = new TableColumn<>("Price (NOK)");
+        priceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
+        priceCol.setCellFactory(TextFieldTableCell.forTableColumn(doubleStringConverter));
+        priceCol.setOnEditCommit(edit -> {
+            try{
+                tableView.getSelectionModel().getSelectedItem().setPrice(edit.getNewValue());
+            } catch (IllegalArgumentException e){
+                inputError("price", e.getMessage());
+                tableView.getSelectionModel().getSelectedItem().setPrice(edit.getOldValue());
+            }
+            tableView.refresh();
+        });
+
+        tableView.setItems(
+                App.componentList.getList().stream().filter(component ->
+                        component.getComponentType().equals(Cabin.COMPONENT_TYPE)
+                ).collect(Collectors.toCollection(FXCollections::observableArrayList))
+        );
+
+        tableView.getColumns().setAll(
+                manuCol,
+                modelCol,
+                formFactorCol,
+                priceCol
+        );
+    }
+
+    @FXML
+    void viewMouse(ActionEvent event) {
+        TableColumn<Component, String> manuCol = new TableColumn<>("Manufacturer");
+        manuCol.setCellValueFactory(new PropertyValueFactory<>("manufacturer"));
+        manuCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        manuCol.setOnEditCommit(edit -> {
+            try {
+                tableView.getSelectionModel().getSelectedItem().setManufacturer(edit.getNewValue());
+            } catch (IllegalArgumentException e){
+                inputError("manufacturer", e.getMessage());
+                tableView.getSelectionModel().getSelectedItem().setManufacturer(edit.getNewValue());
+            }
+            tableView.refresh();
+        });
+
+        TableColumn<Component, String> modelCol = new TableColumn<>("Model");
+        modelCol.setCellValueFactory(new PropertyValueFactory<>("model"));
+        modelCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        modelCol.setOnEditCommit(edit -> {
+            try {
+                tableView.getSelectionModel().getSelectedItem().setModel(edit.getNewValue());
+            } catch (IllegalArgumentException e){
+                inputError("model", e.getMessage());
+                tableView.getSelectionModel().getSelectedItem().setModel(edit.getOldValue());
+            }
+            tableView.refresh();
+        });
+
+        TableColumn<Component, Integer> numButtCol = new TableColumn<>("Buttons");
+        numButtCol.setCellValueFactory(new PropertyValueFactory<>("numberButtons"));
+        numButtCol.setCellFactory(TextFieldTableCell.forTableColumn(integerStringConverter));
+        numButtCol.setOnEditCommit(edit -> {
+            try {
+                tableView.getSelectionModel().getSelectedItem().setNumberButtons(edit.getNewValue());
+            } catch (IllegalArgumentException e) {
+                inputError("buttons", e.getMessage());
+                tableView.getSelectionModel().getSelectedItem().setNumberButtons(edit.getOldValue());
+            }
+            tableView.refresh();
+        });
+
+        TableColumn<Component, Integer> dpiCol = new TableColumn<>("Polling rate (dpi)");
+        dpiCol.setCellValueFactory(new PropertyValueFactory<>("dpi"));
+        dpiCol.setCellFactory(TextFieldTableCell.forTableColumn(integerStringConverter));
+        dpiCol.setOnEditCommit(edit -> {
+            try {
+                tableView.getSelectionModel().getSelectedItem().setDpi(edit.getNewValue());
+            } catch (IllegalArgumentException e) {
+                inputError("dpi", e.getMessage());
+                tableView.getSelectionModel().getSelectedItem().setDpi(edit.getOldValue());
+            }
+            tableView.refresh();
+        });
+
+        TableColumn<Component, Boolean> ergonomicCol = new TableColumn<>("Eronomic");
+        ergonomicCol.setCellValueFactory(new PropertyValueFactory<>("ergonomic"));
+        ergonomicCol.setCellFactory(TextFieldTableCell.forTableColumn(booleanStringConverter));
+        ergonomicCol.setOnEditCommit(edit -> {
+            try {
+                tableView.getSelectionModel().getSelectedItem().setErgonomic(edit.getNewValue());
+            } catch (IllegalArgumentException e) {
+                inputError("ergonomic", e.getMessage());
+                tableView.getSelectionModel().getSelectedItem().setErgonomic(edit.getOldValue());
+            }
+            tableView.refresh();
+        });
+
+        TableColumn<Component, Boolean> wirelessCol = new TableColumn<>("Wireless");
+        wirelessCol.setCellValueFactory(new PropertyValueFactory<>("wireless"));
+        wirelessCol.setCellFactory(TextFieldTableCell.forTableColumn(booleanStringConverter));
+        wirelessCol.setOnEditCommit(edit -> {
+            try {
+                tableView.getSelectionModel().getSelectedItem().setWireless(edit.getNewValue());
+            } catch (IllegalArgumentException e) {
+                inputError("wireless", e.getMessage());
+                tableView.getSelectionModel().getSelectedItem().setWireless(edit.getOldValue());
+            }
+            tableView.refresh();
+        });
+
+        TableColumn<Component, Double> priceCol = new TableColumn<>("Price (NOK)");
+        priceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
+        priceCol.setCellFactory(TextFieldTableCell.forTableColumn(doubleStringConverter));
+        priceCol.setOnEditCommit(edit -> {
+            try{
+                tableView.getSelectionModel().getSelectedItem().setPrice(edit.getNewValue());
+            } catch (IllegalArgumentException e){
+                inputError("price", e.getMessage());
+                tableView.getSelectionModel().getSelectedItem().setPrice(edit.getOldValue());
+            }
+            tableView.refresh();
+        });
+
+        tableView.setItems(
+                App.componentList.getList().stream().filter(component ->
+                        component.getComponentType().equals(Mouse.COMPONENT_TYPE)
+                ).collect(Collectors.toCollection(FXCollections::observableArrayList))
+        );
+
+        tableView.getColumns().setAll(
+                manuCol,
+                modelCol,
+                numButtCol,
+                dpiCol,
+                ergonomicCol,
+                wirelessCol,
+                priceCol
+        );
+    }
+
+    @FXML
+    void viewMonitor(ActionEvent event){
+        TableColumn<Component, String> manuCol = new TableColumn<>("Manufacturer");
+        manuCol.setCellValueFactory(new PropertyValueFactory<>("manufacturer"));
+        manuCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        manuCol.setOnEditCommit(edit -> {
+            try {
+                tableView.getSelectionModel().getSelectedItem().setManufacturer(edit.getNewValue());
+            } catch (IllegalArgumentException e){
+                inputError("manufacturer", e.getMessage());
+                tableView.getSelectionModel().getSelectedItem().setManufacturer(edit.getNewValue());
+            }
+            tableView.refresh();
+        });
+
+        TableColumn<Component, String> modelCol = new TableColumn<>("Model");
+        modelCol.setCellValueFactory(new PropertyValueFactory<>("model"));
+        modelCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        modelCol.setOnEditCommit(edit -> {
+            try {
+                tableView.getSelectionModel().getSelectedItem().setModel(edit.getNewValue());
+            } catch (IllegalArgumentException e){
+                inputError("model", e.getMessage());
+                tableView.getSelectionModel().getSelectedItem().setModel(edit.getOldValue());
+            }
+            tableView.refresh();
+        });
+
+        TableColumn<Component, Double> sizeCol = new TableColumn<>("Display size (inches)");
+        sizeCol.setCellValueFactory(new PropertyValueFactory<>("size"));
+        sizeCol.setCellFactory(TextFieldTableCell.forTableColumn(doubleStringConverter));
+        sizeCol.setOnEditCommit(edit -> {
+            try {
+                tableView.getSelectionModel().getSelectedItem().setSize(edit.getNewValue());
+            } catch (IllegalArgumentException e){
+                inputError("display size", e.getMessage());
+                tableView.getSelectionModel().getSelectedItem().setSize(edit.getOldValue());
+            }
+            tableView.refresh();
+        });
+
+        TableColumn<Component, Integer> refreshCol = new TableColumn<>("Refresh Rate (Hz)");
+        refreshCol.setCellValueFactory(new PropertyValueFactory<>("refreshRate"));
+        refreshCol.setCellFactory(TextFieldTableCell.forTableColumn(integerStringConverter));
+        refreshCol.setOnEditCommit(edit -> {
+            try {
+                tableView.getSelectionModel().getSelectedItem().setRefreshRate(edit.getNewValue());
+            } catch (IllegalArgumentException e){
+                inputError("refresh rate", e.getMessage());
+                tableView.getSelectionModel().getSelectedItem().setRefreshRate(edit.getOldValue());
+            }
+            tableView.refresh();
+        });
+
+        TableColumn<Component, Double> priceCol = new TableColumn<>("Price (NOK)");
+        priceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
+        priceCol.setCellFactory(TextFieldTableCell.forTableColumn(doubleStringConverter));
+        priceCol.setOnEditCommit(edit -> {
+            try{
+                tableView.getSelectionModel().getSelectedItem().setPrice(edit.getNewValue());
+            } catch (IllegalArgumentException e){
+                inputError("price", e.getMessage());
+                tableView.getSelectionModel().getSelectedItem().setPrice(edit.getOldValue());
+            }
+            tableView.refresh();
+        });
+
+        tableView.setItems(
+                App.componentList.getList().stream().filter(component ->
+                        component.getComponentType().equals(Monitor.COMPONENT_TYPE)
+                ).collect(Collectors.toCollection(FXCollections::observableArrayList))
+        );
+
+        tableView.getColumns().setAll(
+                manuCol,
+                modelCol,
+                sizeCol,
+                refreshCol,
+                priceCol
+        );
+    }
+
+    @FXML
+    void viewKeyboard(ActionEvent event) {
+        TableColumn<Component, String> manuCol = new TableColumn<>("Manufacturer");
+        manuCol.setCellValueFactory(new PropertyValueFactory<>("manufacturer"));
+        manuCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        manuCol.setOnEditCommit(edit -> {
+            try {
+                tableView.getSelectionModel().getSelectedItem().setManufacturer(edit.getNewValue());
+            } catch (IllegalArgumentException e){
+                inputError("manufacturer", e.getMessage());
+                tableView.getSelectionModel().getSelectedItem().setManufacturer(edit.getNewValue());
+            }
+            tableView.refresh();
+        });
+
+        TableColumn<Component, String> modelCol = new TableColumn<>("Model");
+        modelCol.setCellValueFactory(new PropertyValueFactory<>("model"));
+        modelCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        modelCol.setOnEditCommit(edit -> {
+            try {
+                tableView.getSelectionModel().getSelectedItem().setModel(edit.getNewValue());
+            } catch (IllegalArgumentException e){
+                inputError("model", e.getMessage());
+                tableView.getSelectionModel().getSelectedItem().setModel(edit.getOldValue());
+            }
+            tableView.refresh();
+        });
+
+        TableColumn<Component, Boolean> tactileCol = new TableColumn<>("Tactile");
+        tactileCol.setCellValueFactory(new PropertyValueFactory<>("tactile"));
+        tactileCol.setCellFactory(TextFieldTableCell.forTableColumn(booleanStringConverter));
+        tactileCol.setOnEditCommit(edit -> {
+            try {
+                tableView.getSelectionModel().getSelectedItem().setTactile(edit.getNewValue());
+            } catch (IllegalArgumentException e) {
+                inputError("tactile", e.getMessage());
+                tableView.getSelectionModel().getSelectedItem().setTactile(edit.getOldValue());
+            }
+            tableView.refresh();
+        });
+
+        TableColumn<Component, Double> priceCol = new TableColumn<>("Price (NOK)");
+        priceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
+        priceCol.setCellFactory(TextFieldTableCell.forTableColumn(doubleStringConverter));
+        priceCol.setOnEditCommit(edit -> {
+            try{
+                tableView.getSelectionModel().getSelectedItem().setPrice(edit.getNewValue());
+            } catch (IllegalArgumentException e){
+                inputError("price", e.getMessage());
+                tableView.getSelectionModel().getSelectedItem().setPrice(edit.getOldValue());
+            }
+            tableView.refresh();
+        });
+
+        tableView.setItems(
+                App.componentList.getList().stream().filter(component ->
+                        component.getComponentType().equals(Keyboard.COMPONENT_TYPE)
+                ).collect(Collectors.toCollection(FXCollections::observableArrayList))
+        );
+
+        tableView.getColumns().setAll(
+                manuCol,
+                modelCol,
+                tactileCol,
+                priceCol
+        );
+    }
 
     private void inputError(String inputField, String error) {
         DialogBox.error("Input error!",
                 "could not update " + inputField,
                 error);
     };
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

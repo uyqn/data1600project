@@ -297,6 +297,26 @@ public class Cabin extends Component implements Compatible, Serializable {
 
     }
 
+    @Override
+    public String getNoise() {
+        return null;
+    }
+
+    @Override
+    public void setNoise(String noise) {
+
+    }
+
+    @Override
+    public String getRpmString() {
+        return null;
+    }
+
+    @Override
+    public void setRpmString(String newValue) {
+
+    }
+
     public double getTotalPrice(){
         double totalPrice = getPrice();
 

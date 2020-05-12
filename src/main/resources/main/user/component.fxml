@@ -208,7 +208,7 @@
                     </rowConstraints>
                     <Label text="Manufacturer: " />
                     <Label text="Model: " GridPane.rowIndex="1" />
-                    <Label text="Number of RAM: " GridPane.rowIndex="2" />
+                    <Label text="RAM: " GridPane.rowIndex="2" />
                     <Label text="Price: " GridPane.rowIndex="5" />
                     <TextField id="manufacturer" promptText="Enter manufacturer" GridPane.columnIndex="1" />
                     <TextField id="model" promptText="Enter model" GridPane.columnIndex="1" GridPane.rowIndex="1" />

@@ -346,4 +346,24 @@ public class SSD extends Storage implements Serializable {
     public void setPowerCapacity(int powerCapacity) {
 
     }
+
+    @Override
+    public String getNoise() {
+        return null;
+    }
+
+    @Override
+    public void setNoise(String noise) {
+
+    }
+
+    @Override
+    public String getRpmString() {
+        return null;
+    }
+
+    @Override
+    public void setRpmString(String newValue) {
+
+    }
 }

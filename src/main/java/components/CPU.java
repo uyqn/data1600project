@@ -310,6 +310,26 @@ public class CPU extends Component implements Serializable, Compatible {
 
     }
 
+    @Override
+    public String getNoise() {
+        return null;
+    }
+
+    @Override
+    public void setNoise(String noise) {
+
+    }
+
+    @Override
+    public String getRpmString() {
+        return null;
+    }
+
+    @Override
+    public void setRpmString(String newValue) {
+
+    }
+
     public double getPowerConsumption() {
         return powerConsumption.getValue();
     }
