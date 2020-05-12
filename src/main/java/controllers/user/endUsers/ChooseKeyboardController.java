@@ -2,7 +2,6 @@ package controllers.user.endUsers;
 
 import components.Component;
 import components.Keyboard;
-import components.Storage.SSD;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
