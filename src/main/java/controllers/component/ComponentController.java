@@ -232,6 +232,7 @@ public class ComponentController implements Initializable {
             resetGui(addGraphicCardGui,
                     "manufacturer",
                     "model",
+                    "bussType",
                     "memory",
                     "memoryType",
                     "baseClock",
