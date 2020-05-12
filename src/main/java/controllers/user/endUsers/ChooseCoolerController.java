@@ -38,10 +38,10 @@ public class ChooseCoolerController implements Initializable {
     private TableColumn<Cooler, Double> PriceColumn;
 
     @FXML
-    private TableColumn<Cooler, Integer> CoreRPMColumn;
+    private TableColumn<Cooler, Integer> CoreRpmColumn;
 
     @FXML
-    private TableColumn<Cooler, Integer> MaxRPMColumn;
+    private TableColumn<Cooler, Integer> MaxRpmColumn;
 
     @FXML
     private TableColumn<Cooler, Double> CoreNoiseColumn;
@@ -61,8 +61,8 @@ public class ChooseCoolerController implements Initializable {
         ManufacturerColumn.setCellValueFactory(new PropertyValueFactory<Cooler, String>("manufacturer"));
         ModelColumn.setCellValueFactory(new PropertyValueFactory<Cooler, String>("model"));
         PriceColumn.setCellValueFactory(new PropertyValueFactory<Cooler, Double>("price"));
-        CoreRPMColumn.setCellValueFactory(new PropertyValueFactory<Cooler, Integer>("coreRpm"));
-        MaxRPMColumn.setCellValueFactory(new PropertyValueFactory<Cooler, Integer>("maxRpm"));
+        CoreRpmColumn.setCellValueFactory(new PropertyValueFactory<Cooler, Integer>("coreRpm"));
+        MaxRpmColumn.setCellValueFactory(new PropertyValueFactory<Cooler, Integer>("maxRpm"));
         CoreNoiseColumn.setCellValueFactory(new PropertyValueFactory<Cooler, Double>("coreNoise"));
         MaxNoiseColumn.setCellValueFactory(new PropertyValueFactory<Cooler, Double>("maxNoise"));
         PowerColumn.setCellValueFactory(new PropertyValueFactory<Cooler, Double>("powerConsumption"));
