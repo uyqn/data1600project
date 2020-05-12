@@ -2,7 +2,7 @@ package controllers.user.endUsers;
 
 import components.Component;
 import components.Memory;
-import components.Motherboard;
+import components.Storage.HDD;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -23,28 +23,29 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
-public class ChooseMemoryController implements Initializable {
+public class ChooseHddController implements Initializable {
 
     @FXML
     private TableView<Component> tableView;
 
     @FXML
-    private TableColumn<Memory, String> ManufacturerColumn;
+    private TableColumn<HDD, String> ManufacturerColumn;
 
     @FXML
-    private TableColumn<Memory, String> ModelColumn;
+    private TableColumn<HDD, String> ModelColumn;
 
     @FXML
-    private TableColumn<Memory, Double> PriceColumn;
+    private TableColumn<HDD, Double> PriceColumn;
 
     @FXML
-    private TableColumn<Memory, Integer> RamColumn;
+    private TableColumn<HDD, Integer> CapacityColumn;
 
     @FXML
-    private TableColumn<Memory, String> MemoryColumn;
+    private TableColumn<HDD, String> RpmColumn;
 
     @FXML
-    private TableColumn<Memory, Integer> SpeedColumn;
+    private TableColumn<HDD, String> FormFactorColumn;
+
 
 
     @Override
@@ -52,21 +53,21 @@ public class ChooseMemoryController implements Initializable {
 
         //Setter opp kolonner
 
-        ManufacturerColumn.setCellValueFactory(new PropertyValueFactory<Memory, String>("manufacturer"));
-        ModelColumn.setCellValueFactory(new PropertyValueFactory<Memory, String>("model"));
-        PriceColumn.setCellValueFactory(new PropertyValueFactory<Memory, Double>("price"));
-        RamColumn.setCellValueFactory(new PropertyValueFactory<Memory, Integer>("ram"));
-        MemoryColumn.setCellValueFactory(new PropertyValueFactory<Memory, String>("memoryTech"));
-        SpeedColumn.setCellValueFactory(new PropertyValueFactory<Memory, Integer>("speed"));
+        ManufacturerColumn.setCellValueFactory(new PropertyValueFactory<HDD, String>("manufacturer"));
+        ModelColumn.setCellValueFactory(new PropertyValueFactory<HDD, String>("model"));
+        PriceColumn.setCellValueFactory(new PropertyValueFactory<HDD, Double>("price"));
+        CapacityColumn.setCellValueFactory(new PropertyValueFactory<HDD, Integer>("capacity"));
+        RpmColumn.setCellValueFactory(new PropertyValueFactory<HDD, String>("rpm"));
+        FormFactorColumn.setCellValueFactory(new PropertyValueFactory<HDD, String>("form"));
+
 
         tableView.setItems(
                 App.componentList.getList().stream().filter(component ->
-                        component.getComponentType().equals(Memory.COMPONENT_TYPE)
+                        component.getComponentType().equals(HDD.COMPONENT_TYPE)
                 ).collect(Collectors.toCollection(FXCollections::observableArrayList))
         );
 
     }
-
     @FXML
     private Button backBtn;
 
@@ -76,7 +77,7 @@ public class ChooseMemoryController implements Initializable {
     @FXML
     void GoBack(ActionEvent event) throws IOException {
 
-        Parent view = FXMLLoader.load(getClass().getResource("/main/user/endUsers/ChooseMotherboard.fxml"));
+        Parent view = FXMLLoader.load(getClass().getResource("/main/user/endUsers/ChooseMemory.fxml"));
 
         Scene scene = new Scene(view);
 
@@ -89,7 +90,7 @@ public class ChooseMemoryController implements Initializable {
     @FXML
     void GoNext(ActionEvent event) throws IOException {
 
-        Parent view = FXMLLoader.load(getClass().getResource("/main/user/endUsers/ChooseHdd.fxml"));
+        Parent view = FXMLLoader.load(getClass().getResource("/main/user/endUsers/ChooseSsd.fxml"));
 
         Scene scene = new Scene(view);
 

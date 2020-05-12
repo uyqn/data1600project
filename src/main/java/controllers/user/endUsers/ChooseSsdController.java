@@ -43,7 +43,7 @@ public class ChooseSsdController implements Initializable {
     private TableColumn<SSD, Integer> RpmColumn;
 
     @FXML
-    private TableColumn<SSD, String> FormColumn;
+    private TableColumn<SSD, String> FormFactorColumn;
 
 
 
@@ -57,7 +57,7 @@ public class ChooseSsdController implements Initializable {
         PriceColumn.setCellValueFactory(new PropertyValueFactory<SSD, Double>("price"));
         CapacityColumn.setCellValueFactory(new PropertyValueFactory<SSD, Double>("capacity"));
         RpmColumn.setCellValueFactory(new PropertyValueFactory<SSD, Integer>("rpm"));
-        FormColumn.setCellValueFactory(new PropertyValueFactory<SSD, String>("form"));
+        FormFactorColumn.setCellValueFactory(new PropertyValueFactory<SSD, String>("form"));
 
 
 

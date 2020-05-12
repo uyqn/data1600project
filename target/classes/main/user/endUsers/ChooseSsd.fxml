@@ -18,7 +18,7 @@
          <columns>
             <TableColumn prefWidth="73.66665649414062" text="Name" />
             <TableColumn prefWidth="130.6666259765625" text="Price" />
-            <TableColumn prefWidth="124.3333740234375" text="Capacity" />
+            <TableColumn prefWidth="124.3333740234375" text="Capacity"/>
             <TableColumn prefWidth="126.0" text="RPM" />
          </columns>
       </TableView>
