@@ -7,22 +7,23 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="388.0" prefWidth="699.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.user.endUsers.ChooseGpuController">
+<AnchorPane prefHeight="388.0" prefWidth="749.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.user.endUsers.ChooseGpuController">
    <children>
       <Label layoutX="246.0" layoutY="41.0" prefHeight="36.0" prefWidth="238.0" text="Choose a Graphics Card">
          <font>
             <Font size="22.0" />
          </font>
       </Label>
-      <TableView fx:id="tableView" layoutX="44.0" layoutY="111.0" prefHeight="182.0" prefWidth="611.0">
+      <TableView fx:id="tableView" layoutX="44.0" layoutY="111.0" prefHeight="182.0" prefWidth="640.0">
          <columns>
-            <TableColumn prefWidth="75.0" text="Name" />
-            <TableColumn prefWidth="75.0" text="Price" />
-            <TableColumn prefWidth="75.0" text="Buss Type" />
-            <TableColumn prefWidth="75.0" text="Memory" />
-            <TableColumn prefWidth="109.0" text="Memory Type" />
-            <TableColumn prefWidth="91.3333740234375" text="Base Clock" />
-            <TableColumn prefWidth="107.6666259765625" text="Boost Clock" />
+            <TableColumn fx:id="ManufacturerColumn" prefWidth="88.33334350585938" text="Manufacturer" />
+            <TableColumn fx:id="ModelColumn" prefWidth="61.666656494140625" text="Model" />
+            <TableColumn fx:id="PriceColumn" prefWidth="51.6666259765625" text="Price" />
+            <TableColumn fx:id="BussTypeColumn" prefWidth="63.0" text="Buss Type" />
+            <TableColumn fx:id="MemoryColumn" prefWidth="66.33331298828125" text="Memory" />
+            <TableColumn fx:id="MemoryTypeColumn" minWidth="0.0" prefWidth="100.66668701171875" text="Memory Type" />
+            <TableColumn fx:id="BaseClockColumn" minWidth="0.0" prefWidth="99.66668701171875" text="Core Clock" />
+            <TableColumn fx:id="BoostTypeColumn" prefWidth="105.33331298828125" text="Boost Clock" />
          </columns>
       </TableView>
       <Button fx:id="backBtn" layoutX="309.0" layoutY="313.0" mnemonicParsing="false" onAction="#GoBack" text="Back" />

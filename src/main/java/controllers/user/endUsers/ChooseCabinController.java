@@ -1,5 +1,6 @@
 package controllers.user.endUsers;
 
+import components.Component;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,7 +16,9 @@ import java.io.IOException;
 public class ChooseCabinController {
 
     @FXML
-    private TableView<?> tableView;
+    private TableView<Component> tableView;
+
+
 
     @FXML
     private Button backBtn;

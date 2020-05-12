@@ -9,24 +9,25 @@
 
 <!-- I denne mappen går koden for alle alternativene til EndUsers-->
 
-<AnchorPane prefHeight="383.0" prefWidth="634.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.user.endUsers.BuildPcController">
+<AnchorPane prefHeight="383.0" prefWidth="730.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.user.endUsers.BuildPcController">
    <children>
-      <Label layoutX="242.0" layoutY="45.0" prefHeight="36.0" prefWidth="149.0" text="Choose a CPU">
+      <Label layoutX="288.0" layoutY="44.0" prefHeight="36.0" prefWidth="149.0" text="Choose a CPU">
          <font>
             <Font size="22.0" />
          </font></Label>
-      <TableView fx:id="tableView" layoutX="21.0" layoutY="111.0" prefHeight="182.0" prefWidth="591.0">
+      <TableView fx:id="tableView" layoutX="21.0" layoutY="111.0" prefHeight="182.0" prefWidth="682.0">
          <columns>
-            <TableColumn prefWidth="75.0" text="Name" />
-            <TableColumn prefWidth="75.0" text="Price" />
-            <TableColumn prefWidth="75.0" text="Sockets" />
-            <TableColumn prefWidth="75.0" text="Core Count" />
-            <TableColumn prefWidth="75.0" text="Core Clock" />
-            <TableColumn prefWidth="75.0" text="Boost Clock" />
-            <TableColumn prefWidth="157.0" text="Power Consumption" />
+            <TableColumn fx:id="ManufacturerColumn" prefWidth="85.0" text="Manufacturer" />
+            <TableColumn fx:id="ModelColumn" prefWidth="65.0" text="Model" />
+            <TableColumn fx:id="PriceColumn" prefWidth="75.0" text="Price" />
+            <TableColumn fx:id="SocketColumn" prefWidth="75.0" text="Sockets" />
+            <TableColumn fx:id="CoreCountColumn" prefWidth="75.0" text="Core Count" />
+            <TableColumn fx:id="CoreClockColumn" prefWidth="75.0" text="Core Clock" />
+            <TableColumn fx:id="BoostClockColumn" prefWidth="75.0" text="Boost Clock" />
+            <TableColumn fx:id="PowerColumn" prefWidth="157.0" text="Power Consumption" />
          </columns>
       </TableView>
-      <Button fx:id="homeBtn" layoutX="249.0" layoutY="313.0" mnemonicParsing="false" onAction="#backHome" text="Back" />
-      <Button fx:id="addBtn" layoutX="324.0" layoutY="313.0" mnemonicParsing="false" onAction="#AddGpu" text="Next" />
+      <Button fx:id="homeBtn" layoutX="299.0" layoutY="313.0" mnemonicParsing="false" onAction="#backHome" text="Back" />
+      <Button fx:id="addBtn" layoutX="365.0" layoutY="313.0" mnemonicParsing="false" onAction="#AddGpu" text="Next" />
    </children>
 </AnchorPane>
