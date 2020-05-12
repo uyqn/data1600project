@@ -12,7 +12,8 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class ChoosePowerController {
+public class ChooseHhdController {
+
     @FXML
     private TableView<?> tableView;
 
@@ -25,7 +26,7 @@ public class ChoosePowerController {
     @FXML
     void GoBack(ActionEvent event) throws IOException {
 
-        Parent view = FXMLLoader.load(getClass().getResource("/main/user/endUsers/ChooseCooler.fxml"));
+        Parent view = FXMLLoader.load(getClass().getResource("/main/user/endUsers/ChooseMemory.fxml"));
 
         Scene scene = new Scene(view);
 
@@ -38,7 +39,7 @@ public class ChoosePowerController {
     @FXML
     void GoNext(ActionEvent event) throws IOException {
 
-        Parent view = FXMLLoader.load(getClass().getResource("/main/user/endUsers/ChooseCabin.fxml"));
+        Parent view = FXMLLoader.load(getClass().getResource("/main/user/endUsers/ChooseSsd.fxml"));
 
         Scene scene = new Scene(view);
 

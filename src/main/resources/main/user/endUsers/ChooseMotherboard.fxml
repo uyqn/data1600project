@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="388.0" prefWidth="813.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.user.endUsers.ChooseMotherboardController">
+   <children>
+      <Label layoutX="287.0" layoutY="44.0" prefHeight="36.0" prefWidth="238.0" text="Choose a Motherboard">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Label>
+      <TableView fx:id="tableView" layoutX="44.0" layoutY="111.0" prefHeight="182.0" prefWidth="737.0">
+         <columns>
+            <TableColumn fx:id="ManufacturerColumn" prefWidth="83.33334350585938" text="Manufacturer" />
+            <TableColumn fx:id="ModelColumn" prefWidth="79.66668701171875" text="Model" />
+            <TableColumn fx:id="PriceColumn" prefWidth="41.33331298828125" text="Price" />
+            <TableColumn fx:id="PSpacesColumn" prefWidth="106.66668701171875" text="Processor Spaces" />
+            <TableColumn fx:id="MaxRamColumn" prefWidth="66.33331298828125" text="Max Ram" />
+            <TableColumn fx:id="BoostTypeColumn" prefWidth="71.66668701171875" text="Boost Type" />
+            <TableColumn fx:id="SocketColumn" prefWidth="58.66668701171875" text="Socket" />
+            <TableColumn fx:id="BussTypeColumn" prefWidth="76.0" text="Buss Type" />
+            <TableColumn fx:id="FormFactorColumn" prefWidth="75.0" text="Form Factor" />
+            <TableColumn fx:id="MemoryColumn" prefWidth="75.0" text="Memory" />
+            <TableColumn fx:id="RamSlotColumn" prefWidth="75.0" text="Ram Slots" />
+         </columns>
+      </TableView>
+      <Button fx:id="backBtn" layoutX="346.0" layoutY="313.0" mnemonicParsing="false" onAction="#GoBack" text="Back" />
+      <Button fx:id="nextBtn" layoutX="420.0" layoutY="313.0" mnemonicParsing="false" onAction="#GoNext" text="Next" />
+   </children>
+</AnchorPane>
