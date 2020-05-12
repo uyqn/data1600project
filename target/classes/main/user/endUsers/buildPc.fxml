@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<!-- I denne mappen går koden for alle alternativene til EndUsers-->
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.user.endUsers.PrevPcController">
+   <children>
+      <Label layoutX="29.0" layoutY="172.0" prefHeight="36.0" prefWidth="149.0" text="Choose a CPU">
+         <font>
+            <Font size="22.0" />
+         </font></Label>
+      <TableView fx:id="tableView" layoutX="182.0" layoutY="99.0" prefHeight="182.0" prefWidth="401.0">
+         <columns>
+            <TableColumn prefWidth="75.0" text="Name" />
+            <TableColumn prefWidth="75.0" text="Price" />
+            <TableColumn prefWidth="75.0" text="Sockets" />
+            <TableColumn prefWidth="75.0" text="Core Count" />
+            <TableColumn prefWidth="75.0" text="Core Clock" />
+            <TableColumn prefWidth="75.0" text="Boost Clock" />
+            <TableColumn prefWidth="75.0" text="Power Consumption" />
+         </columns>
+      </TableView>
+      <Button fx:id="homeBtn" layoutX="251.0" layoutY="325.0" mnemonicParsing="false" onAction="#backHome" text="Back" />
+      <Button fx:id="addBtn" layoutX="310.0" layoutY="325.0" mnemonicParsing="false" onAction="#addPc" text="Next" />
+   </children>
+</AnchorPane>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.user.endUsers.PrevPcController">
+   <children>
+      <GridPane fx:id="viewComputersGui" prefHeight="400.0" prefWidth="600.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="195.20001220703125" minWidth="10.0" prefWidth="62.4000244140625" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="429.59999999999997" minWidth="10.0" prefWidth="429.59999999999997" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="141.99999999999994" minWidth="10.0" prefWidth="58.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="304.79996948242194" minHeight="10.0" prefHeight="303.19999389648444" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="130.19998779296878" minHeight="10.0" prefHeight="16.000006103515602" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Button fx:id="homeBtn" mnemonicParsing="false" onAction="#backHome" text="Home" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+            <Button fx:id="addBtn" mnemonicParsing="false" onAction="#addPc" text="Add new Pc" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+            <Label text="Previously made computers:" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+         </children>
+      </GridPane>
+   </children>
+</AnchorPane>
