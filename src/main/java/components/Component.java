@@ -22,6 +22,8 @@ public abstract class Component implements Serializable {
         setPrice(price);
     }
 
+
+
     public abstract String getComponentType();
 
     public String getName() {
@@ -33,7 +35,7 @@ public abstract class Component implements Serializable {
     }
 
     public void setManufacturer(String manufacturer) {
-        if(!manufacturer.matches("[A-Z][A-Za-z. ]+|[A-Z][A-Za-z0-9]+")){
+        if(!manufacturer.matches("[A-Za-z. ]+|[A-Z][A-Za-z0-9]+")){
             throw new IllegalArgumentException("Invalid name format for manufacturer");
         }
         this.manufacturer.set(manufacturer.replaceAll("\\s{2,}", " ").trim());
@@ -44,7 +46,7 @@ public abstract class Component implements Serializable {
     }
 
     public void setModel(String model) {
-        if(!model.matches("[A-Za-z0-9 \\-]+") || model.isBlank() || model.isEmpty()){
+        if(!model.matches("[A-Za-z0-9. \\-]+") || model.isBlank() || model.isEmpty()){
             throw new IllegalArgumentException("Invalid name format for model");
         }
         this.model.set(model.replaceAll("\\s{2,}", " "));
@@ -149,8 +151,8 @@ public abstract class Component implements Serializable {
     public abstract int getRpm();
     public abstract void setRpm(int rpm);
 
-    public abstract double getCapacity();
-    public abstract void setCapacity(double capacity);
+    public abstract int getCapacity();
+    public abstract void setCapacity(int capacity);
 
     public abstract String getFormFactor();
     public abstract void setFormFactor(String formFactor);
@@ -181,8 +183,10 @@ public abstract class Component implements Serializable {
     public abstract void setMemory(int memory);
     public abstract String getMemoryType();
     public abstract void setMemoryType(String memoryType);
+    public abstract int getBoostSpeed();
+    public abstract void setBoostSpeed(int boostSpeed);
 
-    public abstract boolean isTactile();
+    public abstract boolean getTactile();
     public abstract void setTactile(boolean tactile);
 
     public abstract int getRam();
@@ -192,6 +196,8 @@ public abstract class Component implements Serializable {
     public abstract int getSpeed();
     public abstract void setSpeed(int speed);
 
+    public abstract double getSize();
+    public abstract void setSize(double size);
     public abstract int getRefreshRate();
     public abstract void setRefreshRate(int refreshRate);
 
@@ -211,4 +217,9 @@ public abstract class Component implements Serializable {
 
     public abstract int getPowerCapacity();
     public abstract void setPowerCapacity(int powerCapacity);
+
+    public abstract String getNoise();
+    public abstract void setNoise(String noise);
+    public abstract String getRpmString();
+    public abstract void setRpmString(String newValue);
 }

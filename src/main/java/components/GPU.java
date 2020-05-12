@@ -4,9 +4,8 @@ package components;
 //Graphics Card
 import controllers.guiManager.Extract;
 import fileManager.Formatter;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -19,8 +18,7 @@ public class GPU extends Component implements Serializable, Compatible {
     private transient SimpleStringProperty bussType = new SimpleStringProperty();
     private transient SimpleIntegerProperty memory = new SimpleIntegerProperty();
     private transient SimpleStringProperty memoryType=new SimpleStringProperty();
-    private transient SimpleDoubleProperty coreClock = new SimpleDoubleProperty();
-    private transient SimpleDoubleProperty boostClock = new SimpleDoubleProperty();
+    private transient SimpleIntegerProperty boostSpeed= new SimpleIntegerProperty();
 
     private transient double bussVersion;
     private transient int bussSlots;
@@ -33,50 +31,38 @@ public class GPU extends Component implements Serializable, Compatible {
         setBussType(csv[3]);
         setMemory(Integer.parseInt(csv[4]));
         setMemoryType(csv[5]);
-        setClockSpeed(csv[6]);
-
+        setBoostSpeed(Integer.parseInt(csv[6]));
     }
 
 
     public GPU(String manufacturer, String model, String bussType, int memory, String memoryType,
-               double coreClock, double boostClock, double price){
+               int boostSpeed, double price){
         super(manufacturer,model,price);
 
         setBussType(bussType);
         setMemory(memory);
         setMemoryType(memoryType);
-        setCoreClock(coreClock);
-        setBoostClock(boostClock);
-    }
-
-    public GPU(String manufacturer, String model, String bussType, int memory, String memoryType, String clockSpeed, double price){
-
-
-        super(manufacturer,model,price);
-
-        setBussType(bussType);
-        setMemory(memory);
-        setMemoryType(memoryType);
-        setClockSpeed(clockSpeed);
+        setBoostSpeed(boostSpeed);
     }
 
     public String getCOMPONENT_TYPE(){return COMPONENT_TYPE;}
 
 
     public double getCoreClock() {
-        return coreClock.getValue();
+        return 0;
     }
 
     public void setCoreClock(double coreClock) {
-        if(coreClock < 1.1 || coreClock > 5.0){
-            throw new IllegalArgumentException("Base clock frequency should be between or equal to 1.1 and "
-                    + getBoostClock() + " GHz");
-        }
-        if(coreClock > getBoostClock()){
-            setBoostClock(coreClock);
-        }
+    }
 
-        this.coreClock.set(coreClock);
+    @Override
+    public double getBoostClock() {
+        return 0;
+    }
+
+    @Override
+    public void setBoostClock(double boostClock) {
+
     }
 
     public String getBussType(){
@@ -129,20 +115,16 @@ public class GPU extends Component implements Serializable, Compatible {
         this.bussVersion = aDouble;
     }
 
-    public double getBoostClock() {
-        return boostClock.getValue();
+    public int getBoostSpeed() {
+        return boostSpeed.getValue();
     }
 
-    public void setBoostClock(double boostClock) {
-        if(boostClock < 1.1 || boostClock > 5.0){
-            throw new IllegalArgumentException("Overclocked speed should be between or equal to " + getCoreClock() +
-                    " and 5.0 GHz");
-        }
-        if(boostClock < getCoreClock()){
-            setCoreClock(boostClock);
+    public void setBoostSpeed(int boostSpeed) {
+        if(boostSpeed < 1){
+            throw new IllegalArgumentException("Overclocked speed should be positive");
         }
 
-        this.boostClock.set(boostClock);
+        this.boostSpeed.set(boostSpeed);
     }
 
     public int getMemory() {
@@ -166,7 +148,7 @@ public class GPU extends Component implements Serializable, Compatible {
     }
 
     @Override
-    public boolean isTactile() {
+    public boolean getTactile() {
         return false;
     }
 
@@ -202,6 +184,16 @@ public class GPU extends Component implements Serializable, Compatible {
 
     @Override
     public void setSpeed(int speed) {
+
+    }
+
+    @Override
+    public double getSize() {
+        return 0;
+    }
+
+    @Override
+    public void setSize(double size) {
 
     }
 
@@ -285,6 +277,26 @@ public class GPU extends Component implements Serializable, Compatible {
 
     }
 
+    @Override
+    public String getNoise() {
+        return null;
+    }
+
+    @Override
+    public void setNoise(String noise) {
+
+    }
+
+    @Override
+    public String getRpmString() {
+        return null;
+    }
+
+    @Override
+    public void setRpmString(String newValue) {
+
+    }
+
     public String getClockSpeed() {
         return (getCoreClock() != getBoostClock()) ?
                 getCoreClock() + "/" + getBoostClock():
@@ -336,7 +348,7 @@ public class GPU extends Component implements Serializable, Compatible {
                 getBussType(),
                 getMemory(),
                 getMemoryType(),
-                getClockSpeed(),
+                getBoostSpeed(),
                 getPrice()
         );
     }
@@ -344,26 +356,26 @@ public class GPU extends Component implements Serializable, Compatible {
     @Override
     public String toString(){
         return String.format("%s: %s\n" +
-                "Busstype: %s \n" +
-                "Memory: %s GB %s\n" +
-                "Clock Speed: %s GHz\n" +
+                "Buss type: %s \n" +
+                "Memory: %s GB\n" +
+                "Memory type: %s\n" +
+                "Boost clock: %s MHz\n" +
                 "Price: %s NOK\n",
-                getCOMPONENT_TYPE(), getName(), getBussType(), getMemory(), getMemoryType(), getClockSpeed(),
-                getPrice());
+                getCOMPONENT_TYPE(), getName(), getBussType(), getMemory(), getMemoryType(), getBoostSpeed(),
+                String.format("%.2f",getPrice()));
     }
 
     //Serialisering
     private void writeObject(ObjectOutputStream objectOutputStream) throws IOException{
         objectOutputStream.defaultWriteObject();
 
-        objectOutputStream.writeUTF(getManufacturer()); //String
-        objectOutputStream.writeUTF(getModel()); //int
-        objectOutputStream.writeDouble(getPrice()); //Double
+        objectOutputStream.writeUTF(getManufacturer());
+        objectOutputStream.writeUTF(getModel());
+        objectOutputStream.writeDouble(getPrice());
 
         objectOutputStream.writeInt(getMemory());
         objectOutputStream.writeUTF(getMemoryType());
-        objectOutputStream.writeDouble(getCoreClock());
-        objectOutputStream.writeDouble(getBoostClock());
+        objectOutputStream.writeInt(getBoostSpeed());
     }
 
     private void readObject(ObjectInputStream objecInputStream) throws IOException, ClassNotFoundException{
@@ -373,21 +385,19 @@ public class GPU extends Component implements Serializable, Compatible {
 
         int memory= objecInputStream.readInt();
         String memoryType= objecInputStream.readUTF();
-        double baseClock= objecInputStream.readDouble();
-        double boostClock = objecInputStream.readDouble();
+        double boostSpeed = objecInputStream.readInt();
 
         this.memory=new SimpleIntegerProperty();
         this.memoryType=new SimpleStringProperty();
-        this.coreClock =new SimpleDoubleProperty();
-        this.boostClock= new SimpleDoubleProperty();
+        this.boostSpeed= new SimpleIntegerProperty();
 
         super.setManufacturer(manufacturer);
         super.setModel(model);
         super.setPrice(price);
+
         setMemory(memory);
         setMemoryType(memoryType);
-        setCoreClock(baseClock);
-        setBoostClock(boostClock);
+        setBoostClock(boostSpeed);
 
     }
 
@@ -402,12 +412,12 @@ public class GPU extends Component implements Serializable, Compatible {
     }
 
     @Override
-    public double getCapacity() {
+    public int getCapacity() {
         return 0;
     }
 
     @Override
-    public void setCapacity(double capacity) {
+    public void setCapacity(int capacity) {
 
     }
 

@@ -12,16 +12,17 @@ public class SSD extends Storage implements Serializable {
     public static final transient String COMPONENT_TYPE ="SSD";
 
     public SSD(String[] csv){
-        super(csv[1], csv[2], Double.parseDouble(csv[3]), Double.parseDouble(csv[4]));
+        super(csv[1], csv[2], Integer.parseInt(csv[3]), Double.parseDouble(csv[4]));
     }
 
     public SSD(String manufacturer,
                String model,
-               double capacity,
+               int capacity,
                double price){
         super(manufacturer, model, capacity, price);
     }
 
+    @Override
     public String getComponentType() {
         return COMPONENT_TYPE;
     }
@@ -44,19 +45,26 @@ public class SSD extends Storage implements Serializable {
         objectOutputStream.writeUTF(getManufacturer());
         objectOutputStream.writeUTF(getModel());
         objectOutputStream.writeDouble(getPrice());
-        objectOutputStream.writeDouble(getCapacity());
+        objectOutputStream.writeInt(getCapacity());
     }
 
     private void readObject(ObjectInputStream objectInputStream) throws IOException, ClassNotFoundException {
         String manufacturer = objectInputStream.readUTF();
         String model = objectInputStream.readUTF();
         double price = objectInputStream.readDouble();
-        double capacity = objectInputStream.readDouble();
+        int capacity = objectInputStream.readInt();
 
         super.setManufacturer(manufacturer);
         super.setModel(model);
         super.setCapacity(capacity);
         super.setPrice(price);
+    }
+
+    @Override
+    public String toString() {
+        return getComponentType() + ": " + getName() + "\n" +
+                "Capacity: " + getCapacity() + "GB\n" +
+                "Price: " + String.format("%.2f",getPrice());
     }
 
     @Override
@@ -200,7 +208,17 @@ public class SSD extends Storage implements Serializable {
     }
 
     @Override
-    public boolean isTactile() {
+    public int getBoostSpeed() {
+        return 0;
+    }
+
+    @Override
+    public void setBoostSpeed(int boostSpeed) {
+
+    }
+
+    @Override
+    public boolean getTactile() {
         return false;
     }
 
@@ -236,6 +254,16 @@ public class SSD extends Storage implements Serializable {
 
     @Override
     public void setSpeed(int speed) {
+
+    }
+
+    @Override
+    public double getSize() {
+        return 0;
+    }
+
+    @Override
+    public void setSize(double size) {
 
     }
 
@@ -316,6 +344,26 @@ public class SSD extends Storage implements Serializable {
 
     @Override
     public void setPowerCapacity(int powerCapacity) {
+
+    }
+
+    @Override
+    public String getNoise() {
+        return null;
+    }
+
+    @Override
+    public void setNoise(String noise) {
+
+    }
+
+    @Override
+    public String getRpmString() {
+        return null;
+    }
+
+    @Override
+    public void setRpmString(String newValue) {
 
     }
 }

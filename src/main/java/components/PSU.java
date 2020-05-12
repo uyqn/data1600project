@@ -11,12 +11,12 @@ import java.io.Serializable;
 public class PSU extends Component implements Serializable {
 
     public transient static final String COMPONENT_TYPE = "PSU";
-    private transient SimpleIntegerProperty PowerCapacity;
+    private transient SimpleIntegerProperty powerCapacity = new SimpleIntegerProperty();
 
     public PSU(String[] csv){
-        super(csv[1], csv[2], Double.parseDouble(csv[3]));
+        super(csv[1], csv[2], Double.parseDouble(csv[4]));
 
-        setPowerCapacity(Integer.parseInt(csv[4]));
+        setPowerCapacity(Integer.parseInt(csv[3]));
     }
 
 
@@ -31,20 +31,43 @@ public class PSU extends Component implements Serializable {
     }
 
     public int getPowerCapacity(){
-        return PowerCapacity.get();
+        return powerCapacity.get();
     }
 
-    public void setPowerCapacity(int PowerCapacity){
-        if(PowerCapacity < 0 ){
+    public void setPowerCapacity(int powerCapacity){
+        if(powerCapacity < 0 ){
             throw new IllegalArgumentException("Power capacity cannot be negative");
         }
         else {
-            this.PowerCapacity.set(PowerCapacity);
+            this.powerCapacity.set(powerCapacity);
         }
     }
 
-    public String ToString(){
-        return "PowerSupply: " + getName() + "Power Capacity: " +PowerCapacity+" W";
+    @Override
+    public String getNoise() {
+        return null;
+    }
+
+    @Override
+    public void setNoise(String noise) {
+
+    }
+
+    @Override
+    public String getRpmString() {
+        return null;
+    }
+
+    @Override
+    public void setRpmString(String newValue) {
+
+    }
+
+    @Override
+    public String toString(){
+        return "PowerSupply: " + getName() + "\n" +
+                "Power Capacity: " + getPowerCapacity() + " W\n" +
+                "Price: " + String.format("%.2f",getPrice());
     }
 
     @Override
@@ -76,7 +99,7 @@ public class PSU extends Component implements Serializable {
 
         int PowerCapacity = objectInputStream.readInt();
 
-        this.PowerCapacity = new SimpleIntegerProperty();
+        this.powerCapacity = new SimpleIntegerProperty();
 
         super.setManufacturer(manufacturer);
         super.setModel(model);
@@ -95,12 +118,12 @@ public class PSU extends Component implements Serializable {
     }
 
     @Override
-    public double getCapacity() {
+    public int getCapacity() {
         return 0;
     }
 
     @Override
-    public void setCapacity(double capacity) {
+    public void setCapacity(int capacity) {
 
     }
 
@@ -235,7 +258,17 @@ public class PSU extends Component implements Serializable {
     }
 
     @Override
-    public boolean isTactile() {
+    public int getBoostSpeed() {
+        return 0;
+    }
+
+    @Override
+    public void setBoostSpeed(int boostSpeed) {
+
+    }
+
+    @Override
+    public boolean getTactile() {
         return false;
     }
 
@@ -271,6 +304,16 @@ public class PSU extends Component implements Serializable {
 
     @Override
     public void setSpeed(int speed) {
+
+    }
+
+    @Override
+    public double getSize() {
+        return 0;
+    }
+
+    @Override
+    public void setSize(double size) {
 
     }
 

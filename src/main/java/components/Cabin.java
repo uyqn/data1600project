@@ -158,7 +158,17 @@ public class Cabin extends Component implements Compatible, Serializable {
     }
 
     @Override
-    public boolean isTactile() {
+    public int getBoostSpeed() {
+        return 0;
+    }
+
+    @Override
+    public void setBoostSpeed(int boostSpeed) {
+
+    }
+
+    @Override
+    public boolean getTactile() {
         return false;
     }
 
@@ -194,6 +204,16 @@ public class Cabin extends Component implements Compatible, Serializable {
 
     @Override
     public void setSpeed(int speed) {
+
+    }
+
+    @Override
+    public double getSize() {
+        return 0;
+    }
+
+    @Override
+    public void setSize(double size) {
 
     }
 
@@ -274,6 +294,26 @@ public class Cabin extends Component implements Compatible, Serializable {
 
     @Override
     public void setPowerCapacity(int powerCapacity) {
+
+    }
+
+    @Override
+    public String getNoise() {
+        return null;
+    }
+
+    @Override
+    public void setNoise(String noise) {
+
+    }
+
+    @Override
+    public String getRpmString() {
+        return null;
+    }
+
+    @Override
+    public void setRpmString(String newValue) {
 
     }
 
@@ -364,7 +404,7 @@ public class Cabin extends Component implements Compatible, Serializable {
         return String.format("%s: %s\n" +
                         "Form factor: %s\n" +
                         "Price: %s NOK",
-                COMPONENT_TYPE, getName(), formFactor, String.format("%.2f",getPrice()));
+                COMPONENT_TYPE, getName(), getFormFactor(), String.format("%.2f",getPrice()));
     }
 
     @Override
@@ -410,12 +450,12 @@ public class Cabin extends Component implements Compatible, Serializable {
     }
 
     @Override
-    public double getCapacity() {
+    public int getCapacity() {
         return 0;
     }
 
     @Override
-    public void setCapacity(double capacity) {
+    public void setCapacity(int capacity) {
 
     }
 }

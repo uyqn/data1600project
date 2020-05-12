@@ -1,7 +1,7 @@
 package components.Storage;
 
 import components.Component;
-import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 import java.io.IOException;
@@ -10,21 +10,21 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 public abstract class Storage extends Component implements Serializable {
-    private transient SimpleDoubleProperty capacity=new SimpleDoubleProperty();
+    private transient SimpleIntegerProperty capacity=new SimpleIntegerProperty();
     private transient SimpleStringProperty form=new SimpleStringProperty();
 
 
-    public Storage(String manufacturer, String model, double capacity, double price){
+    public Storage(String manufacturer, String model, int capacity, double price){
 
         super(manufacturer, model, price);
         setCapacity(capacity);
     }
 
     @Override
-    public double getCapacity(){return capacity.getValue();}
+    public int getCapacity(){return capacity.getValue();}
 
     @Override
-    public void setCapacity(double capacity){
+    public void setCapacity(int capacity){
         if (capacity<0){
             throw new IllegalArgumentException("Capaity must be positive");
         }
@@ -46,17 +46,17 @@ public abstract class Storage extends Component implements Serializable {
 
         objectOutputStream.writeUTF(getManufacturer());
         objectOutputStream.writeUTF(getModel());
-        objectOutputStream.writeDouble(getCapacity());
+        objectOutputStream.writeInt(getCapacity());
         objectOutputStream.writeDouble(getPrice());
     }
 
     private void readObject(ObjectInputStream objectInputStream) throws IOException, ClassNotFoundException {
         String manufacturer = objectInputStream.readUTF();
         String model = objectInputStream.readUTF();
-        double capacity = objectInputStream.readDouble();
+        int capacity = objectInputStream.readInt();
         double price = objectInputStream.readDouble();
 
-        this.capacity = new SimpleDoubleProperty();
+        this.capacity = new SimpleIntegerProperty();
 
         super.setManufacturer(manufacturer);
         super.setModel(model);

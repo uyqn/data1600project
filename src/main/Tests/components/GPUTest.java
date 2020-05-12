@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 class GPUTest {
-    GPU test = new GPU("Manufacturer","Model", "PCIe 3.0x16",0, "DDR", 1.1, 2.2,2);
+    GPU test = new GPU("Manufacturer","Model", "PCIe 3.0x16",0, "DDR", 1000,2);
 
     @Test
     void setManufacturer(){

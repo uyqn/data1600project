@@ -100,10 +100,11 @@ public class ComponentController implements Initializable {
                     "socket",
                     "bussType",
                     "numSlots",
-                    "ramTech",
                     "maxRamSize",
                     "formFactor",
                     "price");
+
+            ramTech.setValue(null);
 
         } catch (IllegalArgumentException e){
             DialogBox.error(e.getClass().toString(), null,
@@ -126,6 +127,8 @@ public class ComponentController implements Initializable {
             DialogBox.info("Cabin successfully added",
                     "The following cabin was added:",
                     cabin.toString());
+
+            resetGui(addCabinGui, "manufacturer", "model", "formFactor", "price");
         } catch (IllegalArgumentException e){
             DialogBox.error(e.getClass().toString(), null,
                     e.getMessage());
@@ -179,9 +182,6 @@ public class ComponentController implements Initializable {
             double power = getDouble(addCoolerGui, "power");
             double price = getDouble(addCoolerGui, "price");
 
-            System.out.println(getString(addCoolerGui, "baseRpm"));
-            System.out.println(getString(addCoolerGui, "maxRpm"));
-
             Cooler cooler = new Cooler(manufacturer, model, dimension, rpm, noise, power, price);
 
             DialogBox.info("Cooler successfully added",
@@ -214,14 +214,14 @@ public class ComponentController implements Initializable {
         try{
             String manufacturer = getString(addGraphicCardGui, "manufacturer");
             String model=getString(addGraphicCardGui, "model");
-            String bussType = getString(addGraphicCardGui, "bussType");
+            String bussType = "PCI-Express " + getDouble(addGraphicCardGui, "bussType") + "x16";
             int memory=getInt(addGraphicCardGui,"memory");
-            String memoryType=getString(addGraphicCardGui, "memoryType");
-            String clockSpeed=getString(addGraphicCardGui,"baseClock") + "/" + getString(addGraphicCardGui, "boostClock");
+            String memoryType = getString(addGraphicCardGui, "memoryType");
+            int boostClock = getInt(addGraphicCardGui, "boostClock");
             double price=getDouble(addGraphicCardGui, "price");
 
 
-            GPU GPU =new GPU(manufacturer, model, bussType, memory, memoryType, clockSpeed, price);
+            GPU GPU =new GPU(manufacturer, model, bussType, memory, memoryType, boostClock, price);
 
             DialogBox.info("GPU successfully added",
                     "The following gpu was added:",
@@ -235,7 +235,6 @@ public class ComponentController implements Initializable {
                     "bussType",
                     "memory",
                     "memoryType",
-                    "baseClock",
                     "boostClock",
                     "price"
                     );
@@ -267,7 +266,8 @@ public class ComponentController implements Initializable {
 
             App.componentList.add(memory);
 
-            resetGui(addMemoryGui,"manufacturer", "model", "RAM", "speed", "speedTech", "price");
+            resetGui(addMemoryGui,"manufacturer", "model", "RAM", "speed", "price");
+            this.speedTech.setValue(null);
 
         }catch (IllegalArgumentException e) {
             DialogBox.error(e.getClass().toString(), null,
@@ -281,13 +281,11 @@ public class ComponentController implements Initializable {
     @FXML
     void ssdBtn(ActionEvent event){
         txtRpm.setDisable(true);
-        ((Label) addStorageGui.lookup("#capacityUnit")).setText(" GB");
     }
 
     @FXML
     void hddBtn(ActionEvent event){
         txtRpm.setDisable(false);
-        ((Label) addStorageGui.lookup("#capacityUnit")).setText(" TB");
     }
 
     @FXML
@@ -298,7 +296,7 @@ public class ComponentController implements Initializable {
 
                 String manufacturer=getString(addStorageGui, "manufacturer");
                 String model = getString(addStorageGui, "model");
-                double capacity = getDouble(addStorageGui, "capacity");
+                int capacity = getInt(addStorageGui, "capacity");
                 double price= getDouble(addStorageGui, "price");
 
                 Storage ssd = new SSD(manufacturer, model, capacity, price);
@@ -309,6 +307,8 @@ public class ComponentController implements Initializable {
 
                 App.componentList.add(ssd);
 
+                resetGui(addStorageGui, "manufacturer", "model", "capacity", "rpm", "price");
+
             }catch (IllegalArgumentException e){
                 DialogBox.error(e.getClass().toString(), null,
                         e.getMessage());
@@ -318,17 +318,19 @@ public class ComponentController implements Initializable {
 
                 String manufacturer=getString(addStorageGui, "manufacturer");
                 String model = getString(addStorageGui, "model");
-                double capacity = getDouble(addStorageGui, "capacity");
+                int capacity = getInt(addStorageGui, "capacity");
                 int rpm= getInt(addStorageGui, "rpm");
                 double price= getDouble(addStorageGui, "price");
 
                 Storage hdd = new HDD(manufacturer, model, capacity, rpm, price);
 
-                DialogBox.info("Harddrive successfully added",
+                DialogBox.info("HDD successfully added",
                         "The following Harddrive was added:",
                         hdd.toString());
 
                 App.componentList.add(hdd);
+
+                resetGui(addStorageGui, "manufacturer", "model", "capacity", "rpm", "price");
 
             }catch (IllegalArgumentException e){
                 DialogBox.error(e.getClass().toString(), null,
@@ -344,10 +346,11 @@ public class ComponentController implements Initializable {
         try {
             String manufacturer = getString(addMonitorGui, "manufacturer");
             String model = getString(addMonitorGui, "model");
+            double size = getDouble(addMonitorGui, "displaySize");
             int refreshRate = getInt(addMonitorGui, "refreshRate");
             double price = getDouble(addMonitorGui, "price");
 
-            Monitor monitor = new Monitor(manufacturer, model, refreshRate, price);
+            Monitor monitor = new Monitor(manufacturer, model, size, refreshRate, price);
 
             Alert info = new Alert(Alert.AlertType.INFORMATION);
 
@@ -360,6 +363,7 @@ public class ComponentController implements Initializable {
             resetGui(addMonitorGui,
                     "manufacturer",
                     "model",
+                    "displaySize",
                     "refreshRate",
                     "price");
 
@@ -455,7 +459,8 @@ public class ComponentController implements Initializable {
 
             App.componentList.add(keyboard);
 
-            resetGui(addKeyboardGui,"manufacturer", "model", "double");
+            resetGui(addKeyboardGui,"manufacturer", "model", "price");
+
             ((RadioButton) addKeyboardGui.lookup("#tactileYes")).setSelected(true);
 
         }catch (IllegalArgumentException e){
@@ -546,12 +551,13 @@ public class ComponentController implements Initializable {
         Limit.text2double(addCpuGui,"coreClock", "boostClock", "power", "price");
 
         Limit.text2int(addGraphicCardGui, "memory");
-        Limit.text2double(addGraphicCardGui, "price", "baseClock", "boostClock");
+        Limit.text2double(addGraphicCardGui, "price", "boostClock", "bussType");
 
         Limit.text2int(addMemoryGui, "RAM", "speed");
         Limit.text2double(addMemoryGui, "price");
 
-        Limit.text2int(addStorageGui, "rpm");
+        Limit.text2int(addStorageGui, "rpm", "capacity");
+        Limit.text2double(addStorageGui, "price");
 
         Limit.text2int(addCoolerGui, "baseRpm", "maxRpm");
         Limit.text2double(addCoolerGui, "width", "depth", "baseNoise", "maxNoise", "height", "power", "price");
@@ -565,13 +571,13 @@ public class ComponentController implements Initializable {
         Limit.text2double(addMouseGui, "price");
         Limit.text2int(addMonitorGui, "refreshRate");
 
-        Limit.text2double(addMonitorGui, "price");
+        Limit.text2double(addMonitorGui, "price", "displaySize");
         Limit.text2double(addKeyboardGui, "price");
 
         ramTech.getItems().addAll("DDR", "DDR2", "DDR3", "DDR4");
-        ramTech.setValue("DDR");
+        ramTech.setValue(null);
         speedTech.getItems().addAll("DDR", "DDR2", "DDR3", "DDR4");
-        speedTech.setValue("DDR");
+        speedTech.setValue(null);
     }
 }
 

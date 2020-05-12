@@ -156,11 +156,17 @@ public class Motherboard extends Component implements Serializable, Compatible {
     }
 
     public void setRamSlots(int ramSlots) {
-        if(ramSlots < 1 || ramSlots > 4){
-            throw new IllegalArgumentException("The number of ram slots must be 1,2 or 4");
+        int[] validRamSlots = {1, 2, 4, 6, 8, 12, 16};
+        boolean invalid = true;
+        for(int slots : validRamSlots){
+            if(ramSlots == slots){
+                invalid = false;
+                break;
+            }
         }
-        if(ramSlots == 3){
-            throw new IllegalArgumentException("The number of ram slots must be 1,2 or 4");
+
+        if(invalid){
+            throw new IllegalArgumentException("The ramslot entered is not a valid number");
         }
 
         this.ramSlots.set(ramSlots);
@@ -198,6 +204,16 @@ public class Motherboard extends Component implements Serializable, Compatible {
 
     @Override
     public void setSpeed(int speed) {
+
+    }
+
+    @Override
+    public double getSize() {
+        return 0;
+    }
+
+    @Override
+    public void setSize(double size) {
 
     }
 
@@ -261,7 +277,17 @@ public class Motherboard extends Component implements Serializable, Compatible {
     }
 
     @Override
-    public boolean isTactile() {
+    public int getBoostSpeed() {
+        return 0;
+    }
+
+    @Override
+    public void setBoostSpeed(int boostSpeed) {
+
+    }
+
+    @Override
+    public boolean getTactile() {
         return false;
     }
 
@@ -456,6 +482,26 @@ public class Motherboard extends Component implements Serializable, Compatible {
 
     }
 
+    @Override
+    public String getNoise() {
+        return null;
+    }
+
+    @Override
+    public void setNoise(String noise) {
+
+    }
+
+    @Override
+    public String getRpmString() {
+        return null;
+    }
+
+    @Override
+    public void setRpmString(String newValue) {
+
+    }
+
     public String getBoostType() {
         return boostType.getValue();
     }
@@ -511,9 +557,16 @@ public class Motherboard extends Component implements Serializable, Compatible {
     }
 
     public String toString(){
-        return getComponentType() + ": " + getName() + "\n" +
-                "Processor Spaces: " + getProcessorSpaces() + "\n" +
-                " Max Ram: " + getMaxRamSize() + " GB";
+        return String.format("%s: %s\n" +
+                        "Socket: %s\n" +
+                        "Buss type: %s\n" +
+                        "Ram slots: %s\n" +
+                        "Memory Technology: %s\n" +
+                        "Max memory size: %s GB\n" +
+                        "Form factor: %s\n" +
+                        "Price: %s NOK",
+                getComponentType(), getName(), getSocket(), getBussType(), getRamSlots(), getMemoryTech(),
+                getMaxRamSize(), getFormFactor(), String.format("%.2f",getPrice()));
     }
 
     @Override
@@ -586,12 +639,12 @@ public class Motherboard extends Component implements Serializable, Compatible {
     }
 
     @Override
-    public double getCapacity() {
+    public int getCapacity() {
         return 0;
     }
 
     @Override
-    public void setCapacity(double capacity) {
+    public void setCapacity(int capacity) {
 
     }
 

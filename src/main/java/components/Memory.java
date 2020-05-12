@@ -105,6 +105,16 @@ public class Memory extends Component implements Serializable, Compatible {
     }
 
     @Override
+    public double getSize() {
+        return 0;
+    }
+
+    @Override
+    public void setSize(double size) {
+
+    }
+
+    @Override
     public int getRefreshRate() {
         return 0;
     }
@@ -184,6 +194,26 @@ public class Memory extends Component implements Serializable, Compatible {
 
     }
 
+    @Override
+    public String getNoise() {
+        return null;
+    }
+
+    @Override
+    public void setNoise(String noise) {
+
+    }
+
+    @Override
+    public String getRpmString() {
+        return null;
+    }
+
+    @Override
+    public void setRpmString(String newValue) {
+
+    }
+
 
     @Override
     public String toCSV(){
@@ -194,8 +224,8 @@ public class Memory extends Component implements Serializable, Compatible {
     public String toString(){
         return String.format("%s: %s\n"+
                 "RAM: %s GB\n"+
-                "Speed: %sMHz %s\n"+
-                "Price: %s", getComponentType(), getName(), getRam(),getSpeed(), getMemoryTech(), getPrice());
+                "Technology: %s %sMHz\n"+
+                "Price: %s NOK", getComponentType(), getName(), getRam(),getMemoryTech(), getSpeed(), String.format("%.2f",getPrice()));
     }
 
     //Serialisering:
@@ -244,12 +274,12 @@ public class Memory extends Component implements Serializable, Compatible {
     }
 
     @Override
-    public double getCapacity() {
+    public int getCapacity() {
         return 0;
     }
 
     @Override
-    public void setCapacity(double capacity) {
+    public void setCapacity(int capacity) {
 
     }
 
@@ -384,7 +414,17 @@ public class Memory extends Component implements Serializable, Compatible {
     }
 
     @Override
-    public boolean isTactile() {
+    public int getBoostSpeed() {
+        return 0;
+    }
+
+    @Override
+    public void setBoostSpeed(int boostSpeed) {
+
+    }
+
+    @Override
+    public boolean getTactile() {
         return false;
     }
 
