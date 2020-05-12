@@ -14,26 +14,26 @@ public class Memory extends Component implements Serializable, Compatible {
 
     public transient static final String COMPONENT_TYPE = "Memory";
 
-    private transient SimpleIntegerProperty RAM=new SimpleIntegerProperty();
+    private transient SimpleIntegerProperty ram = new SimpleIntegerProperty();
     private transient SimpleStringProperty memoryTech =new SimpleStringProperty();
-    private transient SimpleIntegerProperty speed=new SimpleIntegerProperty();
+    private transient SimpleIntegerProperty speed = new SimpleIntegerProperty();
 
     private transient int techNumber; //DDR#
 
     public Memory(String[] csv){
         super(csv[1], csv[2], Double.parseDouble(csv[3]));
 
-        setRAM(Integer.parseInt(csv[4]));
+        setRam(Integer.parseInt(csv[4]));
         setMemoryTech(csv[5]);
         setSpeed(Integer.parseInt(csv[6]));
     }
 
 
-    public Memory(String manufacturer, String model, double price, int RAM, String memoryTech, int speed){
+    public Memory(String manufacturer, String model, double price, int ram, String memoryTech, int speed){
 
         super(manufacturer, model, price);
 
-        setRAM(RAM);
+        setRam(ram);
         setMemoryTech(memoryTech);
         setSpeed(speed);
     }
@@ -41,14 +41,14 @@ public class Memory extends Component implements Serializable, Compatible {
     @Override
     public String getComponentType(){return COMPONENT_TYPE;}
 
-    public int getRAM(){ return RAM.getValue();}
+    public int getRam(){ return ram.getValue();}
 
-    public void setRAM(int RAM){
+    public void setRam(int ram){
 
         boolean invalid=true;
 
         for (int i=2; i<=256; i=i*2){
-            if(RAM==i){
+            if(ram ==i){
                 invalid=false;
                 break;
             }
@@ -57,7 +57,7 @@ public class Memory extends Component implements Serializable, Compatible {
         if(invalid){
             throw new IllegalArgumentException("RAM must be one of these: \n 2GB, 4GB, 8GB, 16GB, 32GB, 64GB, 128GB");
         }
-        this.RAM.set(RAM);
+        this.ram.set(ram);
     }
 
     public String getMemoryTech(){ return memoryTech.getValue();}
@@ -104,10 +104,90 @@ public class Memory extends Component implements Serializable, Compatible {
         this.speed.set(speed);
     }
 
+    @Override
+    public int getRefreshRate() {
+        return 0;
+    }
+
+    @Override
+    public void setRefreshRate(int refreshRate) {
+
+    }
+
+    @Override
+    public int getRamSlots() {
+        return 0;
+    }
+
+    @Override
+    public void setRamSlots(int ramSlots) {
+
+    }
+
+    @Override
+    public int getMaxRamSize() {
+        return 0;
+    }
+
+    @Override
+    public void setMaxRamSize(int maxRamSize) {
+
+    }
+
+    @Override
+    public int getNumberButtons() {
+        return 0;
+    }
+
+    @Override
+    public void setNumberButtons(int numberButtons) {
+
+    }
+
+    @Override
+    public int getDpi() {
+        return 0;
+    }
+
+    @Override
+    public void setDpi(int dpi) {
+
+    }
+
+    @Override
+    public boolean isErgonomic() {
+        return false;
+    }
+
+    @Override
+    public void setErgonomic(boolean ergonomic) {
+
+    }
+
+    @Override
+    public boolean isWireless() {
+        return false;
+    }
+
+    @Override
+    public void setWireless(boolean wireless) {
+
+    }
+
+    @Override
+    public int getPowerCapacity() {
+        return 0;
+    }
+
+    @Override
+    public void setPowerCapacity(int powerCapacity) {
+
+    }
+
 
     @Override
     public String toCSV(){
-        return Formatter.toCSV(getComponentType(),getManufacturer(),getModel(),getPrice(),getRAM(), getMemoryTech(), getSpeed());
+        return Formatter.toCSV(getComponentType(),getManufacturer(),getModel(),getPrice(), getRam(), getMemoryTech(), getSpeed());
     }
 
     @Override
@@ -115,7 +195,7 @@ public class Memory extends Component implements Serializable, Compatible {
         return String.format("%s: %s\n"+
                 "RAM: %s GB\n"+
                 "Speed: %sMHz %s\n"+
-                "Price: %s", getComponentType(), getName(), getRAM(),getSpeed(), getMemoryTech(), getPrice());
+                "Price: %s", getComponentType(), getName(), getRam(),getSpeed(), getMemoryTech(), getPrice());
     }
 
     //Serialisering:
@@ -127,7 +207,7 @@ public class Memory extends Component implements Serializable, Compatible {
         objectOutputStream.writeUTF(getModel());
         objectOutputStream.writeDouble(getPrice());
 
-        objectOutputStream.writeInt(getRAM());
+        objectOutputStream.writeInt(getRam());
         objectOutputStream.writeUTF(getMemoryTech());
         objectOutputStream.writeInt(getSpeed());
 
@@ -141,16 +221,176 @@ public class Memory extends Component implements Serializable, Compatible {
         String speedTech= objectInputStream.readUTF();
         int speed=objectInputStream.readInt();
 
-        this.RAM = new SimpleIntegerProperty();
+        this.ram = new SimpleIntegerProperty();
         this.memoryTech = new SimpleStringProperty();
         this.speed=new SimpleIntegerProperty();
 
         super.setManufacturer(manufacturer);
         super.setModel(model);
         super.setPrice(price);
-        setRAM(RAM);
+        setRam(RAM);
         setMemoryTech(speedTech);
         setSpeed(speed);
+    }
+
+    @Override
+    public int getRpm() {
+        return 0;
+    }
+
+    @Override
+    public void setRpm(int rpm) {
+
+    }
+
+    @Override
+    public double getCapacity() {
+        return 0;
+    }
+
+    @Override
+    public void setCapacity(double capacity) {
+
+    }
+
+    @Override
+    public String getFormFactor() {
+        return null;
+    }
+
+    @Override
+    public void setFormFactor(String formFactor) {
+
+    }
+
+    @Override
+    public int getCoreRpm() {
+        return 0;
+    }
+
+    @Override
+    public void setCoreRpm(int coreRPM) {
+
+    }
+
+    @Override
+    public int getMaxRpm() {
+        return 0;
+    }
+
+    @Override
+    public void setMaxRpm(int maxRPM) {
+
+    }
+
+    @Override
+    public double getCoreNoise() {
+        return 0;
+    }
+
+    @Override
+    public void setCoreNoise(double coreNoise) {
+
+    }
+
+    @Override
+    public double getMaxNoise() {
+        return 0;
+    }
+
+    @Override
+    public void setMaxNoise(double noise) {
+
+    }
+
+    @Override
+    public double getPowerConsumption() {
+        return 0;
+    }
+
+    @Override
+    public void setPowerConsumption(double powerConsumption) {
+
+    }
+
+    @Override
+    public String getSocket() {
+        return null;
+    }
+
+    @Override
+    public void setSocket(String socket) {
+
+    }
+
+    @Override
+    public int getCoreCount() {
+        return 0;
+    }
+
+    @Override
+    public void setCoreCount(int coreCount) {
+
+    }
+
+    @Override
+    public double getCoreClock() {
+        return 0;
+    }
+
+    @Override
+    public void setCoreClock(double coreClock) {
+
+    }
+
+    @Override
+    public double getBoostClock() {
+        return 0;
+    }
+
+    @Override
+    public void setBoostClock(double boostClock) {
+
+    }
+
+    @Override
+    public String getBussType() {
+        return null;
+    }
+
+    @Override
+    public void setBussType(String bussType) {
+
+    }
+
+    @Override
+    public int getMemory() {
+        return 0;
+    }
+
+    @Override
+    public void setMemory(int memory) {
+
+    }
+
+    @Override
+    public String getMemoryType() {
+        return null;
+    }
+
+    @Override
+    public void setMemoryType(String memoryType) {
+
+    }
+
+    @Override
+    public boolean isTactile() {
+        return false;
+    }
+
+    @Override
+    public void setTactile(boolean tactile) {
+
     }
 
     @Override

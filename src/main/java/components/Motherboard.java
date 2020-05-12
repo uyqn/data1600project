@@ -191,6 +191,26 @@ public class Motherboard extends Component implements Serializable, Compatible {
         this.memoryTech.set("DDR"+ getTechNumber());
     }
 
+    @Override
+    public int getSpeed() {
+        return 0;
+    }
+
+    @Override
+    public void setSpeed(int speed) {
+
+    }
+
+    @Override
+    public int getRefreshRate() {
+        return 0;
+    }
+
+    @Override
+    public void setRefreshRate(int refreshRate) {
+
+    }
+
     public int getTechNumber() {
         return techNumber;
     }
@@ -218,6 +238,46 @@ public class Motherboard extends Component implements Serializable, Compatible {
         setBussSlots(Extract.ints(bussType).get(1));
 
         this.bussType.set("PCIe " + getBussVersion() + "x" + getBussSlots());
+    }
+
+    @Override
+    public int getMemory() {
+        return 0;
+    }
+
+    @Override
+    public void setMemory(int memory) {
+
+    }
+
+    @Override
+    public String getMemoryType() {
+        return null;
+    }
+
+    @Override
+    public void setMemoryType(String memoryType) {
+
+    }
+
+    @Override
+    public boolean isTactile() {
+        return false;
+    }
+
+    @Override
+    public void setTactile(boolean tactile) {
+
+    }
+
+    @Override
+    public int getRam() {
+        return 0;
+    }
+
+    @Override
+    public void setRam(int ram) {
+
     }
 
     public int getBussSlots() {
@@ -265,6 +325,56 @@ public class Motherboard extends Component implements Serializable, Compatible {
         this.formFactor.set(formFactor);
     }
 
+    @Override
+    public int getCoreRpm() {
+        return 0;
+    }
+
+    @Override
+    public void setCoreRpm(int coreRPM) {
+
+    }
+
+    @Override
+    public int getMaxRpm() {
+        return 0;
+    }
+
+    @Override
+    public void setMaxRpm(int maxRPM) {
+
+    }
+
+    @Override
+    public double getCoreNoise() {
+        return 0;
+    }
+
+    @Override
+    public void setCoreNoise(double coreNoise) {
+
+    }
+
+    @Override
+    public double getMaxNoise() {
+        return 0;
+    }
+
+    @Override
+    public void setMaxNoise(double noise) {
+
+    }
+
+    @Override
+    public double getPowerConsumption() {
+        return 0;
+    }
+
+    @Override
+    public void setPowerConsumption(double powerConsumption) {
+
+    }
+
 
     public String getComponentType() {
         return COMPONENT_TYPE;
@@ -288,12 +398,62 @@ public class Motherboard extends Component implements Serializable, Compatible {
         return maxRamSize.getValue();
     }
 
-    private void setMaxRamSize(int maxRamSize) {
+    public void setMaxRamSize(int maxRamSize) {
 
         if(maxRamSize % 4 != 0 || maxRamSize<4){
             throw new IllegalArgumentException("Must be a valid number of RAM-Size (16,32,64 etc.)");
         }
         this.maxRamSize.set(maxRamSize);
+    }
+
+    @Override
+    public int getNumberButtons() {
+        return 0;
+    }
+
+    @Override
+    public void setNumberButtons(int numberButtons) {
+
+    }
+
+    @Override
+    public int getDpi() {
+        return 0;
+    }
+
+    @Override
+    public void setDpi(int dpi) {
+
+    }
+
+    @Override
+    public boolean isErgonomic() {
+        return false;
+    }
+
+    @Override
+    public void setErgonomic(boolean ergonomic) {
+
+    }
+
+    @Override
+    public boolean isWireless() {
+        return false;
+    }
+
+    @Override
+    public void setWireless(boolean wireless) {
+
+    }
+
+    @Override
+    public int getPowerCapacity() {
+        return 0;
+    }
+
+    @Override
+    public void setPowerCapacity(int powerCapacity) {
+
     }
 
     public String getBoostType() {
@@ -318,6 +478,36 @@ public class Motherboard extends Component implements Serializable, Compatible {
             throw new IllegalArgumentException("Format of socket type is invalid");
         }
         this.socket.set(socket);
+    }
+
+    @Override
+    public int getCoreCount() {
+        return 0;
+    }
+
+    @Override
+    public void setCoreCount(int coreCount) {
+
+    }
+
+    @Override
+    public double getCoreClock() {
+        return 0;
+    }
+
+    @Override
+    public void setCoreClock(double coreClock) {
+
+    }
+
+    @Override
+    public double getBoostClock() {
+        return 0;
+    }
+
+    @Override
+    public void setBoostClock(double boostClock) {
+
     }
 
     public String toString(){
@@ -383,6 +573,26 @@ public class Motherboard extends Component implements Serializable, Compatible {
         setMemoryTech(memoryTech);
         setMaxRamSize(maxRamSize);
         setFormFactor(formFactor);
+    }
+
+    @Override
+    public int getRpm() {
+        return 0;
+    }
+
+    @Override
+    public void setRpm(int rpm) {
+
+    }
+
+    @Override
+    public double getCapacity() {
+        return 0;
+    }
+
+    @Override
+    public void setCapacity(double capacity) {
+
     }
 
     @Override

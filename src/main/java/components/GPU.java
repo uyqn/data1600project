@@ -19,7 +19,7 @@ public class GPU extends Component implements Serializable, Compatible {
     private transient SimpleStringProperty bussType = new SimpleStringProperty();
     private transient SimpleIntegerProperty memory = new SimpleIntegerProperty();
     private transient SimpleStringProperty memoryType=new SimpleStringProperty();
-    private transient SimpleDoubleProperty baseClock = new SimpleDoubleProperty();
+    private transient SimpleDoubleProperty coreClock = new SimpleDoubleProperty();
     private transient SimpleDoubleProperty boostClock = new SimpleDoubleProperty();
 
     private transient double bussVersion;
@@ -39,13 +39,13 @@ public class GPU extends Component implements Serializable, Compatible {
 
 
     public GPU(String manufacturer, String model, String bussType, int memory, String memoryType,
-               double baseClock, double boostClock, double price){
+               double coreClock, double boostClock, double price){
         super(manufacturer,model,price);
 
         setBussType(bussType);
         setMemory(memory);
         setMemoryType(memoryType);
-        setBaseClock(baseClock);
+        setCoreClock(coreClock);
         setBoostClock(boostClock);
     }
 
@@ -63,20 +63,20 @@ public class GPU extends Component implements Serializable, Compatible {
     public String getCOMPONENT_TYPE(){return COMPONENT_TYPE;}
 
 
-    public double getBaseClock() {
-        return baseClock.getValue();
+    public double getCoreClock() {
+        return coreClock.getValue();
     }
 
-    public void setBaseClock(double baseClock) {
-        if(baseClock < 1.1 || baseClock > 5.0){
+    public void setCoreClock(double coreClock) {
+        if(coreClock < 1.1 || coreClock > 5.0){
             throw new IllegalArgumentException("Base clock frequency should be between or equal to 1.1 and "
                     + getBoostClock() + " GHz");
         }
-        if(baseClock > getBoostClock()){
-            setBoostClock(baseClock);
+        if(coreClock > getBoostClock()){
+            setBoostClock(coreClock);
         }
 
-        this.baseClock.set(baseClock);
+        this.coreClock.set(coreClock);
     }
 
     public String getBussType(){
@@ -135,11 +135,11 @@ public class GPU extends Component implements Serializable, Compatible {
 
     public void setBoostClock(double boostClock) {
         if(boostClock < 1.1 || boostClock > 5.0){
-            throw new IllegalArgumentException("Overclocked speed should be between or equal to " + getBaseClock() +
+            throw new IllegalArgumentException("Overclocked speed should be between or equal to " + getCoreClock() +
                     " and 5.0 GHz");
         }
-        if(boostClock < getBaseClock()){
-            setBaseClock(boostClock);
+        if(boostClock < getCoreClock()){
+            setCoreClock(boostClock);
         }
 
         this.boostClock.set(boostClock);
@@ -165,10 +165,130 @@ public class GPU extends Component implements Serializable, Compatible {
         this.memoryType.set(memoryType);
     }
 
+    @Override
+    public boolean isTactile() {
+        return false;
+    }
+
+    @Override
+    public void setTactile(boolean tactile) {
+
+    }
+
+    @Override
+    public int getRam() {
+        return 0;
+    }
+
+    @Override
+    public void setRam(int ram) {
+
+    }
+
+    @Override
+    public String getMemoryTech() {
+        return null;
+    }
+
+    @Override
+    public void setMemoryTech(String memoryTech) {
+
+    }
+
+    @Override
+    public int getSpeed() {
+        return 0;
+    }
+
+    @Override
+    public void setSpeed(int speed) {
+
+    }
+
+    @Override
+    public int getRefreshRate() {
+        return 0;
+    }
+
+    @Override
+    public void setRefreshRate(int refreshRate) {
+
+    }
+
+    @Override
+    public int getRamSlots() {
+        return 0;
+    }
+
+    @Override
+    public void setRamSlots(int ramSlots) {
+
+    }
+
+    @Override
+    public int getMaxRamSize() {
+        return 0;
+    }
+
+    @Override
+    public void setMaxRamSize(int maxRamSize) {
+
+    }
+
+    @Override
+    public int getNumberButtons() {
+        return 0;
+    }
+
+    @Override
+    public void setNumberButtons(int numberButtons) {
+
+    }
+
+    @Override
+    public int getDpi() {
+        return 0;
+    }
+
+    @Override
+    public void setDpi(int dpi) {
+
+    }
+
+    @Override
+    public boolean isErgonomic() {
+        return false;
+    }
+
+    @Override
+    public void setErgonomic(boolean ergonomic) {
+
+    }
+
+    @Override
+    public boolean isWireless() {
+        return false;
+    }
+
+    @Override
+    public void setWireless(boolean wireless) {
+
+    }
+
+    @Override
+    public int getPowerCapacity() {
+        return 0;
+    }
+
+    @Override
+    public void setPowerCapacity(int powerCapacity) {
+
+    }
+
     public String getClockSpeed() {
-        return (getBaseClock() != getBoostClock()) ?
-                getBaseClock() + "/" + getBoostClock():
-                String.valueOf(getBaseClock());
+        return (getCoreClock() != getBoostClock()) ?
+                getCoreClock() + "/" + getBoostClock():
+                String.valueOf(getCoreClock());
     }
 
     public void setClockSpeed(double core, double boost){
@@ -176,7 +296,7 @@ public class GPU extends Component implements Serializable, Compatible {
             throw new IllegalArgumentException("Core clock speed should be greater than the boost clock speed");
         }
 
-        setBaseClock(core);
+        setCoreClock(core);
         setBoostClock(boost);
     }
 
@@ -187,11 +307,11 @@ public class GPU extends Component implements Serializable, Compatible {
         }
 
         if(Extract.doubles(clockSpeed).size() == 1){
-            setBaseClock(Extract.doubles(clockSpeed).get(0));
+            setCoreClock(Extract.doubles(clockSpeed).get(0));
             setBoostClock(Extract.doubles(clockSpeed).get(0));
         }
         else {
-            setBaseClock(
+            setCoreClock(
                     Math.min(Extract.doubles(clockSpeed).get(0),
                             Extract.doubles(clockSpeed).get(Extract.doubles(clockSpeed).size() - 1))
             );
@@ -242,7 +362,7 @@ public class GPU extends Component implements Serializable, Compatible {
 
         objectOutputStream.writeInt(getMemory());
         objectOutputStream.writeUTF(getMemoryType());
-        objectOutputStream.writeDouble(getBaseClock());
+        objectOutputStream.writeDouble(getCoreClock());
         objectOutputStream.writeDouble(getBoostClock());
     }
 
@@ -258,7 +378,7 @@ public class GPU extends Component implements Serializable, Compatible {
 
         this.memory=new SimpleIntegerProperty();
         this.memoryType=new SimpleStringProperty();
-        this.baseClock=new SimpleDoubleProperty();
+        this.coreClock =new SimpleDoubleProperty();
         this.boostClock= new SimpleDoubleProperty();
 
         super.setManufacturer(manufacturer);
@@ -266,8 +386,108 @@ public class GPU extends Component implements Serializable, Compatible {
         super.setPrice(price);
         setMemory(memory);
         setMemoryType(memoryType);
-        setBaseClock(baseClock);
+        setCoreClock(baseClock);
         setBoostClock(boostClock);
+
+    }
+
+    @Override
+    public int getRpm() {
+        return 0;
+    }
+
+    @Override
+    public void setRpm(int rpm) {
+
+    }
+
+    @Override
+    public double getCapacity() {
+        return 0;
+    }
+
+    @Override
+    public void setCapacity(double capacity) {
+
+    }
+
+    @Override
+    public String getFormFactor() {
+        return null;
+    }
+
+    @Override
+    public void setFormFactor(String formFactor) {
+
+    }
+
+    @Override
+    public int getCoreRpm() {
+        return 0;
+    }
+
+    @Override
+    public void setCoreRpm(int coreRPM) {
+
+    }
+
+    @Override
+    public int getMaxRpm() {
+        return 0;
+    }
+
+    @Override
+    public void setMaxRpm(int maxRPM) {
+
+    }
+
+    @Override
+    public double getCoreNoise() {
+        return 0;
+    }
+
+    @Override
+    public void setCoreNoise(double coreNoise) {
+
+    }
+
+    @Override
+    public double getMaxNoise() {
+        return 0;
+    }
+
+    @Override
+    public void setMaxNoise(double noise) {
+
+    }
+
+    @Override
+    public double getPowerConsumption() {
+        return 0;
+    }
+
+    @Override
+    public void setPowerConsumption(double powerConsumption) {
+
+    }
+
+    @Override
+    public String getSocket() {
+        return null;
+    }
+
+    @Override
+    public void setSocket(String socket) {
+
+    }
+
+    @Override
+    public int getCoreCount() {
+        return 0;
+    }
+
+    @Override
+    public void setCoreCount(int coreCount) {
 
     }
 

@@ -13,8 +13,8 @@ import java.io.Serializable;
 public class Cooler extends Component implements Serializable {
     public static final transient String COMPONENT_TYPE = "Cooler";
 
-    private transient SimpleIntegerProperty coreRPM = new SimpleIntegerProperty();
-    private transient SimpleIntegerProperty maxRPM = new SimpleIntegerProperty();
+    private transient SimpleIntegerProperty coreRpm = new SimpleIntegerProperty();
+    private transient SimpleIntegerProperty maxRpm = new SimpleIntegerProperty();
     private transient SimpleDoubleProperty coreNoise = new SimpleDoubleProperty();
     private transient SimpleDoubleProperty maxNoise = new SimpleDoubleProperty();
     private transient SimpleDoubleProperty powerConsumption = new SimpleDoubleProperty();
@@ -47,16 +47,16 @@ public class Cooler extends Component implements Serializable {
                   double width,
                   double depth,
                   double height,
-                  int coreRPM,
-                  int maxRPM,
+                  int coreRpm,
+                  int maxRpm,
                   double coreNoise,
                   double maxNoise,
                   double powerConsumption,
                   double price) {
         super(manufacturer, model, price);
         super.setDimension(width, depth, height);
-        setCoreRPM(coreRPM);
-        setMaxRPM(maxRPM);
+        setCoreRpm(coreRpm);
+        setMaxRpm(maxRpm);
         setCoreNoise(coreNoise);
         setMaxNoise(maxNoise);
         setPowerConsumption(powerConsumption);
@@ -133,39 +133,64 @@ public class Cooler extends Component implements Serializable {
         }
     }
 
-    public int getCoreRPM() {
-        return coreRPM.getValue();
+    public int getCoreRpm() {
+        return coreRpm.getValue();
     }
 
-    public void setCoreRPM(int coreRPM) {
-        if(coreRPM < 0){
+    public void setCoreRpm(int coreRpm) {
+        if(coreRpm < 0){
             throw new IllegalArgumentException("RPM cannot be negative");
         }
-        if(coreRPM > getMaxRPM()){
-            setMaxRPM(coreRPM);
+        if(coreRpm > getMaxRpm()){
+            setMaxRpm(coreRpm);
         }
-        this.coreRPM.set(coreRPM);
+        this.coreRpm.set(coreRpm);
     }
 
-    public int getMaxRPM() {
-        return maxRPM.getValue();
+    public int getMaxRpm() {
+        return maxRpm.getValue();
     }
 
-    public void setMaxRPM(int maxRPM) {
-        if(maxRPM < 0){
+    public void setMaxRpm(int maxRpm) {
+        if(maxRpm < 0){
             throw new IllegalArgumentException("Max RPM cannot be negative");
         }
-        if(maxRPM < getCoreRPM()){
-            setCoreRPM(maxRPM);
+        if(maxRpm < getCoreRpm()){
+            setCoreRpm(maxRpm);
         }
 
-        this.maxRPM.set(maxRPM);
+        this.maxRpm.set(maxRpm);
     }
 
-    public String getRPM(){
-        return (getCoreRPM() != getMaxRPM()) ?
-                getCoreRPM() + " - " + getMaxRPM() :
-                String.valueOf(getCoreRPM());
+    public String getRpmString(){
+        return (getCoreRpm() != getMaxRpm()) ?
+                getCoreRpm() + " - " + getMaxRpm() :
+                String.valueOf(getCoreRpm());
+    }
+
+    @Override
+    public void setRpm(int rpm) {
+
+    }
+
+    @Override
+    public double getCapacity() {
+        return 0;
+    }
+
+    @Override
+    public void setCapacity(double capacity) {
+
+    }
+
+    @Override
+    public String getFormFactor() {
+        return null;
+    }
+
+    @Override
+    public void setFormFactor(String formFactor) {
+
     }
 
     public void setRPM(String rpm){
@@ -175,14 +200,14 @@ public class Cooler extends Component implements Serializable {
         }
 
         if(Extract.ints(rpm).size() == 1){
-            setCoreRPM(Extract.ints(rpm).get(0));
-            setMaxRPM(Extract.ints(rpm).get(0));
+            setCoreRpm(Extract.ints(rpm).get(0));
+            setMaxRpm(Extract.ints(rpm).get(0));
         }
         else {
-            setCoreRPM(Math.min(Extract.ints(rpm).get(0),
+            setCoreRpm(Math.min(Extract.ints(rpm).get(0),
                     Extract.ints(rpm).get(1))
             );
-            setMaxRPM(Math.max(Extract.ints(rpm).get(0),
+            setMaxRpm(Math.max(Extract.ints(rpm).get(0),
                     Extract.ints(rpm).get(1))
             );
         }
@@ -201,13 +226,203 @@ public class Cooler extends Component implements Serializable {
     }
 
     @Override
+    public String getSocket() {
+        return null;
+    }
+
+    @Override
+    public void setSocket(String socket) {
+
+    }
+
+    @Override
+    public int getCoreCount() {
+        return 0;
+    }
+
+    @Override
+    public void setCoreCount(int coreCount) {
+
+    }
+
+    @Override
+    public double getCoreClock() {
+        return 0;
+    }
+
+    @Override
+    public void setCoreClock(double coreClock) {
+
+    }
+
+    @Override
+    public double getBoostClock() {
+        return 0;
+    }
+
+    @Override
+    public void setBoostClock(double boostClock) {
+
+    }
+
+    @Override
+    public String getBussType() {
+        return null;
+    }
+
+    @Override
+    public void setBussType(String bussType) {
+
+    }
+
+    @Override
+    public int getMemory() {
+        return 0;
+    }
+
+    @Override
+    public void setMemory(int memory) {
+
+    }
+
+    @Override
+    public String getMemoryType() {
+        return null;
+    }
+
+    @Override
+    public void setMemoryType(String memoryType) {
+
+    }
+
+    @Override
+    public boolean isTactile() {
+        return false;
+    }
+
+    @Override
+    public void setTactile(boolean tactile) {
+
+    }
+
+    @Override
+    public int getRam() {
+        return 0;
+    }
+
+    @Override
+    public void setRam(int ram) {
+
+    }
+
+    @Override
+    public String getMemoryTech() {
+        return null;
+    }
+
+    @Override
+    public void setMemoryTech(String memoryTech) {
+
+    }
+
+    @Override
+    public int getSpeed() {
+        return 0;
+    }
+
+    @Override
+    public void setSpeed(int speed) {
+
+    }
+
+    @Override
+    public int getRefreshRate() {
+        return 0;
+    }
+
+    @Override
+    public void setRefreshRate(int refreshRate) {
+
+    }
+
+    @Override
+    public int getRamSlots() {
+        return 0;
+    }
+
+    @Override
+    public void setRamSlots(int ramSlots) {
+
+    }
+
+    @Override
+    public int getMaxRamSize() {
+        return 0;
+    }
+
+    @Override
+    public void setMaxRamSize(int maxRamSize) {
+
+    }
+
+    @Override
+    public int getNumberButtons() {
+        return 0;
+    }
+
+    @Override
+    public void setNumberButtons(int numberButtons) {
+
+    }
+
+    @Override
+    public int getDpi() {
+        return 0;
+    }
+
+    @Override
+    public void setDpi(int dpi) {
+
+    }
+
+    @Override
+    public boolean isErgonomic() {
+        return false;
+    }
+
+    @Override
+    public void setErgonomic(boolean ergonomic) {
+
+    }
+
+    @Override
+    public boolean isWireless() {
+        return false;
+    }
+
+    @Override
+    public void setWireless(boolean wireless) {
+
+    }
+
+    @Override
+    public int getPowerCapacity() {
+        return 0;
+    }
+
+    @Override
+    public void setPowerCapacity(int powerCapacity) {
+
+    }
+
+    @Override
     public String toCSV(){
         return Formatter.toCSV(
                 COMPONENT_TYPE,
                 getManufacturer(),
                 getModel(),
                 getDimension(),
-                getRPM(),
+                getRpmString(),
                 getNoise(),
                 getPowerConsumption(),
                 getPrice()
@@ -222,7 +437,7 @@ public class Cooler extends Component implements Serializable {
                         "Noise: %s dBA\n" +
                         "Power consumption: %s W\n" +
                         "Price: %s NOK",
-                COMPONENT_TYPE, getName(), getDimension(), getRPM(), getNoise(), getPowerConsumption(),
+                COMPONENT_TYPE, getName(), getDimension(), getRpmString(), getNoise(), getPowerConsumption(),
                 String.format("%.2f",getPrice())
                 );
     }
@@ -236,8 +451,8 @@ public class Cooler extends Component implements Serializable {
         objectOutputStream.writeDouble(getPrice());
         objectOutputStream.writeUTF(getDimension());
 
-        objectOutputStream.writeInt(getCoreRPM());
-        objectOutputStream.writeInt(getMaxRPM());
+        objectOutputStream.writeInt(getCoreRpm());
+        objectOutputStream.writeInt(getMaxRpm());
         objectOutputStream.writeDouble(getCoreNoise());
         objectOutputStream.writeDouble(getMaxNoise());
         objectOutputStream.writeDouble(getPowerConsumption());
@@ -255,8 +470,8 @@ public class Cooler extends Component implements Serializable {
         double maxNoise = objectInputStream.readDouble();
         double powerConsumption = objectInputStream.readDouble();
 
-        this.coreRPM = new SimpleIntegerProperty();
-        this.maxRPM = new SimpleIntegerProperty();
+        this.coreRpm = new SimpleIntegerProperty();
+        this.maxRpm = new SimpleIntegerProperty();
         this.coreNoise = new SimpleDoubleProperty();
         this.maxNoise = new SimpleDoubleProperty();
         this.powerConsumption = new SimpleDoubleProperty();
@@ -265,10 +480,15 @@ public class Cooler extends Component implements Serializable {
         super.setModel(model);
         super.setPrice(price);
         super.setDimension(dimension);
-        setCoreRPM(coreRPM);
-        setMaxRPM(maxRPM);
+        setCoreRpm(coreRPM);
+        setMaxRpm(maxRPM);
         setCoreNoise(coreNoise);
         setMaxNoise(maxNoise);
         setPowerConsumption(powerConsumption);
+    }
+
+    @Override
+    public int getRpm() {
+        return 0;
     }
 }

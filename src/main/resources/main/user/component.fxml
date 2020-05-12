@@ -113,7 +113,7 @@
                     <Label text="Price: " GridPane.rowIndex="6" />
                     <TextField id="manufacturer" promptText="Enter manufacturer" GridPane.columnIndex="1" />
                     <TextField id="model" promptText="Enter model" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                    <TextField id="BussType" promptText="Enter bus type" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                    <TextField id="bussType" promptText="Enter bus type" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                     <TextField id="memory" promptText="Enter memory" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                     <TextField id="memoryType" promptText="Enter memory type" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                     <GridPane GridPane.columnIndex="1" GridPane.rowIndex="5">

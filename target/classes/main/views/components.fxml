@@ -14,115 +14,120 @@
    <center>
       <GridPane fx:id="viewComponentsGui" BorderPane.alignment="CENTER">
          <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="950.0" minWidth="300.0" prefWidth="697.0" />
-            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="650.0" minWidth="0.0" prefWidth="253.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="950.0" minWidth="300.0" prefWidth="697.0"/>
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="650.0" minWidth="0.0" prefWidth="253.0"/>
          </columnConstraints>
          <rowConstraints>
-            <RowConstraints maxHeight="362.0" minHeight="10.0" prefHeight="186.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="680.0" minHeight="10.0" prefHeight="218.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="680.0" minHeight="10.0" prefHeight="607.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="362.0" minHeight="10.0" prefHeight="186.0" vgrow="SOMETIMES"/>
+            <RowConstraints maxHeight="680.0" minHeight="10.0" prefHeight="218.0" vgrow="SOMETIMES"/>
+            <RowConstraints maxHeight="680.0" minHeight="10.0" prefHeight="607.0" vgrow="SOMETIMES"/>
          </rowConstraints>
          <opaqueInsets>
-            <Insets />
+            <Insets/>
          </opaqueInsets>
          <padding>
-            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
          </padding>
          <BorderPane.margin>
-            <Insets />
+            <Insets/>
          </BorderPane.margin>
-         <children>
-            <GridPane>
-              <columnConstraints>
-                <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints vgrow="SOMETIMES" />
-                <RowConstraints vgrow="SOMETIMES" />
-                <RowConstraints vgrow="SOMETIMES" />
-                  <RowConstraints vgrow="SOMETIMES" />
-              </rowConstraints>
-               <children>
-                  <RadioButton mnemonicParsing="false" text="Keyboard" GridPane.columnIndex="3" GridPane.rowIndex="3">
-                     <GridPane.margin>
-                        <Insets left="20.0" />
-                     </GridPane.margin>
-                     <toggleGroup>
-                        <ToggleGroup fx:id="viewer" />
-                     </toggleGroup>
-                  </RadioButton>
-                  <RadioButton mnemonicParsing="false" text="Monitor" toggleGroup="$viewer" GridPane.columnIndex="2" GridPane.rowIndex="3">
-                     <GridPane.margin>
-                        <Insets left="20.0" />
-                     </GridPane.margin>
-                  </RadioButton>
-                  <RadioButton mnemonicParsing="false" text="Cabin" toggleGroup="$viewer" GridPane.columnIndex="4" GridPane.rowIndex="2">
-                     <GridPane.margin>
-                        <Insets left="20.0" />
-                     </GridPane.margin>
-                  </RadioButton>
-                  <RadioButton mnemonicParsing="false" text="PSU" toggleGroup="$viewer" GridPane.columnIndex="3" GridPane.rowIndex="2">
-                     <GridPane.margin>
-                        <Insets left="20.0" />
-                     </GridPane.margin>
-                  </RadioButton>
-                  <RadioButton mnemonicParsing="false" text="Cooler" toggleGroup="$viewer" GridPane.columnIndex="2" GridPane.rowIndex="2">
-                     <GridPane.margin>
-                        <Insets left="20.0" />
-                     </GridPane.margin>
-                  </RadioButton>
-                  <RadioButton mnemonicParsing="false" text="SSD" toggleGroup="$viewer" GridPane.columnIndex="4" GridPane.rowIndex="1">
-                     <GridPane.margin>
-                        <Insets left="20.0" />
-                     </GridPane.margin>
-                  </RadioButton>
-                  <RadioButton mnemonicParsing="false" text="Memory" toggleGroup="$viewer" GridPane.columnIndex="2" GridPane.rowIndex="1">
-                     <GridPane.margin>
-                        <Insets left="20.0" />
-                     </GridPane.margin>
-                  </RadioButton>
-                  <RadioButton mnemonicParsing="false" text="HDD" toggleGroup="$viewer" GridPane.columnIndex="3" GridPane.rowIndex="1">
-                     <GridPane.margin>
-                        <Insets left="20.0" />
-                     </GridPane.margin>
-                  </RadioButton>
-                  <RadioButton mnemonicParsing="false" text="GPU" toggleGroup="$viewer" GridPane.columnIndex="3">
-                     <GridPane.margin>
-                        <Insets left="20.0" />
-                     </GridPane.margin>
-                  </RadioButton>
-                  <RadioButton mnemonicParsing="false" text="Motherboard" toggleGroup="$viewer" GridPane.columnIndex="4">
-                     <GridPane.margin>
-                        <Insets left="20.0" />
-                     </GridPane.margin>
-                  </RadioButton>
-                  <RadioButton mnemonicParsing="false" text="CPU" toggleGroup="$viewer" GridPane.columnIndex="2">
-                     <GridPane.margin>
-                        <Insets left="20.0" />
-                     </GridPane.margin>
-                  </RadioButton>
-                  <RadioButton mnemonicParsing="false" selected="true" text="All" toggleGroup="$viewer" GridPane.columnIndex="1">
-                     <GridPane.margin>
-                        <Insets left="20.0" />
-                     </GridPane.margin>
-                  </RadioButton>
-                  <RadioButton mnemonicParsing="false" text="Mouse" toggleGroup="$viewer" GridPane.columnIndex="4" GridPane.rowIndex="3">
-                     <GridPane.margin>
-                        <Insets left="20.0" />
-                     </GridPane.margin>
-                  </RadioButton>
-                  <Label text="View: ">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font>
-                  </Label>
-               </children>
-            </GridPane>
-         </children>
+         <GridPane>
+            <columnConstraints>
+               <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+            </columnConstraints>
+            <rowConstraints>
+               <RowConstraints vgrow="SOMETIMES"/>
+               <RowConstraints vgrow="SOMETIMES"/>
+               <RowConstraints vgrow="SOMETIMES"/>
+               <RowConstraints vgrow="SOMETIMES"/>
+            </rowConstraints>
+            <RadioButton mnemonicParsing="false" text="Keyboard" GridPane.columnIndex="3" GridPane.rowIndex="3">
+               <GridPane.margin>
+                  <Insets left="20.0"/>
+               </GridPane.margin>
+               <toggleGroup>
+                  <ToggleGroup fx:id="viewer"/>
+               </toggleGroup>
+            </RadioButton>
+            <RadioButton mnemonicParsing="false" text="Monitor" toggleGroup="$viewer" GridPane.columnIndex="2"
+                         GridPane.rowIndex="3">
+               <GridPane.margin>
+                  <Insets left="20.0"/>
+               </GridPane.margin>
+            </RadioButton>
+            <RadioButton mnemonicParsing="false" text="Cabin" toggleGroup="$viewer" GridPane.columnIndex="4"
+                         GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets left="20.0"/>
+               </GridPane.margin>
+            </RadioButton>
+            <RadioButton mnemonicParsing="false" text="PSU" toggleGroup="$viewer" GridPane.columnIndex="3"
+                         GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets left="20.0"/>
+               </GridPane.margin>
+            </RadioButton>
+            <RadioButton mnemonicParsing="false" text="Cooler" toggleGroup="$viewer" GridPane.columnIndex="2"
+                         GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets left="20.0"/>
+               </GridPane.margin>
+            </RadioButton>
+            <RadioButton mnemonicParsing="false" text="SSD" toggleGroup="$viewer" GridPane.columnIndex="4"
+                         GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets left="20.0"/>
+               </GridPane.margin>
+            </RadioButton>
+            <RadioButton mnemonicParsing="false" text="Memory" toggleGroup="$viewer" GridPane.columnIndex="2"
+                         GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets left="20.0"/>
+               </GridPane.margin>
+            </RadioButton>
+            <RadioButton mnemonicParsing="false" text="HDD" toggleGroup="$viewer" GridPane.columnIndex="3"
+                         GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets left="20.0"/>
+               </GridPane.margin>
+            </RadioButton>
+            <RadioButton mnemonicParsing="false" text="GPU" toggleGroup="$viewer" GridPane.columnIndex="3">
+               <GridPane.margin>
+                  <Insets left="20.0"/>
+               </GridPane.margin>
+            </RadioButton>
+            <RadioButton mnemonicParsing="false" text="Motherboard" toggleGroup="$viewer" GridPane.columnIndex="4">
+               <GridPane.margin>
+                  <Insets left="20.0"/>
+               </GridPane.margin>
+            </RadioButton>
+            <RadioButton mnemonicParsing="false" text="CPU" toggleGroup="$viewer" GridPane.columnIndex="2">
+               <GridPane.margin>
+                  <Insets left="20.0"/>
+               </GridPane.margin>
+            </RadioButton>
+            <RadioButton mnemonicParsing="false" selected="true" text="All" toggleGroup="$viewer"
+                         GridPane.columnIndex="1">
+               <GridPane.margin>
+                  <Insets left="20.0"/>
+               </GridPane.margin>
+            </RadioButton>
+            <RadioButton mnemonicParsing="false" text="Mouse" toggleGroup="$viewer" GridPane.columnIndex="4"
+                         GridPane.rowIndex="3">
+               <GridPane.margin>
+                  <Insets left="20.0"/>
+               </GridPane.margin>
+            </RadioButton>
+            <Label text="View: ">
+               <font>
+                  <Font name="System Bold" size="12.0"/>
+               </font>
+            </Label>
+         </GridPane>
       </GridPane>
    </center>
 </BorderPane>

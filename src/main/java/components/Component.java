@@ -144,4 +144,71 @@ public abstract class Component implements Serializable {
         setPrice(price);
         setDimension(dimension);
     }
+
+    //"Dummy" methods for tableview:
+    public abstract int getRpm();
+    public abstract void setRpm(int rpm);
+
+    public abstract double getCapacity();
+    public abstract void setCapacity(double capacity);
+
+    public abstract String getFormFactor();
+    public abstract void setFormFactor(String formFactor);
+
+    public abstract int getCoreRpm();
+    public abstract void setCoreRpm(int coreRPM);
+    public abstract int getMaxRpm();
+    public abstract void setMaxRpm(int maxRPM);
+    public abstract double getCoreNoise();
+    public abstract void setCoreNoise(double coreNoise);
+    public abstract double getMaxNoise();
+    public abstract void setMaxNoise(double noise);
+    public abstract double getPowerConsumption();
+    public abstract void setPowerConsumption(double powerConsumption);
+
+    public abstract String getSocket();
+    public abstract void setSocket(String socket);
+    public abstract int getCoreCount();
+    public abstract void setCoreCount(int coreCount);
+    public abstract double getCoreClock();
+    public abstract void setCoreClock(double coreClock);
+    public abstract double getBoostClock();
+    public abstract void setBoostClock(double boostClock);
+
+    public abstract String getBussType();
+    public abstract void setBussType(String bussType);
+    public abstract int getMemory();
+    public abstract void setMemory(int memory);
+    public abstract String getMemoryType();
+    public abstract void setMemoryType(String memoryType);
+
+    public abstract boolean isTactile();
+    public abstract void setTactile(boolean tactile);
+
+    public abstract int getRam();
+    public abstract void setRam(int ram);
+    public abstract String getMemoryTech();
+    public abstract void setMemoryTech(String memoryTech);
+    public abstract int getSpeed();
+    public abstract void setSpeed(int speed);
+
+    public abstract int getRefreshRate();
+    public abstract void setRefreshRate(int refreshRate);
+
+    public abstract int getRamSlots();
+    public abstract void setRamSlots(int ramSlots);
+    public abstract int getMaxRamSize();
+    public abstract void setMaxRamSize(int maxRamSize);
+
+    public abstract int getNumberButtons();
+    public abstract void setNumberButtons(int numberButtons);
+    public abstract int getDpi();
+    public abstract void setDpi(int dpi);
+    public abstract boolean isErgonomic();
+    public abstract void setErgonomic(boolean ergonomic);
+    public abstract boolean isWireless();
+    public abstract void setWireless(boolean wireless);
+
+    public abstract int getPowerCapacity();
+    public abstract void setPowerCapacity(int powerCapacity);
 }
