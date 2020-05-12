@@ -1,6 +1,7 @@
 package components;
 
 import fileManager.Formatter;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
 import java.io.IOException;
@@ -12,22 +13,34 @@ public class Monitor extends Component implements Serializable {
     public transient static final String COMPONENT_TYPE = "Monitor";
 
     private transient SimpleIntegerProperty refreshRate = new SimpleIntegerProperty();
+    private transient SimpleDoubleProperty size = new SimpleDoubleProperty();
 
     public Monitor(String[] csv) {
-        super(csv[0], csv[1], Double.parseDouble(csv[3]));
+        super(csv[0], csv[1], Double.parseDouble(csv[4]));
 
-        setRefreshRate(Integer.parseInt(csv[2]));
+        setSize(Double.parseDouble(csv[2]));
+        setRefreshRate(Integer.parseInt(csv[3]));
     }
 
     public Monitor(String manufacturer,
                    String model,
+                   double size,
                    int refreshRate,
                    double price){
 
         super(manufacturer, model, price);
 
+        setSize(size);
+        setRefreshRate(refreshRate);
         setPrice(price);
+    }
 
+    @Override
+    public void setSize(double size) {
+        if(size < 15 || size > 65){
+            throw new IllegalArgumentException("Screen size must be between 15.0\" and 65.0\"");
+        }
+        this.size.set(size);
     }
 
     public String getComponentType() {
@@ -121,7 +134,14 @@ public class Monitor extends Component implements Serializable {
     @Override
     public String toString(){
         return getComponentType() + ": " + getName() + "\n" +
-                "Refresh rate " +getRefreshRate()+" Hz";
+                "Display size: " + getSize() + "\" \n" +
+                "Refresh rate " + getRefreshRate() + " Hz\n" +
+                "Price: " + String.format("%.2f",getPrice());
+    }
+
+    @Override
+    public double getSize() {
+        return this.size.getValue();
     }
 
     @Override
@@ -129,6 +149,7 @@ public class Monitor extends Component implements Serializable {
         return Formatter.toCSV(
                 getManufacturer(),
                 getModel(),
+                getSize(),
                 getRefreshRate(),
                 getPrice()
         );
@@ -141,7 +162,7 @@ public class Monitor extends Component implements Serializable {
         objectOutputStream.writeUTF(getManufacturer());
         objectOutputStream.writeUTF(getModel());
         objectOutputStream.writeDouble(getPrice());
-
+        objectOutputStream.writeDouble(getSize());
         objectOutputStream.writeInt(getRefreshRate());
     }
 
@@ -149,7 +170,7 @@ public class Monitor extends Component implements Serializable {
         String manufacturer = objectInputStream.readUTF();
         String model = objectInputStream.readUTF();
         double price = objectInputStream.readDouble();
-
+        double size = objectInputStream.readDouble();
         int refreshRate = objectInputStream.readInt();
 
         this.refreshRate = new SimpleIntegerProperty();
@@ -157,6 +178,7 @@ public class Monitor extends Component implements Serializable {
         super.setManufacturer(manufacturer);
         super.setModel(model);
         super.setPrice(price);
+        setSize(size);
         setRefreshRate(refreshRate);
     }
 
@@ -171,12 +193,12 @@ public class Monitor extends Component implements Serializable {
     }
 
     @Override
-    public double getCapacity() {
+    public int getCapacity() {
         return 0;
     }
 
     @Override
-    public void setCapacity(double capacity) {
+    public void setCapacity(int capacity) {
 
     }
 
@@ -311,7 +333,17 @@ public class Monitor extends Component implements Serializable {
     }
 
     @Override
-    public boolean isTactile() {
+    public int getBoostSpeed() {
+        return 0;
+    }
+
+    @Override
+    public void setBoostSpeed(int boostSpeed) {
+
+    }
+
+    @Override
+    public boolean getTactile() {
         return false;
     }
 

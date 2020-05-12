@@ -60,7 +60,7 @@ public class SuperUserController {
             addViewComponentWindow.getStage().close();
             superHome.lookup("#viewComponents").setDisable(false);
         });
-        superHome.lookup("#viewComponents").setDisable(false);
+        superHome.lookup("#viewComponents").setDisable(true);
     }
 
     @FXML

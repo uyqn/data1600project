@@ -96,15 +96,12 @@ public class Mouse extends Component implements Serializable {
 
     @Override
     public String toString(){
-        String ergonomic = isErgonomic() ? "Yes" : "No";
-        String wireless = isWireless() ? "Yes" : "No";
-
         return getComponentType() + ": " + getName() + "\n" +
                 "Buttons: " + getNumberButtons() + "\n" +
                 "Polling rate: " + getDpi() + "DPI \n" +
-                "Ergonomic: " + ergonomic + "\n" +
-                "Wireless: " + wireless + "\n" +
-                "Price: " + getPrice();
+                "Ergonomic: " + isErgonomic() + "\n" +
+                "Wireless: " + isWireless() + "\n" +
+                "Price: " + String.format("%.2f",getPrice());
     }
 
     @Override
@@ -167,12 +164,12 @@ public class Mouse extends Component implements Serializable {
     }
 
     @Override
-    public double getCapacity() {
+    public int getCapacity() {
         return 0;
     }
 
     @Override
-    public void setCapacity(double capacity) {
+    public void setCapacity(int capacity) {
 
     }
 
@@ -307,7 +304,17 @@ public class Mouse extends Component implements Serializable {
     }
 
     @Override
-    public boolean isTactile() {
+    public int getBoostSpeed() {
+        return 0;
+    }
+
+    @Override
+    public void setBoostSpeed(int boostSpeed) {
+
+    }
+
+    @Override
+    public boolean getTactile() {
         return false;
     }
 
@@ -343,6 +350,16 @@ public class Mouse extends Component implements Serializable {
 
     @Override
     public void setSpeed(int speed) {
+
+    }
+
+    @Override
+    public double getSize() {
+        return 0;
+    }
+
+    @Override
+    public void setSize(double size) {
 
     }
 

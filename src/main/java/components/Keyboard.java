@@ -11,7 +11,7 @@ import java.io.Serializable;
 public class Keyboard extends Component implements Serializable {
 
     public transient static final String COMPONENT_TYPE = "Keyboard";
-    private transient SimpleBooleanProperty Tactile;
+    private transient SimpleBooleanProperty tactile = new SimpleBooleanProperty();
 
     public Keyboard(String [] csv) {
         super(csv[1], csv[2], Double.parseDouble(csv[4]));
@@ -29,12 +29,12 @@ public class Keyboard extends Component implements Serializable {
 
     }
 
-    public boolean isTactile() {
-        return Tactile.get();
+    public boolean getTactile() {
+        return tactile.get();
     }
 
     public void setTactile(boolean tactile) {
-        this.Tactile.set(tactile);
+        this.tactile.set(tactile);
     }
 
     @Override
@@ -64,6 +64,16 @@ public class Keyboard extends Component implements Serializable {
 
     @Override
     public void setSpeed(int speed) {
+
+    }
+
+    @Override
+    public double getSize() {
+        return 0;
+    }
+
+    @Override
+    public void setSize(double size) {
 
     }
 
@@ -155,15 +165,15 @@ public class Keyboard extends Component implements Serializable {
     public String toString(){
         return String.format("%s: %s\n"+
                 "Tactile: %s\n" +
-                "Price: %s", getComponentType(),getName(),
-                isTactile() ? "Yes" : "No", getPrice());
+                "Price: %s NOK", getComponentType(),getName(),
+                getTactile(), String.format("%.2f",getPrice()));
     }
     @Override
     public String toCSV() {
         return Formatter.toCSV(getComponentType(),
                 getManufacturer(),
                 getModel(),
-                isTactile(),
+                getTactile(),
                 getPrice()
         );
     }
@@ -176,7 +186,7 @@ public class Keyboard extends Component implements Serializable {
         objectOutputStream.writeUTF(getModel());
         objectOutputStream.writeDouble(getPrice());
 
-        objectOutputStream.writeBoolean(isTactile());
+        objectOutputStream.writeBoolean(getTactile());
     }
 
     private void readObject(ObjectInputStream objectInputStream) throws IOException, ClassNotFoundException {
@@ -186,7 +196,7 @@ public class Keyboard extends Component implements Serializable {
 
         boolean Tactile = objectInputStream.readBoolean();
 
-        this.Tactile = new SimpleBooleanProperty();
+        this.tactile = new SimpleBooleanProperty();
 
         super.setManufacturer(manufacturer);
         super.setModel(model);
@@ -205,12 +215,12 @@ public class Keyboard extends Component implements Serializable {
     }
 
     @Override
-    public double getCapacity() {
+    public int getCapacity() {
         return 0;
     }
 
     @Override
-    public void setCapacity(double capacity) {
+    public void setCapacity(int capacity) {
 
     }
 
@@ -341,6 +351,16 @@ public class Keyboard extends Component implements Serializable {
 
     @Override
     public void setMemoryType(String memoryType) {
+
+    }
+
+    @Override
+    public int getBoostSpeed() {
+        return 0;
+    }
+
+    @Override
+    public void setBoostSpeed(int boostSpeed) {
 
     }
 

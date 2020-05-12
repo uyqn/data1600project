@@ -14,13 +14,13 @@ public class HDD extends Storage implements Serializable {
     private transient SimpleIntegerProperty rpm = new SimpleIntegerProperty();
 
     public HDD(String[] csv){
-        super(csv[1], csv[2], Double.parseDouble(csv[3]), Double.parseDouble(csv[5]));
+        super(csv[1], csv[2],Integer.parseInt(csv[3]), Double.parseDouble(csv[5]));
         setRpm(Integer.parseInt(csv[4]));
     }
 
     public HDD(String manufacturer,
                String model,
-               double capacity,
+               int capacity,
                int rpm,
                double price){
 
@@ -30,8 +30,17 @@ public class HDD extends Storage implements Serializable {
 
     }
 
+    @Override
     public String getComponentType() {
         return COMPONENT_TYPE;
+    }
+
+    @Override
+    public String toString() {
+        return getComponentType() + ": " + getName() + "\n" +
+                "Capacity: " + getCapacity() + "GB\n" +
+                "RPM: " + getRpm() + "\n" +
+                "Price: " + String.format("%.2f",getPrice());
     }
 
     @Override
@@ -178,7 +187,17 @@ public class HDD extends Storage implements Serializable {
     }
 
     @Override
-    public boolean isTactile() {
+    public int getBoostSpeed() {
+        return 0;
+    }
+
+    @Override
+    public void setBoostSpeed(int boostSpeed) {
+
+    }
+
+    @Override
+    public boolean getTactile() {
         return false;
     }
 
@@ -214,6 +233,16 @@ public class HDD extends Storage implements Serializable {
 
     @Override
     public void setSpeed(int speed) {
+
+    }
+
+    @Override
+    public double getSize() {
+        return 0;
+    }
+
+    @Override
+    public void setSize(double size) {
 
     }
 
@@ -303,6 +332,7 @@ public class HDD extends Storage implements Serializable {
                 getComponentType(),
                 getManufacturer(),
                 getModel(),
+                getCapacity(),
                 getRpm(),
                 getPrice()
         );
@@ -316,7 +346,7 @@ public class HDD extends Storage implements Serializable {
         objectOutputStream.writeUTF(getModel());
         objectOutputStream.writeDouble(getPrice());
 
-        objectOutputStream.writeDouble(getCapacity());
+        objectOutputStream.writeInt(getCapacity());
         objectOutputStream.writeInt(getRpm());
     }
 
@@ -325,7 +355,7 @@ public class HDD extends Storage implements Serializable {
         String model = objectInputStream.readUTF();
         double price = objectInputStream.readDouble();
 
-        double capacity = objectInputStream.readDouble();
+        int capacity = objectInputStream.readInt();
         int rpm = objectInputStream.readInt();
 
         this.rpm = new SimpleIntegerProperty();

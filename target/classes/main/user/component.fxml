@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="726.0" prefWidth="558.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.component.ComponentController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="726.0" prefWidth="558.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.component.ComponentController">
    <center>
       <Accordion prefHeight="618.0" prefWidth="458.0" BorderPane.alignment="CENTER">
         <panes>
@@ -109,32 +109,16 @@
                     <Label text="Manufacturer: " />
                     <Label text="Model: " GridPane.rowIndex="1" />
                     <Label text="Memory: " GridPane.rowIndex="3" />
-                    <Label text="Clockspeed: " GridPane.rowIndex="5" />
+                    <Label text="Boost clock: " GridPane.rowIndex="5" />
                     <Label text="Price: " GridPane.rowIndex="6" />
                     <TextField id="manufacturer" promptText="Enter manufacturer" GridPane.columnIndex="1" />
                     <TextField id="model" promptText="Enter model" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                    <TextField id="BussType" promptText="Enter bus type" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                    <TextField id="bussType" promptText="Enter buss version" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                     <TextField id="memory" promptText="Enter memory" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                     <TextField id="memoryType" promptText="Enter memory type" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                    <GridPane GridPane.columnIndex="1" GridPane.rowIndex="5">
-                        <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" />
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        </columnConstraints>
-                        <rowConstraints>
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        </rowConstraints>
-                        <Label text="/" GridPane.columnIndex="1">
-                            <font>
-                                <Font size="20.0" />
-                            </font>
-                        </Label>
-                        <TextField id="baseClock" promptText="Base speed" />
-                        <TextField id="boostClock" promptText="Boost speed" GridPane.columnIndex="2" />
-                    </GridPane>
+                  <TextField id="boostClock" promptText="Enter boost clock" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                     <TextField id="price" promptText="Enter price of component" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                    <Label text=" GHz" GridPane.columnIndex="2" GridPane.rowIndex="5">
+                    <Label text=" MHz" GridPane.columnIndex="2" GridPane.rowIndex="5">
                         <GridPane.margin>
                             <Insets />
                         </GridPane.margin>
@@ -142,7 +126,9 @@
                     <Label text=" NOK" GridPane.columnIndex="2" GridPane.rowIndex="6" />
                     <Button mnemonicParsing="false" onAction="#addGraphicCard" text="Add GPU" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                     <Label text="Memory type: " GridPane.rowIndex="4" />
-                    <Label text="Buss type: " GridPane.rowIndex="2" />
+                    <Label text="PCI-Express: " GridPane.rowIndex="2" />
+                  <Label text=" x16" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                  <Label text=" GB" GridPane.columnIndex="2" GridPane.rowIndex="3" />
                 </GridPane>
             </TitledPane>
           <TitledPane text="Motherboard">
@@ -227,15 +213,15 @@
                     <TextField id="manufacturer" promptText="Enter manufacturer" GridPane.columnIndex="1" />
                     <TextField id="model" promptText="Enter model" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                     <TextField id="RAM" promptText="Enter RAM" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                    <TextField id="speed" promptText="Enter speed" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <ChoiceBox id="speedTech" fx:id="speedTech" prefHeight="25.0" prefWidth="180.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                     <TextField id="price" promptText="Enter price of component" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                     <Label text=" NOK" GridPane.columnIndex="2" GridPane.rowIndex="5" />
                     <Button mnemonicParsing="false" onAction="#addMemory" text="Add Memory" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                     <Label text="Memory technology: " GridPane.rowIndex="4" />
                     <Label text=" GB" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                     <Label text="Speed: " GridPane.rowIndex="3" />
-                    <TextField id="speed" promptText="Enter speed" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                     <Label text=" MHz" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                  <ChoiceBox id="speedTech" fx:id="speedTech" prefHeight="25.0" prefWidth="180.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                 </GridPane>
             </TitledPane>
             <TitledPane text="Storage">
@@ -253,14 +239,11 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                     <Label text="Manufacturer: " />
                     <Label text="Model: " GridPane.rowIndex="1" />
                     <TextField id="manufacturer" promptText="Enter manufacturer" GridPane.columnIndex="1" />
                     <TextField id="model" promptText="Enter model" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                    <Button mnemonicParsing="false" onAction="#addStorage" text="Add Storage" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                    <Label text="Choose storage type: " GridPane.rowIndex="2" />
                     <GridPane GridPane.columnIndex="1" GridPane.rowIndex="2">
                         <columnConstraints>
                             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -276,15 +259,17 @@
                         </RadioButton>
                         <RadioButton mnemonicParsing="false" onAction="#ssdBtn" text="SSD" toggleGroup="$Storages" GridPane.columnIndex="1" />
                     </GridPane>
-                    <Label text="Capacity: " GridPane.rowIndex="3" />
                     <TextField id="capacity" promptText="Enter capacity" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                    <Label id="capacityUnit" text=" TB" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                    <Label text="RPM: " GridPane.rowIndex="4" />
                     <TextField id="rpm" fx:id="txtRpm" promptText="Enter RPM" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <TextField id="price" promptText="Enter Price" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                    <Button mnemonicParsing="false" onAction="#addStorage" text="Add Storage" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                    <Label text="Choose storage type: " GridPane.rowIndex="2" />
+                    <Label text="Capacity: " GridPane.rowIndex="3" />
+                    <Label id="capacityUnit" text=" GB" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                    <Label text="RPM: " GridPane.rowIndex="4" />
                   <Label text=" Hz" GridPane.columnIndex="2" GridPane.rowIndex="4" />
                   <Label text="Price" GridPane.rowIndex="5" />
-                  <TextField id="price" promptText="Enter Price" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                  <Label text="NOK" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+                  <Label text=" NOK" GridPane.columnIndex="2" GridPane.rowIndex="5" />
                 </GridPane>
             </TitledPane>
             <TitledPane text="Cooler">
@@ -466,26 +451,8 @@
                     </rowConstraints>
                     <TextField id="manufacturer" promptText="Enter manufacturer here" GridPane.columnIndex="1" />
                     <TextField id="model" promptText="Enter model name here" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                     <TextField id="numButtons" alignment="CENTER" promptText="buttons" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                     <TextField id="dpi" promptText="Enter dpi here" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                    <TextField id="price" promptText="Enter price here" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                    <Label alignment="BOTTOM_LEFT" prefHeight="17.0" prefWidth="70.0" text="Polling rate: " textAlignment="RIGHT" GridPane.rowIndex="3" />
-                    <Label alignment="BOTTOM_LEFT" text="Model: " textAlignment="RIGHT" GridPane.rowIndex="1" />
-                    <Label alignment="BOTTOM_LEFT" text="Price: " textAlignment="RIGHT" GridPane.rowIndex="6" />
-                    <Label alignment="BOTTOM_LEFT" text="Manufacturer: " textAlignment="RIGHT" />
-                    <Label text=" DPI" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                    <Label alignment="BOTTOM_LEFT" prefHeight="17.0" prefWidth="112.0" text="Number of buttons: " textAlignment="RIGHT" GridPane.rowIndex="2" />
-                    <GridPane GridPane.columnIndex="1" GridPane.rowIndex="2">
-                        <columnConstraints>
-                            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        </columnConstraints>
-                        <rowConstraints>
-                            <RowConstraints vgrow="SOMETIMES" />
-                        </rowConstraints>
-                        <TextField id="numButtons" alignment="CENTER" promptText="buttons" />
-                    </GridPane>
-                    <Button mnemonicParsing="false" onAction="#addMouse" text="Add Mouse" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                  <Label text="Ergonomic:" GridPane.rowIndex="4" />
-                  <Label text="Wireless: " GridPane.rowIndex="5" />
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                      <children>
                         <RadioButton id="ergonomicYes" mnemonicParsing="false" selected="true" text="Yes">
@@ -506,6 +473,16 @@
                         <RadioButton id="wirelessNo" mnemonicParsing="false" selected="true" text="No" toggleGroup="$wireless" />
                      </children>
                   </HBox>
+                    <TextField id="price" promptText="Enter price here" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                    <Label alignment="BOTTOM_LEFT" prefHeight="17.0" prefWidth="70.0" text="Polling rate: " textAlignment="RIGHT" GridPane.rowIndex="3" />
+                    <Label alignment="BOTTOM_LEFT" text="Model: " textAlignment="RIGHT" GridPane.rowIndex="1" />
+                    <Label alignment="BOTTOM_LEFT" text="Price: " textAlignment="RIGHT" GridPane.rowIndex="6" />
+                    <Label alignment="BOTTOM_LEFT" text="Manufacturer: " textAlignment="RIGHT" />
+                    <Label text=" DPI" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                    <Label alignment="BOTTOM_LEFT" prefHeight="17.0" prefWidth="112.0" text="Number of buttons: " textAlignment="RIGHT" GridPane.rowIndex="2" />
+                    <Button mnemonicParsing="false" onAction="#addMouse" text="Add Mouse" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                  <Label text="Ergonomic:" GridPane.rowIndex="4" />
+                  <Label text="Wireless: " GridPane.rowIndex="5" />
                   <Label text=" NOK" GridPane.columnIndex="2" GridPane.rowIndex="6" />
                 </GridPane>
             </TitledPane>
@@ -519,20 +496,25 @@
                     <rowConstraints>
                         <RowConstraints maxHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
+                     <RowConstraints maxHeight="70.0" minHeight="10.0" prefHeight="70.0" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                     <TextField id="manufacturer" promptText="Enter manufacturer here" GridPane.columnIndex="1" />
                     <TextField id="model" promptText="Enter model name here" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                    <TextField id="refreshRate" promptText="Enter refresh rate here" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                    <TextField id="price" promptText="Enter price here" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                    <Label alignment="BOTTOM_LEFT" prefHeight="17.0" prefWidth="70.0" text="Refresh rate: " textAlignment="RIGHT" GridPane.rowIndex="2" />
+                  <TextField id="displaySize" promptText="Enter size of display" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                    <TextField id="refreshRate" promptText="Enter refresh rate here" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                    <TextField id="price" promptText="Enter price here" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                    <Label alignment="BOTTOM_LEFT" prefHeight="17.0" prefWidth="70.0" text="Refresh rate: " textAlignment="RIGHT" GridPane.rowIndex="3" />
                     <Label alignment="BOTTOM_LEFT" text="Model: " textAlignment="RIGHT" GridPane.rowIndex="1" />
-                    <Label alignment="BOTTOM_LEFT" text="Price: " textAlignment="RIGHT" GridPane.rowIndex="3" />
+                    <Label alignment="BOTTOM_LEFT" text="Price: " textAlignment="RIGHT" GridPane.rowIndex="4" />
                     <Label alignment="BOTTOM_LEFT" text="Manufacturer: " textAlignment="RIGHT" />
-                    <Label text=" Hz" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                    <Button contentDisplay="CENTER" mnemonicParsing="false" onAction="#addMonitor" text="Add Monitor" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                    <Label text=" Hz" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                    <Button contentDisplay="CENTER" mnemonicParsing="false" onAction="#addMonitor" text="Add Monitor" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                  <Label text="Display size: " GridPane.rowIndex="2" />
+                  <Label text=" inches" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                  <Label text=" NOK" GridPane.columnIndex="2" GridPane.rowIndex="4" />
                 </GridPane>
             </TitledPane>
             <TitledPane text="Keyboard">
@@ -551,12 +533,6 @@
                     </rowConstraints>
                     <TextField id="manufacturer" promptText="Enter manufacturer here" GridPane.columnIndex="1" />
                     <TextField id="model" promptText="Enter model name here" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                    <TextField id="price" promptText="Enter price here" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                    <Label alignment="BOTTOM_LEFT" text="Tactile:" textAlignment="RIGHT" GridPane.rowIndex="2" />
-                    <Label alignment="BOTTOM_LEFT" text="Model: " textAlignment="RIGHT" GridPane.rowIndex="1" />
-                    <Label alignment="BOTTOM_LEFT" text="Price: " textAlignment="RIGHT" GridPane.rowIndex="3" />
-                    <Label alignment="BOTTOM_LEFT" text="Manufacturer: " textAlignment="RIGHT" />
-                    <Button mnemonicParsing="false" onAction="#addKeyboard" text="Add Keyboard" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <children>
                         <RadioButton id="tactileYes" mnemonicParsing="false" selected="true" text="Yes">
@@ -567,6 +543,12 @@
                         <RadioButton id="tactileNo" mnemonicParsing="false" text="No" toggleGroup="$tactile" />
                      </children>
                   </HBox>
+                    <TextField id="price" promptText="Enter price here" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                    <Label alignment="BOTTOM_LEFT" text="Tactile:" textAlignment="RIGHT" GridPane.rowIndex="2" />
+                    <Label alignment="BOTTOM_LEFT" text="Model: " textAlignment="RIGHT" GridPane.rowIndex="1" />
+                    <Label alignment="BOTTOM_LEFT" text="Price: " textAlignment="RIGHT" GridPane.rowIndex="3" />
+                    <Label alignment="BOTTOM_LEFT" text="Manufacturer: " textAlignment="RIGHT" />
+                    <Button mnemonicParsing="false" onAction="#addKeyboard" text="Add Keyboard" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                 </GridPane>
             </TitledPane>
         </panes>

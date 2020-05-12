@@ -1,1 +1,29 @@
 CPU,AMD,Ryzen 5 3400G,AM4,4,3.7/4.2,65.0,1949.0
+CPU,Intel,Core i5-9400F,LGA1151,6,2.9/4.1,65.0,1899.0
+CPU,Intel,Core i9-9920X,LGA2066,12,3.5/4.4,165.0,7599.0
+CPU,AMD,Ryzen 7 3800X,AM4,8,3.9/4.5,105.0,4219.0
+GPU,ASUS,Radeon RX 5600,PCIe 4.0x16,6,GDDR6,1770,4099.0
+GPU,Gigabyte,GeForce GTX 1650,PCIe 3.0x16,4,GDDR6,1755,2499.0
+GPU,Saphire,Radeon RX 5500,PCIe 4.0x16,8,GDDR6,1845,3299.0
+GPU,ZOTAC,GeForce RTX 2080 Ti,PCIe 4.0x16,11,GDDR6,4352,16489.0
+Motherboard,ASUS,TUF X299 Mark 1,LGA2066,PCIe 3.0x16,8,DDR4,128,ATX,4499.0
+Motherboard,Gigabyte,Z390 AORUS MASTER,LGA1151,PCIe 3.0x16,4,DDR4,128,ATX,4419.0
+Motherboard,ASUS,ROG MAXIMUS XI HERO,LGA1151,PCIe 3.0x16,4,DDR4,64,ATX,4869.0
+Memory,HyperX,Predator,1247.0,16,DDR4,3200
+Memory,G.Skill,Trident Z Neo,2749.0,32,DDR4,3600
+Memory,Corsair,Vengeance,1354.0,16,DDR4,2666
+HDD,Seagate,Firecuda,5400,500,647.0
+HDD,Seagate,Firecuda,5400,1000,609.0
+Cooler,Cooler Master,MasterFan SF360R,36.0 x 12.0 x 2.5,650 - 1800,8.0 - 30.0,6.48,499.0
+Cooler,Deepcool,Captain 240 Pro,29.0 x 12.0 x 2.7,500 - 1800,30.0,2.04,1499.0
+PSU,Seasonic,Focus GX 750,750,1499.0
+PSU,Corsair,RM650X,650,1399.0
+Cabin,Fractal Design,Define 7 XL,EATX,2699.0
+Cabin,Corsair,Carbide Series 275Q,ATX,890.0
+Mouse,iiglo,M610,6,1600,true,true,299.0
+Mouse,Svivie,Proteus 3360,7,12000,true,false,449.0
+Keyboard,Razer,Huntsman Tournament Edition,true,1999.0
+Keyboard,SteelSeries,Apex 7 gaming,true,1989.0
+Keyboard,Corsair,Gaming K70 MK.2,true,2190.0
+Keyboard,HyperX,Alloy Core,true,699.0
+Keyboard,Razer,BlackWidow Elite Gaming,true,2349.0

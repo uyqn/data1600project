@@ -1,6 +1,7 @@
 module main {
     requires javafx.controls;
     requires javafx.fxml;
+    requires java.desktop;
 
     opens main to javafx.fxml;
     exports main;
@@ -24,6 +25,9 @@ module main {
 
     opens controllers.views to javafx.fxml;
     exports controllers.views;
+
+    opens components.Storage to javafx.fxml;
+    exports components.Storage;
 
     opens fileManager to javafx.fxml;
     exports fileManager;
