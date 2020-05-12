@@ -16,9 +16,10 @@
       </Label>
       <TableView fx:id="tableView" layoutX="46.0" layoutY="110.0" prefHeight="182.0" prefWidth="450.0">
          <columns>
-            <TableColumn prefWidth="132.66668701171875" text="Name" />
-            <TableColumn prefWidth="129.33331298828125" text="Price" />
-            <TableColumn prefWidth="186.0" text="Power Consuption" />
+            <TableColumn fx:id="ManufacturerColumn" prefWidth="114.00003051757812" text="Manufacturer" />
+            <TableColumn fx:id="ModelColumn" prefWidth="98.99996948242188" text="Model" />
+            <TableColumn fx:id="PriceColumn" prefWidth="99.0" text="Price" />
+            <TableColumn fx:id="PowerColumn" prefWidth="138.0" text="Power Capacity" />
          </columns>
       </TableView>
       <Button fx:id="backBtn" layoutX="200.0" layoutY="313.0" mnemonicParsing="false" onAction="#GoBack" text="Back" />

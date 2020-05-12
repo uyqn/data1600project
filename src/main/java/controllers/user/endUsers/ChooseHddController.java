@@ -1,8 +1,8 @@
 package controllers.user.endUsers;
 
-import components.Cabin;
 import components.Component;
-import components.GPU;
+import components.Memory;
+import components.Storage.HDD;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -23,22 +23,29 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
-public class ChooseCabinController implements Initializable {
+public class ChooseHddController implements Initializable {
 
     @FXML
     private TableView<Component> tableView;
 
     @FXML
-    private TableColumn<Cabin, String> ManufacturerColumn;
+    private TableColumn<HDD, String> ManufacturerColumn;
 
     @FXML
-    private TableColumn<Cabin, String> ModelColumn;
+    private TableColumn<HDD, String> ModelColumn;
 
     @FXML
-    private TableColumn<Cabin, Double> PriceColumn;
+    private TableColumn<HDD, Double> PriceColumn;
 
     @FXML
-    private TableColumn<Cabin, String> FormFactorColumn;
+    private TableColumn<HDD, Integer> CapacityColumn;
+
+    @FXML
+    private TableColumn<HDD, String> RpmColumn;
+
+    @FXML
+    private TableColumn<HDD, String> FormFactorColumn;
+
 
 
     @Override
@@ -46,21 +53,21 @@ public class ChooseCabinController implements Initializable {
 
         //Setter opp kolonner
 
-        ManufacturerColumn.setCellValueFactory(new PropertyValueFactory<Cabin, String>("manufacturer"));
-        ModelColumn.setCellValueFactory(new PropertyValueFactory<Cabin, String>("model"));
-        PriceColumn.setCellValueFactory(new PropertyValueFactory<Cabin, Double>("price"));
-        FormFactorColumn.setCellValueFactory(new PropertyValueFactory<Cabin, String>("formFactor"));
-
+        ManufacturerColumn.setCellValueFactory(new PropertyValueFactory<HDD, String>("manufacturer"));
+        ModelColumn.setCellValueFactory(new PropertyValueFactory<HDD, String>("model"));
+        PriceColumn.setCellValueFactory(new PropertyValueFactory<HDD, Double>("price"));
+        CapacityColumn.setCellValueFactory(new PropertyValueFactory<HDD, Integer>("capacity"));
+        RpmColumn.setCellValueFactory(new PropertyValueFactory<HDD, String>("rpm"));
+        FormFactorColumn.setCellValueFactory(new PropertyValueFactory<HDD, String>("form"));
 
 
         tableView.setItems(
                 App.componentList.getList().stream().filter(component ->
-                        component.getComponentType().equals(Cabin.COMPONENT_TYPE)
+                        component.getComponentType().equals(HDD.COMPONENT_TYPE)
                 ).collect(Collectors.toCollection(FXCollections::observableArrayList))
         );
 
     }
-
     @FXML
     private Button backBtn;
 
@@ -70,7 +77,7 @@ public class ChooseCabinController implements Initializable {
     @FXML
     void GoBack(ActionEvent event) throws IOException {
 
-        Parent view = FXMLLoader.load(getClass().getResource("/main/user/endUsers/ChoosePower.fxml"));
+        Parent view = FXMLLoader.load(getClass().getResource("/main/user/endUsers/ChooseMemory.fxml"));
 
         Scene scene = new Scene(view);
 
@@ -83,7 +90,7 @@ public class ChooseCabinController implements Initializable {
     @FXML
     void GoNext(ActionEvent event) throws IOException {
 
-        Parent view = FXMLLoader.load(getClass().getResource("/main/user/endUsers/ChooseMouse.fxml"));
+        Parent view = FXMLLoader.load(getClass().getResource("/main/user/endUsers/ChooseSsd.fxml"));
 
         Scene scene = new Scene(view);
 

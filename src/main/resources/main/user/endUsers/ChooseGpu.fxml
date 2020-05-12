@@ -23,7 +23,7 @@
             <TableColumn fx:id="MemoryColumn" prefWidth="66.33331298828125" text="Memory" />
             <TableColumn fx:id="MemoryTypeColumn" minWidth="0.0" prefWidth="100.66668701171875" text="Memory Type" />
             <TableColumn fx:id="BaseClockColumn" minWidth="0.0" prefWidth="99.66668701171875" text="Core Clock" />
-            <TableColumn fx:id="BoostTypeColumn" prefWidth="105.33331298828125" text="Boost Clock" />
+            <TableColumn fx:id="BoostClockColumn" prefWidth="105.33331298828125" text="Boost Clock" />
          </columns>
       </TableView>
       <Button fx:id="backBtn" layoutX="309.0" layoutY="313.0" mnemonicParsing="false" onAction="#GoBack" text="Back" />
