@@ -24,8 +24,6 @@ import java.util.stream.Collectors;
 
 public class BuildPcController implements Initializable {
 
-    private ObservableList<Component> filteredList;
-
     //Tableview med CPU-komponenter
     @FXML
     private TableView<Component> tableView;
