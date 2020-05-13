@@ -96,7 +96,7 @@ public class ChooseMotherboardController implements Initializable {
         MaxRamColumn.setCellValueFactory(new PropertyValueFactory<Motherboard, Integer>("maxRamSize"));
         TechnologyColumn.setCellValueFactory(new PropertyValueFactory<Motherboard, String>("memoryTech"));
         SocketColumn.setCellValueFactory(new PropertyValueFactory<Motherboard, String>("socket"));
-        BussTypeColumn.setCellValueFactory(new PropertyValueFactory<Motherboard, String>("bussType"));
+        BussTypeColumn.setCellValueFactory(new PropertyValueFactory<Motherboard, String>("BussType"));
         FormFactorColumn.setCellValueFactory(new PropertyValueFactory<Motherboard, String>("formFactor"));
 
         tableView.setItems(mbList);
