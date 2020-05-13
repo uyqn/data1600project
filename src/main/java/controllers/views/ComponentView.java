@@ -705,8 +705,9 @@ public class ComponentView implements Initializable {
         filterBox.getItems().setAll(
                 "Manufacturer",
                 "Model",
-                "Capacity ≤",
-                "RPM ≤",
+                "RAM (GB) ≤",
+                "Speed (MHz) ≤",
+                "Technology",
                 "Price (NOK) ≤");
         filterBox.setValue(null);
         searchText.setText(null);
@@ -851,7 +852,7 @@ public class ComponentView implements Initializable {
         filterBox.getItems().setAll(
                 "Manufacturer",
                 "Model",
-                "Capacity ≤",
+                "Capacity (GB) ≤",
                 "RPM ≤",
                 "Price (NOK) ≤");
         filterBox.setValue(null);
@@ -980,7 +981,7 @@ public class ComponentView implements Initializable {
         filterBox.getItems().setAll(
                 "Manufacturer",
                 "Model",
-                "Capacity ≤",
+                "Capacity (GB) ≤",
                 "Price (NOK) ≤");
         filterBox.setValue(null);
         searchText.setText(null);
@@ -1100,7 +1101,7 @@ public class ComponentView implements Initializable {
         filterBox.setValue(null);
         searchText.setText(null);
         filteredList = App.componentList.getList().stream().filter(component ->
-                component.getComponentType().equals(SSD.COMPONENT_TYPE)
+                component.getComponentType().equals(Cooler.COMPONENT_TYPE)
         ).collect(Collectors.toCollection(FXCollections::observableArrayList));
 
         TableColumn<Component, String> manuCol = new TableColumn<>("Manufacturer");
@@ -1284,6 +1285,16 @@ public class ComponentView implements Initializable {
 
     @FXML
     void viewPsu(ActionEvent event) {
+        filterBox.getItems().setAll(
+                "Manufacturer",
+                "Model",
+                "Power capacity (W) ≤",
+                "Price (NOK) ≤");
+        filterBox.setValue(null);
+        searchText.setText(null);
+        filteredList = App.componentList.getList().stream().filter(component ->
+                component.getComponentType().equals(PSU.COMPONENT_TYPE)
+        ).collect(Collectors.toCollection(FXCollections::observableArrayList));
         TableColumn<Component, String> manuCol = new TableColumn<>("Manufacturer");
         manuCol.setCellValueFactory(new PropertyValueFactory<>("manufacturer"));
         manuCol.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -1336,22 +1347,62 @@ public class ComponentView implements Initializable {
             tableView.refresh();
         });
 
-        tableView.setItems(
-                App.componentList.getList().stream().filter(component ->
-                        component.getComponentType().equals(PSU.COMPONENT_TYPE)
-                ).collect(Collectors.toCollection(FXCollections::observableArrayList))
-        );
-
         tableView.getColumns().setAll(
                 manuCol,
                 modelCol,
                 powerCol,
                 priceCol
         );
+
+        searchText.setOnKeyReleased(keyEvent -> {
+            String search = searchText.getText().toLowerCase();
+            int filterIndex = filterBox.getSelectionModel().getSelectedIndex();
+
+            tableView.setItems(filteredList.stream().filter(component -> {
+                if(search.isBlank() || search.isEmpty() || filterBox.getSelectionModel().getSelectedItem() == null){
+                    return true;
+                }
+                else {
+                    switch (filterIndex){
+                        case 0:
+                            return component.getManufacturer().toLowerCase().contains(search);
+                        case 1:
+                            return component.getModel().toLowerCase().contains(search);
+                        case 2:
+                            try {
+                                return component.getPowerCapacity() <= Integer.parseInt(search);
+                            } catch (NumberFormatException e){
+                                return false;
+                            }
+                        case 3:
+                            try {
+                                return component.getPrice() <= Double.parseDouble(search);
+                            } catch (NumberFormatException e) {
+                                return false;
+                            }
+                        default:
+                            return false;
+                    }
+                }
+            }).collect(Collectors.toCollection(FXCollections::observableArrayList)));
+        });
+
+        tableView.setItems(filteredList);
     }
 
     @FXML
     void viewCabin(ActionEvent event) {
+        filterBox.getItems().setAll(
+                "Manufacturer",
+                "Model",
+                "Form factor",
+                "Price (NOK) ≤");
+        filterBox.setValue(null);
+        searchText.setText(null);
+        filteredList = App.componentList.getList().stream().filter(component ->
+                component.getComponentType().equals(Cabin.COMPONENT_TYPE)
+        ).collect(Collectors.toCollection(FXCollections::observableArrayList));
+
         TableColumn<Component, String> manuCol = new TableColumn<>("Manufacturer");
         manuCol.setCellValueFactory(new PropertyValueFactory<>("manufacturer"));
         manuCol.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -1404,18 +1455,43 @@ public class ComponentView implements Initializable {
             tableView.refresh();
         });
 
-        tableView.setItems(
-                App.componentList.getList().stream().filter(component ->
-                        component.getComponentType().equals(Cabin.COMPONENT_TYPE)
-                ).collect(Collectors.toCollection(FXCollections::observableArrayList))
-        );
-
         tableView.getColumns().setAll(
                 manuCol,
                 modelCol,
                 formFactorCol,
                 priceCol
         );
+
+        searchText.setOnKeyReleased(keyEvent -> {
+            String search = searchText.getText().toLowerCase();
+            int filterIndex = filterBox.getSelectionModel().getSelectedIndex();
+
+            tableView.setItems(filteredList.stream().filter(component -> {
+                if(search.isBlank() || search.isEmpty() || filterBox.getSelectionModel().getSelectedItem() == null){
+                    return true;
+                }
+                else {
+                    switch (filterIndex){
+                        case 0:
+                            return component.getManufacturer().toLowerCase().contains(search);
+                        case 1:
+                            return component.getModel().toLowerCase().contains(search);
+                        case 2:
+                            return component.getFormFactor().toLowerCase().contains(search);
+                        case 3:
+                            try {
+                                return component.getPrice() <= Double.parseDouble(search);
+                            } catch (NumberFormatException e) {
+                                return false;
+                            }
+                        default:
+                            return false;
+                    }
+                }
+            }).collect(Collectors.toCollection(FXCollections::observableArrayList)));
+        });
+
+        tableView.setItems(filteredList);
     }
 
     @FXML
