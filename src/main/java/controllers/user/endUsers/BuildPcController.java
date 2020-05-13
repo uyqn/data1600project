@@ -2,6 +2,7 @@ package controllers.user.endUsers;
 
 import components.CPU;
 import components.Component;
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -65,6 +66,9 @@ public class BuildPcController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
+        //Enabler next-button idet man trykker
+        addBtn.disableProperty().bind(Bindings.isEmpty(tableView.getSelectionModel().getSelectedItems()));
+
         filterBox.getItems().setAll("Manufacturer", "Model", "Price (NOK) ≤", "Socket", "Core Count",
                 "Core Clock", "Boost Clock", "Power Consumption");
         filterBox.setValue(null);
@@ -107,6 +111,8 @@ public class BuildPcController implements Initializable {
                         } catch (NumberFormatException e){
                             return false;
                         }
+                    case 3:
+                        return component.getSocket().toLowerCase().contains(search);
                     default:
                         return false;
                 }

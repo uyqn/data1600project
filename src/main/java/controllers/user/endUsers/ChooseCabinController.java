@@ -88,6 +88,9 @@ public class ChooseCabinController implements Initializable {
                         } catch (NumberFormatException e){
                             return false;
                         }
+
+                    case 3:
+                        return component.getFormFactor().toLowerCase().contains(search);
                     default:
                         return false;
                 }
