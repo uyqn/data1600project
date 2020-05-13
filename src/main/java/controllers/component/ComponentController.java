@@ -74,8 +74,11 @@ public class ComponentController implements Initializable {
     //Add Components
     @FXML
     void addMb(ActionEvent event) {
+
         try {
-            String manufacturer = getString(addMbGui, "manufacturer");
+            if (validate(addMbGui, "manufacturer", "model", "socket", "bussType", "numSlots", "maxRamSize", "formFactor", "price")) {
+
+                String manufacturer = getString(addMbGui, "manufacturer");
             String model = getString(addMbGui, "model");
             String socket = getString(addMbGui, "socket");
             String bussType = getString(addMbGui, "bussType");
@@ -105,7 +108,7 @@ public class ComponentController implements Initializable {
                     "price");
 
             ramTech.setValue(null);
-
+        }
         } catch (IllegalArgumentException e){
             DialogBox.error(e.getClass().toString(), null,
                     e.getMessage());
@@ -114,8 +117,10 @@ public class ComponentController implements Initializable {
 
     @FXML
     void addCabin(ActionEvent event){
-        try{
-            String manufacturer = getString(addCabinGui, "manufacturer");
+        try {
+            if (validate(addCabinGui, "manufacturer", "model", "formFactor", "price")) {
+
+                String manufacturer = getString(addCabinGui, "manufacturer");
             String model = getString(addCabinGui, "model");
             String formFactor = getString(addCabinGui, "formFactor");
             double price = getDouble(addCabinGui, "price");
@@ -129,6 +134,7 @@ public class ComponentController implements Initializable {
                     cabin.toString());
 
             resetGui(addCabinGui, "manufacturer", "model", "formFactor", "price");
+        }
         } catch (IllegalArgumentException e){
             DialogBox.error(e.getClass().toString(), null,
                     e.getMessage());
@@ -138,11 +144,13 @@ public class ComponentController implements Initializable {
     @FXML
     void addCPU(ActionEvent event) {
         try {
-            String manufacturer = getString(addCpuGui, "manufacturer");
+            if (validate(addCpuGui, "manufacturer", "model", "socket","core","coreClock", "boostClock","power", "price")) {
+
+                String manufacturer = getString(addCpuGui, "manufacturer");
             String model = getString(addCpuGui, "model");
             String socket = getString(addCpuGui, "socket");
             int coreCount = getInt(addCpuGui, "core");
-            String clockSpeed =  getString(addCpuGui, "coreClock") + "/" + getString(addCpuGui, "boostClock");
+            String clockSpeed = getString(addCpuGui, "coreClock") + "/" + getString(addCpuGui, "boostClock");
             double powerConsumption = getDouble(addCpuGui, "power");
             double price = getDouble(addCpuGui, "price");
 
@@ -163,6 +171,7 @@ public class ComponentController implements Initializable {
                     "boostClock",
                     "power",
                     "price");
+        }
         } catch (IllegalArgumentException e){
             DialogBox.error(e.getClass().toString(), null,
                     e.getMessage());
@@ -171,8 +180,10 @@ public class ComponentController implements Initializable {
 
     @FXML
     void addCooler(ActionEvent event) {
-        try{
-            String manufacturer = getString(addCoolerGui, "manufacturer");
+        try {
+            if (validate(addCoolerGui, "manufacturer", "model", "width","depth","height","baseRpm","maxRpm","baseNoise", "maxNoise", "power", "price")) {
+
+                String manufacturer = getString(addCoolerGui, "manufacturer");
             String model = getString(addCoolerGui, "model");
             String dimension = getString(addCoolerGui, "width") + " x " +
                     getString(addCoolerGui, "depth") + " x " +
@@ -202,6 +213,8 @@ public class ComponentController implements Initializable {
                     "maxNoise",
                     "power",
                     "price");
+
+        }
         } catch (IllegalArgumentException e) {
             DialogBox.error(e.getClass().toString(), null,
                     e.getMessage());
@@ -211,17 +224,19 @@ public class ComponentController implements Initializable {
     @FXML
     void addGraphicCard(ActionEvent event) {
 
-        try{
-            String manufacturer = getString(addGraphicCardGui, "manufacturer");
-            String model=getString(addGraphicCardGui, "model");
+        try {
+            if (validate(addGraphicCardGui, "manufacturer", "model", "bussType","memory", "memoryType", "boostClock", "price")) {
+
+                String manufacturer = getString(addGraphicCardGui, "manufacturer");
+            String model = getString(addGraphicCardGui, "model");
             String bussType = "PCI-Express " + getDouble(addGraphicCardGui, "bussType") + "x16";
-            int memory=getInt(addGraphicCardGui,"memory");
+            int memory = getInt(addGraphicCardGui, "memory");
             String memoryType = getString(addGraphicCardGui, "memoryType");
             int boostClock = getInt(addGraphicCardGui, "boostClock");
-            double price=getDouble(addGraphicCardGui, "price");
+            double price = getDouble(addGraphicCardGui, "price");
 
 
-            GPU GPU =new GPU(manufacturer, model, bussType, memory, memoryType, boostClock, price);
+            GPU GPU = new GPU(manufacturer, model, bussType, memory, memoryType, boostClock, price);
 
             DialogBox.info("GPU successfully added",
                     "The following gpu was added:",
@@ -237,7 +252,9 @@ public class ComponentController implements Initializable {
                     "memoryType",
                     "boostClock",
                     "price"
-                    );
+            );
+
+        }
         }catch (IllegalArgumentException e){
             DialogBox.error(e.getClass().toString(), null,
                     e.getMessage());
@@ -250,15 +267,17 @@ public class ComponentController implements Initializable {
     void addMemory(ActionEvent event) {
 
         try {
-            String manufacturer= getString(addMemoryGui, "manufacturer");
-            String model=getString(addMemoryGui, "model");
-            int RAM=getInt(addMemoryGui, "RAM");
+            if (validate(addMemoryGui, "manufacturer", "model", "RAM","speed", "price")) {
+
+                String manufacturer = getString(addMemoryGui, "manufacturer");
+            String model = getString(addMemoryGui, "model");
+            int RAM = getInt(addMemoryGui, "RAM");
             String speedTech = this.speedTech.getSelectionModel().getSelectedItem();
-            int speed=getInt(addMemoryGui, "speed");
-            double price=getDouble(addMemoryGui, "price");
+            int speed = getInt(addMemoryGui, "speed");
+            double price = getDouble(addMemoryGui, "price");
 
 
-            Memory memory=new Memory(manufacturer,model,price, RAM, speedTech, speed);
+            Memory memory = new Memory(manufacturer, model, price, RAM, speedTech, speed);
 
             DialogBox.info("RAM successfully added",
                     "The following RAM was added:",
@@ -266,9 +285,9 @@ public class ComponentController implements Initializable {
 
             App.componentList.add(memory);
 
-            resetGui(addMemoryGui,"manufacturer", "model", "RAM", "speed", "price");
+            resetGui(addMemoryGui, "manufacturer", "model", "RAM", "speed", "price");
             this.speedTech.setValue(null);
-
+        }
         }catch (IllegalArgumentException e) {
             DialogBox.error(e.getClass().toString(), null,
                     e.getMessage());
@@ -292,35 +311,38 @@ public class ComponentController implements Initializable {
     void addStorage(ActionEvent event){
 
         if (txtRpm.isDisabled()){
-            try {
+            if (validate(addStorageGui, "manufacturer", "model", "capacity", "price")) {
 
-                String manufacturer=getString(addStorageGui, "manufacturer");
-                String model = getString(addStorageGui, "model");
-                int capacity = getInt(addStorageGui, "capacity");
-                double price= getDouble(addStorageGui, "price");
+                try {
 
-                Storage ssd = new SSD(manufacturer, model, capacity, price);
+                    String manufacturer = getString(addStorageGui, "manufacturer");
+                    String model = getString(addStorageGui, "model");
+                    int capacity = getInt(addStorageGui, "capacity");
+                    double price = getDouble(addStorageGui, "price");
 
-                DialogBox.info("SSD successfully added",
-                        "The following SSD was added:",
-                        ssd.toString());
+                    Storage ssd = new SSD(manufacturer, model, capacity, price);
 
-                App.componentList.add(ssd);
+                    DialogBox.info("SSD successfully added",
+                            "The following SSD was added:",
+                            ssd.toString());
 
-                resetGui(addStorageGui, "manufacturer", "model", "capacity", "rpm", "price");
+                    App.componentList.add(ssd);
 
-            }catch (IllegalArgumentException e){
-                DialogBox.error(e.getClass().toString(), null,
-                        e.getMessage());
+                    resetGui(addStorageGui, "manufacturer", "model", "capacity", "rpm", "price");
+                } catch (IllegalArgumentException e) {
+                    DialogBox.error(e.getClass().toString(), null,
+                            e.getMessage());
+                }
             }
         }else {
             try {
+                if (validate(addStorageGui, "manufacturer", "model", "capacity", "rpm", "price")) {
 
-                String manufacturer=getString(addStorageGui, "manufacturer");
+                String manufacturer = getString(addStorageGui, "manufacturer");
                 String model = getString(addStorageGui, "model");
                 int capacity = getInt(addStorageGui, "capacity");
-                int rpm= getInt(addStorageGui, "rpm");
-                double price= getDouble(addStorageGui, "price");
+                int rpm = getInt(addStorageGui, "rpm");
+                double price = getDouble(addStorageGui, "price");
 
                 Storage hdd = new HDD(manufacturer, model, capacity, rpm, price);
 
@@ -331,7 +353,7 @@ public class ComponentController implements Initializable {
                 App.componentList.add(hdd);
 
                 resetGui(addStorageGui, "manufacturer", "model", "capacity", "rpm", "price");
-
+            }
             }catch (IllegalArgumentException e){
                 DialogBox.error(e.getClass().toString(), null,
                         e.getMessage());
@@ -344,30 +366,32 @@ public class ComponentController implements Initializable {
     void addMonitor(ActionEvent event) {
 
         try {
-            String manufacturer = getString(addMonitorGui, "manufacturer");
-            String model = getString(addMonitorGui, "model");
-            double size = getDouble(addMonitorGui, "displaySize");
-            int refreshRate = getInt(addMonitorGui, "refreshRate");
-            double price = getDouble(addMonitorGui, "price");
+            if (validate(addMonitorGui, "manufacturer", "model", "size", "refreshRate", "price")) {
 
-            Monitor monitor = new Monitor(manufacturer, model, size, refreshRate, price);
+                String manufacturer = getString(addMonitorGui, "manufacturer");
+                String model = getString(addMonitorGui, "model");
+                double size = getDouble(addMonitorGui, "displaySize");
+                int refreshRate = getInt(addMonitorGui, "refreshRate");
+                double price = getDouble(addMonitorGui, "price");
 
-            Alert info = new Alert(Alert.AlertType.INFORMATION);
+                Monitor monitor = new Monitor(manufacturer, model, size, refreshRate, price);
 
-            DialogBox.info("Monitor successfully added",
-                    "The following monitor was added:",
-                    monitor.toString());
+                Alert info = new Alert(Alert.AlertType.INFORMATION);
 
-            App.componentList.add(monitor);
+                DialogBox.info("Monitor successfully added",
+                        "The following monitor was added:",
+                        monitor.toString());
 
-            resetGui(addMonitorGui,
-                    "manufacturer",
-                    "model",
-                    "displaySize",
-                    "refreshRate",
-                    "price");
+                App.componentList.add(monitor);
 
+                resetGui(addMonitorGui,
+                        "manufacturer",
+                        "model",
+                        "displaySize",
+                        "refreshRate",
+                        "price");
 
+            }
         } catch (IllegalArgumentException e){
             DialogBox.error(e.getClass().toString(), null,
                     e.getMessage());
@@ -379,32 +403,34 @@ public class ComponentController implements Initializable {
     void addMouse(ActionEvent event) {
 
         try {
-            String manufacturer=getString(addMouseGui, "manufacturer");
-            String model = getString(addMouseGui, "model");
-            int numButtons = getInt(addMouseGui, "numButtons");
-            int dpi = getInt(addMouseGui, "dpi");
-            boolean ergonomic = ((RadioButton) addMouseGui.lookup("#ergonomicYes")).isSelected();
-            boolean wireless = ((RadioButton) addMouseGui.lookup("#wirelessYes")).isSelected();
-            double price = getDouble(addMouseGui, "price");
+            if (validate(addMouseGui, "manufacturer", "model", "numButtons", "dpi", "price")) {
 
-            Mouse mouse = new Mouse(manufacturer, model, numButtons, dpi, ergonomic, wireless, price);
+                String manufacturer = getString(addMouseGui, "manufacturer");
+                String model = getString(addMouseGui, "model");
+                int numButtons = getInt(addMouseGui, "numButtons");
+                int dpi = getInt(addMouseGui, "dpi");
+                boolean ergonomic = ((RadioButton) addMouseGui.lookup("#ergonomicYes")).isSelected();
+                boolean wireless = ((RadioButton) addMouseGui.lookup("#wirelessYes")).isSelected();
+                double price = getDouble(addMouseGui, "price");
 
-            DialogBox.info("Mouse was successfully added",
-                    "The following mouse was added:",
-                    mouse.toString());
+                Mouse mouse = new Mouse(manufacturer, model, numButtons, dpi, ergonomic, wireless, price);
 
-            App.componentList.add(mouse);
+                DialogBox.info("Mouse was successfully added",
+                        "The following mouse was added:",
+                        mouse.toString());
 
-            resetGui(addMouseGui,
-                    "manufacturer",
-                    "model",
-                    "numButtons",
-                    "dpi",
-                    "price");
+                App.componentList.add(mouse);
 
-            ((RadioButton) addMouseGui.lookup("#ergonomicYes")).setSelected(true);
-            ((RadioButton) addMouseGui.lookup("#wirelessNo")).setSelected(true);
+                resetGui(addMouseGui,
+                        "manufacturer",
+                        "model",
+                        "numButtons",
+                        "dpi",
+                        "price");
 
+                ((RadioButton) addMouseGui.lookup("#ergonomicYes")).setSelected(true);
+                ((RadioButton) addMouseGui.lookup("#wirelessNo")).setSelected(true);
+            }
         }catch (IllegalArgumentException e){
             DialogBox.error(e.getClass().toString(), null,
                     e.getMessage());
@@ -415,30 +441,32 @@ public class ComponentController implements Initializable {
 
     @FXML
     void addPowerSupply(ActionEvent event) {
+            try {
+                if (validate(addPowerSupplyGui, "manufacturer", "model", "powerCapacity", "price")) {
 
-        try{
-            String manufacturer=getString(addPowerSupplyGui, "manufacturer");
-            String model = getString(addPowerSupplyGui, "model");
-            int powerCapacity = getInt(addPowerSupplyGui, "powerCapacity");
-            double price= getDouble(addPowerSupplyGui, "price");
+                    String manufacturer = getString(addPowerSupplyGui, "manufacturer");
+                    String model = getString(addPowerSupplyGui, "model");
+                    int powerCapacity = getInt(addPowerSupplyGui, "powerCapacity");
+                    double price = getDouble(addPowerSupplyGui, "price");
 
-            PSU PSU = new PSU(manufacturer, model, powerCapacity, price);
+                    PSU PSU = new PSU(manufacturer, model, powerCapacity, price);
 
-            DialogBox.info("PSU successfully added",
-                    "The following PSU was added:",
-                    PSU.toString());
+                    DialogBox.info("PSU successfully added",
+                            "The following PSU was added:",
+                            PSU.toString());
 
-            App.componentList.add(PSU);
+                    App.componentList.add(PSU);
 
-            resetGui(addPowerSupplyGui,
-                    "manufacturer",
-                    "model",
-                    "powerCapacity",
-                    "price");
-        } catch (IllegalArgumentException e){
-            DialogBox.error(e.getClass().toString(), null,
-                    e.getMessage());
-        }
+                    resetGui(addPowerSupplyGui,
+                            "manufacturer",
+                            "model",
+                            "powerCapacity",
+                            "price");
+                }
+            } catch (IllegalArgumentException e) {
+                DialogBox.error(e.getClass().toString(), null,
+                        e.getMessage());
+            }
 
     }
 
@@ -446,23 +474,25 @@ public class ComponentController implements Initializable {
     void addKeyboard(ActionEvent event){
 
         try {
-            String manufacturer = getString(addKeyboardGui, "manufacturer");
-            String model = getString(addKeyboardGui, "model");
-            boolean tactile = ((RadioButton) addKeyboardGui.lookup("#tactileYes")).isSelected();
-            double price = getDouble(addKeyboardGui, "price");
+            if (validate(addKeyboardGui, "manufacturer", "model", "price")) {
 
-            Keyboard keyboard = new Keyboard(manufacturer, model, tactile, price);
+                String manufacturer = getString(addKeyboardGui, "manufacturer");
+                String model = getString(addKeyboardGui, "model");
+                boolean tactile = ((RadioButton) addKeyboardGui.lookup("#tactileYes")).isSelected();
+                double price = getDouble(addKeyboardGui, "price");
 
-            DialogBox.info("Keyboard successfully added",
-                    "The following keyboard was added:",
-                    keyboard.toString());
+                Keyboard keyboard = new Keyboard(manufacturer, model, tactile, price);
 
-            App.componentList.add(keyboard);
+                DialogBox.info("Keyboard successfully added",
+                        "The following keyboard was added:",
+                        keyboard.toString());
 
-            resetGui(addKeyboardGui,"manufacturer", "model", "price");
+                App.componentList.add(keyboard);
 
-            ((RadioButton) addKeyboardGui.lookup("#tactileYes")).setSelected(true);
+                resetGui(addKeyboardGui, "manufacturer", "model", "price");
 
+                ((RadioButton) addKeyboardGui.lookup("#tactileYes")).setSelected(true);
+            }
         }catch (IllegalArgumentException e){
             DialogBox.error(e.getClass().toString(), null,
                     e.getMessage());
@@ -534,6 +564,23 @@ public class ComponentController implements Initializable {
         for(String str : id){
             ((TextField) pane.lookup("#" + str)).setText("");
         }
+    }
+
+    private boolean validate(Pane pane, String... id){
+
+        for (String str : id){
+            if (((TextField) pane.lookup("#" + str )).getText().isEmpty()){
+
+
+                Alert alert=new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Warning");
+                alert.setHeaderText("All the fields must be filled");
+                alert.showAndWait();
+                return false;
+
+            }
+        }
+        return true;
     }
 
     @FXML
