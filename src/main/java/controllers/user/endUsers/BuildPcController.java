@@ -11,10 +11,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import main.App;
 
@@ -24,6 +23,8 @@ import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 public class BuildPcController implements Initializable {
+
+    private ObservableList<Component> filteredList;
 
     //Tableview med CPU-komponenter
     @FXML
@@ -53,8 +54,22 @@ public class BuildPcController implements Initializable {
     @FXML
     private TableColumn<CPU, Double> PowerColumn;
 
+    @FXML
+    private ChoiceBox<String> filterBox;
+
+    @FXML
+    private TextField filterText;
+
+    ObservableList<Component> cpuList = App.componentList.getList().stream().filter(component ->
+            component.getComponentType().equals(CPU.COMPONENT_TYPE)
+    ).collect(Collectors.toCollection(FXCollections::observableArrayList));
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
+        filterBox.getItems().setAll("Manufacturer", "Model", "Price (NOK) ≤", "Socket", "Core Count",
+                "Core Clock", "Boost Clock", "Power Consumption");
+        filterBox.setValue(null);
 
         //Setter opp kolonner
 
@@ -68,12 +83,37 @@ public class BuildPcController implements Initializable {
         PowerColumn.setCellValueFactory(new PropertyValueFactory<CPU, Double>("powerConsumption"));
 
 
-        tableView.setItems(
-                App.componentList.getList().stream().filter(component ->
-                        component.getComponentType().equals(CPU.COMPONENT_TYPE)
-                ).collect(Collectors.toCollection(FXCollections::observableArrayList))
-        );
+        tableView.setItems(cpuList);
 
+    }
+
+
+    @FXML
+    void filterEvt(KeyEvent event) {
+        String search = filterText.getText().toLowerCase();
+        int filterIndex = filterBox.getSelectionModel().getSelectedIndex();
+
+        tableView.setItems(cpuList.stream().filter(component -> {
+            if(search.isBlank() || search.isEmpty() || filterBox.getSelectionModel().getSelectedItem() == null){
+                return true;
+            }
+            else {
+                switch (filterIndex){
+                    case 0:
+                        return component.getManufacturer().toLowerCase().contains(search);
+                    case 1:
+                        return component.getModel().toLowerCase().contains(search);
+                    case 2:
+                        try {
+                            return component.getPrice() <= Double.parseDouble(search);
+                        } catch (NumberFormatException e){
+                            return false;
+                        }
+                    default:
+                        return false;
+                }
+            }
+        }).collect(Collectors.toCollection(FXCollections::observableArrayList)));
     }
 
     @FXML
