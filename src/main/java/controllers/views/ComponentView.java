@@ -703,6 +703,19 @@ public class ComponentView implements Initializable {
 
     @FXML
     void viewRam(ActionEvent event) {
+        filterBox.getItems().setAll(
+                "Manufacturer",
+                "Model",
+                "RAM (GB) ≤",
+                "Speed",
+                "Technology",
+                "Price (NOK) ≤");
+        filterBox.setValue(null);
+        searchText.setText(null);
+        filteredList = App.componentList.getList().stream().filter(component ->
+                component.getComponentType().equals(GPU.COMPONENT_TYPE)
+        ).collect(Collectors.toCollection(FXCollections::observableArrayList));
+
         TableColumn<Component, String> manuCol = new TableColumn<>("Manufacturer");
         manuCol.setCellValueFactory(new PropertyValueFactory<>("manufacturer"));
         manuCol.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -743,7 +756,7 @@ public class ComponentView implements Initializable {
         });
 
         TableColumn<Component, Integer> speedCol = new TableColumn<>("Speed (MHz)");
-        speedCol.setCellValueFactory(new PropertyValueFactory<>("ram"));
+        speedCol.setCellValueFactory(new PropertyValueFactory<>("speed"));
         speedCol.setCellFactory(TextFieldTableCell.forTableColumn(integerStringConverter));
         speedCol.setOnEditCommit(edit -> {
             try {
@@ -781,12 +794,6 @@ public class ComponentView implements Initializable {
             tableView.refresh();
         });
 
-        tableView.setItems(
-                App.componentList.getList().stream().filter(component ->
-                        component.getComponentType().equals(Memory.COMPONENT_TYPE)
-                ).collect(Collectors.toCollection(FXCollections::observableArrayList))
-        );
-
         tableView.getColumns().setAll(
                 manuCol,
                 modelCol,
@@ -795,6 +802,50 @@ public class ComponentView implements Initializable {
                 techCol,
                 priceCol
         );
+
+        searchText.setOnKeyReleased(keyEvent -> {
+            String search = searchText.getText().toLowerCase();
+            int filterIndex = filterBox.getSelectionModel().getSelectedIndex();
+
+            tableView.setItems(filteredList.stream().filter(component -> {
+                if(search.isBlank() || search.isEmpty() || filterBox.getSelectionModel().getSelectedItem() == null){
+                    return true;
+                }
+                else {
+                    switch (filterIndex){
+                        case 0:
+                            return component.getManufacturer().toLowerCase().contains(search);
+                        case 1:
+                            return component.getModel().toLowerCase().contains(search);
+                        case 2:
+                            try {
+                                return component.getRam() <= Integer.parseInt(search);
+                            } catch (NumberFormatException e){
+                                return false;
+                            }
+                        case 3:
+                            try {
+                                return component.getSpeed() <= Integer.parseInt(search);
+                            } catch (NumberFormatException e) {
+                                return false;
+                            }
+                        case 4:
+                            return component.getMemoryTech().toLowerCase().contains(search);
+                        case 5:
+                            try {
+                                return component.getPrice() <= Double.parseDouble(search);
+                            } catch (NumberFormatException e) {
+                                return false;
+                            }
+
+                        default:
+                            return false;
+                    }
+                }
+            }).collect(Collectors.toCollection(FXCollections::observableArrayList)));
+        });
+
+        tableView.setItems(filteredList);
     }
 
     @FXML
