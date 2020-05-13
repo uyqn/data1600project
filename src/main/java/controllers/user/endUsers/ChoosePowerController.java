@@ -1,9 +1,7 @@
 package controllers.user.endUsers;
 
 import components.Component;
-import components.Cooler;
 import components.PSU;
-import components.Storage.HDD;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -48,7 +46,7 @@ public class ChoosePowerController implements Initializable {
     @FXML
     private TextField filterText;
 
-    ObservableList<Component> powerList = App.componentList.getList().stream().filter(component ->
+    ObservableList<Component> powerList = App.listableList.getList().stream().filter(component ->
             component.getComponentType().equals(PSU.COMPONENT_TYPE)
     ).collect(Collectors.toCollection(FXCollections::observableArrayList));
 
@@ -73,7 +71,7 @@ public class ChoosePowerController implements Initializable {
 
 
         tableView.setItems(
-                App.componentList.getList().stream().filter(component ->
+                App.listableList.getList().stream().filter(component ->
                         component.getComponentType().equals(PSU.COMPONENT_TYPE)
                 ).collect(Collectors.toCollection(FXCollections::observableArrayList))
         );

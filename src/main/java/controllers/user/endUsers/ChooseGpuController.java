@@ -56,7 +56,7 @@ public class ChooseGpuController implements Initializable {
     @FXML
     private TextField filterText;
 
-    ObservableList<Component> gpuList = App.componentList.getList().stream().filter(component ->
+    ObservableList<Component> gpuList = App.listableList.getList().stream().filter(component ->
             component.getComponentType().equals(GPU.COMPONENT_TYPE)
     ).collect(Collectors.toCollection(FXCollections::observableArrayList));
 
@@ -89,7 +89,6 @@ public class ChooseGpuController implements Initializable {
 
 
         tableView.setItems(gpuList);
-
     }
 
     @FXML

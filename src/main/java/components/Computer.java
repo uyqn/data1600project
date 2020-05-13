@@ -5,7 +5,8 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import listManager.ComponentList;
+import listManager.ListableList;
+import listManager.ItemList;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -13,7 +14,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Computer extends ComponentList<Component> implements Listable, Serializable {
+public class Computer extends ListableList<Component> implements Listable, ItemList<Component>, Serializable {
     private transient SimpleStringProperty name = new SimpleStringProperty();
     private transient ObservableList<Component> components = FXCollections.observableArrayList();
 

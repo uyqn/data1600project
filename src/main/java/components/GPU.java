@@ -372,7 +372,7 @@ public class GPU extends Component implements Serializable, Compatible {
         objectOutputStream.writeUTF(getManufacturer());
         objectOutputStream.writeUTF(getModel());
         objectOutputStream.writeDouble(getPrice());
-
+        objectOutputStream.writeUTF(getBussType());
         objectOutputStream.writeInt(getMemory());
         objectOutputStream.writeUTF(getMemoryType());
         objectOutputStream.writeInt(getBoostSpeed());
@@ -382,23 +382,23 @@ public class GPU extends Component implements Serializable, Compatible {
         String manufacturer = objecInputStream.readUTF();
         String model = objecInputStream.readUTF();
         double price = objecInputStream.readDouble();
-
+        String bussType = objecInputStream.readUTF();
         int memory= objecInputStream.readInt();
         String memoryType= objecInputStream.readUTF();
         double boostSpeed = objecInputStream.readInt();
 
-        this.memory=new SimpleIntegerProperty();
-        this.memoryType=new SimpleStringProperty();
-        this.boostSpeed= new SimpleIntegerProperty();
+        this.bussType = new SimpleStringProperty();
+        this.memory = new SimpleIntegerProperty();
+        this.memoryType = new SimpleStringProperty();
+        this.boostSpeed = new SimpleIntegerProperty();
 
         super.setManufacturer(manufacturer);
         super.setModel(model);
         super.setPrice(price);
-
+        setBussType(bussType);
         setMemory(memory);
         setMemoryType(memoryType);
         setBoostClock(boostSpeed);
-
     }
 
     @Override

@@ -10,7 +10,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -20,6 +24,9 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class ComponentController implements Initializable {
+
+    @FXML
+    private BorderPane gui;
 
     @FXML
     private GridPane superHome;
@@ -95,7 +102,7 @@ public class ComponentController implements Initializable {
                     "The following motherboard was added:",
                     mb.toString());
 
-            App.componentList.add(mb);
+            App.listableList.add(mb);
 
             resetGui(addMbGui,
                     "manufacturer",
@@ -127,7 +134,7 @@ public class ComponentController implements Initializable {
 
             Cabin cabin = new Cabin(manufacturer, model, formFactor, price);
 
-            App.componentList.add(cabin);
+            App.listableList.add(cabin);
 
             DialogBox.info("Cabin successfully added",
                     "The following cabin was added:",
@@ -160,7 +167,7 @@ public class ComponentController implements Initializable {
                     "The following CPU was added:",
                     cpu.toString());
 
-            App.componentList.add(cpu);
+            App.listableList.add(cpu);
 
             resetGui(addCpuGui,
                     "manufacturer",
@@ -199,7 +206,7 @@ public class ComponentController implements Initializable {
                     "The following cooler was added:",
                     cooler.toString());
 
-            App.componentList.add(cooler);
+            App.listableList.add(cooler);
 
             resetGui(addCoolerGui,
                     "manufacturer",
@@ -242,7 +249,7 @@ public class ComponentController implements Initializable {
                     "The following gpu was added:",
                     GPU.toString());
 
-            App.componentList.add(GPU);
+            App.listableList.add(GPU);
 
             resetGui(addGraphicCardGui,
                     "manufacturer",
@@ -283,7 +290,7 @@ public class ComponentController implements Initializable {
                     "The following RAM was added:",
                     memory.toString());
 
-            App.componentList.add(memory);
+            App.listableList.add(memory);
 
             resetGui(addMemoryGui, "manufacturer", "model", "RAM", "speed", "price");
             this.speedTech.setValue(null);
@@ -326,7 +333,7 @@ public class ComponentController implements Initializable {
                             "The following SSD was added:",
                             ssd.toString());
 
-                    App.componentList.add(ssd);
+                    App.listableList.add(ssd);
 
                     resetGui(addStorageGui, "manufacturer", "model", "capacity", "rpm", "price");
                 } catch (IllegalArgumentException e) {
@@ -350,7 +357,7 @@ public class ComponentController implements Initializable {
                         "The following Harddrive was added:",
                         hdd.toString());
 
-                App.componentList.add(hdd);
+                App.listableList.add(hdd);
 
                 resetGui(addStorageGui, "manufacturer", "model", "capacity", "rpm", "price");
             }
@@ -380,7 +387,7 @@ public class ComponentController implements Initializable {
                         "The following monitor was added:",
                         monitor.toString());
 
-                App.componentList.add(monitor);
+                App.listableList.add(monitor);
 
                 resetGui(addMonitorGui,
                         "manufacturer",
@@ -416,7 +423,7 @@ public class ComponentController implements Initializable {
                         "The following mouse was added:",
                         mouse.toString());
 
-                App.componentList.add(mouse);
+                App.listableList.add(mouse);
 
                 resetGui(addMouseGui,
                         "manufacturer",
@@ -452,7 +459,7 @@ public class ComponentController implements Initializable {
                             "The following PSU was added:",
                             PSU.toString());
 
-                    App.componentList.add(PSU);
+                    App.listableList.add(PSU);
 
                     resetGui(addPowerSupplyGui,
                             "manufacturer",
@@ -484,7 +491,7 @@ public class ComponentController implements Initializable {
                         "The following keyboard was added:",
                         keyboard.toString());
 
-                App.componentList.add(keyboard);
+                App.listableList.add(keyboard);
 
                 resetGui(addKeyboardGui, "manufacturer", "model", "price");
 
@@ -584,6 +591,10 @@ public class ComponentController implements Initializable {
     void close(ActionEvent event) {
         superHome.lookup("#addComponent").setDisable(false);
         ((Stage) ((Node) event.getSource()).getScene().getWindow()).close();
+    }
+
+    public void disableGui(boolean disable){
+        this.gui.setDisable(true);
     }
 
     @Override

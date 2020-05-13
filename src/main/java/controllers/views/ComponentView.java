@@ -16,6 +16,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.converter.BooleanStringConverter;
@@ -33,6 +34,9 @@ public class ComponentView implements Initializable {
 
     @FXML
     private GridPane superHome;
+
+    @FXML
+    private BorderPane gui;
 
     @FXML
     private TableView<Component> tableView;
@@ -77,7 +81,7 @@ public class ComponentView implements Initializable {
         filterBox.getItems().setAll("Manufacturer", "Model", "Price (NOK) ≤");
         filterBox.setValue(null);
         searchText.setText(null);
-        filteredList = App.componentList.getList();
+        filteredList = App.listableList.getList();
 
         TableColumn<Component, String> typeCol = new TableColumn<>("Type");
         typeCol.setCellValueFactory(new PropertyValueFactory<>("componentType"));
@@ -166,7 +170,7 @@ public class ComponentView implements Initializable {
                 "Price (NOK) ≤");
         filterBox.setValue(null);
         searchText.setText(null);
-        filteredList = App.componentList.getList().stream().filter(component ->
+        filteredList = App.listableList.getList().stream().filter(component ->
                 component.getComponentType().equals(CPU.COMPONENT_TYPE)
         ).collect(Collectors.toCollection(FXCollections::observableArrayList));
 
@@ -354,7 +358,7 @@ public class ComponentView implements Initializable {
                 "Price (NOK) ≤");
         filterBox.setValue(null);
         searchText.setText(null);
-        filteredList = App.componentList.getList().stream().filter(component ->
+        filteredList = App.listableList.getList().stream().filter(component ->
                 component.getComponentType().equals(GPU.COMPONENT_TYPE)
         ).collect(Collectors.toCollection(FXCollections::observableArrayList));
 
@@ -521,7 +525,7 @@ public class ComponentView implements Initializable {
                 "Price (NOK) ≤");
         filterBox.setValue(null);
         searchText.setText(null);
-        filteredList = App.componentList.getList().stream().filter(component ->
+        filteredList = App.listableList.getList().stream().filter(component ->
                 component.getComponentType().equals(Motherboard.COMPONENT_TYPE)
         ).collect(Collectors.toCollection(FXCollections::observableArrayList));
 
@@ -717,7 +721,7 @@ public class ComponentView implements Initializable {
                 "Price (NOK) ≤");
         filterBox.setValue(null);
         searchText.setText(null);
-        filteredList = App.componentList.getList().stream().filter(component ->
+        filteredList = App.listableList.getList().stream().filter(component ->
                 component.getComponentType().equals(Memory.COMPONENT_TYPE)
         ).collect(Collectors.toCollection(FXCollections::observableArrayList));
 
@@ -864,7 +868,7 @@ public class ComponentView implements Initializable {
                 "Price (NOK) ≤");
         filterBox.setValue(null);
         searchText.setText(null);
-        filteredList = App.componentList.getList().stream().filter(component ->
+        filteredList = App.listableList.getList().stream().filter(component ->
                 component.getComponentType().equals(HDD.COMPONENT_TYPE)
         ).collect(Collectors.toCollection(FXCollections::observableArrayList));
 
@@ -993,7 +997,7 @@ public class ComponentView implements Initializable {
                 "Price (NOK) ≤");
         filterBox.setValue(null);
         searchText.setText(null);
-        filteredList = App.componentList.getList().stream().filter(component ->
+        filteredList = App.listableList.getList().stream().filter(component ->
                 component.getComponentType().equals(SSD.COMPONENT_TYPE)
         ).collect(Collectors.toCollection(FXCollections::observableArrayList));
 
@@ -1109,7 +1113,7 @@ public class ComponentView implements Initializable {
                 "Price (NOK) ≤");
         filterBox.setValue(null);
         searchText.setText(null);
-        filteredList = App.componentList.getList().stream().filter(component ->
+        filteredList = App.listableList.getList().stream().filter(component ->
                 component.getComponentType().equals(Cooler.COMPONENT_TYPE)
         ).collect(Collectors.toCollection(FXCollections::observableArrayList));
 
@@ -1302,7 +1306,7 @@ public class ComponentView implements Initializable {
                 "Price (NOK) ≤");
         filterBox.setValue(null);
         searchText.setText(null);
-        filteredList = App.componentList.getList().stream().filter(component ->
+        filteredList = App.listableList.getList().stream().filter(component ->
                 component.getComponentType().equals(PSU.COMPONENT_TYPE)
         ).collect(Collectors.toCollection(FXCollections::observableArrayList));
 
@@ -1411,7 +1415,7 @@ public class ComponentView implements Initializable {
                 "Price (NOK) ≤");
         filterBox.setValue(null);
         searchText.setText(null);
-        filteredList = App.componentList.getList().stream().filter(component ->
+        filteredList = App.listableList.getList().stream().filter(component ->
                 component.getComponentType().equals(Cabin.COMPONENT_TYPE)
         ).collect(Collectors.toCollection(FXCollections::observableArrayList));
 
@@ -1521,7 +1525,7 @@ public class ComponentView implements Initializable {
                 "Price (NOK) ≤");
         filterBox.setValue(null);
         searchText.setText(null);
-        filteredList = App.componentList.getList().stream().filter(component ->
+        filteredList = App.listableList.getList().stream().filter(component ->
                 component.getComponentType().equals(Mouse.COMPONENT_TYPE)
         ).collect(Collectors.toCollection(FXCollections::observableArrayList));
 
@@ -1705,7 +1709,7 @@ public class ComponentView implements Initializable {
                 "Price (NOK) ≤");
         filterBox.setValue(null);
         searchText.setText(null);
-        filteredList = App.componentList.getList().stream().filter(component ->
+        filteredList = App.listableList.getList().stream().filter(component ->
                 component.getComponentType().equals(Monitor.COMPONENT_TYPE)
         ).collect(Collectors.toCollection(FXCollections::observableArrayList));
 
@@ -1835,7 +1839,7 @@ public class ComponentView implements Initializable {
                 "Price (NOK) ≤");
         filterBox.setValue(null);
         searchText.setText(null);
-        filteredList = App.componentList.getList().stream().filter(component ->
+        filteredList = App.listableList.getList().stream().filter(component ->
                 component.getComponentType().equals(Keyboard.COMPONENT_TYPE)
         ).collect(Collectors.toCollection(FXCollections::observableArrayList));
 
@@ -1984,11 +1988,15 @@ public class ComponentView implements Initializable {
 
     @FXML
     void remove(ActionEvent event){
-        App.componentList.getList().remove(tableView.getSelectionModel().getSelectedItem());
+        App.listableList.getList().remove(tableView.getSelectionModel().getSelectedItem());
     }
 
     public void setSuperHome(GridPane superHome) {
         this.superHome = superHome;
+    }
+
+    public void disableGui(boolean disable){
+        gui.setDisable(disable);
     }
 
     private void inputError(String inputField, String error) {
@@ -2001,7 +2009,7 @@ public class ComponentView implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         filterBox.getItems().setAll("Manufacturer", "Model", "Price (NOK) ≤");
         filterBox.setValue(null);
-        filteredList = App.componentList.getList();
+        filteredList = App.listableList.getList();
 
         TableColumn<Component, String> typeCol = new TableColumn<>("Type");
         typeCol.setCellValueFactory(new PropertyValueFactory<>("componentType"));
@@ -2077,5 +2085,6 @@ public class ComponentView implements Initializable {
 
         tableView.setItems(filteredList);
         tableView.setEditable(true);
+        tableView.refresh();
     }
 }

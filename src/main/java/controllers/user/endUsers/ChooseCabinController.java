@@ -1,9 +1,7 @@
 package controllers.user.endUsers;
 
-import components.CPU;
 import components.Cabin;
 import components.Component;
-import components.GPU;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -48,7 +46,7 @@ public class ChooseCabinController implements Initializable {
     @FXML
     private TextField filterText;
 
-    ObservableList<Component> cabinList = App.componentList.getList().stream().filter(component ->
+    ObservableList<Component> cabinList = App.listableList.getList().stream().filter(component ->
             component.getComponentType().equals(Cabin.COMPONENT_TYPE)
     ).collect(Collectors.toCollection(FXCollections::observableArrayList));
 

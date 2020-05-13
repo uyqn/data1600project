@@ -1,23 +1,24 @@
 package controllers.user;
 
-import controllers.component.ComponentController;
+import controllers.LoginController;
 import controllers.guiManager.GUI;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import controllers.LoginController;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import users.User;
-import javafx.scene.Node;
+import users.EndUser;
 
 import java.io.IOException;
 
 public class EndUserController{
+
+    private EndUser user;
 
     @FXML
     private Label centerLabel;
@@ -65,7 +66,7 @@ public class EndUserController{
         toLogin.switchScene();
     }
 
-    public void setUser(User user) {
-        centerLabel.setText("Signed in as " + user.getUsername());
+    public void setUser(EndUser user) {
+        this.user = user;
     }
 }

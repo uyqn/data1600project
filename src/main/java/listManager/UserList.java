@@ -1,4 +1,6 @@
-package users;
+package listManager;
+
+import users.User;
 
 import java.util.ArrayList;
 

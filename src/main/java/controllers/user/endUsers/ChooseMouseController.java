@@ -1,8 +1,6 @@
 package controllers.user.endUsers;
 
 import components.Component;
-import components.Keyboard;
-import components.Monitor;
 import components.Mouse;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -56,7 +54,7 @@ public class ChooseMouseController implements Initializable {
     @FXML
     private TextField filterText;
 
-    ObservableList<Component> mouseList = App.componentList.getList().stream().filter(component ->
+    ObservableList<Component> mouseList = App.listableList.getList().stream().filter(component ->
             component.getComponentType().equals(Mouse.COMPONENT_TYPE)
     ).collect(Collectors.toCollection(FXCollections::observableArrayList));
 
@@ -88,7 +86,7 @@ public class ChooseMouseController implements Initializable {
 
 
         tableView.setItems(
-                App.componentList.getList().stream().filter(component ->
+                App.listableList.getList().stream().filter(component ->
                         component.getComponentType().equals(Mouse.COMPONENT_TYPE)
                 ).collect(Collectors.toCollection(FXCollections::observableArrayList))
         );

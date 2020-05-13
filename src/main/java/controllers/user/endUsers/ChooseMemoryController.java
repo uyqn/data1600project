@@ -1,9 +1,7 @@
 package controllers.user.endUsers;
 
 import components.Component;
-import components.GPU;
 import components.Memory;
-import components.Motherboard;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -55,7 +53,7 @@ public class ChooseMemoryController implements Initializable {
     @FXML
     private TextField filterText;
 
-    ObservableList<Component> memoryList = App.componentList.getList().stream().filter(component ->
+    ObservableList<Component> memoryList = App.listableList.getList().stream().filter(component ->
             component.getComponentType().equals(Memory.COMPONENT_TYPE)
     ).collect(Collectors.toCollection(FXCollections::observableArrayList));
 

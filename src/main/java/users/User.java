@@ -1,18 +1,21 @@
 package users;
 
 import components.Computer;
+import components.Listable;
 import fileManager.FileManager;
 import javafx.beans.property.SimpleStringProperty;
-import listManager.ComponentList;
+import listManager.ItemList;
+import listManager.ListableList;
 
 import java.io.Serializable;
+import java.nio.file.Path;
 
-public abstract class User implements Serializable {
+public abstract class User implements Serializable, Listable {
     private transient SimpleStringProperty username = new SimpleStringProperty();
     private transient SimpleStringProperty password = new SimpleStringProperty();
 
     private transient FileManager manager = new FileManager();
-    private transient ComponentList<Computer> computerList = new ComponentList<>();
+    private transient ListableList<Computer> computerList = new ListableList<>();
 
     public User(String username, String password) {
         setUsername(username);
@@ -40,4 +43,9 @@ public abstract class User implements Serializable {
         }
         this.password.set(password);
     }
+
+    public abstract void open();
+    public abstract Path getPath();
+    public abstract <S extends Listable> void save(ItemList<S> list);
+    public abstract <S extends Listable> void saveAs(ItemList<S> list);
 }
