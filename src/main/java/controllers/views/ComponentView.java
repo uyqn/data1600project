@@ -5,11 +5,14 @@ import components.Storage.HDD;
 import components.Storage.SSD;
 import controllers.guiManager.DialogBox;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.converter.BooleanStringConverter;
@@ -23,8 +26,16 @@ import java.util.stream.Collectors;
 
 public class ComponentView implements Initializable {
 
+    private ObservableList<Component> filteredList;
+
     @FXML
     private TableView<Component> tableView;
+
+    @FXML
+    private ChoiceBox<String> filterBox;
+
+    @FXML
+    private TextField searchText;
 
     private IntegerStringConverter integerStringConverter = new IntegerStringConverter() {
         public Integer fromString(String s) {
@@ -1237,6 +1248,10 @@ public class ComponentView implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        filterBox.getItems().setAll("Manufacturer", "Model", "Price (NOK) ≤");
+        filterBox.setValue(null);
+        filteredList = App.componentList.getList();
+
         TableColumn<Component, String> typeCol = new TableColumn<>("Type");
         typeCol.setCellValueFactory(new PropertyValueFactory<>("componentType"));
 
@@ -1281,7 +1296,34 @@ public class ComponentView implements Initializable {
 
         tableView.getColumns().setAll(typeCol, manuCol, modelCol, priceCol);
 
-        tableView.setItems(App.componentList.getList());
+        searchText.setOnKeyReleased(keyEvent -> {
+            String search = searchText.getText().toLowerCase();
+            int filterIndex = filterBox.getSelectionModel().getSelectedIndex();
+
+            tableView.setItems(filteredList.stream().filter(component -> {
+                if(search.isBlank() || search.isEmpty() || filterBox.getSelectionModel().getSelectedItem() == null){
+                    return true;
+                }
+                else {
+                    switch (filterIndex){
+                        case 0:
+                            return component.getManufacturer().toLowerCase().contains(search);
+                        case 1:
+                            return component.getModel().toLowerCase().contains(search);
+                        case 2:
+                            try {
+                                return component.getPrice() <= Double.parseDouble(search);
+                            } catch (NumberFormatException e){
+                                return false;
+                            }
+                        default:
+                            return false;
+                    }
+                }
+            }).collect(Collectors.toCollection(FXCollections::observableArrayList)));
+        });
+
+        tableView.setItems(filteredList);
         tableView.setEditable(true);
     }
 }
