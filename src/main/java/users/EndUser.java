@@ -33,10 +33,6 @@ public class EndUser extends User {
 
         this.saved = false;
 
-        Component cpu = new CPU("AMD","Ryzen 7 3800X","AM4",8,"3.9/4.5",105.0,4219.0);
-        Component cooler = new Cooler("Cooler Master","MasterFan SF360R ARGB","36.0 x 12.0 x 2.5","650.0 - 1800.0",
-                "8.0 - 30", 6.48,499.0);
-
 
     }
 
