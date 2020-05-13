@@ -61,10 +61,8 @@ public class ChooseMonitorController implements Initializable {
         filterBox.getItems().setAll(
                 "Manufacturer",
                 "Model",
-                "Buttons ≤",
-                "Display size (inches) ≤",
-                "Refresh rate (Hz)",
-                "Price (NOK) ≤");
+                "Price (NOK) ≤",
+                "Refresh rate (Hz)");
         filterBox.setValue(null);
         filterText.setText(null);
 
@@ -99,19 +97,13 @@ public class ChooseMonitorController implements Initializable {
                         return component.getManufacturer().toLowerCase().contains(search);
                     case 1:
                         return component.getModel().toLowerCase().contains(search);
-                    case 2:
-                        try {
-                            return component.getSize() <= Double.parseDouble(search);
-                        } catch (NumberFormatException e) {
-                            return false;
-                        }
                     case 3:
                         try {
                             return component.getRefreshRate() <= Integer.parseInt(search);
                         } catch (NumberFormatException e) {
                             return false;
                         }
-                    case 4:
+                    case 2:
                         try {
                             return component.getPrice() <= Double.parseDouble(search);
                         } catch (NumberFormatException e) {

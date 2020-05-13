@@ -69,15 +69,15 @@ public class ChooseCoolerController implements Initializable {
         filterBox.getItems().setAll(
                 "Manufacturer",
                 "Model",
-                "Width (cm) ≤",
-                "Depth (cm) ≤",
-                "Height (cm) ≤",
                 "Base RPM ≤",
                 "Max RPM ≤",
                 "Base noise (dBA) ≤",
                 "Max noise (dBA) ≤",
                 "Power consumption ≤",
-                "Price (NOK) ≤");
+                "Price (NOK) ≤",
+                "Width (cm) ≤",
+                "Depth (cm) ≤",
+                "Height (cm) ≤");
         filterBox.setValue(null);
         filterText.setText(null);
 
@@ -119,55 +119,55 @@ public class ChooseCoolerController implements Initializable {
                         return component.getManufacturer().toLowerCase().contains(search);
                     case 1:
                         return component.getModel().toLowerCase().contains(search);
-                    case 2:
+                   case 8:
                         try {
                             return component.getWidth() <= Double.parseDouble(search);
                         } catch (NumberFormatException e) {
                             return false;
                         }
-                    case 3:
+                    case 9:
                         try {
                             return component.getDepth() <= Double.parseDouble(search);
                         } catch (NumberFormatException e) {
                             return false;
                         }
-                    case 4:
+                    case 10:
                         try {
                             return component.getHeight() <= Double.parseDouble(search);
                         } catch (NumberFormatException e) {
                             return false;
                         }
-                    case 5:
+                    case 3:
                         try {
                             return component.getCoreRpm() <= Integer.parseInt(search);
                         } catch (NumberFormatException e) {
                             return false;
                         }
-                    case 6:
+                    case 4:
                         try {
                             return component.getMaxRpm() <= Integer.parseInt(search);
                         } catch (NumberFormatException e) {
                             return false;
                         }
-                    case 7:
+                    case 5:
                         try {
                             return component.getCoreNoise() <= Double.parseDouble(search);
                         } catch (NumberFormatException e) {
                             return false;
                         }
-                    case 8:
+                    case 6:
                         try {
                             return component.getMaxNoise() <= Double.parseDouble(search);
                         } catch (NumberFormatException e) {
                             return false;
                         }
-                    case 9:
+                    case 7:
                         try {
                             return component.getPowerConsumption() <= Double.parseDouble(search);
                         } catch (NumberFormatException e) {
                             return false;
                         }
-                    case 10:
+                    case 2:
                         try {
                             return component.getPrice() <= Double.parseDouble(search);
                         } catch (NumberFormatException e) {

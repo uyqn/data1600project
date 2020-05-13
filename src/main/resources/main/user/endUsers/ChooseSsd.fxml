@@ -18,12 +18,10 @@
       </Label>
       <TableView fx:id="tableView" layoutX="44.0" layoutY="144.0" prefHeight="182.0" prefWidth="556.0">
          <columns>
-            <TableColumn fx:id="ManufacturerColumn" prefWidth="92.66668701171875" text="Manufacturer" />
-            <TableColumn fx:id="ModelColumn" prefWidth="77.33331298828125" text="Model" />
-            <TableColumn fx:id="PriceColumn" prefWidth="88.33331298828125" text="Price" />
-            <TableColumn fx:id="CapacityColumn" prefWidth="94.0" text="Capacity" />
-            <TableColumn fx:id="RpmColumn" prefWidth="90.0" text="RPM" />
-            <TableColumn fx:id="FormFactorColumn" prefWidth="111.66668701171875" text="Form Factor" />
+            <TableColumn fx:id="ManufacturerColumn" prefWidth="123.66665649414062" text="Manufacturer" />
+            <TableColumn fx:id="ModelColumn" prefWidth="107.33334350585938" text="Model" />
+            <TableColumn fx:id="PriceColumn" prefWidth="136.66668701171875" text="Price" />
+            <TableColumn fx:id="CapacityColumn" prefWidth="188.33331298828125" text="Capacity" />
          </columns>
       </TableView>
       <Button fx:id="backBtn" layoutX="257.0" layoutY="338.0" mnemonicParsing="false" onAction="#GoBack" text="Back" />

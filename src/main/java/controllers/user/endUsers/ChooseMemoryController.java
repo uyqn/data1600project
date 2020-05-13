@@ -64,10 +64,10 @@ public class ChooseMemoryController implements Initializable {
         filterBox.getItems().setAll(
                 "Manufacturer",
                 "Model",
+                "Price (NOK) ≤",
                 "RAM (GB) ≤",
-                "Speed (MHz) ≤",
                 "Technology",
-                "Price (NOK) ≤");
+                "Speed (MHz) ≤");
         filterBox.setValue(null);
         filterText.setText(null);
 
@@ -100,13 +100,13 @@ public class ChooseMemoryController implements Initializable {
                         return component.getManufacturer().toLowerCase().contains(search);
                     case 1:
                         return component.getModel().toLowerCase().contains(search);
-                    case 2:
+                    case 3:
                         try {
                             return component.getRam() <= Integer.parseInt(search);
                         } catch (NumberFormatException e) {
                             return false;
                         }
-                    case 3:
+                    case 5:
                         try {
                             return component.getSpeed() <= Integer.parseInt(search);
                         } catch (NumberFormatException e) {
@@ -114,7 +114,7 @@ public class ChooseMemoryController implements Initializable {
                         }
                     case 4:
                         return component.getMemoryTech().toLowerCase().contains(search);
-                    case 5:
+                    case 2:
                         try {
                             return component.getPrice() <= Double.parseDouble(search);
                         } catch (NumberFormatException e) {

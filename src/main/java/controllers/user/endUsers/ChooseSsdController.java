@@ -41,12 +41,6 @@ public class ChooseSsdController implements Initializable {
     @FXML
     private TableColumn<SSD, Double> CapacityColumn;
 
-    @FXML
-    private TableColumn<SSD, Integer> RpmColumn;
-
-    @FXML
-    private TableColumn<SSD, String> FormFactorColumn;
-
 
 
     @FXML
@@ -64,8 +58,8 @@ public class ChooseSsdController implements Initializable {
         filterBox.getItems().setAll(
                 "Manufacturer",
                 "Model",
-                "Capacity (GB) ≤",
-                "Price (NOK) ≤");
+                "Price (NOK) ≤",
+                "Capacity (GB) ≤");
         filterBox.setValue(null);
         filterText.setText(null);
 
@@ -75,8 +69,6 @@ public class ChooseSsdController implements Initializable {
         ModelColumn.setCellValueFactory(new PropertyValueFactory<SSD, String>("model"));
         PriceColumn.setCellValueFactory(new PropertyValueFactory<SSD, Double>("price"));
         CapacityColumn.setCellValueFactory(new PropertyValueFactory<SSD, Double>("capacity"));
-        RpmColumn.setCellValueFactory(new PropertyValueFactory<SSD, Integer>("rpm"));
-        FormFactorColumn.setCellValueFactory(new PropertyValueFactory<SSD, String>("form"));
 
 
         tableView.setItems(
@@ -99,13 +91,13 @@ public class ChooseSsdController implements Initializable {
                         return component.getManufacturer().toLowerCase().contains(search);
                     case 1:
                         return component.getModel().toLowerCase().contains(search);
-                    case 2:
+                    case 3:
                         try {
                             return component.getCapacity() <= Integer.parseInt(search);
                         } catch (NumberFormatException e) {
                             return false;
                         }
-                    case 3:
+                    case 2:
                         try {
                             return component.getPrice() <= Double.parseDouble(search);
                         } catch (NumberFormatException e) {

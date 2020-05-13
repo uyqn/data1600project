@@ -58,8 +58,8 @@ public class ChooseCabinController implements Initializable {
         filterBox.getItems().setAll(
                 "Manufacturer",
                 "Model",
-                "Form factor",
-                "Price (NOK) ≤");
+                "Price (NOK) ≤",
+                "Form factor");
         filterBox.setValue(null);
         filterText.setText(null);
 
@@ -89,9 +89,9 @@ public class ChooseCabinController implements Initializable {
                         return component.getManufacturer().toLowerCase().contains(search);
                     case 1:
                         return component.getModel().toLowerCase().contains(search);
-                    case 2:
-                        return component.getFormFactor().toLowerCase().contains(search);
                     case 3:
+                        return component.getFormFactor().toLowerCase().contains(search);
+                    case 2:
                         try {
                             return component.getPrice() <= Double.parseDouble(search);
                         } catch (NumberFormatException e) {

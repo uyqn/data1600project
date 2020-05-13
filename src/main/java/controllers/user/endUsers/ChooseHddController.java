@@ -45,8 +45,6 @@ public class ChooseHddController implements Initializable {
     @FXML
     private TableColumn<HDD, String> RpmColumn;
 
-    @FXML
-    private TableColumn<HDD, String> FormFactorColumn;
 
 
 
@@ -65,9 +63,9 @@ public class ChooseHddController implements Initializable {
         filterBox.getItems().setAll(
                 "Manufacturer",
                 "Model",
+                "Price (NOK) ≤",
                 "Capacity (GB) ≤",
-                "RPM ≤",
-                "Price (NOK) ≤");
+                "RPM ≤");
         filterBox.setValue(null);
         filterText.setText(null);
 
@@ -79,7 +77,6 @@ public class ChooseHddController implements Initializable {
         PriceColumn.setCellValueFactory(new PropertyValueFactory<HDD, Double>("price"));
         CapacityColumn.setCellValueFactory(new PropertyValueFactory<HDD, Integer>("capacity"));
         RpmColumn.setCellValueFactory(new PropertyValueFactory<HDD, String>("rpm"));
-        FormFactorColumn.setCellValueFactory(new PropertyValueFactory<HDD, String>("form"));
 
 
         tableView.setItems(
@@ -104,19 +101,19 @@ public class ChooseHddController implements Initializable {
                         return component.getManufacturer().toLowerCase().contains(search);
                     case 1:
                         return component.getModel().toLowerCase().contains(search);
-                    case 2:
+                    case 3:
                         try {
                             return component.getCapacity() <= Integer.parseInt(search);
                         } catch (NumberFormatException e) {
                             return false;
                         }
-                    case 3:
+                    case 4:
                         try {
                             return component.getRpm() <= Integer.parseInt(search);
                         } catch (NumberFormatException e) {
                             return false;
                         }
-                    case 4:
+                    case 2:
                         try {
                             return component.getPrice() <= Double.parseDouble(search);
                         } catch (NumberFormatException e) {
