@@ -10,44 +10,74 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import main.App;
-
+import users.EndUser;
+import java.awt.event.KeyEvent;
 import java.io.IOException;
-import java.io.Serializable;
 import java.net.URL;
-import java.nio.MappedByteBuffer;
-import java.util.List;
 import java.util.ResourceBundle;
-
-class ComputerRegister implements Serializable{
-    private transient ObservableList<Computer> computers= FXCollections.observableArrayList();
-
-    public List<Computer> getRegister(){return computers;}
-
-    public void attatchTableView(TableView tv){tv.setItems(computers);}
+import java.util.stream.Collectors;
 
 
-}
-public class PrevPcController<T> implements Initializable {
+
+public class PrevPcController implements Initializable {
 
 
-    private TableView<Computer> computerView=new TableView<>();
 
     @FXML
-    private GridPane viewComputersGui;
+    private TableView<Computer> tableView;
 
     @FXML
-    private Button homeBtn;
+    private TableColumn<Computer, String> nameCol;
 
     @FXML
-    private Button addBtn;
+    private TableColumn<Computer, Double> priceCol;
+
+    @FXML
+    private TableColumn<Computer, String> cpuCol;
+
+    @FXML
+    private TableColumn<Computer, String> gpuCol;
+    @FXML
+    private TableColumn<Computer, String> mbCol;
+    @FXML
+    private TableColumn<Computer, String> memoryCol;
+    @FXML
+    private TableColumn<Computer, String>ssdCol;
+    @FXML
+    private TableColumn<Computer, String> hddCol;
+
+    @FXML
+    private TableColumn<Computer, String>coolerCol;
+
+    @FXML
+    private TableColumn<Computer, String> psCol;
+
+    @FXML
+    private TableColumn<Computer, String> cabinCol;
+
+    @FXML
+    private TableColumn<Computer, String> monitorCol;
+
+    @FXML
+    private TableColumn<Computer, String> keyboardCol;
+
+    @FXML
+    private TableColumn<Computer, String> mouseCol;
+
+    @FXML
+    private ChoiceBox<String> filterBox;
+
+    @FXML
+    private TextField filterText;
+
+
+    private ObservableList<Computer> computerList=EndUser.listableList.getList().stream().filter(computer ->
+            computer.getName().equals(computer.getName())
+    ).collect(Collectors.toCollection(FXCollections::observableArrayList));
+
 
     @FXML
     void addPc(ActionEvent event) throws IOException {
@@ -71,45 +101,84 @@ public class PrevPcController<T> implements Initializable {
         window.show();
     }
 
-    private void getComputerView(){
-        TableColumn<Computer, String> nameCol = new TableColumn<>("Name");
-        nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
-        computerView.getColumns().add(nameCol);
 
-        TableColumn<Computer, String> cpuCol = new TableColumn<>("CPU");
-        nameCol.setCellValueFactory(new PropertyValueFactory<>("cpu"));
-        computerView.getColumns().add(cpuCol);
-
-        TableColumn<Computer, Double> priceCol = new TableColumn<>("Price");
-        nameCol.setCellValueFactory(new PropertyValueFactory<>("price"));
-        computerView.getColumns().add(priceCol);
-
-
-
-    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle){
-        getComputerView();
+       filterBox.getItems().setAll("Name", "Price (NOK) ≤", "CPU", "GPU", "Motherboard", "Memory", "Storage", "Cooler", "Power supply", "Cabin", "Monitor", "Keyboard", "Mouse");
+       filterBox.setValue(null);
+
+       computerList=EndUser.listableList.getList();
 
 
+        nameCol.setCellValueFactory(new PropertyValueFactory<Computer, String >("name"));
+        priceCol.setCellValueFactory(new PropertyValueFactory<Computer, Double>("price"));
+        cpuCol.setCellValueFactory(new PropertyValueFactory<Computer, String>("cpuName"));
+        gpuCol.setCellValueFactory(new PropertyValueFactory<Computer, String>("gpuName"));
+        mbCol.setCellValueFactory(new PropertyValueFactory<Computer, String>("motherboardName"));
+        memoryCol.setCellValueFactory(new PropertyValueFactory<Computer, String>("memoryName"));
+        ssdCol.setCellValueFactory(new PropertyValueFactory<Computer, String>("ssdName"));
+        hddCol.setCellValueFactory(new PropertyValueFactory<Computer, String>("hddName"));
+        coolerCol.setCellValueFactory(new PropertyValueFactory<Computer, String>("coolerName"));
+        psCol.setCellValueFactory(new PropertyValueFactory<Computer, String>("psuName"));
+        cabinCol.setCellValueFactory(new PropertyValueFactory<Computer, String>("cabinName"));
+        monitorCol.setCellValueFactory(new PropertyValueFactory<Computer, String>("monitorName"));
+        keyboardCol.setCellValueFactory(new PropertyValueFactory<Computer, String>("keyboardName"));
+        mouseCol.setCellValueFactory(new PropertyValueFactory<Computer, String>("mouseName"));
 
-        viewComputersGui.add(computerView,1,1);
-
+        tableView.setItems(computerList);
 
 
     }
-   /* public class ComponentView<T>{
 
+    @FXML
+    void filterEvt(KeyEvent event){
+        String search = filterText.getText().toLowerCase();
+        int filterIndex=filterBox.getSelectionModel().getSelectedIndex();
 
-        private TableView<Computer> computerView = new TableView<>();
+        tableView.setItems(computerList.stream().filter(computer -> {
+            if (search.isBlank() || search.isEmpty() || filterBox.getSelectionModel().getSelectedItem()==null){
+                return true;
+            }
+            else {
+                switch (filterIndex){
+                    case 0:
+                        return computer.getName().toLowerCase().contains(search);
+                    case 1:
+                        try {
+                            return computer.getPrice() < Double.parseDouble(search);
+                        }catch (NumberFormatException e){
+                            return false;
+                        }
+                    case 2:
+                        return computer.getCpuName().toLowerCase().contains(search);
+                    case 3:
+                        return computer.getGpuName().toLowerCase().contains(search);
+                    case 4:
+                        return computer.getMotherboardName().toLowerCase().contains(search);
+                    case 5:
+                        return computer.getMemoriesName().toLowerCase().contains(search);
+                    case 6:
+                        return computer.getStorageName().toLowerCase().contains(search);
+                    case 7:
+                        return computer.getCoolerName().toLowerCase().contains(search);
+                    case 8:
+                        return computer.getPsuName().toLowerCase().contains(search);
+                    case 9:
+                        return computer.getCabinName().toLowerCase().contains(search);
+                    case 10:
+                        return computer.getMonitorName().toLowerCase().contains(search);
+                    case 11:
+                        return computer.getKeyboardName().toLowerCase().contains(search);
+                    case 12:
+                        return computer.getMouseName().toLowerCase().contains(search);
+
+                    default:
+                        return false;
+                }
+            }
+        }).collect(Collectors.toCollection(FXCollections::observableArrayList)));
     }
-
-    private void getComputerView(){
-
-    }*/
-
-
 
 
 }
