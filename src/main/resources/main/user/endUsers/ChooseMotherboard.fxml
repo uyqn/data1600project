@@ -21,14 +21,12 @@
             <TableColumn fx:id="ManufacturerColumn" prefWidth="83.33334350585938" text="Manufacturer" />
             <TableColumn fx:id="ModelColumn" prefWidth="79.66668701171875" text="Model" />
             <TableColumn fx:id="PriceColumn" prefWidth="41.33331298828125" text="Price" />
-            <TableColumn fx:id="PSpacesColumn" prefWidth="106.66668701171875" text="Processor Spaces" />
-            <TableColumn fx:id="MaxRamColumn" prefWidth="66.33331298828125" text="Max Ram" />
-            <TableColumn fx:id="BoostTypeColumn" prefWidth="71.66668701171875" text="Boost Type" />
             <TableColumn fx:id="SocketColumn" prefWidth="58.66668701171875" text="Socket" />
             <TableColumn fx:id="BussTypeColumn" prefWidth="76.0" text="Buss Type" />
-            <TableColumn fx:id="FormFactorColumn" prefWidth="75.0" text="Form Factor" />
-            <TableColumn fx:id="MemoryColumn" prefWidth="75.0" text="Memory" />
-            <TableColumn fx:id="RamSlotColumn" prefWidth="75.0" text="Ram Slots" />
+            <TableColumn fx:id="MaxRamColumn" prefWidth="106.0" text="Max Ram" />
+            <TableColumn fx:id="RamSlotColumn" prefWidth="78.0" text="Ram Slots" />
+            <TableColumn fx:id="TechnologyColumn" prefWidth="83.3333740234375" text="Technology" />
+            <TableColumn fx:id="FormFactorColumn" prefWidth="129.0" text="Form Factor" />
          </columns>
       </TableView>
       <Button fx:id="backBtn" layoutX="345.0" layoutY="338.0" mnemonicParsing="false" onAction="#GoBack" text="Back" />

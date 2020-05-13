@@ -39,14 +39,10 @@ public class ChooseMotherboardController implements Initializable {
     @FXML
     private TableColumn<Motherboard, Double> PriceColumn;
 
-    @FXML
-    private TableColumn<Motherboard, Integer> PSpacesColumn;
 
     @FXML
     private TableColumn<Motherboard, Integer> MaxRamColumn;
 
-    @FXML
-    private TableColumn<Motherboard, String> BoostTypeColumn;
 
     @FXML
     private TableColumn<Motherboard, String> SocketColumn;
@@ -58,7 +54,11 @@ public class ChooseMotherboardController implements Initializable {
     private TableColumn<Motherboard, String> FormFactorColumn;
 
     @FXML
-    private TableColumn<Motherboard, String> MemoryColumn;
+    private TableColumn<Motherboard, String> TechnologyColumn;
+
+    @FXML
+    private TableColumn<Motherboard, Integer> RamSlotColumn;
+
 
     @FXML
     private ChoiceBox<String> filterBox;
@@ -75,13 +75,13 @@ public class ChooseMotherboardController implements Initializable {
         filterBox.getItems().setAll(
                 "Manufacturer",
                 "Model",
+                "Price (NOK) ≤",
                 "Socket",
                 "Buss type",
                 "Ram slots ≤",
-                "Technology",
                 "Max memory (GB) ≤",
-                "Form factor",
-                "Price (NOK) ≤");
+                "Technology",
+                "Form factor");
         filterBox.setValue(null);
         filterText.setText(null);
 
@@ -92,13 +92,12 @@ public class ChooseMotherboardController implements Initializable {
         ManufacturerColumn.setCellValueFactory(new PropertyValueFactory<Motherboard, String>("manufacturer"));
         ModelColumn.setCellValueFactory(new PropertyValueFactory<Motherboard, String>("model"));
         PriceColumn.setCellValueFactory(new PropertyValueFactory<Motherboard, Double>("price"));
-        PSpacesColumn.setCellValueFactory(new PropertyValueFactory<Motherboard, Integer>("ProcessorSpaces"));
+        RamSlotColumn.setCellValueFactory(new PropertyValueFactory<Motherboard, Integer>("RamSlots"));
         MaxRamColumn.setCellValueFactory(new PropertyValueFactory<Motherboard, Integer>("maxRamSize"));
-        BoostTypeColumn.setCellValueFactory(new PropertyValueFactory<Motherboard, String>("boostType"));
+        TechnologyColumn.setCellValueFactory(new PropertyValueFactory<Motherboard, String>("memoryTech"));
         SocketColumn.setCellValueFactory(new PropertyValueFactory<Motherboard, String>("socket"));
         BussTypeColumn.setCellValueFactory(new PropertyValueFactory<Motherboard, String>("bussType"));
         FormFactorColumn.setCellValueFactory(new PropertyValueFactory<Motherboard, String>("formFactor"));
-        MemoryColumn.setCellValueFactory(new PropertyValueFactory<Motherboard, String>("memoryTech"));
 
         tableView.setItems(mbList);
 
@@ -118,17 +117,17 @@ public class ChooseMotherboardController implements Initializable {
                         return component.getManufacturer().toLowerCase().contains(search);
                     case 1:
                         return component.getModel().toLowerCase().contains(search);
-                    case 2:
-                        return component.getSocket().toLowerCase().contains(search);
                     case 3:
-                        return component.getBussType().toLowerCase().contains(search);
+                        return component.getSocket().toLowerCase().contains(search);
                     case 4:
+                        return component.getBussType().toLowerCase().contains(search);
+                    case 5:
                         try {
                             return component.getRamSlots() <= Integer.parseInt(search);
                         } catch (NumberFormatException e) {
                             return false;
                         }
-                    case 5:
+                    case 7:
                         return component.getMemoryTech().toLowerCase().contains(search);
                     case 6:
                         try {
@@ -136,9 +135,9 @@ public class ChooseMotherboardController implements Initializable {
                         } catch (NumberFormatException e) {
                             return false;
                         }
-                    case 7:
-                        return component.getFormFactor().toLowerCase().contains(search);
                     case 8:
+                        return component.getFormFactor().toLowerCase().contains(search);
+                    case 2:
                         try {
                             return component.getPrice() <= Double.parseDouble(search);
                         } catch (NumberFormatException e) {
