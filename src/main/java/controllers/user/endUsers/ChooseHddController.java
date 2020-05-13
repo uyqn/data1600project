@@ -71,9 +71,6 @@ public class ChooseHddController implements Initializable {
         filterBox.setValue(null);
         filterText.setText(null);
 
-        //Enabler next-button idet man velger en komponent
-        nextBtn.disableProperty().bind(Bindings.isEmpty(tableView.getSelectionModel().getSelectedItems()));
-
 
         //Setter opp kolonner
 

@@ -1,9 +1,7 @@
 package controllers.user.endUsers;
 
-import components.CPU;
 import components.Component;
 import components.GPU;
-import components.Motherboard;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -49,9 +47,6 @@ public class ChooseGpuController implements Initializable {
     private TableColumn<GPU, String> MemoryTypeColumn;
 
     @FXML
-    private TableColumn<GPU, String> BaseClockColumn;
-
-    @FXML
     private TableColumn<GPU, String> BoostClockColumn;
 
 
@@ -68,19 +63,19 @@ public class ChooseGpuController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-        //Enabler next-button idet man velger en komponent
-        nextBtn.disableProperty().bind(Bindings.isEmpty(tableView.getSelectionModel().getSelectedItems()));
-
         filterBox.getItems().setAll(
                 "Manufacturer",
                 "Model",
+                "Price (NOK) ≤",
                 "Buss type",
                 "Memory (GB) ≤",
-                "Technology",
-                "Boost clock (MHz) ≤",
-                "Price (NOK) ≤");
+                "Memory Type",
+                "Boost clock (MHz) ≤");
         filterBox.setValue(null);
         filterText.setText(null);
+
+        //Enabler next-button idet man velger en komponent
+        nextBtn.disableProperty().bind(Bindings.isEmpty(tableView.getSelectionModel().getSelectedItems()));
 
         //Setter opp kolonner
 
@@ -90,8 +85,7 @@ public class ChooseGpuController implements Initializable {
         BussTypeColumn.setCellValueFactory(new PropertyValueFactory<GPU, String>("bussType"));
         MemoryColumn.setCellValueFactory(new PropertyValueFactory<GPU, String>("memory"));
         MemoryTypeColumn.setCellValueFactory(new PropertyValueFactory<GPU, String>("memoryType"));
-        BaseClockColumn.setCellValueFactory(new PropertyValueFactory<GPU, String>("coreClock"));
-        BoostClockColumn.setCellValueFactory(new PropertyValueFactory<GPU, String>("boostClock"));
+        BoostClockColumn.setCellValueFactory(new PropertyValueFactory<GPU, String>("boostSpeed"));
 
 
         tableView.setItems(gpuList);
@@ -112,23 +106,23 @@ public class ChooseGpuController implements Initializable {
                         return component.getManufacturer().toLowerCase().contains(search);
                     case 1:
                         return component.getModel().toLowerCase().contains(search);
-                    case 2:
-                        return component.getBussType().toLowerCase().contains(search);
                     case 3:
+                        return component.getBussType().toLowerCase().contains(search);
+                    case 4:
                         try {
                             return component.getMemory() <= Integer.parseInt(search);
                         } catch (NumberFormatException e) {
                             return false;
                         }
-                    case 4:
-                        return component.getMemoryTech().toLowerCase().contains(search);
                     case 5:
+                        return component.getMemoryTech().toLowerCase().contains(search);
+                    case 6:
                         try {
                             return component.getBoostSpeed() <= Double.parseDouble(search);
                         } catch (NumberFormatException e) {
                             return false;
                         }
-                    case 6:
+                    case 2:
                         try {
                             return component.getPrice() <= Double.parseDouble(search);
                         } catch (NumberFormatException e) {
