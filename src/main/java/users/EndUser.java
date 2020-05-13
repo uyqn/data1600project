@@ -1,11 +1,14 @@
 package users;
 
-import components.Listable;
+import components.*;
 import controllers.guiManager.DialogBox;
 import fileManager.FileSaverCSV;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import listManager.ItemList;
+import listManager.ListableList;
+import main.App;
+import main.TestEnvironment;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,6 +18,7 @@ import java.nio.file.Paths;
 public class EndUser extends User {
     private boolean saved;
     private FileChooser fileChooser = new FileChooser();
+    public static ListableList<Computer> listableList=new ListableList<>();
     private Path path;
 
     public EndUser(String username, String password) {
@@ -28,6 +32,12 @@ public class EndUser extends User {
         fileChooser.getExtensionFilters().add(csvExtensions);
 
         this.saved = false;
+
+        Component cpu = new CPU("AMD","Ryzen 7 3800X","AM4",8,"3.9/4.5",105.0,4219.0);
+        Component cooler = new Cooler("Cooler Master","MasterFan SF360R ARGB","36.0 x 12.0 x 2.5","650.0 - 1800.0",
+                "8.0 - 30", 6.48,499.0);
+
+
     }
 
     @Override
