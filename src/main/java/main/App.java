@@ -2,8 +2,8 @@ package main;
 
 import components.Component;
 import fileManager.FileManager;
-import fileManager.FileOpenerCSV;
-import fileManager.FileSaverCSV;
+import fileManager.FileOpenerBin;
+import fileManager.FileSaverBin;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -26,20 +26,20 @@ public class App extends Application {
     public static ComponentList<Component> componentList = new ComponentList<>();
 
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) throws IOException, ClassNotFoundException {
         initiateCoreUsers();
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("login.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setScene(scene);
 
-        FileOpenerCSV tempOpener = new FileOpenerCSV();
+        FileOpenerBin tempOpener = new FileOpenerBin();
 
-        componentList.setList(tempOpener.open(Paths.get("temp.csv")));
+        componentList.setList(tempOpener.open(Paths.get("temp.bin")));
 
         stage.setOnCloseRequest(windowEvent -> {
-            FileSaverCSV<Component> tempSaver = new FileSaverCSV<>();
+            FileSaverBin<Component> tempSaver = new FileSaverBin<>();
             try {
-                tempSaver.save(Paths.get("temp.csv"), componentList);
+                tempSaver.save(Paths.get("temp.bin"), componentList);
             } catch (IOException e) {
                 e.printStackTrace();
             }

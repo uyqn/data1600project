@@ -3,7 +3,9 @@ package fileManager;
 import components.Component;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import listManager.ItemList;
+import main.App;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,7 +13,7 @@ import java.io.ObjectInputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-public class FileOpenerBin<S extends Component> implements FileOpener {
+public class FileOpenerBin extends Task<ObservableList<Component>> implements FileOpener {
 
     @SuppressWarnings("unchecked")
     @Override
@@ -26,5 +28,14 @@ public class FileOpenerBin<S extends Component> implements FileOpener {
         }
 
         return list;
+    }
+
+    @Override
+    protected ObservableList<Component> call() throws Exception {
+        try{
+            Thread.sleep(3000);
+        } catch (InterruptedException ignored){}
+
+        return open(App.fileManager.getPath());
     }
 }

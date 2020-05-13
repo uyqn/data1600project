@@ -160,9 +160,10 @@
       </GridPane>
    </center>
    <bottom>
-      <HBox alignment="CENTER" prefHeight="61.0" prefWidth="1000.0" BorderPane.alignment="CENTER">
+      <HBox alignment="CENTER" prefHeight="61.0" prefWidth="1000.0" spacing="100.0" BorderPane.alignment="CENTER">
          <children>
-            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#close" text="Close" />
+            <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#close" prefWidth="100.0" text="Close" />
+            <Button maxHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#remove" prefWidth="100.0" text="Remove" />
          </children>
       </HBox>
    </bottom>

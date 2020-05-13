@@ -4,6 +4,7 @@ import controllers.LoginController;
 import controllers.component.ComponentController;
 import controllers.guiManager.GUI;
 import controllers.views.ComponentView;
+import fileManager.FileOpenerBin;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Menu;
@@ -25,7 +26,8 @@ public class SuperUserController {
 
     @FXML
     void open(ActionEvent event) {
-        App.componentList.setList(App.fileManager.open());
+        FileOpenerBin opener = new FileOpenerBin();
+        Thread thread = new Thread(opener);
     }
 
     @FXML

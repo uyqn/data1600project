@@ -1982,6 +1982,11 @@ public class ComponentView implements Initializable {
         ((Stage) ((Node) event.getSource()).getScene().getWindow()).close();
     }
 
+    @FXML
+    void remove(ActionEvent event){
+        App.componentList.getList().remove(tableView.getSelectionModel().getSelectedItem());
+    }
+
     public void setSuperHome(GridPane superHome) {
         this.superHome = superHome;
     }
