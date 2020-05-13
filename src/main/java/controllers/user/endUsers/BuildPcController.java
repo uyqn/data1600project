@@ -69,8 +69,6 @@ public class BuildPcController implements Initializable {
         //Enabler next-button idet man velger en komponent
         addBtn.disableProperty().bind(Bindings.isEmpty(tableView.getSelectionModel().getSelectedItems()));
 
-
-
         filterBox.getItems().setAll("Manufacturer", "Model", "Price (NOK) ≤", "Socket", "Core Count",
                 "Core Clock", "Boost Clock", "Power Consumption");
         filterBox.setValue(null);
@@ -163,7 +161,6 @@ public class BuildPcController implements Initializable {
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         window.setScene(scene);
         window.show();
-
     }
 
     @FXML

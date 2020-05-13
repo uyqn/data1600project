@@ -26,6 +26,7 @@ public class App extends Application {
     public static ListableList<Component> listableList = new ListableList<>();
     public static User user;
 
+
     @Override
     public void start(Stage stage) throws IOException, ClassNotFoundException {
         initiateCoreUsers();

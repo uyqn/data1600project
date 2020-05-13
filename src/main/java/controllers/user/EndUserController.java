@@ -37,15 +37,14 @@ public class EndUserController{
 
     @FXML
     void buildPc(ActionEvent event) throws IOException {
-            Parent view = FXMLLoader.load(getClass().getResource("/main/user/endUsers/buildPc.fxml"));
+        Parent view = FXMLLoader.load(getClass().getResource("/main/user/endUsers/buildPc.fxml"));
 
-            Scene scene = new Scene(view);
+        Scene scene = new Scene(view);
 
-            Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-            window.setScene(scene);
-            window.show();
-
-        }
+        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        window.setScene(scene);
+        window.show();
+    }
 
 
     @FXML
@@ -57,7 +56,6 @@ public class EndUserController{
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         window.setScene(scene);
         window.show();
-
     }
 
     @FXML

@@ -2,7 +2,6 @@ package controllers.user.endUsers;
 
 import components.Component;
 import components.Monitor;
-import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -140,7 +139,5 @@ public class ChooseMonitorController implements Initializable {
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         window.setScene(scene);
         window.show();
-
-
     }
 }
