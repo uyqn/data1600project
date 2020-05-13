@@ -4,6 +4,7 @@ import controllers.LoginController;
 import controllers.component.ComponentController;
 import controllers.guiManager.GUI;
 import controllers.views.ComponentView;
+import fileManager.FileOpenerBin;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Menu;
@@ -25,7 +26,8 @@ public class SuperUserController {
 
     @FXML
     void open(ActionEvent event) {
-        App.fileManager.open();
+        FileOpenerBin opener = new FileOpenerBin();
+        Thread thread = new Thread(opener);
     }
 
     @FXML
@@ -55,6 +57,7 @@ public class SuperUserController {
     void viewComponents(ActionEvent event) throws IOException {
         GUI<ComponentView> addViewComponentWindow = new GUI<>(event, "views/components");
         addViewComponentWindow.newWindow();
+        addViewComponentWindow.getController().setSuperHome(superHome);
         addViewComponentWindow.getStage().setOnCloseRequest(windowEvent -> {
             windowEvent.consume();
             addViewComponentWindow.getStage().close();

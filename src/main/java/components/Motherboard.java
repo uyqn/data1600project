@@ -170,7 +170,6 @@ public class Motherboard extends Component implements Serializable, Compatible {
         }
 
         this.ramSlots.set(ramSlots);
-        this.memories.set(new Memory[ramSlots]);
     }
 
     public String getMemoryTech(){ return memoryTech.getValue();}
@@ -410,7 +409,7 @@ public class Motherboard extends Component implements Serializable, Compatible {
         return ProcessorSpaces.getValue();
     }
 
-    private void setProcessorSpaces(int processorSpaces) {
+    public void setProcessorSpaces(int processorSpaces) {
 
         if(processorSpaces<1 || processorSpaces>6){
             throw new IllegalArgumentException("No motherboard can have less than 1 or more than 6 sockets");

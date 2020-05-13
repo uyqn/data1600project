@@ -167,6 +167,7 @@ public class Monitor extends Component implements Serializable {
     @Override
     public String toCSV() {
         return Formatter.toCSV(
+                getComponentType(),
                 getManufacturer(),
                 getModel(),
                 getSize(),

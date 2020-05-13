@@ -25,7 +25,7 @@ public class TestEnvironment extends Application {
 
         testList.add(cooler);
         testList.add(cpu);
-
+        testList.remove(null);
         testList.getList().setAll(cooler);
 
         System.out.println(testList);
