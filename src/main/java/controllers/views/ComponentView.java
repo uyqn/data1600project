@@ -9,12 +9,15 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 import javafx.util.converter.BooleanStringConverter;
 import javafx.util.converter.DoubleStringConverter;
 import javafx.util.converter.IntegerStringConverter;
@@ -27,6 +30,9 @@ import java.util.stream.Collectors;
 public class ComponentView implements Initializable {
 
     private ObservableList<Component> filteredList;
+
+    @FXML
+    private GridPane superHome;
 
     @FXML
     private TableView<Component> tableView;
@@ -148,7 +154,6 @@ public class ComponentView implements Initializable {
     }
 
     @FXML
-
     void viewCpu(ActionEvent event) {
         filterBox.getItems().setAll(
                 "Manufacturer",
@@ -164,8 +169,6 @@ public class ComponentView implements Initializable {
         filteredList = App.componentList.getList().stream().filter(component ->
                 component.getComponentType().equals(CPU.COMPONENT_TYPE)
         ).collect(Collectors.toCollection(FXCollections::observableArrayList));
-
-
 
         TableColumn<Component, String> manuCol = new TableColumn<>("Manufacturer");
         manuCol.setCellValueFactory(new PropertyValueFactory<>("manufacturer"));
@@ -1971,6 +1974,16 @@ public class ComponentView implements Initializable {
         } catch (NullPointerException ignored){}
 
         tableView.setItems(filteredList);
+    }
+
+    @FXML
+    void close(ActionEvent event){
+        superHome.lookup("#viewComponents").setDisable(false);
+        ((Stage) ((Node) event.getSource()).getScene().getWindow()).close();
+    }
+
+    public void setSuperHome(GridPane superHome) {
+        this.superHome = superHome;
     }
 
     private void inputError(String inputField, String error) {

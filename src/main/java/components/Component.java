@@ -9,7 +9,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
-public abstract class Component implements Serializable {
+public abstract class Component implements Serializable, Listable {
     private transient SimpleStringProperty manufacturer = new SimpleStringProperty();
     private transient SimpleStringProperty model = new SimpleStringProperty();
     private transient SimpleDoubleProperty price = new SimpleDoubleProperty();

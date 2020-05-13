@@ -1,6 +1,7 @@
 package listManager;
 
 import components.Component;
+import components.Listable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableView;
@@ -12,7 +13,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ComponentList<S extends Component>
+public class ComponentList<S extends Listable>
         extends attachTableView<S> implements Serializable, ItemList<S> {
     private transient ObservableList<S> list = FXCollections.observableArrayList();
 
@@ -42,7 +43,7 @@ public class ComponentList<S extends Component>
     @Override
     public String toCSV(){
         StringBuilder csv = new StringBuilder();
-        for(Component item : list){
+        for(S item : list){
             csv.append(item.toCSV()).append("\n");
         }
         return csv.toString();

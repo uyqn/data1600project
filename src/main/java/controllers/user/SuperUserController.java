@@ -25,7 +25,7 @@ public class SuperUserController {
 
     @FXML
     void open(ActionEvent event) {
-        App.fileManager.open();
+        App.componentList.setList(App.fileManager.open());
     }
 
     @FXML
@@ -55,6 +55,7 @@ public class SuperUserController {
     void viewComponents(ActionEvent event) throws IOException {
         GUI<ComponentView> addViewComponentWindow = new GUI<>(event, "views/components");
         addViewComponentWindow.newWindow();
+        addViewComponentWindow.getController().setSuperHome(superHome);
         addViewComponentWindow.getStage().setOnCloseRequest(windowEvent -> {
             windowEvent.consume();
             addViewComponentWindow.getStage().close();

@@ -10,6 +10,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import listManager.ComponentList;
+import users.EndUser;
+import users.SuperUser;
 import users.User;
 import users.UserList;
 
@@ -52,13 +54,15 @@ public class App extends Application {
     }
 
     private void initiateCoreUsers(){
-        User admin = new User("admin", "super",1);
-        User uyqn = new User("uyqn", "s341864", 1);
-        User helene = new User("hele", "s341873", 1);
-        /*User end=new User("end", "passord", 2);*/
+        User admin = new SuperUser("admin", "super");
+        User uyqn = new SuperUser("uyqn", "s341864");
+        User helene = new SuperUser("hele", "s341873");
+        User end = new EndUser("bruker", "passord");
+
         UserList.add(uyqn);
         UserList.add(admin);
         UserList.add(helene);
-        /*UserList.add(end);*/
+
+        UserList.add(end);
     }
 }

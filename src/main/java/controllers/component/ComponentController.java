@@ -366,7 +366,7 @@ public class ComponentController implements Initializable {
     void addMonitor(ActionEvent event) {
 
         try {
-            if (validate(addMonitorGui, "manufacturer", "model", "size", "refreshRate", "price")) {
+            if (validate(addMonitorGui, "manufacturer", "model", "displaySize", "refreshRate", "price")) {
 
                 String manufacturer = getString(addMonitorGui, "manufacturer");
                 String model = getString(addMonitorGui, "model");
@@ -375,8 +375,6 @@ public class ComponentController implements Initializable {
                 double price = getDouble(addMonitorGui, "price");
 
                 Monitor monitor = new Monitor(manufacturer, model, size, refreshRate, price);
-
-                Alert info = new Alert(Alert.AlertType.INFORMATION);
 
                 DialogBox.info("Monitor successfully added",
                         "The following monitor was added:",
@@ -390,7 +388,6 @@ public class ComponentController implements Initializable {
                         "displaySize",
                         "refreshRate",
                         "price");
-
             }
         } catch (IllegalArgumentException e){
             DialogBox.error(e.getClass().toString(), null,
