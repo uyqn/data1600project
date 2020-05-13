@@ -2,6 +2,7 @@ package controllers.user.endUsers;
 
 import components.CPU;
 import components.Component;
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -65,6 +66,11 @@ public class BuildPcController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
+        //Enabler next-button idet man velger en komponent
+        addBtn.disableProperty().bind(Bindings.isEmpty(tableView.getSelectionModel().getSelectedItems()));
+
+
+
         filterBox.getItems().setAll("Manufacturer", "Model", "Price (NOK) ≤", "Socket", "Core Count",
                 "Core Clock", "Boost Clock", "Power Consumption");
         filterBox.setValue(null);
@@ -102,11 +108,38 @@ public class BuildPcController implements Initializable {
                     case 1:
                         return component.getModel().toLowerCase().contains(search);
                     case 2:
+                        return component.getSocket().toLowerCase().contains(search);
+                    case 3:
                         try {
-                            return component.getPrice() <= Double.parseDouble(search);
+                            return component.getCoreCount() <= Integer.parseInt(search);
                         } catch (NumberFormatException e){
                             return false;
                         }
+                    case 4:
+                        try {
+                            return component.getCoreClock() <= Double.parseDouble(search);
+                        } catch (NumberFormatException e) {
+                            return false;
+                        }
+                    case 5:
+                        try {
+                            return component.getBoostClock() <= Double.parseDouble(search);
+                        } catch (NumberFormatException e) {
+                            return false;
+                        }
+                    case 6:
+                        try {
+                            return component.getPowerConsumption() <= Double.parseDouble(search);
+                        } catch (NumberFormatException e) {
+                            return false;
+                        }
+                    case 7:
+                        try {
+                            return component.getPrice() <= Double.parseDouble(search);
+                        } catch (NumberFormatException e) {
+                            return false;
+                        }
+
                     default:
                         return false;
                 }

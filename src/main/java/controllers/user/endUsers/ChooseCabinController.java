@@ -4,6 +4,7 @@ import components.CPU;
 import components.Cabin;
 import components.Component;
 import components.GPU;
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -54,10 +55,17 @@ public class ChooseCabinController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-        filterBox.getItems().setAll("Manufacturer", "Model", "Price (NOK) ≤", "Form factor");
+        filterBox.getItems().setAll(
+                "Manufacturer",
+                "Model",
+                "Form factor",
+                "Price (NOK) ≤");
         filterBox.setValue(null);
-        //Setter opp kolonner
+        filterText.setText(null);
 
+        nextBtn.disableProperty().bind(Bindings.isEmpty(tableView.getSelectionModel().getSelectedItems()));
+
+        //Setter opp kolonner
         ManufacturerColumn.setCellValueFactory(new PropertyValueFactory<Cabin, String>("manufacturer"));
         ModelColumn.setCellValueFactory(new PropertyValueFactory<Cabin, String>("model"));
         PriceColumn.setCellValueFactory(new PropertyValueFactory<Cabin, Double>("price"));
@@ -73,19 +81,20 @@ public class ChooseCabinController implements Initializable {
         int filterIndex = filterBox.getSelectionModel().getSelectedIndex();
 
         tableView.setItems(cabinList.stream().filter(component -> {
-            if(search.isBlank() || search.isEmpty() || filterBox.getSelectionModel().getSelectedItem() == null){
+            if (search.isBlank() || search.isEmpty() || filterBox.getSelectionModel().getSelectedItem() == null) {
                 return true;
-            }
-            else {
-                switch (filterIndex){
+            } else {
+                switch (filterIndex) {
                     case 0:
                         return component.getManufacturer().toLowerCase().contains(search);
                     case 1:
                         return component.getModel().toLowerCase().contains(search);
                     case 2:
+                        return component.getFormFactor().toLowerCase().contains(search);
+                    case 3:
                         try {
                             return component.getPrice() <= Double.parseDouble(search);
-                        } catch (NumberFormatException e){
+                        } catch (NumberFormatException e) {
                             return false;
                         }
                     default:
