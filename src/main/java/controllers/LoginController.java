@@ -8,9 +8,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import listManager.UserList;
+import users.EndUser;
 import users.SuperUser;
 import users.User;
-import users.UserList;
 
 import java.io.IOException;
 
@@ -24,11 +25,11 @@ public class LoginController {
         if (user != null) {
             if(user.getClass() == SuperUser.class){
                 GUI<SuperUserController> toSuper = new GUI<>(event, "user/superUser");
-                toSuper.getController().setUser(user);
+                toSuper.getController().setUser((SuperUser) user);
                 toSuper.switchScene();
             } else {
                 GUI<EndUserController> toEnd = new GUI<>(event, "user/endUser");
-                toEnd.getController().setUser(user);
+                toEnd.getController().setUser((EndUser) user);
                 toEnd.switchScene();
             }
         } else {

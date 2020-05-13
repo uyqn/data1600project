@@ -59,7 +59,7 @@ public class BuildPcController implements Initializable {
     @FXML
     private TextField filterText;
 
-    ObservableList<Component> cpuList = App.componentList.getList().stream().filter(component ->
+    ObservableList<Component> cpuList = App.listableList.getList().stream().filter(component ->
             component.getComponentType().equals(CPU.COMPONENT_TYPE)
     ).collect(Collectors.toCollection(FXCollections::observableArrayList));
 

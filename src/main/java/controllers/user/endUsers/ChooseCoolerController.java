@@ -1,9 +1,7 @@
 package controllers.user.endUsers;
 
-import components.Cabin;
 import components.Component;
 import components.Cooler;
-import components.Storage.SSD;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -60,7 +58,7 @@ public class ChooseCoolerController implements Initializable {
     @FXML
     private TextField filterText;
 
-    ObservableList<Component> coolerList = App.componentList.getList().stream().filter(component ->
+    ObservableList<Component> coolerList = App.listableList.getList().stream().filter(component ->
             component.getComponentType().equals(Cooler.COMPONENT_TYPE)
     ).collect(Collectors.toCollection(FXCollections::observableArrayList));
 
@@ -98,7 +96,7 @@ public class ChooseCoolerController implements Initializable {
 
 
         tableView.setItems(
-                App.componentList.getList().stream().filter(component ->
+                App.listableList.getList().stream().filter(component ->
                         component.getComponentType().equals(Cooler.COMPONENT_TYPE)
                 ).collect(Collectors.toCollection(FXCollections::observableArrayList))
         );

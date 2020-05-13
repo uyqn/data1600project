@@ -9,11 +9,11 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import listManager.ComponentList;
+import listManager.ListableList;
+import listManager.UserList;
 import users.EndUser;
 import users.SuperUser;
 import users.User;
-import users.UserList;
 
 import java.io.IOException;
 import java.nio.file.Paths;
@@ -23,7 +23,8 @@ import java.nio.file.Paths;
  */
 public class App extends Application {
     public static FileManager fileManager = new FileManager();
-    public static ComponentList<Component> componentList = new ComponentList<>();
+    public static ListableList<Component> listableList = new ListableList<>();
+    public static User user;
 
     @Override
     public void start(Stage stage) throws IOException, ClassNotFoundException {
@@ -34,12 +35,12 @@ public class App extends Application {
 
         FileOpenerBin tempOpener = new FileOpenerBin();
 
-        componentList.setList(tempOpener.open(Paths.get("temp.bin")));
+        listableList.setList(tempOpener.open(Paths.get("temp.bin")));
 
         stage.setOnCloseRequest(windowEvent -> {
             FileSaverBin<Component> tempSaver = new FileSaverBin<>();
             try {
-                tempSaver.save(Paths.get("temp.bin"), componentList);
+                tempSaver.save(Paths.get("temp.bin"), listableList);
             } catch (IOException e) {
                 e.printStackTrace();
             }

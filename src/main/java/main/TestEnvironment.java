@@ -6,7 +6,7 @@ import components.Cooler;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
-import listManager.ComponentList;
+import listManager.ListableList;
 
 public class TestEnvironment extends Application {
     public static void main(String[] args){
@@ -17,7 +17,7 @@ public class TestEnvironment extends Application {
     public void start(Stage primaryStage) throws Exception {
         //All testing av koder og shit går her:
 
-        ComponentList<Component> testList = new ComponentList<>();
+        ListableList<Component> testList = new ListableList<>();
 
         Component cpu = new CPU("AMD","Ryzen 7 3800X","AM4",8,"3.9/4.5",105.0,4219.0);
         Component cooler = new Cooler("Cooler Master","MasterFan SF360R ARGB","36.0 x 12.0 x 2.5","650.0 - 1800.0",

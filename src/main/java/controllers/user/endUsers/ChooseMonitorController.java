@@ -1,6 +1,5 @@
 package controllers.user.endUsers;
 
-import components.Cabin;
 import components.Component;
 import components.Monitor;
 import javafx.beans.binding.Bindings;
@@ -48,7 +47,7 @@ public class ChooseMonitorController implements Initializable {
     @FXML
     private TextField filterText;
 
-    ObservableList<Component> monitorList = App.componentList.getList().stream().filter(component ->
+    ObservableList<Component> monitorList = App.listableList.getList().stream().filter(component ->
             component.getComponentType().equals(Monitor.COMPONENT_TYPE)
     ).collect(Collectors.toCollection(FXCollections::observableArrayList));
 
@@ -74,7 +73,7 @@ public class ChooseMonitorController implements Initializable {
 
 
         tableView.setItems(
-                App.componentList.getList().stream().filter(component ->
+                App.listableList.getList().stream().filter(component ->
                         component.getComponentType().equals(Monitor.COMPONENT_TYPE)
                 ).collect(Collectors.toCollection(FXCollections::observableArrayList))
         );

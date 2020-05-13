@@ -42,7 +42,6 @@ public class GUI<T> {
     public Stage getStage(){
         return stage;
     }
-
     public boolean isShowing(){
         return stage.isShowing();
     }

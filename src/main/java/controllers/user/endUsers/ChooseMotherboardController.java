@@ -1,8 +1,6 @@
 package controllers.user.endUsers;
 
-import components.CPU;
 import components.Component;
-import components.Memory;
 import components.Motherboard;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
@@ -66,7 +64,7 @@ public class ChooseMotherboardController implements Initializable {
     @FXML
     private TextField filterText;
 
-    ObservableList<Component> mbList = App.componentList.getList().stream().filter(component ->
+    ObservableList<Component> mbList = App.listableList.getList().stream().filter(component ->
             component.getComponentType().equals(Motherboard.COMPONENT_TYPE)
     ).collect(Collectors.toCollection(FXCollections::observableArrayList));
 

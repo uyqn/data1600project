@@ -128,9 +128,6 @@ public class FileManager {
             case ".csv":
                 opener = new FileOpenerCSV();
                 break;
-            case ".bin":
-                opener = new FileOpenerBin();
-                break;
             default:
                 Alert error = new Alert(Alert.AlertType.ERROR);
                 error.setTitle("Open error");

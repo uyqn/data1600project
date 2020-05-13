@@ -13,7 +13,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ComponentList<S extends Listable>
+public class ListableList<S extends Listable>
         extends attachTableView<S> implements Serializable, ItemList<S> {
     private transient ObservableList<S> list = FXCollections.observableArrayList();
 

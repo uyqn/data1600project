@@ -52,7 +52,7 @@ public class ChooseKeyboardController implements Initializable {
 
 
         tableView.setItems(
-                App.componentList.getList().stream().filter(component ->
+                App.listableList.getList().stream().filter(component ->
                         component.getComponentType().equals(Keyboard.COMPONENT_TYPE)
                 ).collect(Collectors.toCollection(FXCollections::observableArrayList))
         );
