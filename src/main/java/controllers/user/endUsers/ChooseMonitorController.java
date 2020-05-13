@@ -1,9 +1,12 @@
 package controllers.user.endUsers;
 
+import components.Cabin;
 import components.Component;
 import components.Keyboard;
 import components.Monitor;
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,10 +14,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import main.App;
 
@@ -40,9 +42,33 @@ public class ChooseMonitorController implements Initializable {
     @FXML
     private TableColumn<Monitor, Integer> RefreshRateColumn;
 
+    @FXML
+    private TableColumn<Cabin, String> FormFactorColumn;
+
+    @FXML
+    private ChoiceBox<String> filterBox;
+
+    @FXML
+    private TextField filterText;
+
+    ObservableList<Component> monitorList = App.componentList.getList().stream().filter(component ->
+            component.getComponentType().equals(Monitor.COMPONENT_TYPE)
+    ).collect(Collectors.toCollection(FXCollections::observableArrayList));
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
+        filterBox.getItems().setAll(
+                "Manufacturer",
+                "Model",
+                "Buttons ≤",
+                "Display size (inches) ≤",
+                "Refresh rate (Hz)",
+                "Price (NOK) ≤");
+        filterBox.setValue(null);
+        filterText.setText(null);
+
+        nextBtn.disableProperty().bind(Bindings.isEmpty(tableView.getSelectionModel().getSelectedItems()));
 
         //Setter opp kolonner
 
@@ -58,6 +84,45 @@ public class ChooseMonitorController implements Initializable {
                 ).collect(Collectors.toCollection(FXCollections::observableArrayList))
         );
 
+    }
+
+    @FXML
+    void filterEvt(KeyEvent event) {
+        String search = filterText.getText().toLowerCase();
+        int filterIndex = filterBox.getSelectionModel().getSelectedIndex();
+
+        tableView.setItems(monitorList.stream().filter(component -> {
+            if (search.isBlank() || search.isEmpty() || filterBox.getSelectionModel().getSelectedItem() == null) {
+                return true;
+            } else {
+                switch (filterIndex) {
+                    case 0:
+                        return component.getManufacturer().toLowerCase().contains(search);
+                    case 1:
+                        return component.getModel().toLowerCase().contains(search);
+                    case 2:
+                        try {
+                            return component.getSize() <= Double.parseDouble(search);
+                        } catch (NumberFormatException e) {
+                            return false;
+                        }
+                    case 3:
+                        try {
+                            return component.getRefreshRate() <= Integer.parseInt(search);
+                        } catch (NumberFormatException e) {
+                            return false;
+                        }
+                    case 4:
+                        try {
+                            return component.getPrice() <= Double.parseDouble(search);
+                        } catch (NumberFormatException e) {
+                            return false;
+                        }
+                    default:
+                        return false;
+                }
+            }
+        }).collect(Collectors.toCollection(FXCollections::observableArrayList)));
     }
 
     @FXML

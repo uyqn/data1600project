@@ -1,9 +1,12 @@
 package controllers.user.endUsers;
 
 import components.Component;
+import components.Cooler;
 import components.PSU;
 import components.Storage.HDD;
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,10 +14,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import main.App;
 
@@ -40,11 +42,28 @@ public class ChoosePowerController implements Initializable {
     @FXML
     private TableColumn<PSU, Integer> PowerColumn;
 
+    @FXML
+    private ChoiceBox<String> filterBox;
 
+    @FXML
+    private TextField filterText;
+
+    ObservableList<Component> powerList = App.componentList.getList().stream().filter(component ->
+            component.getComponentType().equals(PSU.COMPONENT_TYPE)
+    ).collect(Collectors.toCollection(FXCollections::observableArrayList));
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        filterBox.getItems().setAll(
+                "Manufacturer",
+                "Model",
+                "Power capacity (W) ≤",
+                "Price (NOK) ≤");
+        filterBox.setValue(null);
+        filterText.setText(null);
 
+        //Enabler next-button idet man velger en komponent
+        nextBtn.disableProperty().bind(Bindings.isEmpty(tableView.getSelectionModel().getSelectedItems()));
         //Setter opp kolonner
 
         ManufacturerColumn.setCellValueFactory(new PropertyValueFactory<PSU, String>("manufacturer"));
@@ -59,6 +78,39 @@ public class ChoosePowerController implements Initializable {
                 ).collect(Collectors.toCollection(FXCollections::observableArrayList))
         );
 
+    }
+
+    @FXML
+    void filterEvt(KeyEvent event) {
+        String search = filterText.getText().toLowerCase();
+        int filterIndex = filterBox.getSelectionModel().getSelectedIndex();
+
+        tableView.setItems(powerList.stream().filter(component -> {
+            if (search.isBlank() || search.isEmpty() || filterBox.getSelectionModel().getSelectedItem() == null) {
+                return true;
+            } else {
+                switch (filterIndex) {
+                    case 0:
+                        return component.getManufacturer().toLowerCase().contains(search);
+                    case 1:
+                        return component.getModel().toLowerCase().contains(search);
+                    case 2:
+                        try {
+                            return component.getPowerCapacity() <= Integer.parseInt(search);
+                        } catch (NumberFormatException e) {
+                            return false;
+                        }
+                    case 3:
+                        try {
+                            return component.getPrice() <= Double.parseDouble(search);
+                        } catch (NumberFormatException e) {
+                            return false;
+                        }
+                    default:
+                        return false;
+                }
+            }
+        }).collect(Collectors.toCollection(FXCollections::observableArrayList)));
     }
 
     @FXML
