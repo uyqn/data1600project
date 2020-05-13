@@ -1,9 +1,12 @@
 package controllers.user.endUsers;
 
 import components.Component;
+import components.GPU;
 import components.Memory;
 import components.Motherboard;
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,10 +14,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import main.App;
 
@@ -47,8 +49,30 @@ public class ChooseMemoryController implements Initializable {
     private TableColumn<Memory, Integer> SpeedColumn;
 
 
+    @FXML
+    private ChoiceBox<String> filterBox;
+
+    @FXML
+    private TextField filterText;
+
+    ObservableList<Component> memoryList = App.componentList.getList().stream().filter(component ->
+            component.getComponentType().equals(Memory.COMPONENT_TYPE)
+    ).collect(Collectors.toCollection(FXCollections::observableArrayList));
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        filterBox.getItems().setAll(
+                "Manufacturer",
+                "Model",
+                "RAM (GB) ≤",
+                "Speed (MHz) ≤",
+                "Technology",
+                "Price (NOK) ≤");
+        filterBox.setValue(null);
+        filterText.setText(null);
+
+        //Enabler next-button idet man velger en komponent
+        nextBtn.disableProperty().bind(Bindings.isEmpty(tableView.getSelectionModel().getSelectedItems()));
 
         //Setter opp kolonner
 
@@ -59,12 +83,49 @@ public class ChooseMemoryController implements Initializable {
         MemoryColumn.setCellValueFactory(new PropertyValueFactory<Memory, String>("memoryTech"));
         SpeedColumn.setCellValueFactory(new PropertyValueFactory<Memory, Integer>("speed"));
 
-        tableView.setItems(
-                App.componentList.getList().stream().filter(component ->
-                        component.getComponentType().equals(Memory.COMPONENT_TYPE)
-                ).collect(Collectors.toCollection(FXCollections::observableArrayList))
-        );
+        tableView.setItems(memoryList);
+    }
 
+    @FXML
+    void filterEvt(KeyEvent event) {
+        String search = filterText.getText().toLowerCase();
+        int filterIndex = filterBox.getSelectionModel().getSelectedIndex();
+
+        tableView.setItems(memoryList.stream().filter(component -> {
+            if (search.isBlank() || search.isEmpty() || filterBox.getSelectionModel().getSelectedItem() == null) {
+                return true;
+            } else {
+                switch (filterIndex) {
+                    case 0:
+                        return component.getManufacturer().toLowerCase().contains(search);
+                    case 1:
+                        return component.getModel().toLowerCase().contains(search);
+                    case 2:
+                        try {
+                            return component.getRam() <= Integer.parseInt(search);
+                        } catch (NumberFormatException e) {
+                            return false;
+                        }
+                    case 3:
+                        try {
+                            return component.getSpeed() <= Integer.parseInt(search);
+                        } catch (NumberFormatException e) {
+                            return false;
+                        }
+                    case 4:
+                        return component.getMemoryTech().toLowerCase().contains(search);
+                    case 5:
+                        try {
+                            return component.getPrice() <= Double.parseDouble(search);
+                        } catch (NumberFormatException e) {
+                            return false;
+                        }
+
+                    default:
+                        return false;
+                }
+            }
+        }).collect(Collectors.toCollection(FXCollections::observableArrayList)));
     }
 
     @FXML

@@ -2,8 +2,11 @@ package controllers.user.endUsers;
 
 import components.Component;
 import components.Memory;
+import components.Motherboard;
 import components.Storage.HDD;
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,10 +14,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import main.App;
 
@@ -48,8 +50,30 @@ public class ChooseHddController implements Initializable {
 
 
 
+    @FXML
+    private ChoiceBox<String> filterBox;
+
+    @FXML
+    private TextField filterText;
+
+    ObservableList<Component> hddList = App.componentList.getList().stream().filter(component ->
+            component.getComponentType().equals(HDD.COMPONENT_TYPE)
+    ).collect(Collectors.toCollection(FXCollections::observableArrayList));
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        filterBox.getItems().setAll(
+                "Manufacturer",
+                "Model",
+                "Capacity (GB) ≤",
+                "RPM ≤",
+                "Price (NOK) ≤");
+        filterBox.setValue(null);
+        filterText.setText(null);
+
+        //Enabler next-button idet man velger en komponent
+        nextBtn.disableProperty().bind(Bindings.isEmpty(tableView.getSelectionModel().getSelectedItems()));
+
 
         //Setter opp kolonner
 
@@ -68,6 +92,46 @@ public class ChooseHddController implements Initializable {
         );
 
     }
+
+    @FXML
+    void filterEvt(KeyEvent event) {
+        String search = filterText.getText().toLowerCase();
+        int filterIndex = filterBox.getSelectionModel().getSelectedIndex();
+
+        tableView.setItems(hddList.stream().filter(component -> {
+            if (search.isBlank() || search.isEmpty() || filterBox.getSelectionModel().getSelectedItem() == null) {
+                return true;
+            } else {
+                switch (filterIndex) {
+                    case 0:
+                        return component.getManufacturer().toLowerCase().contains(search);
+                    case 1:
+                        return component.getModel().toLowerCase().contains(search);
+                    case 2:
+                        try {
+                            return component.getCapacity() <= Integer.parseInt(search);
+                        } catch (NumberFormatException e) {
+                            return false;
+                        }
+                    case 3:
+                        try {
+                            return component.getRpm() <= Integer.parseInt(search);
+                        } catch (NumberFormatException e) {
+                            return false;
+                        }
+                    case 4:
+                        try {
+                            return component.getPrice() <= Double.parseDouble(search);
+                        } catch (NumberFormatException e) {
+                            return false;
+                        }
+                    default:
+                        return false;
+                }
+            }
+        }).collect(Collectors.toCollection(FXCollections::observableArrayList)));
+    }
+
     @FXML
     private Button backBtn;
 
