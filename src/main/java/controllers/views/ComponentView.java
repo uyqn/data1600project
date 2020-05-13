@@ -505,6 +505,22 @@ public class ComponentView implements Initializable {
 
     @FXML
     void viewMb(ActionEvent event) {
+        filterBox.getItems().setAll(
+                "Manufacturer",
+                "Model",
+                "Socket",
+                "Buss type",
+                "Ram slots ≤",
+                "Technology",
+                "Max memory (GB) ≤",
+                "Form factor",
+                "Price (NOK) ≤");
+        filterBox.setValue(null);
+        searchText.setText(null);
+        filteredList = App.componentList.getList().stream().filter(component ->
+                component.getComponentType().equals(GPU.COMPONENT_TYPE)
+        ).collect(Collectors.toCollection(FXCollections::observableArrayList));
+
         TableColumn<Component, String> manuCol = new TableColumn<>("Manufacturer");
         manuCol.setCellValueFactory(new PropertyValueFactory<>("manufacturer"));
         manuCol.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -622,12 +638,6 @@ public class ComponentView implements Initializable {
             tableView.refresh();
         });
 
-        tableView.setItems(
-                App.componentList.getList().stream().filter(component ->
-                        component.getComponentType().equals(Motherboard.COMPONENT_TYPE)
-                ).collect(Collectors.toCollection(FXCollections::observableArrayList))
-        );
-
         tableView.getColumns().setAll(
                 manuCol,
                 modelCol,
@@ -639,6 +649,56 @@ public class ComponentView implements Initializable {
                 formFactorCol,
                 priceCol
         );
+
+        searchText.setOnKeyReleased(keyEvent -> {
+            String search = searchText.getText().toLowerCase();
+            int filterIndex = filterBox.getSelectionModel().getSelectedIndex();
+
+            tableView.setItems(filteredList.stream().filter(component -> {
+                if(search.isBlank() || search.isEmpty() || filterBox.getSelectionModel().getSelectedItem() == null){
+                    return true;
+                }
+                else {
+                    switch (filterIndex){
+                        case 0:
+                            return component.getManufacturer().toLowerCase().contains(search);
+                        case 1:
+                            return component.getModel().toLowerCase().contains(search);
+                        case 2:
+                            return component.getSocket().toLowerCase().contains(search);
+                        case 3:
+                            return component.getBussType().toLowerCase().contains(search);
+                        case 4:
+                            try {
+                                return component.getRamSlots() <= Integer.parseInt(search);
+                            } catch (NumberFormatException e){
+                                return false;
+                            }
+                        case 5:
+                            return component.getMemoryTech().toLowerCase().contains(search);
+                        case 6:
+                            try {
+                                return component.getMaxRamSize() <= Integer.parseInt(search);
+                            } catch (NumberFormatException e) {
+                                return false;
+                            }
+                        case 7:
+                            return component.getFormFactor().toLowerCase().contains(search);
+                        case 8:
+                            try {
+                                return component.getPrice() <= Double.parseDouble(search);
+                            } catch (NumberFormatException e) {
+                                return false;
+                            }
+
+                        default:
+                            return false;
+                    }
+                }
+            }).collect(Collectors.toCollection(FXCollections::observableArrayList)));
+        });
+
+        tableView.setItems(filteredList);
     }
 
     @FXML
