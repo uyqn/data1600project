@@ -2,7 +2,6 @@ package controllers.user.endUsers;
 
 import components.Cabin;
 import components.Component;
-import components.Keyboard;
 import components.Monitor;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
@@ -42,8 +41,6 @@ public class ChooseMonitorController implements Initializable {
     @FXML
     private TableColumn<Monitor, Integer> RefreshRateColumn;
 
-    @FXML
-    private TableColumn<Cabin, String> FormFactorColumn;
 
     @FXML
     private ChoiceBox<String> filterBox;

@@ -2,8 +2,10 @@ package controllers.user.endUsers;
 
 import components.Component;
 import components.Keyboard;
+import components.Monitor;
 import components.Mouse;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,9 +13,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import main.App;
@@ -50,8 +50,31 @@ public class ChooseMouseController implements Initializable {
     private TableColumn<Mouse, Boolean> WirelessColumn;
 
 
+    @FXML
+    private ChoiceBox<String> filterBox;
+
+    @FXML
+    private TextField filterText;
+
+    ObservableList<Component> mouseList = App.componentList.getList().stream().filter(component ->
+            component.getComponentType().equals(Mouse.COMPONENT_TYPE)
+    ).collect(Collectors.toCollection(FXCollections::observableArrayList));
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
+        filterBox.getItems().setAll(
+                "Manufacturer",
+                "Model",
+                "Buttons ≤",
+                "Polling rate (dpi) ≤",
+                "Ergonomic",
+                "Not ergonomic",
+                "Wireless",
+                "Wired",
+                "Price (NOK) ≤");
+        filterBox.setValue(null);
+        filterText.setText(null);
 
         //Setter opp kolonner
 
