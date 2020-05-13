@@ -985,7 +985,7 @@ public class ComponentView implements Initializable {
         filterBox.setValue(null);
         searchText.setText(null);
         filteredList = App.componentList.getList().stream().filter(component ->
-                component.getComponentType().equals(HDD.COMPONENT_TYPE)
+                component.getComponentType().equals(SSD.COMPONENT_TYPE)
         ).collect(Collectors.toCollection(FXCollections::observableArrayList));
 
         TableColumn<Component, String> manuCol = new TableColumn<>("Manufacturer");
@@ -1085,6 +1085,24 @@ public class ComponentView implements Initializable {
 
     @FXML
     void viewCooler(ActionEvent event) {
+        filterBox.getItems().setAll(
+                "Manufacturer",
+                "Model",
+                "Width (cm) ≤",
+                "Depth (cm) ≤",
+                "Height (cm) ≤",
+                "Base RPM ≤",
+                "Max RPM ≤",
+                "Base noise (dBA) ≤",
+                "Max noise (dBA) ≤",
+                "Power consumption ≤",
+                "Price (NOK) ≤");
+        filterBox.setValue(null);
+        searchText.setText(null);
+        filteredList = App.componentList.getList().stream().filter(component ->
+                component.getComponentType().equals(SSD.COMPONENT_TYPE)
+        ).collect(Collectors.toCollection(FXCollections::observableArrayList));
+
         TableColumn<Component, String> manuCol = new TableColumn<>("Manufacturer");
         manuCol.setCellValueFactory(new PropertyValueFactory<>("manufacturer"));
         manuCol.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -1176,12 +1194,6 @@ public class ComponentView implements Initializable {
             tableView.refresh();
         });
 
-        tableView.setItems(
-                App.componentList.getList().stream().filter(component ->
-                        component.getComponentType().equals(Cooler.COMPONENT_TYPE)
-                ).collect(Collectors.toCollection(FXCollections::observableArrayList))
-        );
-
         tableView.getColumns().setAll(
                 manuCol,
                 modelCol,
@@ -1191,6 +1203,83 @@ public class ComponentView implements Initializable {
                 powerCol,
                 priceCol
         );
+
+        searchText.setOnKeyReleased(keyEvent -> {
+            String search = searchText.getText().toLowerCase();
+            int filterIndex = filterBox.getSelectionModel().getSelectedIndex();
+
+            tableView.setItems(filteredList.stream().filter(component -> {
+                if(search.isBlank() || search.isEmpty() || filterBox.getSelectionModel().getSelectedItem() == null){
+                    return true;
+                }
+                else {
+                    switch (filterIndex){
+                        case 0:
+                            return component.getManufacturer().toLowerCase().contains(search);
+                        case 1:
+                            return component.getModel().toLowerCase().contains(search);
+                        case 2:
+                            try {
+                                return component.getWidth() <= Double.parseDouble(search);
+                            } catch (NumberFormatException e){
+                                return false;
+                            }
+                        case 3:
+                            try {
+                                return component.getDepth() <= Double.parseDouble(search);
+                            } catch (NumberFormatException e){
+                                return false;
+                            }
+                        case 4:
+                            try {
+                                return component.getHeight() <= Double.parseDouble(search);
+                            } catch (NumberFormatException e){
+                                return false;
+                            }
+                        case 5:
+                            try {
+                                return component.getCoreRpm() <= Integer.parseInt(search);
+                            } catch (NumberFormatException e){
+                                return false;
+                            }
+                        case 6:
+                            try {
+                                return component.getMaxRpm() <= Integer.parseInt(search);
+                            } catch (NumberFormatException e){
+                                return false;
+                            }
+                        case 7:
+                            try {
+                                return component.getCoreNoise() <= Double.parseDouble(search);
+                            } catch (NumberFormatException e){
+                                return false;
+                            }
+                        case 8:
+                            try {
+                                return component.getMaxNoise() <= Double.parseDouble(search);
+                            } catch (NumberFormatException e){
+                                return false;
+                            }
+                        case 9:
+                            try {
+                                return component.getPowerConsumption() <= Double.parseDouble(search);
+                            } catch (NumberFormatException e){
+                                return false;
+                            }
+                        case 10:
+                            try {
+                                return component.getPrice() <= Double.parseDouble(search);
+                            } catch (NumberFormatException e) {
+                                return false;
+                            }
+                        default:
+                            return false;
+                    }
+                }
+            }).collect(Collectors.toCollection(FXCollections::observableArrayList)));
+        });
+
+        tableView.setItems(filteredList);
     }
 
     @FXML
