@@ -83,7 +83,6 @@ public class ChooseMonitorController implements Initializable {
                         component.getComponentType().equals(Monitor.COMPONENT_TYPE)
                 ).collect(Collectors.toCollection(FXCollections::observableArrayList))
         );
-
     }
 
     @FXML
