@@ -11,6 +11,7 @@ import fileManager.FileSaverBin;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.layout.BorderPane;
@@ -19,12 +20,15 @@ import main.App;
 import users.SuperUser;
 
 import java.io.IOException;
+import java.net.URL;
 import java.nio.file.Paths;
+import java.util.ResourceBundle;
 
-public class SuperUserController {
+public class SuperUserController implements Initializable {
     FileOpenerBin opener;
     GUI<ComponentController> addComponentWindow;
     GUI<ComponentView> addViewComponentWindow;
+    GUI<SuperUserController> dashboard;
     SuperUser user;
 
     @FXML
@@ -55,7 +59,16 @@ public class SuperUserController {
         }
     }
 
-    private void disableGui(boolean disable){
+    public void disableDashboard(boolean disable){
+        if(disable){
+            messageLabel.setText("Please wait while we load your data...");
+        } else {
+            messageLabel.setText(null);
+        }
+        gui.setDisable(disable);
+    }
+
+    public void disableGui(boolean disable){
         gui.setDisable(disable);
         if(addComponentWindow != null) {
             if (addComponentWindow.isShowing()) {
@@ -99,6 +112,9 @@ public class SuperUserController {
         addComponentWindow = new GUI<>(event, "user/component");
         addComponentWindow.newWindow();
         addComponentWindow.getController().setSuperHome(superHome);
+        if(addViewComponentWindow != null) {
+            addViewComponentWindow.getController().setComponentAdder(addComponentWindow);
+        }
         addComponentWindow.getStage().setOnCloseRequest(windowEvent -> {
             windowEvent.consume();
             addComponentWindow.getStage().close();
@@ -112,6 +128,9 @@ public class SuperUserController {
         addViewComponentWindow = new GUI<>(event, "views/components");
         addViewComponentWindow.newWindow();
         addViewComponentWindow.getController().setSuperHome(superHome);
+        addViewComponentWindow.getController().setUser(user);
+        addViewComponentWindow.getController().setDashboard(dashboard);
+        addViewComponentWindow.getController().setComponentAdder(addComponentWindow);
         addViewComponentWindow.getStage().setOnCloseRequest(windowEvent -> {
             windowEvent.consume();
             addViewComponentWindow.getStage().close();
@@ -147,5 +166,14 @@ public class SuperUserController {
     public void setUser(SuperUser user){
         this.user = user;
         this.userAccount.setText(user.getUsername());
+    }
+
+    public void setDashboard(GUI<SuperUserController> dashboard) {
+        this.dashboard = dashboard;
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
     }
 }

@@ -3,17 +3,19 @@ package controllers.views;
 import components.*;
 import components.Storage.HDD;
 import components.Storage.SSD;
+import controllers.component.ComponentController;
 import controllers.guiManager.DialogBox;
+import controllers.guiManager.GUI;
+import controllers.user.SuperUserController;
+import fileManager.FileOpenerBin;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.BorderPane;
@@ -23,6 +25,7 @@ import javafx.util.converter.BooleanStringConverter;
 import javafx.util.converter.DoubleStringConverter;
 import javafx.util.converter.IntegerStringConverter;
 import main.App;
+import users.SuperUser;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -31,6 +34,14 @@ import java.util.stream.Collectors;
 public class ComponentView implements Initializable {
 
     private ObservableList<Component> filteredList;
+    private SuperUser user;
+    private FileOpenerBin opener;
+
+    private GUI<SuperUserController> dashboard;
+    private GUI<ComponentController> componentAdder;
+
+    @FXML
+    private Menu userAccountMenu;
 
     @FXML
     private GridPane superHome;
@@ -75,6 +86,46 @@ public class ComponentView implements Initializable {
     };
 
     private BooleanStringConverter booleanStringConverter = new BooleanStringConverter();
+
+    @FXML
+    void open(ActionEvent event){
+        user.open();
+        if(user.getPath() != null) {
+            opener = new FileOpenerBin();
+            opener.setPath(user.getPath());
+            opener.setOnSucceeded(this::openSuccess);
+            opener.setOnFailed(this::openFailed);
+            Thread thread = new Thread(opener);
+            thread.setDaemon(true);
+            disableGui(true);
+            thread.start();
+        }
+    }
+
+    private void openFailed(WorkerStateEvent workerStateEvent) {
+        DialogBox.error(
+                "Unable to open file!",
+                "Error caused by: ",
+                workerStateEvent.getSource().getException().getMessage());
+        tableView.refresh();
+        disableGui(false);
+    }
+
+    private void openSuccess(WorkerStateEvent workerStateEvent) {
+        App.listableList.setList(opener.getValue());
+        tableView.refresh();
+        disableGui(false);
+    }
+
+    @FXML
+    void save(ActionEvent event){
+        user.save(App.listableList);
+    }
+
+    @FXML
+    void saveAs(ActionEvent event){
+        user.saveAs(App.listableList);
+    }
 
     @FXML
     void viewAll(ActionEvent event) {
@@ -1996,6 +2047,12 @@ public class ComponentView implements Initializable {
     }
 
     public void disableGui(boolean disable){
+        if(componentAdder != null){
+            if(componentAdder.isShowing()){
+                componentAdder.getController().disableGui(disable);
+            }
+        }
+        dashboard.getController().disableDashboard(disable);
         gui.setDisable(disable);
     }
 
@@ -2086,5 +2143,18 @@ public class ComponentView implements Initializable {
         tableView.setItems(filteredList);
         tableView.setEditable(true);
         tableView.refresh();
+    }
+
+    public void setUser(SuperUser user) {
+        this.user = user;
+        this.userAccountMenu.setText(user.getUsername());
+    }
+
+    public void setDashboard(GUI<SuperUserController> dashboard) {
+        this.dashboard = dashboard;
+    }
+
+    public void setComponentAdder(GUI<ComponentController> addComponentWindow) {
+        this.componentAdder = addComponentWindow;
     }
 }

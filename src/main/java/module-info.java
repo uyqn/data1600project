@@ -11,6 +11,9 @@ module main {
     opens components;
     exports components;
 
+    opens controllers.guiManager to javafx.fxml;
+    exports controllers.guiManager;
+
     opens controllers to javafx.fxml;
     exports controllers;
 

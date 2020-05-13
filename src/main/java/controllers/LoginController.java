@@ -26,6 +26,7 @@ public class LoginController {
             if(user.getClass() == SuperUser.class){
                 GUI<SuperUserController> toSuper = new GUI<>(event, "user/superUser");
                 toSuper.getController().setUser((SuperUser) user);
+                toSuper.getController().setDashboard(toSuper);
                 toSuper.switchScene();
             } else {
                 GUI<EndUserController> toEnd = new GUI<>(event, "user/endUser");

@@ -594,7 +594,7 @@ public class ComponentController implements Initializable {
     }
 
     public void disableGui(boolean disable){
-        this.gui.setDisable(true);
+        this.gui.setDisable(disable);
     }
 
     @Override
