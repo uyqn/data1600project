@@ -3,9 +3,6 @@ package controllers.user.endUsers;
 import components.Component;
 import components.Memory;
 import javafx.beans.binding.Bindings;
-import javafx.beans.property.ListProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -73,7 +70,7 @@ public class ChooseMemoryController implements Initializable {
         filterText.setText(null);
 
         //Enabler next-button idet man velger en komponent
-        nextBtn.setDisable(true);
+        nextBtn.disableProperty().bind(Bindings.isEmpty(tableView.getSelectionModel().getSelectedItems()));
         addBtn.disableProperty().bind(Bindings.isEmpty(tableView.getSelectionModel().getSelectedItems()));
 
         //Setter opp kolonner
@@ -171,8 +168,6 @@ public class ChooseMemoryController implements Initializable {
 
         //Fjerner Selection idet man trykker på add
         tableView.getSelectionModel().clearSelection();
-
-        nextBtn.setDisable(false);
 
     }
 
