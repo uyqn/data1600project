@@ -45,13 +45,12 @@ public class Formatter<T> {
         try{
             String manufacturer = csv[1];
             String model = csv[2];
-            String dimension = csv[3];
-            String rpm = csv[4];
-            String noise = csv[5];
-            double power = Double.parseDouble(csv[6]);
-            double price = Double.parseDouble(csv[7]);
+            String rpm = csv[3];
+            String noise = csv[4];
+            double power = Double.parseDouble(csv[5]);
+            double price = Double.parseDouble(csv[6]);
 
-            return new Cooler(manufacturer, model, dimension, rpm, noise, power, price);
+            return new Cooler(manufacturer, model, rpm, noise, power, price);
         }catch (IllegalArgumentException e){
             throw new IllegalArgumentException(e.getMessage());
         }

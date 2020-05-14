@@ -120,6 +120,12 @@ public class ChooseGpuController implements Initializable {
                         return component.getManufacturer().toLowerCase().contains(search);
                     case 1:
                         return component.getModel().toLowerCase().contains(search);
+                    case 2:
+                        try {
+                            return component.getPrice() <= Double.parseDouble(search);
+                        } catch (NumberFormatException e) {
+                            return false;
+                        }
                     case 3:
                         return component.getBussType().toLowerCase().contains(search);
                     case 4:
@@ -129,19 +135,14 @@ public class ChooseGpuController implements Initializable {
                             return false;
                         }
                     case 5:
-                        return component.getMemoryTech().toLowerCase().contains(search);
+                        return component.getMemoryType().toLowerCase().contains(search);
                     case 6:
                         try {
                             return component.getBoostSpeed() <= Double.parseDouble(search);
                         } catch (NumberFormatException e) {
                             return false;
                         }
-                    case 2:
-                        try {
-                            return component.getPrice() <= Double.parseDouble(search);
-                        } catch (NumberFormatException e) {
-                            return false;
-                        }
+
 
                     default:
                         return false;

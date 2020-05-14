@@ -68,15 +68,13 @@ public class ChooseCoolerController implements Initializable {
         filterBox.getItems().setAll(
                 "Manufacturer",
                 "Model",
-                "Base RPM ≤",
-                "Max RPM ≤",
-                "Base noise (dBA) ≤",
-                "Max noise (dBA) ≤",
-                "Power consumption ≤",
                 "Price (NOK) ≤",
-                "Width (cm) ≤",
-                "Depth (cm) ≤",
-                "Height (cm) ≤");
+                "Base RPM ≤",
+                "Max RPM ≥",
+                "Base noise (dBA) ≤",
+                "Max noise (dBA) ≥",
+                "Power consumption ≤"
+                );
         filterBox.setValue(null);
         filterText.setText(null);
 
@@ -93,7 +91,6 @@ public class ChooseCoolerController implements Initializable {
         PowerColumn.setCellValueFactory(new PropertyValueFactory<>("powerConsumption"));
 
 
-
         tableView.setItems(coolerList);
 
         try {
@@ -104,7 +101,7 @@ public class ChooseCoolerController implements Initializable {
     }
 
     @FXML
-    void filterEvt(KeyEvent event) {
+    void filterEvt(ActionEvent event) {
         String search = filterText.getText().toLowerCase();
         int filterIndex = filterBox.getSelectionModel().getSelectedIndex();
 
@@ -117,23 +114,11 @@ public class ChooseCoolerController implements Initializable {
                         return component.getManufacturer().toLowerCase().contains(search);
                     case 1:
                         return component.getModel().toLowerCase().contains(search);
-                   case 8:
+                   case 2:
                         try {
-                            return component.getWidth() <= Double.parseDouble(search);
+                        return component.getPrice() <= Double.parseDouble(search);
                         } catch (NumberFormatException e) {
-                            return false;
-                        }
-                    case 9:
-                        try {
-                            return component.getDepth() <= Double.parseDouble(search);
-                        } catch (NumberFormatException e) {
-                            return false;
-                        }
-                    case 10:
-                        try {
-                            return component.getHeight() <= Double.parseDouble(search);
-                        } catch (NumberFormatException e) {
-                            return false;
+                        return false;
                         }
                     case 3:
                         try {
@@ -143,7 +128,7 @@ public class ChooseCoolerController implements Initializable {
                         }
                     case 4:
                         try {
-                            return component.getMaxRpm() <= Integer.parseInt(search);
+                            return component.getMaxRpm() >= Integer.parseInt(search);
                         } catch (NumberFormatException e) {
                             return false;
                         }
@@ -155,7 +140,7 @@ public class ChooseCoolerController implements Initializable {
                         }
                     case 6:
                         try {
-                            return component.getMaxNoise() <= Double.parseDouble(search);
+                            return component.getMaxNoise() >= Double.parseDouble(search);
                         } catch (NumberFormatException e) {
                             return false;
                         }
@@ -165,12 +150,7 @@ public class ChooseCoolerController implements Initializable {
                         } catch (NumberFormatException e) {
                             return false;
                         }
-                    case 2:
-                        try {
-                            return component.getPrice() <= Double.parseDouble(search);
-                        } catch (NumberFormatException e) {
-                            return false;
-                        }
+
                     default:
                         return false;
                 }
