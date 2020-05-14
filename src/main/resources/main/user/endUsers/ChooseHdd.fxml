@@ -25,9 +25,10 @@
             <TableColumn fx:id="RpmColumn" prefWidth="172.3333740234375" text="RPM" />
          </columns>
       </TableView>
-      <Button fx:id="backBtn" layoutX="264.0" layoutY="326.0" mnemonicParsing="false" onAction="#GoBack" text="Back" />
-      <Button fx:id="nextBtn" layoutX="322.0" layoutY="326.0" mnemonicParsing="false" onAction="#GoNext" text="Next" />
+      <Button fx:id="backBtn" layoutX="238.0" layoutY="326.0" mnemonicParsing="false" onAction="#GoBack" text="Back" />
+      <Button fx:id="nextBtn" layoutX="344.0" layoutY="326.0" mnemonicParsing="false" onAction="#GoNext" text="Next" />
       <ChoiceBox fx:id="filterBox" layoutX="44.0" layoutY="107.0" prefHeight="25.0" prefWidth="123.0" />
       <TextField fx:id="filterText" layoutX="167.0" layoutY="107.0" onKeyReleased="#filterEvt" prefHeight="25.0" prefWidth="435.0" />
+      <Button fx:id="addBtn" layoutX="294.0" layoutY="326.0" mnemonicParsing="false" onAction="#addEvt" text="Add" />
    </children>
 </AnchorPane>
