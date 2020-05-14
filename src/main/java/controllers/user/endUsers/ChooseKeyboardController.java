@@ -1,6 +1,7 @@
 package controllers.user.endUsers;
 
 import components.Component;
+import components.Computer;
 import components.Keyboard;
 import components.Mouse;
 import javafx.collections.FXCollections;
@@ -41,7 +42,7 @@ public class ChooseKeyboardController implements Initializable {
     private TableColumn<Keyboard, Boolean> TactileColumn;
 
     @FXML
-    private TreeView<Component> treeView;
+    private TreeView<String> treeView;
 
     @FXML
     private Label priceLabel;
@@ -76,11 +77,15 @@ public class ChooseKeyboardController implements Initializable {
         TactileColumn.setCellValueFactory(new PropertyValueFactory<Keyboard, Boolean>("tactile"));
 
 
-        tableView.setItems(
-                App.listableList.getList().stream().filter(component ->
-                        component.getComponentType().equals(Keyboard.COMPONENT_TYPE)
-                ).collect(Collectors.toCollection(FXCollections::observableArrayList))
-        );
+        tableView.setItems(keyboardList);
+
+        try{
+            treeView=App.computer.setTreeView(treeView);
+            treeView.refresh();
+            priceLabel.setText("Total price: "+ App.computer.getPrice()+" NOK");
+        }catch (NullPointerException ignore){}
+
+
 
     }
 
@@ -106,10 +111,13 @@ public class ChooseKeyboardController implements Initializable {
     @FXML
     void GoNext(ActionEvent event) throws IOException {
 
+        if (App.computer==null){
+            App.computer=new Computer();
+        }
+        App.computer.setKeyboard((Keyboard) tableView.getSelectionModel().getSelectedItem());
+
         Parent view = FXMLLoader.load(getClass().getResource("/main/user/endUser.fxml"));
-
         Scene scene = new Scene(view);
-
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(scene);
         window.show();

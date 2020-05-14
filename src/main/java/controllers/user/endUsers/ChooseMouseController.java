@@ -1,6 +1,8 @@
 package controllers.user.endUsers;
 
 import components.Component;
+import components.Computer;
+import components.Monitor;
 import components.Mouse;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -54,6 +56,13 @@ public class ChooseMouseController implements Initializable {
     @FXML
     private TextField filterText;
 
+    @FXML
+    private TreeView<String> treeView = new TreeView<>();
+
+    @FXML
+    private Label priceLabel;
+
+
     ObservableList<Component> mouseList = App.listableList.getList().stream().filter(component ->
             component.getComponentType().equals(Mouse.COMPONENT_TYPE)
     ).collect(Collectors.toCollection(FXCollections::observableArrayList));
@@ -85,12 +94,17 @@ public class ChooseMouseController implements Initializable {
         WirelessColumn.setCellValueFactory(new PropertyValueFactory<Mouse, Boolean>("wireless"));
 
 
-        tableView.setItems(
-                App.listableList.getList().stream().filter(component ->
+        tableView.setItems(mouseList
+                /*App.listableList.getList().stream().filter(component ->
                         component.getComponentType().equals(Mouse.COMPONENT_TYPE)
                 ).collect(Collectors.toCollection(FXCollections::observableArrayList))
-        );
+        */);
 
+        try{
+            treeView=App.computer.setTreeView(treeView);
+            treeView.refresh();
+            priceLabel.setText("Total price: "+App.computer.getPrice()+ " NOK");
+        }catch (NullPointerException ignored){}
     }
 
     @FXML
@@ -113,12 +127,16 @@ public class ChooseMouseController implements Initializable {
     }
 
     @FXML
-    void GoNext(ActionEvent event) throws IOException {
+    void addMouse(ActionEvent event) throws IOException {
+
+        if(App.computer==null){
+            App.computer=new Computer();
+        }
+
+        App.computer.setMouse((Mouse) tableView.getSelectionModel().getSelectedItem());
 
         Parent view = FXMLLoader.load(getClass().getResource("/main/user/endUsers/ChooseMonitor.fxml"));
-
         Scene scene = new Scene(view);
-
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(scene);
         window.show();
