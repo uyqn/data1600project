@@ -60,6 +60,7 @@ public class ChooseMouseController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
         filterBox.getItems().setAll(
                 "Manufacturer",
                 "Model",
@@ -78,8 +79,8 @@ public class ChooseMouseController implements Initializable {
         ManufacturerColumn.setCellValueFactory(new PropertyValueFactory<Mouse, String>("manufacturer"));
         ModelColumn.setCellValueFactory(new PropertyValueFactory<Mouse, String>("model"));
         PriceColumn.setCellValueFactory(new PropertyValueFactory<Mouse, Double>("price"));
-        ButtonsColumn.setCellValueFactory(new PropertyValueFactory<Mouse, Integer>("price"));
-        DpiColumn.setCellValueFactory(new PropertyValueFactory<Mouse, Integer>("price"));
+        ButtonsColumn.setCellValueFactory(new PropertyValueFactory<Mouse, Integer>("numberButtons"));
+        DpiColumn.setCellValueFactory(new PropertyValueFactory<Mouse, Integer>("dpi"));
         ErgonomicColumn.setCellValueFactory(new PropertyValueFactory<Mouse, Boolean>("ergonomic"));
         WirelessColumn.setCellValueFactory(new PropertyValueFactory<Mouse, Boolean>("wireless"));
 
@@ -91,6 +92,7 @@ public class ChooseMouseController implements Initializable {
         );
 
     }
+
     @FXML
     private Button backBtn;
 
@@ -104,7 +106,7 @@ public class ChooseMouseController implements Initializable {
 
         Scene scene = new Scene(view);
 
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(scene);
         window.show();
 
@@ -117,10 +119,75 @@ public class ChooseMouseController implements Initializable {
 
         Scene scene = new Scene(view);
 
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(scene);
         window.show();
 
 
     }
+
+    @FXML
+    void filterEvt(ActionEvent event) {
+        int index = filterBox.getSelectionModel().getSelectedIndex();
+        if (index == 4 || index == 5 || index == 6 || index == 7) {
+            filterText.setDisable(true);
+            tableView.setItems(mouseList.stream().filter(component -> {
+                switch (index) {
+                    case 4:
+                        return component.isErgonomic();
+                    case 5:
+                        return !component.isErgonomic();
+                    case 6:
+                        return component.isWireless();
+                    case 7:
+                        return !component.isWireless();
+                    default:
+                        return false;
+                }
+            }).collect(Collectors.toCollection(FXCollections::observableArrayList)));
+        } else {
+            filterText.setDisable(false);
+
+            if (filterText.getText() == null) {
+                tableView.setItems(mouseList);
+            } else {
+                String search = filterText.getText().toLowerCase();
+                int filterIndex = filterBox.getSelectionModel().getSelectedIndex();
+
+                tableView.setItems(mouseList.stream().filter(component -> {
+                    if (search.isBlank() || search.isEmpty() || filterBox.getSelectionModel().getSelectedItem() == null) {
+                        return true;
+                    } else {
+                        switch (filterIndex) {
+                            case 0:
+                                return component.getManufacturer().toLowerCase().contains(search);
+                            case 1:
+                                return component.getModel().toLowerCase().contains(search);
+                            case 2:
+                                try {
+                                    return component.getNumberButtons() <= Integer.parseInt(search);
+                                } catch (NumberFormatException e) {
+                                    return false;
+                                }
+                            case 3:
+                                try {
+                                    return component.getDpi() <= Integer.parseInt(search);
+                                } catch (NumberFormatException e) {
+                                    return false;
+                                }
+                            case 8:
+                                try {
+                                    return component.getPrice() <= Double.parseDouble(search);
+                                } catch (NumberFormatException e) {
+                                    return false;
+                                }
+                            default:
+                                return false;
+                        }
+                    }
+                }).collect(Collectors.toCollection(FXCollections::observableArrayList)));
+            }
+        }
+    }
 }
+
