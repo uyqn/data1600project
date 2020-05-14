@@ -160,6 +160,13 @@ public class Monitor extends Component implements Serializable {
     }
 
     @Override
+    public String getSpec() {
+        return  "Display size: " + getSize() + "\" \n" +
+                "Refresh rate " + getRefreshRate() + " Hz\n" +
+                "Price: " + String.format("%.2f",getPrice());
+    }
+
+    @Override
     public double getSize() {
         return this.size.getValue();
     }

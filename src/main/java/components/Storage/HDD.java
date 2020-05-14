@@ -44,6 +44,13 @@ public class HDD extends Storage implements Serializable {
     }
 
     @Override
+    public String getSpec() {
+        return "Capacity: " + getCapacity() + "GB\n" +
+                "RPM: " + getRpm() + "\n" +
+                "Price: " + String.format("%.2f",getPrice());
+    }
+
+    @Override
     public int getRpm(){return rpm.getValue();}
 
     @Override

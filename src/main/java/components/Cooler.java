@@ -462,6 +462,19 @@ public class Cooler extends Component implements Serializable {
                 );
     }
 
+    @Override
+    public String getSpec() {
+        return String.format(
+                        "Dimension: %s cm\n" +
+                        "RPM: %s RPM\n" +
+                        "Noise: %s dBA\n" +
+                        "Power consumption: %s W\n" +
+                        "Price: %s NOK",
+                getDimension(), getRpmString(), getNoise(), getPowerConsumption(),
+                String.format("%.2f",getPrice())
+        );
+    }
+
     private void writeObject(ObjectOutputStream objectOutputStream) throws IOException {
         objectOutputStream.defaultWriteObject();
 

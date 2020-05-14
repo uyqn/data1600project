@@ -228,6 +228,14 @@ public class Memory extends Component implements Serializable, Compatible {
                 "Price: %s NOK", getComponentType(), getName(), getRam(),getMemoryTech(), getSpeed(), String.format("%.2f",getPrice()));
     }
 
+    @Override
+    public String getSpec() {
+        return String.format(
+                "RAM: %s GB\n"+
+                "Technology: %s %sMHz\n"+
+                "Price: %s NOK", getRam(),getMemoryTech(), getSpeed(), String.format("%.2f",getPrice()));
+    }
+
     //Serialisering:
 
     private void writeObject(ObjectOutputStream objectOutputStream) throws IOException {

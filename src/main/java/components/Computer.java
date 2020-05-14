@@ -1,18 +1,23 @@
 package components;
 
+import components.Storage.HDD;
+import components.Storage.SSD;
 import components.Storage.Storage;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import listManager.ListableList;
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeView;
 import listManager.ItemList;
+import listManager.ListableList;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Computer extends ListableList<Component> implements Listable, ItemList<Component>, Serializable {
     private transient SimpleStringProperty name = new SimpleStringProperty();
@@ -24,7 +29,8 @@ public class Computer extends ListableList<Component> implements Listable, ItemL
     public transient SimpleObjectProperty<GPU> gpu = new SimpleObjectProperty<>();
     public transient SimpleObjectProperty<Motherboard> motherboard = new SimpleObjectProperty<>();
     public transient SimpleObjectProperty<ArrayList<Memory>> memories = new SimpleObjectProperty<>(new ArrayList<>());
-    public transient SimpleObjectProperty<Storage> storage = new SimpleObjectProperty<>();
+    public transient SimpleObjectProperty<SSD> ssd = new SimpleObjectProperty<>();
+    public transient SimpleObjectProperty<HDD> hdd = new SimpleObjectProperty<>();
     public transient SimpleObjectProperty<Cooler> cooler = new SimpleObjectProperty<>();
     public transient SimpleObjectProperty<PSU> psu = new SimpleObjectProperty<>();
     public transient SimpleObjectProperty<Cabin> cabin = new SimpleObjectProperty<>();
@@ -44,6 +50,90 @@ public class Computer extends ListableList<Component> implements Listable, ItemL
         setName(csv[1]);
     }
 
+    private void sortList(){
+        components.clear();
+        components.addAll(getCpu(), getGpu(), getMotherboard());
+        components.addAll(getMemories());
+        components.addAll(getHdd(), getCooler(), getPsu(), getCabin(), getMouse(), getMonitor(), getKeyboard());
+        components.removeIf(Objects::isNull);
+    }
+
+    public void setTreeView(TreeView<String> treeView){
+        TreeItem<String> root = new TreeItem<>();
+        TreeItem<String> memories = new TreeItem<>("Memories");
+
+        sortList();
+        for(Component component : components){
+            if(component.getClass() == Memory.class && getMemories().size() > 1){
+                TreeItem<String> memory = new TreeItem<>(component.getName());
+                TreeItem<String> memorySpec = new TreeItem<>(component.getSpec());
+                memory.getChildren().add(memorySpec);
+                memories.getChildren().add(memory);
+                if(!root.getChildren().contains(memories)){
+                    root.getChildren().add(memories);
+                }
+            }
+            else {
+                TreeItem<String> comp = new TreeItem<>(component.getComponentType() + ": " + component.getName());
+                TreeItem<String> compSpec = new TreeItem<>(component.getSpec());
+                comp.getChildren().add(compSpec);
+                root.getChildren().add(comp);
+            }
+        }
+
+        treeView.setRoot(root);
+        root.setExpanded(true);
+        treeView.setShowRoot(false);
+    }
+
+    public void add(Component... components){
+        for(Component component : components){
+            categorize(component);
+        }
+    }
+
+    private void categorize(Component component){
+        switch (component.getComponentType()) {
+            case Cabin.COMPONENT_TYPE:
+                setCabin((Cabin) component);
+            case Cooler.COMPONENT_TYPE:
+                assert component instanceof Cooler;
+                setCooler((Cooler) component);
+            case CPU.COMPONENT_TYPE:
+                assert component instanceof CPU;
+                setCpu((CPU) component);
+            case GPU.COMPONENT_TYPE:
+                assert component instanceof GPU;
+                setGpu((GPU) component);
+            case Keyboard.COMPONENT_TYPE:
+                assert component instanceof Keyboard;
+                setKeyboard((Keyboard) component);
+            case Memory.COMPONENT_TYPE:
+                assert component instanceof Memory;
+                addMemory((Memory) component);
+            case Monitor.COMPONENT_TYPE:
+                assert component instanceof Monitor;
+                setMonitor((Monitor) component);
+            case Motherboard.COMPONENT_TYPE:
+                assert component instanceof Motherboard;
+                setMotherboard((Motherboard) component);
+            case Mouse.COMPONENT_TYPE:
+                assert component instanceof Mouse;
+                setMouse((Mouse) component);
+            case PSU.COMPONENT_TYPE:
+                assert component instanceof PSU;
+                setPsu((PSU) component);
+            case SSD.COMPONENT_TYPE:
+                assert component instanceof SSD;
+                setSsd((SSD) component);
+            case HDD.COMPONENT_TYPE:
+                assert component instanceof HDD;
+                setHdd((HDD) component);
+            default:
+                throw new IllegalArgumentException("Unable to recognize component");
+        }
+    }
+
     public CPU getCpu(){
         return this.cpu.getValue();
     }
@@ -53,17 +143,16 @@ public class Computer extends ListableList<Component> implements Listable, ItemL
     }
 
     public void setCpu(CPU cpu) {
-        if(this.motherboard.getValue() != null){
-            if(!this.motherboard.getValue().compatible(cpu)){
+        if(getMotherboard() != null){
+            if(!getMotherboard().compatible(cpu)){
                 throw new IllegalArgumentException("Motherboard: " + this.motherboard.getValue().getName() +
                         "\n is not compatible with \n" +
                         "CPU: " + cpu.getName());
             }
         }
 
-        components.remove(getCpu());
         this.cpu.set(cpu);
-        components.add(getCpu());
+        sortList();
     }
 
     public GPU getGpu(){
@@ -75,17 +164,16 @@ public class Computer extends ListableList<Component> implements Listable, ItemL
     }
 
     public void setGpu(GPU gpu){
-        if(this.motherboard.getValue() != null){
-            if(!this.motherboard.getValue().compatible(gpu)){
+        if(getMotherboard() != null){
+            if(!getMotherboard().compatible(gpu)){
                 throw new IllegalArgumentException("Motherboard: " + this.motherboard.getValue().getName() +
                         "\n is not compatible with \n" +
                         "GPU: " + gpu.getName());
             }
         }
 
-        components.remove(getGpu());
         this.gpu.set(gpu);
-        components.add(getGpu());
+        sortList();
     }
 
     public Motherboard getMotherboard(){
@@ -122,11 +210,11 @@ public class Computer extends ListableList<Component> implements Listable, ItemL
         }
 
         if(getMemories().size() > 0){
-            if(memories.getValue().size() > motherboard.getRamSlots()){
+            if(getMemories().size() > motherboard.getRamSlots()){
                 throw new IllegalArgumentException("Motherboard: " + motherboard.getName() +
                         "\ndoes not have enough slots for memories to house all the memories added\n" +
                         motherboard.getName() + " has " + motherboard.getRamSlots() + " available slots \n" +
-                        "This computer currently has " + memories.getValue().size() + " memories");
+                        "This computer currently has " + getMemories().size() + " memories");
             }
             else {
                 for (Memory memory : getMemories()) {
@@ -139,9 +227,8 @@ public class Computer extends ListableList<Component> implements Listable, ItemL
             }
         }
 
-        components.remove(getMotherboard());
         this.motherboard.setValue(motherboard);
-        components.add(getMotherboard());
+        sortList();
 
         this.availableRamSlots = getMotherboard().getRamSlots() - getMemories().size();
     }
@@ -155,31 +242,30 @@ public class Computer extends ListableList<Component> implements Listable, ItemL
     }
 
     public void addMemory(Memory memory){
-        if(this.motherboard.getValue() != null){
-            if(!this.motherboard.getValue().compatible(memory)){
+        if(getMotherboard() != null){
+            if(!getMotherboard().compatible(memory)){
                 throw new IllegalArgumentException("Motherboard: " + this.motherboard.getValue().getName() +
                         "\n is not compatible with \n" +
                         "RAM: " + memory.getName());
             }
             if(availableRamSlots <= 0) {
                 throw new IllegalArgumentException("No available memory slots left on\n" +
-                        "this motherboard: " + this.motherboard.getValue().getName());
+                        "this motherboard: " + getMotherboard().getName());
             }
             else {
-                this.memories.getValue().add(memory);
-                components.add(memory);
+                getMemories().add(memory);
+                sortList();
                 availableRamSlots--;
             }
         } else {
-            this.memories.getValue().add(memory);
-            components.add(memory);
+            getMemories().add(memory);
+            sortList();
         }
     }
 
     public void setMemories(ArrayList<Memory> memories){
-        components.removeAll(memories);
         this.memories.set(memories);
-        components.addAll(memories);
+        sortList();
     }
 
     public ArrayList<Memory> getMemories(){
@@ -198,18 +284,30 @@ public class Computer extends ListableList<Component> implements Listable, ItemL
         return memories.toString();
     }
 
-    public Storage getStorage(){
-        return this.storage.getValue();
+    public Storage getHdd(){
+        return this.hdd.getValue();
     }
 
-    public String getStorageName(){
-        return getStorage().getName();
+    public String getHddName(){
+        return getHdd().getName();
     }
 
-    public void setStorage(Storage storage){
-        components.remove(getStorage());
-        this.storage.set(storage);
-        components.add(getStorage());
+    public void setHdd(HDD hdd){
+        this.hdd.set(hdd);
+        sortList();
+    }
+
+    public SSD getSsd() {
+        return ssd.getValue();
+    }
+
+    public String getSsdName(){
+        return getSsd().getName();
+    }
+
+    public void setSsd(SSD ssd){
+        this.ssd.set(ssd);
+        sortList();
     }
 
     public Cooler getCooler(){
@@ -221,9 +319,8 @@ public class Computer extends ListableList<Component> implements Listable, ItemL
     }
 
     public void setCooler(Cooler cooler){
-        components.remove(getCooler());
         this.cooler.set(cooler);
-        components.add(getCooler());
+        sortList();
     }
 
     public PSU getPsu(){
@@ -235,9 +332,8 @@ public class Computer extends ListableList<Component> implements Listable, ItemL
     }
 
     public void setPsu(PSU psu){
-        components.remove(getPsu());
         this.psu.set(psu);
-        components.add(getPsu());
+        sortList();
     }
 
     public Cabin getCabin(){
@@ -256,9 +352,8 @@ public class Computer extends ListableList<Component> implements Listable, ItemL
                         "Motherboard: " + getMotherboard().getName());
             }
         }
-        components.remove(getCabin());
         this.cabin.set(cabin);
-        components.add(getCabin());
+        sortList();
     }
 
     public Mouse getMouse(){
@@ -270,9 +365,8 @@ public class Computer extends ListableList<Component> implements Listable, ItemL
     }
 
     public void setMouse(Mouse mouse){
-        components.remove(getMouse());
         this.mouse.set(mouse);
-        components.add(mouse);
+        sortList();
     }
 
     public Monitor getMonitor(){
@@ -284,9 +378,8 @@ public class Computer extends ListableList<Component> implements Listable, ItemL
     }
 
     public void setMonitor(Monitor monitor){
-        components.remove(getMonitor());
         this.monitor.set(monitor);
-        components.add(getMonitor());
+        sortList();
     }
 
     public Keyboard getKeyboard(){
@@ -298,22 +391,21 @@ public class Computer extends ListableList<Component> implements Listable, ItemL
     }
 
     public ObservableList<Component> getComponents(){
+        sortList();
         return components;
     }
 
     public void setKeyboard(Keyboard keyboard){
-        components.remove(getKeyboard());
         this.keyboard.set(keyboard);
-        components.add(getKeyboard());
+        sortList();
     }
 
     public double getPrice() {
         double price = 0;
-
+        sortList();
         for(Component component : components){
             price += component.getPrice();
         }
-
         return price;
     }
 
@@ -347,7 +439,8 @@ public class Computer extends ListableList<Component> implements Listable, ItemL
                 "GPU: %s\n" +
                 "Motherboard: %s\n" +
                 "Memories: %s\n" +
-                "Storage:  %s\n" +
+                "HDD:  %s\n" +
+                "SSD: %s\n" +
                 "Cooler: %s \n" +
                 "PSU: %s \n" +
                 "Cabin: %s \n" +
@@ -360,7 +453,8 @@ public class Computer extends ListableList<Component> implements Listable, ItemL
                 getGpuName(),
                 getMotherboardName(),
                 getMemoriesName(),
-                getStorageName(),
+                getHddName(),
+                getSsdName(),
                 getCoolerName(),
                 getPsuName(),
                 getCabinName(),
@@ -377,7 +471,8 @@ public class Computer extends ListableList<Component> implements Listable, ItemL
         outputStream.writeObject(getCpu());
         outputStream.writeObject(getMotherboard());
         outputStream.writeObject(getMemories());
-        outputStream.writeObject(getStorage());
+        outputStream.writeObject(getSsd());
+        outputStream.writeObject(getHdd());
         outputStream.writeObject(getCooler());
         outputStream.writeObject(getPsu());
         outputStream.writeObject(getCabin());
@@ -391,7 +486,8 @@ public class Computer extends ListableList<Component> implements Listable, ItemL
         CPU cpu = (CPU) inputStream.readObject();
         Motherboard motherboard = (Motherboard) inputStream.readObject();
         ArrayList<Memory> memories = (ArrayList<Memory>) inputStream.readObject();
-        Storage storage = (Storage) inputStream.readObject();
+        SSD ssd = (SSD) inputStream.readObject();
+        HDD hdd = (HDD) inputStream.readObject();
         Cooler cooler = (Cooler) inputStream.readObject();
         PSU psu = (PSU) inputStream.readObject();
         Cabin cabin = (Cabin) inputStream.readObject();
@@ -403,7 +499,8 @@ public class Computer extends ListableList<Component> implements Listable, ItemL
         this.gpu = new SimpleObjectProperty<>();
         this.motherboard = new SimpleObjectProperty<>();
         this.memories = new SimpleObjectProperty<>();
-        this.storage = new SimpleObjectProperty<>();
+        this.ssd = new SimpleObjectProperty<>();
+        this.hdd = new SimpleObjectProperty<>();
         this.cooler = new SimpleObjectProperty<>();
         this.psu = new SimpleObjectProperty<>();
         this.cabin = new SimpleObjectProperty<>();
@@ -415,7 +512,8 @@ public class Computer extends ListableList<Component> implements Listable, ItemL
         setCpu(cpu);
         setMotherboard(motherboard);
         setMemories(memories);
-        setStorage(storage);
+        setSsd(ssd);
+        setHdd(hdd);
         setCooler(cooler);
         setPsu(psu);
         setCabin(cabin);

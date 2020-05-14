@@ -125,6 +125,15 @@ public class Mouse extends Component implements Serializable {
     }
 
     @Override
+    public String getSpec() {
+        return "Buttons: " + getNumberButtons() + "\n" +
+                "Polling rate: " + getDpi() + "DPI \n" +
+                "Ergonomic: " + isErgonomic() + "\n" +
+                "Wireless: " + isWireless() + "\n" +
+                "Price: " + String.format("%.2f",getPrice());
+    }
+
+    @Override
     public String toCSV() {
         return Formatter.toCSV( getComponentType(),
                 getManufacturer(),

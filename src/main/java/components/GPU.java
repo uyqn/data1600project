@@ -365,6 +365,18 @@ public class GPU extends Component implements Serializable, Compatible {
                 String.format("%.2f",getPrice()));
     }
 
+    @Override
+    public String getSpec() {
+        return String.format(
+                        "Buss type: %s \n" +
+                        "Memory: %s GB\n" +
+                        "Memory type: %s\n" +
+                        "Boost clock: %s MHz\n" +
+                        "Price: %s NOK\n",
+                getBussType(), getMemory(), getMemoryType(), getBoostSpeed(),
+                String.format("%.2f",getPrice()));
+    }
+
     //Serialisering
     private void writeObject(ObjectOutputStream objectOutputStream) throws IOException{
         objectOutputStream.defaultWriteObject();

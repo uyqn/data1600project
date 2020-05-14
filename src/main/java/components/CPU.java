@@ -404,7 +404,17 @@ public class CPU extends Component implements Serializable, Compatible {
                 String.format("%.2f",getPrice()));
     }
 
-
+    @Override
+    public String getSpec() {
+        return String.format(
+                        "Socket: %s\n" +
+                        "Number of cores: %s cores\n" +
+                        "Clock speed: %s GHz\n" +
+                        "Power usage: %s W\n" +
+                        "Price: %s NOK",
+                getSocket(), getCoreCount(), getClockSpeed(), getPowerConsumption(),
+                String.format("%.2f",getPrice()));
+    }
 
     //Serialisering:
     private void writeObject(ObjectOutputStream objectOutputStream) throws IOException {

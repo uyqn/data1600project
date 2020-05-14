@@ -188,6 +188,15 @@ public class Keyboard extends Component implements Serializable {
                 "Price: %s NOK", getComponentType(),getName(),
                 getTactile(), String.format("%.2f",getPrice()));
     }
+
+    @Override
+    public String getSpec() {
+        return String.format(
+                        "Tactile: %s\n" +
+                        "Price: %s NOK",
+                getTactile(), String.format("%.2f",getPrice()));
+    }
+
     @Override
     public String toCSV() {
         return Formatter.toCSV(getComponentType(),

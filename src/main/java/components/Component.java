@@ -222,4 +222,6 @@ public abstract class Component implements Serializable, Listable {
     public abstract void setNoise(String noise);
     public abstract String getRpmString();
     public abstract void setRpmString(String newValue);
+
+    public abstract String getSpec();
 }

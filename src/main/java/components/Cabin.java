@@ -408,6 +408,13 @@ public class Cabin extends Component implements Compatible, Serializable {
     }
 
     @Override
+    public String getSpec() {
+        return String.format("Form factor: %s\n" +
+                "Price: %s NOK",
+        getFormFactor(), String.format("%.2f",getPrice()));
+    }
+
+    @Override
     public boolean compatible(Compatible motherboard) {
         if(motherboard.getClass() != Motherboard.class){
             throw new IllegalArgumentException("This component is not a connected Motherboard");

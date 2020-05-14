@@ -569,6 +569,20 @@ public class Motherboard extends Component implements Serializable, Compatible {
     }
 
     @Override
+    public String getSpec() {
+        return String.format(
+                        "Socket: %s\n" +
+                        "Buss type: %s\n" +
+                        "Ram slots: %s\n" +
+                        "Memory Technology: %s\n" +
+                        "Max memory size: %s GB\n" +
+                        "Form factor: %s\n" +
+                        "Price: %s NOK",
+                getSocket(), getBussType(), getRamSlots(), getMemoryTech(),
+                getMaxRamSize(), getFormFactor(), String.format("%.2f",getPrice()));
+    }
+
+    @Override
     public String toCSV() {
         return Formatter.toCSV(getComponentType(),
                 getManufacturer(),

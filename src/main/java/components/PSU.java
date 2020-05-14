@@ -65,8 +65,14 @@ public class PSU extends Component implements Serializable {
 
     @Override
     public String toString(){
-        return "PowerSupply: " + getName() + "\n" +
+        return getComponentType() + ": " + getName() + "\n" +
                 "Power Capacity: " + getPowerCapacity() + " W\n" +
+                "Price: " + String.format("%.2f",getPrice());
+    }
+
+    @Override
+    public String getSpec() {
+        return "Power Capacity: " + getPowerCapacity() + " W\n" +
                 "Price: " + String.format("%.2f",getPrice());
     }
 

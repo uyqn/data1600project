@@ -59,6 +59,12 @@ public class BuildPcController implements Initializable {
     @FXML
     private TextField filterText;
 
+    @FXML
+    private TreeView<String> treeView;
+
+    @FXML
+    private Label priceLabel;
+
     ObservableList<Component> cpuList = App.listableList.getList().stream().filter(component ->
             component.getComponentType().equals(CPU.COMPONENT_TYPE)
     ).collect(Collectors.toCollection(FXCollections::observableArrayList));
@@ -84,9 +90,7 @@ public class BuildPcController implements Initializable {
         BoostClockColumn.setCellValueFactory(new PropertyValueFactory<CPU, Double>("boostClock"));
         PowerColumn.setCellValueFactory(new PropertyValueFactory<CPU, Double>("powerConsumption"));
 
-
         tableView.setItems(cpuList);
-
     }
 
 
@@ -153,7 +157,7 @@ public class BuildPcController implements Initializable {
 
     @FXML
     void AddGpu(ActionEvent event) throws IOException {
-
+        App.computer.add(tableView.getSelectionModel().getSelectedItem());
         Parent view = FXMLLoader.load(getClass().getResource("/main/user/endUsers/ChooseGpu.fxml"));
 
         Scene scene = new Scene(view);

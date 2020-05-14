@@ -68,6 +68,12 @@ public class SSD extends Storage implements Serializable {
     }
 
     @Override
+    public String getSpec() {
+        return "Capacity: " + getCapacity() + "GB\n" +
+                "Price: " + String.format("%.2f",getPrice());
+    }
+
+    @Override
     public int getRpm() {
         return 0;
     }

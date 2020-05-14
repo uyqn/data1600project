@@ -1,6 +1,7 @@
 package main;
 
 import components.Component;
+import components.Computer;
 import fileManager.FileManager;
 import fileManager.FileOpenerBin;
 import fileManager.FileSaverBin;
@@ -25,7 +26,7 @@ public class App extends Application {
     public static FileManager fileManager = new FileManager();
     public static ListableList<Component> listableList = new ListableList<>();
     public static User user;
-
+    public static Computer computer;
 
     @Override
     public void start(Stage stage) throws IOException, ClassNotFoundException {
