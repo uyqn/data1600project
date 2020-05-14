@@ -2,6 +2,7 @@ package controllers.user.endUsers;
 
 import components.Component;
 import components.Storage.SSD;
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -53,6 +54,9 @@ public class ChooseSsdController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
+        addBtn.disableProperty().bind(Bindings.isEmpty(tableView.getSelectionModel().getSelectedItems()));
+
         filterBox.getItems().setAll(
                 "Manufacturer",
                 "Model",
@@ -149,12 +153,6 @@ public class ChooseSsdController implements Initializable {
         ////HER GÅR KODE FOR Å LEGGE TIL I COMPUTER////
         ///////////////////////////////////////////////
 
-        Parent view = FXMLLoader.load(getClass().getResource("/main/user/endUsers/Choose.fxml"));
-
-        Scene scene = new Scene(view);
-
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-        window.setScene(scene);
-        window.show();
+        tableView.getSelectionModel().clearSelection();
     }
 }
