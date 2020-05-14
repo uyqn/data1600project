@@ -115,6 +115,9 @@ public class ChooseSsdController implements Initializable {
     private Button nextBtn;
 
     @FXML
+    private Button addBtn;
+
+    @FXML
     void GoBack(ActionEvent event) throws IOException {
 
         Parent view = FXMLLoader.load(getClass().getResource("/main/user/endUsers/ChooseHdd.fxml"));
@@ -138,5 +141,20 @@ public class ChooseSsdController implements Initializable {
         window.setScene(scene);
         window.show();
 
+    }
+
+    @FXML
+    void addEvt(ActionEvent event) throws IOException {
+
+        ////HER GÅR KODE FOR Å LEGGE TIL I COMPUTER////
+        ///////////////////////////////////////////////
+
+        Parent view = FXMLLoader.load(getClass().getResource("/main/user/endUsers/Choose.fxml"));
+
+        Scene scene = new Scene(view);
+
+        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        window.setScene(scene);
+        window.show();
     }
 }

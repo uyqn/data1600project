@@ -130,6 +130,9 @@ public class ChooseHddController implements Initializable {
     private Button nextBtn;
 
     @FXML
+    private Button addBtn;
+
+    @FXML
     void GoBack(ActionEvent event) throws IOException {
 
         Parent view = FXMLLoader.load(getClass().getResource("/main/user/endUsers/ChooseMemory.fxml"));
@@ -153,6 +156,11 @@ public class ChooseHddController implements Initializable {
         window.setScene(scene);
         window.show();
 
+
+    }
+
+    @FXML
+    void addEvt(ActionEvent event) throws IOException{
 
     }
 }
