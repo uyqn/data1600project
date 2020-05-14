@@ -415,7 +415,8 @@ public class Computer extends ListableList<Component> implements Listable, ItemL
         return "GPU: " + getGpuName() + "\n" +
                 "CPU: " + getCpuName() + "\n" +
                 "RAM: " + getTotalRam() + " GB \n" +
-                "Storage: ";
+                "Storage: " + (getSsd().getCapacity() + getHdd().getCapacity()) + " GB\n" +
+                "Price: " + getPrice();
     }
 
     @Override
