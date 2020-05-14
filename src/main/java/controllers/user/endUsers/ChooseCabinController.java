@@ -146,6 +146,7 @@ public class ChooseCabinController implements Initializable {
             window.show();
         } catch (NotCompatibleException e) {
             DialogBox.error("Not Compatible", null, e.getMessage());
+            tableView.getSelectionModel().clearSelection();
         } catch (NullPointerException ignored){}
     }
 }
