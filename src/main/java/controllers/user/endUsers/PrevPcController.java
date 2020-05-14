@@ -1,5 +1,6 @@
 package controllers.user.endUsers;
 
+import components.Component;
 import components.Computer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -27,17 +28,40 @@ public class PrevPcController implements Initializable {
 
 
     @FXML
-    private TableView<Computer> tableView;
+    private Button backHome;
+
+    @FXML
+    private Button addPc;
+
+    @FXML
+    private TableView<Computer> computerView;
+
+    @FXML
+    private TableView<Component> componentView;
 
     @FXML
     private TableColumn<Computer, String> nameCol;
 
     @FXML
-    private TableColumn<Computer, Double> priceCol;
+    private TableColumn<Computer, Double> priceComputerCol;
 
     @FXML
-    private TableColumn<Computer, String> cpuCol;
+    private Button selectPc;
 
+    @FXML
+    private TableColumn<Component, String > typeCol;
+
+    @FXML
+    private TableColumn<Component, String > manufacturerCol;
+
+    @FXML
+    private TableColumn<Component, String> modelCol;
+
+    @FXML TableColumn<Component, Double> priceComponentCol;
+
+    /*
+    @FXML
+    private TableColumn<Computer, String> cpuCol;
     @FXML
     private TableColumn<Computer, String> gpuCol;
     @FXML
@@ -73,7 +97,7 @@ public class PrevPcController implements Initializable {
     @FXML
     private TextField filterText;
 
-
+*/
     private ObservableList<Computer> computerList=EndUser.listableList.getList().stream().filter(computer ->
             computer.getName().equals(computer.getName())
     ).collect(Collectors.toCollection(FXCollections::observableArrayList));
@@ -105,32 +129,34 @@ public class PrevPcController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle){
-       filterBox.getItems().setAll("Name", "Price (NOK) ≤", "CPU", "GPU", "Motherboard", "Memory", "Storage", "Cooler", "Power supply", "Cabin", "Monitor", "Keyboard", "Mouse");
-       filterBox.setValue(null);
+      /* filterBox.getItems().setAll("Name", "Price (NOK) ≤", "CPU", "GPU", "Motherboard", "Memory", "Storage", "Cooler", "Power supply", "Cabin", "Monitor", "Keyboard", "Mouse");
+       filterBox.setValue(null);*/
 
        computerList=EndUser.listableList.getList();
 
 
         nameCol.setCellValueFactory(new PropertyValueFactory<Computer, String >("name"));
-        priceCol.setCellValueFactory(new PropertyValueFactory<Computer, Double>("price"));
-        cpuCol.setCellValueFactory(new PropertyValueFactory<Computer, String>("cpuName"));
-        gpuCol.setCellValueFactory(new PropertyValueFactory<Computer, String>("gpuName"));
-        mbCol.setCellValueFactory(new PropertyValueFactory<Computer, String>("motherboardName"));
-        memoryCol.setCellValueFactory(new PropertyValueFactory<Computer, String>("memoryName"));
-        ssdCol.setCellValueFactory(new PropertyValueFactory<Computer, String>("ssdName"));
-        hddCol.setCellValueFactory(new PropertyValueFactory<Computer, String>("hddName"));
-        coolerCol.setCellValueFactory(new PropertyValueFactory<Computer, String>("coolerName"));
-        psCol.setCellValueFactory(new PropertyValueFactory<Computer, String>("psuName"));
-        cabinCol.setCellValueFactory(new PropertyValueFactory<Computer, String>("cabinName"));
-        monitorCol.setCellValueFactory(new PropertyValueFactory<Computer, String>("monitorName"));
-        keyboardCol.setCellValueFactory(new PropertyValueFactory<Computer, String>("keyboardName"));
-        mouseCol.setCellValueFactory(new PropertyValueFactory<Computer, String>("mouseName"));
-
-        tableView.setItems(computerList);
-
+        priceComputerCol.setCellValueFactory(new PropertyValueFactory<Computer, Double>("price"));
+//        computerView.setItems(computerList);
 
     }
 
+    @FXML
+    void selectPc(ActionEvent event) throws IOException{
+
+
+
+        typeCol.setCellValueFactory(new PropertyValueFactory<>("componentType"));
+        manufacturerCol.setCellValueFactory(new PropertyValueFactory<>("manufacturer"));
+        modelCol.setCellValueFactory(new PropertyValueFactory<>("model"));
+        priceComponentCol.setCellValueFactory(new PropertyValueFactory<>("price"));
+
+
+        componentView.setItems(computerView.getSelectionModel().getSelectedItem().getComponents());
+
+
+    }
+/*
     @FXML
     void filterEvt(KeyEvent event){
         String search = filterText.getText().toLowerCase();
@@ -180,5 +206,5 @@ public class PrevPcController implements Initializable {
         }).collect(Collectors.toCollection(FXCollections::observableArrayList)));
     }
 
-
+*/
 }
