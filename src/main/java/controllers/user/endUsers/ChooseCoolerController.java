@@ -1,6 +1,7 @@
 package controllers.user.endUsers;
 
 import components.Component;
+import components.Computer;
 import components.Cooler;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
@@ -58,6 +59,12 @@ public class ChooseCoolerController implements Initializable {
     @FXML
     private TextField filterText;
 
+    @FXML
+    private TreeView<String> treeView;
+
+    @FXML
+    private Label priceLabel;
+
     ObservableList<Component> coolerList = App.listableList.getList().stream().filter(component ->
             component.getComponentType().equals(Cooler.COMPONENT_TYPE)
     ).collect(Collectors.toCollection(FXCollections::observableArrayList));
@@ -80,27 +87,32 @@ public class ChooseCoolerController implements Initializable {
         filterText.setText(null);
 
         //Enabler next-button idet man velger en komponent
-        nextBtn.disableProperty().bind(Bindings.isEmpty(tableView.getSelectionModel().getSelectedItems()));
+        addBtn.disableProperty().bind(Bindings.isEmpty(tableView.getSelectionModel().getSelectedItems()));
 
         //Setter opp kolonner
 
-        ManufacturerColumn.setCellValueFactory(new PropertyValueFactory<Cooler, String>("manufacturer"));
-        ModelColumn.setCellValueFactory(new PropertyValueFactory<Cooler, String>("model"));
-        PriceColumn.setCellValueFactory(new PropertyValueFactory<Cooler, Double>("price"));
-        CoreRpmColumn.setCellValueFactory(new PropertyValueFactory<Cooler, Integer>("coreRpm"));
-        MaxRpmColumn.setCellValueFactory(new PropertyValueFactory<Cooler, Integer>("maxRpm"));
-        CoreNoiseColumn.setCellValueFactory(new PropertyValueFactory<Cooler, Double>("coreNoise"));
-        MaxNoiseColumn.setCellValueFactory(new PropertyValueFactory<Cooler, Double>("maxNoise"));
-        PowerColumn.setCellValueFactory(new PropertyValueFactory<Cooler, Double>("powerConsumption"));
+        ManufacturerColumn.setCellValueFactory(new PropertyValueFactory<>("manufacturer"));
+        ModelColumn.setCellValueFactory(new PropertyValueFactory<>("model"));
+        PriceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
+        CoreRpmColumn.setCellValueFactory(new PropertyValueFactory<>("coreRpm"));
+        MaxRpmColumn.setCellValueFactory(new PropertyValueFactory<>("maxRpm"));
+        CoreNoiseColumn.setCellValueFactory(new PropertyValueFactory<>("coreNoise"));
+        MaxNoiseColumn.setCellValueFactory(new PropertyValueFactory<>("maxNoise"));
+        PowerColumn.setCellValueFactory(new PropertyValueFactory<>("powerConsumption"));
 
 
 
-        tableView.setItems(
-                App.listableList.getList().stream().filter(component ->
+        tableView.setItems(coolerList
+               /* App.listableList.getList().stream().filter(component ->
                         component.getComponentType().equals(Cooler.COMPONENT_TYPE)
-                ).collect(Collectors.toCollection(FXCollections::observableArrayList))
+                ).collect(Collectors.toCollection(FXCollections::observableArrayList))*/
         );
 
+        try {
+            treeView=App.computer.setTreeView(treeView);
+            treeView.refresh();
+            priceLabel.setText("Total price: "+App.computer.getPrice()+" NOK");
+        }catch (NullPointerException ignored){}
     }
 
     @FXML
@@ -182,10 +194,12 @@ public class ChooseCoolerController implements Initializable {
     private Button backBtn;
 
     @FXML
-    private Button nextBtn;
+    private Button addBtn;
 
     @FXML
-    void GoBack(ActionEvent event) throws IOException {
+    void goBack(ActionEvent event) throws IOException {
+
+
 
         Parent view = FXMLLoader.load(getClass().getResource("/main/user/endUsers/ChooseSsd.fxml"));
 
@@ -198,16 +212,19 @@ public class ChooseCoolerController implements Initializable {
     }
 
     @FXML
-    void GoNext(ActionEvent event) throws IOException {
+    void AddCooler(ActionEvent event) throws IOException {
+
+        if (App.computer==null){
+            App.computer=new Computer();
+        }
+        App.computer.setCooler((Cooler) tableView.getSelectionModel().getSelectedItem());
+
 
         Parent view = FXMLLoader.load(getClass().getResource("/main/user/endUsers/ChoosePower.fxml"));
-
         Scene scene = new Scene(view);
-
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         window.setScene(scene);
         window.show();
-
 
     }
 }

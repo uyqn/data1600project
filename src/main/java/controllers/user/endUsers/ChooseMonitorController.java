@@ -1,6 +1,7 @@
 package controllers.user.endUsers;
 
 import components.Component;
+import components.Computer;
 import components.Monitor;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -46,6 +47,12 @@ public class ChooseMonitorController implements Initializable {
     @FXML
     private TextField filterText;
 
+    @FXML
+    private TreeView<String> treeView = new TreeView<>();
+
+    @FXML
+    private Label priceLabel;
+
     ObservableList<Component> monitorList = App.listableList.getList().stream().filter(component ->
             component.getComponentType().equals(Monitor.COMPONENT_TYPE)
     ).collect(Collectors.toCollection(FXCollections::observableArrayList));
@@ -70,11 +77,16 @@ public class ChooseMonitorController implements Initializable {
         RefreshRateColumn.setCellValueFactory(new PropertyValueFactory<Monitor, Integer>("refreshRate"));
 
 
-        tableView.setItems(
-                App.listableList.getList().stream().filter(component ->
+        tableView.setItems(monitorList
+                /*App.listableList.getList().stream().filter(component ->
                         component.getComponentType().equals(Monitor.COMPONENT_TYPE)
-                ).collect(Collectors.toCollection(FXCollections::observableArrayList))
+                ).collect(Collectors.toCollection(FXCollections::observableArrayList))*/
         );
+        try{
+            treeView=App.computer.setTreeView(treeView);
+            treeView.refresh();
+            priceLabel.setText("Total price: "+App.computer.getPrice()+" NOK");
+        }catch (NullPointerException ignored){}
     }
 
     @FXML
@@ -114,10 +126,10 @@ public class ChooseMonitorController implements Initializable {
     private Button backBtn;
 
     @FXML
-    private Button nextBtn;
+    private Button addBtn;
 
     @FXML
-    void GoBack(ActionEvent event) throws IOException {
+    void goBack(ActionEvent event) throws IOException {
 
         Parent view = FXMLLoader.load(getClass().getResource("/main/user/endUsers/ChooseMouse.fxml"));
 
@@ -130,12 +142,15 @@ public class ChooseMonitorController implements Initializable {
     }
 
     @FXML
-    void GoNext(ActionEvent event) throws IOException {
+    void AddMonitor(ActionEvent event) throws IOException {
+        if (App.computer==null){
+            App.computer=new Computer();
+        }
+
+        App.computer.setMonitor((Monitor) tableView.getSelectionModel().getSelectedItem());
 
         Parent view = FXMLLoader.load(getClass().getResource("/main/user/endUsers/ChooseKeyboard.fxml"));
-
         Scene scene = new Scene(view);
-
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         window.setScene(scene);
         window.show();
