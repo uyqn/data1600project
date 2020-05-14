@@ -2,6 +2,7 @@ package controllers.user.endUsers;
 
 import components.Component;
 import components.Storage.HDD;
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -66,6 +67,7 @@ public class ChooseHddController implements Initializable {
         filterBox.setValue(null);
         filterText.setText(null);
 
+        addBtn.disableProperty().bind(Bindings.isEmpty(tableView.getSelectionModel().getSelectedItems()));
 
         //Setter opp kolonner
 
