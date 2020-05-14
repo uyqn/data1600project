@@ -58,12 +58,11 @@ public class Computer extends ListableList<Component> implements Listable, ItemL
         components.removeIf(Objects::isNull);
     }
 
-    public void setTreeView(TreeView<String> treeView){
+    public TreeView<String> setTreeView(TreeView<String> treeView){
         TreeItem<String> root = new TreeItem<>();
         TreeItem<String> memories = new TreeItem<>("Memories");
 
-        sortList();
-        for(Component component : components){
+        for(Component component : this.components){
             if(component.getClass() == Memory.class && getMemories().size() > 1){
                 TreeItem<String> memory = new TreeItem<>(component.getName());
                 TreeItem<String> memorySpec = new TreeItem<>(component.getSpec());
@@ -84,12 +83,12 @@ public class Computer extends ListableList<Component> implements Listable, ItemL
         treeView.setRoot(root);
         root.setExpanded(true);
         treeView.setShowRoot(false);
+
+        return treeView;
     }
 
-    public void add(Component... components){
-        for(Component component : components){
-            categorize(component);
-        }
+    public void add(Component component){
+        categorize(component);
     }
 
     private void categorize(Component component){
@@ -97,37 +96,26 @@ public class Computer extends ListableList<Component> implements Listable, ItemL
             case Cabin.COMPONENT_TYPE:
                 setCabin((Cabin) component);
             case Cooler.COMPONENT_TYPE:
-                assert component instanceof Cooler;
                 setCooler((Cooler) component);
             case CPU.COMPONENT_TYPE:
-                assert component instanceof CPU;
                 setCpu((CPU) component);
             case GPU.COMPONENT_TYPE:
-                assert component instanceof GPU;
                 setGpu((GPU) component);
             case Keyboard.COMPONENT_TYPE:
-                assert component instanceof Keyboard;
                 setKeyboard((Keyboard) component);
             case Memory.COMPONENT_TYPE:
-                assert component instanceof Memory;
                 addMemory((Memory) component);
             case Monitor.COMPONENT_TYPE:
-                assert component instanceof Monitor;
                 setMonitor((Monitor) component);
             case Motherboard.COMPONENT_TYPE:
-                assert component instanceof Motherboard;
                 setMotherboard((Motherboard) component);
             case Mouse.COMPONENT_TYPE:
-                assert component instanceof Mouse;
                 setMouse((Mouse) component);
             case PSU.COMPONENT_TYPE:
-                assert component instanceof PSU;
                 setPsu((PSU) component);
             case SSD.COMPONENT_TYPE:
-                assert component instanceof SSD;
                 setSsd((SSD) component);
             case HDD.COMPONENT_TYPE:
-                assert component instanceof HDD;
                 setHdd((HDD) component);
             default:
                 throw new IllegalArgumentException("Unable to recognize component");
@@ -166,7 +154,7 @@ public class Computer extends ListableList<Component> implements Listable, ItemL
     public void setGpu(GPU gpu){
         if(getMotherboard() != null){
             if(!getMotherboard().compatible(gpu)){
-                throw new IllegalArgumentException("Motherboard: " + this.motherboard.getValue().getName() +
+                throw new NotCompatibleException("Motherboard: " + this.motherboard.getValue().getName() +
                         "\n is not compatible with \n" +
                         "GPU: " + gpu.getName());
             }
@@ -187,31 +175,32 @@ public class Computer extends ListableList<Component> implements Listable, ItemL
     public void setMotherboard(Motherboard motherboard){
         if(getCpu() != null){
             if(!getCpu().compatible(motherboard)){
-                throw new IllegalArgumentException("Motherboard: " + motherboard.getName() +
-                        "\n is not compatible with \n" +
-                        "CPU: " + getCpu().getName());
+                throw new NotCompatibleException("Motherboard: " + motherboard.getName() +
+                        "\n is not compatible with" + "CPU: " + getCpu().getName() + "\n" +
+                        "Because mismatch sockets: \n" +
+                        getCpu().getName() + " socket: " + getCpu().getSocket() + "\n" +
+                        motherboard.getName() + "socket: " +motherboard.getSocket());
             }
         }
 
         if(getGpu() != null){
             if(!getGpu().compatible(motherboard)){
-                throw new IllegalArgumentException("Motherboard: " + motherboard.getName() +
-                        "\n is not compatible with \n" +
-                        "GPU: " + getGpu().getName());
+                throw new NotCompatibleException("Motherboard: " + motherboard.getName() +
+                        "\n is not compatible with " + "GPU: " + getGpu().getName());
             }
         }
 
         if(getCabin() != null){
             if(!getCabin().compatible(motherboard)){
-                throw new IllegalArgumentException("Motherboard: " + motherboard.getName() +
-                        "\n is not compatible with \n" +
+                throw new NotCompatibleException("Motherboard: " + motherboard.getName() +
+                        "\n is not compatible with" +
                         "Cabin: " + getCabin().getName());
             }
         }
 
         if(getMemories().size() > 0){
             if(getMemories().size() > motherboard.getRamSlots()){
-                throw new IllegalArgumentException("Motherboard: " + motherboard.getName() +
+                throw new NotCompatibleException("Motherboard: " + motherboard.getName() +
                         "\ndoes not have enough slots for memories to house all the memories added\n" +
                         motherboard.getName() + " has " + motherboard.getRamSlots() + " available slots \n" +
                         "This computer currently has " + getMemories().size() + " memories");
@@ -220,7 +209,7 @@ public class Computer extends ListableList<Component> implements Listable, ItemL
                 for (Memory memory : getMemories()) {
                     if (!motherboard.compatible(memory)) {
                         throw new IllegalArgumentException("Motherboard: " + motherboard.getName() +
-                                "\nis not compatible with \n" +
+                                "\nis not compatible with" +
                                 "Memory: " + memory.getName());
                     }
                 }
@@ -244,12 +233,12 @@ public class Computer extends ListableList<Component> implements Listable, ItemL
     public void addMemory(Memory memory){
         if(getMotherboard() != null){
             if(!getMotherboard().compatible(memory)){
-                throw new IllegalArgumentException("Motherboard: " + this.motherboard.getValue().getName() +
+                throw new NotCompatibleException("Motherboard: " + this.motherboard.getValue().getName() +
                         "\n is not compatible with \n" +
                         "RAM: " + memory.getName());
             }
             if(availableRamSlots <= 0) {
-                throw new IllegalArgumentException("No available memory slots left on\n" +
+                throw new NotCompatibleException("No available memory slots left on\n" +
                         "this motherboard: " + getMotherboard().getName());
             }
             else {
@@ -347,7 +336,7 @@ public class Computer extends ListableList<Component> implements Listable, ItemL
     public void setCabin(Cabin cabin){
         if(getMotherboard() != null){
             if(!getMotherboard().compatible(cabin)){
-                throw new IllegalArgumentException("Cabin: " + cabin.getName() +
+                throw new NotCompatibleException("Cabin: " + cabin.getName() +
                         "\n is not compatible with \n" +
                         "Motherboard: " + getMotherboard().getName());
             }

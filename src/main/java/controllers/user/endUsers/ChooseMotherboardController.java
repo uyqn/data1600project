@@ -1,7 +1,10 @@
 package controllers.user.endUsers;
 
 import components.Component;
+import components.Computer;
 import components.Motherboard;
+import components.NotCompatibleException;
+import controllers.guiManager.DialogBox;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -57,6 +60,12 @@ public class ChooseMotherboardController implements Initializable {
     @FXML
     private TableColumn<Motherboard, Integer> RamSlotColumn;
 
+    @FXML
+    private TreeView<String> treeView;
+
+    @FXML
+    private Label priceLabel;
+
 
     @FXML
     private ChoiceBox<String> filterBox;
@@ -99,6 +108,11 @@ public class ChooseMotherboardController implements Initializable {
 
         tableView.setItems(mbList);
 
+        try{
+            treeView = App.computer.setTreeView(treeView);
+            treeView.refresh();
+            priceLabel.setText("Total price: " + App.computer.getPrice() + " NOK");
+        } catch (NullPointerException ignored){}
     }
 
     @FXML
@@ -157,6 +171,12 @@ public class ChooseMotherboardController implements Initializable {
 
     @FXML
     void GoBack(ActionEvent event) throws IOException {
+        if(App.computer == null){
+            App.computer = new Computer();
+        }
+        try {
+            App.computer.setMotherboard((Motherboard) tableView.getSelectionModel().getSelectedItem());
+        } catch (NotCompatibleException | NullPointerException ignored){}
 
         Parent view = FXMLLoader.load(getClass().getResource("/main/user/endUsers/ChooseGpu.fxml"));
 
@@ -165,20 +185,25 @@ public class ChooseMotherboardController implements Initializable {
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         window.setScene(scene);
         window.show();
-
     }
 
     @FXML
     void GoNext(ActionEvent event) throws IOException {
+        if(App.computer == null){
+            App.computer = new Computer();
+        }
+        try {
+            App.computer.setMotherboard((Motherboard) tableView.getSelectionModel().getSelectedItem());
 
-        Parent view = FXMLLoader.load(getClass().getResource("/main/user/endUsers/ChooseMemory.fxml"));
+            Parent view = FXMLLoader.load(getClass().getResource("/main/user/endUsers/ChooseMemory.fxml"));
 
-        Scene scene = new Scene(view);
+            Scene scene = new Scene(view);
 
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-        window.setScene(scene);
-        window.show();
-
-
+            Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+            window.setScene(scene);
+            window.show();
+        } catch (NotCompatibleException e){
+            DialogBox.error("Not compatible", null, e.getMessage());
+        }
     }
 }

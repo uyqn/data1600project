@@ -1,6 +1,7 @@
 package controllers.user.endUsers;
 
 import components.Component;
+import components.Computer;
 import components.GPU;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
@@ -49,6 +50,11 @@ public class ChooseGpuController implements Initializable {
     @FXML
     private TableColumn<GPU, String> BoostClockColumn;
 
+    @FXML
+    private TreeView<String> treeView;
+
+    @FXML
+    private Label priceLabel;
 
     @FXML
     private ChoiceBox<String> filterBox;
@@ -87,8 +93,12 @@ public class ChooseGpuController implements Initializable {
         MemoryTypeColumn.setCellValueFactory(new PropertyValueFactory<GPU, String>("memoryType"));
         BoostClockColumn.setCellValueFactory(new PropertyValueFactory<GPU, String>("boostSpeed"));
 
-
         tableView.setItems(gpuList);
+        try{
+            treeView = App.computer.setTreeView(treeView);
+            treeView.refresh();
+            priceLabel.setText("Total price: " + App.computer.getPrice() + " NOK");
+        } catch (NullPointerException ignored){}
     }
 
     @FXML
@@ -143,7 +153,11 @@ public class ChooseGpuController implements Initializable {
 
     @FXML
     void GoBack(ActionEvent event) throws IOException {
+        if(App.computer == null){
+            App.computer = new Computer();
+        }
 
+        App.computer.setGpu((GPU) tableView.getSelectionModel().getSelectedItem());
         Parent view = FXMLLoader.load(getClass().getResource("/main/user/endUsers/buildPc.fxml"));
 
         Scene scene = new Scene(view);
@@ -151,11 +165,15 @@ public class ChooseGpuController implements Initializable {
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         window.setScene(scene);
         window.show();
-
     }
 
     @FXML
     void GoNext(ActionEvent event) throws IOException {
+        if(App.computer == null){
+            App.computer = new Computer();
+        }
+
+        App.computer.setGpu((GPU) tableView.getSelectionModel().getSelectedItem());
 
         Parent view = FXMLLoader.load(getClass().getResource("/main/user/endUsers/ChooseMotherboard.fxml"));
 

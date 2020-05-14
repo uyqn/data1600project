@@ -2,6 +2,7 @@ package controllers.user.endUsers;
 
 import components.CPU;
 import components.Component;
+import components.Computer;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -30,28 +31,28 @@ public class BuildPcController implements Initializable {
     private TableView<Component> tableView;
 
     @FXML
-    private TableColumn<CPU, String> ManufacturerColumn;
+    private TableColumn<Component, String> ManufacturerColumn;
 
     @FXML
-    private TableColumn<CPU, String> ModelColumn;
+    private TableColumn<Component, String> ModelColumn;
 
     @FXML
-    private TableColumn<CPU, Double> PriceColumn;
+    private TableColumn<Component, Double> PriceColumn;
 
     @FXML
-    private TableColumn<CPU, String> SocketColumn;
+    private TableColumn<Component, String> SocketColumn;
 
     @FXML
-    private TableColumn<CPU, Integer> CoreCountColumn;
+    private TableColumn<Component, Integer> CoreCountColumn;
 
     @FXML
-    private TableColumn<CPU, Double> CoreClockColumn;
+    private TableColumn<Component, Double> CoreClockColumn;
 
     @FXML
-    private TableColumn<CPU, Double> BoostClockColumn;
+    private TableColumn<Component, Double> BoostClockColumn;
 
     @FXML
-    private TableColumn<CPU, Double> PowerColumn;
+    private TableColumn<Component, Double> PowerColumn;
 
     @FXML
     private ChoiceBox<String> filterBox;
@@ -60,7 +61,7 @@ public class BuildPcController implements Initializable {
     private TextField filterText;
 
     @FXML
-    private TreeView<String> treeView;
+    private TreeView<String> treeView = new TreeView<>();
 
     @FXML
     private Label priceLabel;
@@ -81,16 +82,21 @@ public class BuildPcController implements Initializable {
 
         //Setter opp kolonner
 
-        ManufacturerColumn.setCellValueFactory(new PropertyValueFactory<CPU, String>("manufacturer"));
-        ModelColumn.setCellValueFactory(new PropertyValueFactory<CPU, String>("model"));
-        PriceColumn.setCellValueFactory(new PropertyValueFactory<CPU, Double>("price"));
-        SocketColumn.setCellValueFactory(new PropertyValueFactory<CPU, String>("socket"));
-        CoreCountColumn.setCellValueFactory(new PropertyValueFactory<CPU, Integer>("coreCount"));
-        CoreClockColumn.setCellValueFactory(new PropertyValueFactory<CPU, Double>("coreClock"));
-        BoostClockColumn.setCellValueFactory(new PropertyValueFactory<CPU, Double>("boostClock"));
-        PowerColumn.setCellValueFactory(new PropertyValueFactory<CPU, Double>("powerConsumption"));
+        ManufacturerColumn.setCellValueFactory(new PropertyValueFactory<>("manufacturer"));
+        ModelColumn.setCellValueFactory(new PropertyValueFactory<>("model"));
+        PriceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
+        SocketColumn.setCellValueFactory(new PropertyValueFactory<>("socket"));
+        CoreCountColumn.setCellValueFactory(new PropertyValueFactory<>("coreCount"));
+        CoreClockColumn.setCellValueFactory(new PropertyValueFactory<>("coreClock"));
+        BoostClockColumn.setCellValueFactory(new PropertyValueFactory<>("boostClock"));
+        PowerColumn.setCellValueFactory(new PropertyValueFactory<>("powerConsumption"));
 
         tableView.setItems(cpuList);
+        try{
+            treeView = App.computer.setTreeView(treeView);
+            treeView.refresh();
+            priceLabel.setText("Total price: " + App.computer.getPrice() + " NOK");
+        } catch (NullPointerException ignored){}
     }
 
 
@@ -157,11 +163,14 @@ public class BuildPcController implements Initializable {
 
     @FXML
     void AddGpu(ActionEvent event) throws IOException {
-        App.computer.add(tableView.getSelectionModel().getSelectedItem());
+        if(App.computer == null){
+            App.computer = new Computer();
+        }
+
+        App.computer.setCpu((CPU) tableView.getSelectionModel().getSelectedItem());
+
         Parent view = FXMLLoader.load(getClass().getResource("/main/user/endUsers/ChooseGpu.fxml"));
-
         Scene scene = new Scene(view);
-
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         window. setScene(scene);
         window.show();
@@ -169,7 +178,6 @@ public class BuildPcController implements Initializable {
 
     @FXML
     void backHome(ActionEvent event) throws IOException {
-
         Parent view = FXMLLoader.load(getClass().getResource("/main/user/endUser.fxml"));
 
         Scene scene = new Scene(view);
@@ -177,7 +185,6 @@ public class BuildPcController implements Initializable {
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         window.setScene(scene);
         window.show();
-
     }
 
 }

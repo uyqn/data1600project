@@ -519,7 +519,7 @@ public class GPU extends Component implements Serializable, Compatible {
             throw new IllegalArgumentException("This component can only connect to a Motherboard");
         }
 
-        return ((Motherboard) motherboard).getBussType().equals(getBussType());
+        return ((Motherboard) motherboard).getBussSlots() == getBussSlots();
     }
 }
 
