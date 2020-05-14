@@ -188,19 +188,16 @@ public class ComponentController implements Initializable {
     @FXML
     void addCooler(ActionEvent event) {
         try {
-            if (validate(addCoolerGui, "manufacturer", "model", "width","depth","height","baseRpm","maxRpm","baseNoise", "maxNoise", "power", "price")) {
+            if (validate(addCoolerGui, "manufacturer", "model", "baseRpm","maxRpm","baseNoise", "maxNoise", "power", "price")) {
 
                 String manufacturer = getString(addCoolerGui, "manufacturer");
             String model = getString(addCoolerGui, "model");
-            String dimension = getString(addCoolerGui, "width") + " x " +
-                    getString(addCoolerGui, "depth") + " x " +
-                    getString(addCoolerGui, "height");
             String rpm = getString(addCoolerGui, "baseRpm") + " - " + getString(addCoolerGui, "maxRpm");
             String noise = getString(addCoolerGui, "baseNoise") + " - " + getString(addCoolerGui, "maxNoise");
             double power = getDouble(addCoolerGui, "power");
             double price = getDouble(addCoolerGui, "price");
 
-            Cooler cooler = new Cooler(manufacturer, model, dimension, rpm, noise, power, price);
+            Cooler cooler = new Cooler(manufacturer, model, rpm, noise, power, price);
 
             DialogBox.info("Cooler successfully added",
                     "The following cooler was added:",
@@ -211,9 +208,6 @@ public class ComponentController implements Initializable {
             resetGui(addCoolerGui,
                     "manufacturer",
                     "model",
-                    "width",
-                    "depth",
-                    "height",
                     "baseRpm",
                     "maxRpm",
                     "baseNoise",
@@ -615,7 +609,7 @@ public class ComponentController implements Initializable {
         Limit.text2double(addStorageGui, "price");
 
         Limit.text2int(addCoolerGui, "baseRpm", "maxRpm");
-        Limit.text2double(addCoolerGui, "width", "depth", "baseNoise", "maxNoise", "height", "power", "price");
+        Limit.text2double(addCoolerGui, "baseNoise", "maxNoise", "power", "price");
 
         Limit.text2double(addPowerSupplyGui, "price");
         Limit.text2int(addPowerSupplyGui, "powerCapacity");

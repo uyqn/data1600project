@@ -20,62 +20,31 @@ public class Cooler extends Component implements Serializable {
     private transient SimpleDoubleProperty powerConsumption = new SimpleDoubleProperty();
 
     public Cooler(String[] csv){
-        super(csv[1], csv[2], Double.parseDouble(csv[7]));
+        super(csv[1], csv[2], Double.parseDouble(csv[6]));
 
-        setDimension(csv[3]);
-        setRpmString(csv[4]);
-        setNoise(csv[5]);
-        setPowerConsumption(Double.parseDouble(csv[6]));
+        setRpmString(csv[3]);
+        setNoise(csv[4]);
+        setPowerConsumption(Double.parseDouble(csv[5]));
     }
 
     public Cooler(String manufacturer,
                    String model,
-                   String dimension,
                    String rpm,
                    String noise,
                    double powerConsumption,
                    double price) {
         super(manufacturer, model, price);
-        super.setDimension(dimension);
         setRpmString(rpm);
         setNoise(noise);
         setPowerConsumption(powerConsumption);
     }
 
-    public Cooler(String manufacturer,
-                  String model,
-                  double width,
-                  double depth,
-                  double height,
-                  int coreRpm,
-                  int maxRpm,
-                  double coreNoise,
-                  double maxNoise,
-                  double powerConsumption,
-                  double price) {
-        super(manufacturer, model, price);
-        super.setDimension(width, depth, height);
-        setCoreRpm(coreRpm);
-        setMaxRpm(maxRpm);
-        setCoreNoise(coreNoise);
-        setMaxNoise(maxNoise);
-        setPowerConsumption(powerConsumption);
-    }
 
     @Override
     public String getComponentType() {
         return COMPONENT_TYPE;
     }
 
-    @Override
-    public void setDimension(String dimension){
-        if(Extract.doubles(dimension).size() < 3){
-            throw new IllegalArgumentException("All three fields of dimension must be specified");
-        }
-        super.setWidth(Extract.doubles(dimension).get(0));
-        super.setDepth(Extract.doubles(dimension).get(1));
-        super.setHeight(Extract.doubles(dimension).get(2));
-    }
 
     public double getCoreNoise() {
         return coreNoise.getValue();
@@ -441,7 +410,6 @@ public class Cooler extends Component implements Serializable {
                 getComponentType(),
                 getManufacturer(),
                 getModel(),
-                getDimension(),
                 getRpmString(),
                 getNoise(),
                 getPowerConsumption(),
@@ -452,12 +420,11 @@ public class Cooler extends Component implements Serializable {
     @Override
     public String toString() {
         return String.format("%s: %s\n" +
-                        "Dimension: %s cm\n" +
                         "RPM: %s RPM\n" +
                         "Noise: %s dBA\n" +
                         "Power consumption: %s W\n" +
                         "Price: %s NOK",
-                COMPONENT_TYPE, getName(), getDimension(), getRpmString(), getNoise(), getPowerConsumption(),
+                COMPONENT_TYPE, getName(), getRpmString(), getNoise(), getPowerConsumption(),
                 String.format("%.2f",getPrice())
                 );
     }
@@ -465,12 +432,12 @@ public class Cooler extends Component implements Serializable {
     @Override
     public String getSpec() {
         return String.format(
-                        "Dimension: %s cm\n" +
+
                         "RPM: %s RPM\n" +
                         "Noise: %s dBA\n" +
                         "Power consumption: %s W\n" +
                         "Price: %s NOK",
-                getDimension(), getRpmString(), getNoise(), getPowerConsumption(),
+                 getRpmString(), getNoise(), getPowerConsumption(),
                 String.format("%.2f",getPrice())
         );
     }
@@ -482,7 +449,6 @@ public class Cooler extends Component implements Serializable {
         objectOutputStream.writeUTF(getManufacturer());
         objectOutputStream.writeUTF(getModel());
         objectOutputStream.writeDouble(getPrice());
-        objectOutputStream.writeUTF(getDimension());
 
         objectOutputStream.writeInt(getCoreRpm());
         objectOutputStream.writeInt(getMaxRpm());
@@ -495,7 +461,6 @@ public class Cooler extends Component implements Serializable {
         String manufacturer = objectInputStream.readUTF();
         String model = objectInputStream.readUTF();
         double price = objectInputStream.readDouble();
-        String dimension = objectInputStream.readUTF();
 
         int coreRPM = objectInputStream.readInt();
         int maxRPM = objectInputStream.readInt();
@@ -512,7 +477,6 @@ public class Cooler extends Component implements Serializable {
         super.setManufacturer(manufacturer);
         super.setModel(model);
         super.setPrice(price);
-        super.setDimension(dimension);
         setCoreRpm(coreRPM);
         setMaxRpm(maxRPM);
         setCoreNoise(coreNoise);
