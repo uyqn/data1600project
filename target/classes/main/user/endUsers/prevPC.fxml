@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="665.0" prefWidth="805.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.user.endUsers.PrevPcController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="665.0" prefWidth="805.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.user.endUsers.PrevPcController">
    <center>
       <GridPane BorderPane.alignment="CENTER">
          <columnConstraints>
@@ -38,8 +38,8 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <Button fx:id="backHome" mnemonicParsing="false" onAction="#backHome" text="Home" GridPane.rowIndex="3" />
-            <Button fx:id="addPc" mnemonicParsing="false" onAction="#addPc" text="Add new PC" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
+            <Button fx:id="backHome" mnemonicParsing="false" text="Home" GridPane.rowIndex="3" />
+            <Button fx:id="addPc" mnemonicParsing="false" text="Add new PC" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
             <GridPane prefHeight="270.0" prefWidth="766.0" GridPane.rowIndex="1">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="427.0" minWidth="10.0" prefWidth="404.6000244140625" />
