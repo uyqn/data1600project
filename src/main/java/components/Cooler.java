@@ -438,7 +438,7 @@ public class Cooler extends Component implements Serializable {
     @Override
     public String toCSV(){
         return Formatter.toCSV(
-                COMPONENT_TYPE,
+                getComponentType(),
                 getManufacturer(),
                 getModel(),
                 getDimension(),

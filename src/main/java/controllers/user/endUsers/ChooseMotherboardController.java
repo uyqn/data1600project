@@ -208,8 +208,9 @@ public class ChooseMotherboardController implements Initializable {
             Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
             window.setScene(scene);
             window.show();
-        } catch (NotCompatibleException e){
+        } catch (NotCompatibleException e) {
             DialogBox.error("Not compatible", null, e.getMessage());
-        } catch (NullPointerException ignored){}
+            tableView.getSelectionModel().clearSelection();
+        }
     }
 }

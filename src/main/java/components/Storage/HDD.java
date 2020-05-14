@@ -27,7 +27,6 @@ public class HDD extends Storage implements Serializable {
         super(manufacturer, model, capacity, price);
 
         setRpm(rpm);
-
     }
 
     @Override
@@ -38,16 +37,16 @@ public class HDD extends Storage implements Serializable {
     @Override
     public String toString() {
         return getComponentType() + ": " + getName() + "\n" +
-                "Capacity: " + getCapacity() + "GB\n" +
+                "Capacity: " + getCapacity() + " GB\n" +
                 "RPM: " + getRpm() + "\n" +
-                "Price: " + String.format("%.2f",getPrice());
+                "Price: " + String.format("%.2f",getPrice()) + " NOK";
     }
 
     @Override
     public String getSpec() {
-        return "Capacity: " + getCapacity() + "GB\n" +
+        return "Capacity: " + getCapacity() + " GB\n" +
                 "RPM: " + getRpm() + "\n" +
-                "Price: " + String.format("%.2f",getPrice());
+                "Price: " + String.format("%.2f",getPrice()) + " NOK";
     }
 
     @Override

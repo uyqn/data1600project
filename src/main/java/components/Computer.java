@@ -54,7 +54,8 @@ public class Computer extends ListableList<Component> implements Listable, ItemL
         components.clear();
         components.addAll(getCpu(), getGpu(), getMotherboard());
         components.addAll(getMemories());
-        components.addAll(getHdd(), getCooler(), getPsu(), getCabin(), getMouse(), getMonitor(), getKeyboard());
+        components.addAll(getSsd(), getHdd(), getCooler(), getPsu(), getCabin(), getMouse(), getMonitor(),
+                getKeyboard());
         components.removeIf(Objects::isNull);
     }
 
@@ -93,41 +94,6 @@ public class Computer extends ListableList<Component> implements Listable, ItemL
         return treeView;
     }
 
-    public void add(Component component){
-        categorize(component);
-    }
-
-    private void categorize(Component component){
-        switch (component.getComponentType()) {
-            case Cabin.COMPONENT_TYPE:
-                setCabin((Cabin) component);
-            case Cooler.COMPONENT_TYPE:
-                setCooler((Cooler) component);
-            case CPU.COMPONENT_TYPE:
-                setCpu((CPU) component);
-            case GPU.COMPONENT_TYPE:
-                setGpu((GPU) component);
-            case Keyboard.COMPONENT_TYPE:
-                setKeyboard((Keyboard) component);
-            case Memory.COMPONENT_TYPE:
-                addMemory((Memory) component);
-            case Monitor.COMPONENT_TYPE:
-                setMonitor((Monitor) component);
-            case Motherboard.COMPONENT_TYPE:
-                setMotherboard((Motherboard) component);
-            case Mouse.COMPONENT_TYPE:
-                setMouse((Mouse) component);
-            case PSU.COMPONENT_TYPE:
-                setPsu((PSU) component);
-            case SSD.COMPONENT_TYPE:
-                setSsd((SSD) component);
-            case HDD.COMPONENT_TYPE:
-                setHdd((HDD) component);
-            default:
-                throw new IllegalArgumentException("Unable to recognize component");
-        }
-    }
-
     public CPU getCpu(){
         return this.cpu.getValue();
     }
@@ -139,7 +105,7 @@ public class Computer extends ListableList<Component> implements Listable, ItemL
     public void setCpu(CPU cpu) {
         if(getMotherboard() != null){
             if(!getMotherboard().compatible(cpu)){
-                throw new IllegalArgumentException("Motherboard: " + this.motherboard.getValue().getName() +
+                throw new NotCompatibleException("Motherboard: " + this.motherboard.getValue().getName() +
                         "\n is not compatible with \n" +
                         "CPU: " + cpu.getName());
             }
@@ -243,6 +209,14 @@ public class Computer extends ListableList<Component> implements Listable, ItemL
         return getMemory(index).getName();
     }
 
+    public int getTotalRam(){
+        int totalRam = 0;
+        for(Memory memory : getMemories()){
+            totalRam += memory.getRam();
+        }
+        return totalRam;
+    }
+
     public void addMemory(Memory memory){
         if(getMotherboard() != null){
             if(!getMotherboard().compatible(memory)){
@@ -254,11 +228,15 @@ public class Computer extends ListableList<Component> implements Listable, ItemL
                 throw new NotEnoughRamSlotsException("No available memory slots left on\n" +
                         "this motherboard: " + getMotherboard().getName());
             }
-            else {
-                getMemories().add(memory);
-                sortList();
-                availableRamSlots--;
+            if(getMotherboard().getMaxRamSize() < getTotalRam() + memory.getRam()){
+                throw new RamExceededException(getMotherboard().getName() + "cannot support the attempted total input" +
+                        " of memory\n " + getMotherboard().getName() + " Max RAM size: " + getMotherboard().getMaxRamSize() + "\n" +
+                        "Attempted total input of RAM: " + (getTotalRam() + memory.getRam()));
             }
+
+            getMemories().add(memory);
+            sortList();
+            availableRamSlots--;
         } else {
             getMemories().add(memory);
             sortList();

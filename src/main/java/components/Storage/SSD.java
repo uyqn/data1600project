@@ -64,13 +64,13 @@ public class SSD extends Storage implements Serializable {
     public String toString() {
         return getComponentType() + ": " + getName() + "\n" +
                 "Capacity: " + getCapacity() + "GB\n" +
-                "Price: " + String.format("%.2f",getPrice());
+                "Price: " + String.format("%.2f",getPrice()) + " NOK";
     }
 
     @Override
     public String getSpec() {
         return "Capacity: " + getCapacity() + "GB\n" +
-                "Price: " + String.format("%.2f",getPrice());
+                "Price: " + String.format("%.2f",getPrice()) + " NOK";
     }
 
     @Override

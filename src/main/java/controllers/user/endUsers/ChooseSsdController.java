@@ -1,7 +1,9 @@
 package controllers.user.endUsers;
 
 import components.Component;
+import components.NotCompatibleException;
 import components.Storage.SSD;
+import controllers.guiManager.DialogBox;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -40,13 +42,17 @@ public class ChooseSsdController implements Initializable {
     @FXML
     private TableColumn<SSD, Double> CapacityColumn;
 
-
-
     @FXML
     private ChoiceBox<String> filterBox;
 
     @FXML
     private TextField filterText;
+
+    @FXML
+    private TreeView<String> treeView;
+
+    @FXML
+    private Label priceLabel;
 
     ObservableList<Component> ssdList = App.listableList.getList().stream().filter(component ->
             component.getComponentType().equals(SSD.COMPONENT_TYPE)
@@ -54,8 +60,7 @@ public class ChooseSsdController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
-        addBtn.disableProperty().bind(Bindings.isEmpty(tableView.getSelectionModel().getSelectedItems()));
+        nextBtn.disableProperty().bind(Bindings.isEmpty(tableView.getSelectionModel().getSelectedItems()));
 
         filterBox.getItems().setAll(
                 "Manufacturer",
@@ -64,7 +69,6 @@ public class ChooseSsdController implements Initializable {
                 "Capacity (GB) ≤");
         filterBox.setValue(null);
         filterText.setText(null);
-
 
         //Setter opp kolonner
         ManufacturerColumn.setCellValueFactory(new PropertyValueFactory<SSD, String>("manufacturer"));
@@ -77,6 +81,16 @@ public class ChooseSsdController implements Initializable {
                 ssdList
         );
 
+        try{
+            treeView = App.computer.setTreeView(treeView);
+            treeView.refresh();
+            priceLabel.setText("Total price: " + App.computer.getPrice() + " NOK");
+            if(treeView.getTreeItem(4).getValue().contains("HDD") ||
+                    treeView.getTreeItem(4).getValue().contains("SSD")) {
+                nextBtn.disableProperty().unbind();
+                nextBtn.setDisable(false);
+            }
+        } catch (NullPointerException ignored){}
     }
 
     @FXML
@@ -123,36 +137,41 @@ public class ChooseSsdController implements Initializable {
 
     @FXML
     void GoBack(ActionEvent event) throws IOException {
+        try{
+            if(tableView.getSelectionModel().getSelectedItem() != null) {
+                App.computer.setSsd((SSD) tableView.getSelectionModel().getSelectedItem());
+            }
 
-        Parent view = FXMLLoader.load(getClass().getResource("/main/user/endUsers/ChooseHdd.fxml"));
+            Parent view = FXMLLoader.load(getClass().getResource("/main/user/endUsers/ChooseHdd.fxml"));
 
-        Scene scene = new Scene(view);
+            Scene scene = new Scene(view);
 
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-        window.setScene(scene);
-        window.show();
-
+            Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+            window.setScene(scene);
+            window.show();
+        } catch (NotCompatibleException e){
+            DialogBox.error("Not compatible!", null, e.getMessage());
+            tableView.getSelectionModel().clearSelection();
+        }
     }
 
     @FXML
     void GoNext(ActionEvent event) throws IOException {
+        try{
+            if(tableView.getSelectionModel().getSelectedItem() != null) {
+                App.computer.setSsd((SSD) tableView.getSelectionModel().getSelectedItem());
+            }
 
-        Parent view = FXMLLoader.load(getClass().getResource("/main/user/endUsers/ChooseCooler.fxml"));
+            Parent view = FXMLLoader.load(getClass().getResource("/main/user/endUsers/ChooseCooler.fxml"));
 
-        Scene scene = new Scene(view);
+            Scene scene = new Scene(view);
 
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-        window.setScene(scene);
-        window.show();
-
-    }
-
-    @FXML
-    void addEvt(ActionEvent event) throws IOException {
-
-        ////HER GÅR KODE FOR Å LEGGE TIL I COMPUTER////
-        ///////////////////////////////////////////////
-
-        tableView.getSelectionModel().clearSelection();
+            Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+            window.setScene(scene);
+            window.show();
+        } catch (NotCompatibleException e){
+            DialogBox.error("Not compatible!", null, e.getMessage());
+            tableView.getSelectionModel().clearSelection();
+        }
     }
 }

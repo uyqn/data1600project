@@ -195,6 +195,7 @@ public class ChooseGpuController implements Initializable {
             window.show();
         } catch (NotCompatibleException e) {
             DialogBox.error("Not compatible!", null, e.getMessage());
+            tableView.getSelectionModel().clearSelection();
         }
     }
 

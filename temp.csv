@@ -12,8 +12,8 @@ Motherboard,ASUS,ROG MAXIMUS XI HERO,LGA1151,PCIe 3.0x16,4,DDR4,64,ATX,4869.0
 Memory,HyperX,Predator,1247.0,16,DDR4,3200
 Memory,G.Skill,Trident Z Neo,2749.0,32,DDR4,3600
 Memory,Corsair,Vengeance,1354.0,16,DDR4,2666
-HDD,Seagate,Firecuda,5400,500,647.0
-HDD,Seagate,Firecuda,5400,1000,609.0
+HDD,Seagate,Firecuda,500,5400,647.0
+HDD,Seagate,Firecuda,1000,5400,609.0
 HDD,Samsung,860 Evo,500,600,790.0
 SSD,Samsung,970 Evo,500,999.0
 SSD,Kingston,A400,400,450.0

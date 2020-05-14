@@ -20,8 +20,8 @@
    <center>
       <GridPane prefHeight="418.0">
          <columnConstraints>
-            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="560.0" minWidth="466.0" prefWidth="494.0" />
-            <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="560.0" minWidth="463.0" prefWidth="463.0" />
+            <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="297.0" minWidth="259.0" prefWidth="297.0" />
          </columnConstraints>
          <rowConstraints>
             <RowConstraints fillHeight="false" />
