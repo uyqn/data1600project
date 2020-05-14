@@ -161,6 +161,9 @@ public class ChooseHddController implements Initializable {
 
     @FXML
     void addEvt(ActionEvent event) throws IOException{
+        ////HER GÅR KODE FOR Å LEGGE TIL I COMPUTER////
+        ///////////////////////////////////////////////
 
+        tableView.getSelectionModel().clearSelection();
     }
 }

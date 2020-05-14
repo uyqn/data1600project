@@ -3,6 +3,9 @@ package controllers.user.endUsers;
 import components.Component;
 import components.Memory;
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.ListProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -46,12 +49,12 @@ public class ChooseMemoryController implements Initializable {
     @FXML
     private TableColumn<Memory, Integer> SpeedColumn;
 
-
     @FXML
     private ChoiceBox<String> filterBox;
 
     @FXML
     private TextField filterText;
+
 
     ObservableList<Component> memoryList = App.listableList.getList().stream().filter(component ->
             component.getComponentType().equals(Memory.COMPONENT_TYPE)
@@ -70,7 +73,8 @@ public class ChooseMemoryController implements Initializable {
         filterText.setText(null);
 
         //Enabler next-button idet man velger en komponent
-        nextBtn.disableProperty().bind(Bindings.isEmpty(tableView.getSelectionModel().getSelectedItems()));
+        nextBtn.setDisable(true);
+        addBtn.disableProperty().bind(Bindings.isEmpty(tableView.getSelectionModel().getSelectedItems()));
 
         //Setter opp kolonner
 
@@ -133,6 +137,9 @@ public class ChooseMemoryController implements Initializable {
     private Button nextBtn;
 
     @FXML
+    private Button addBtn;
+
+    @FXML
     void GoBack(ActionEvent event) throws IOException {
 
         Parent view = FXMLLoader.load(getClass().getResource("/main/user/endUsers/ChooseMotherboard.fxml"));
@@ -158,4 +165,15 @@ public class ChooseMemoryController implements Initializable {
 
 
     }
+
+    @FXML
+    void addEvt(ActionEvent event) throws IOException {
+
+        //Fjerner Selection idet man trykker på add
+        tableView.getSelectionModel().clearSelection();
+
+        nextBtn.setDisable(false);
+
+    }
+
 }
