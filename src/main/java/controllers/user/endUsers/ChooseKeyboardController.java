@@ -2,7 +2,9 @@ package controllers.user.endUsers;
 
 import components.Component;
 import components.Keyboard;
+import components.Mouse;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,9 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import main.App;
@@ -40,9 +40,27 @@ public class ChooseKeyboardController implements Initializable {
     private TableColumn<Keyboard, Boolean> TactileColumn;
 
 
+    @FXML
+    private ChoiceBox<String> filterBox;
+
+    @FXML
+    private TextField filterText;
+
+    ObservableList<Component> keyboardList = App.listableList.getList().stream().filter(component ->
+            component.getComponentType().equals(Keyboard.COMPONENT_TYPE)
+    ).collect(Collectors.toCollection(FXCollections::observableArrayList));
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
+        filterBox.getItems().setAll(
+                "Manufacturer",
+                "Model",
+                "Tactile",
+                "Not tactile",
+                "Price (NOK) ≤");
+        filterBox.setValue(null);
+        filterText.setText(null);
         //Setter opp kolonner
 
         ManufacturerColumn.setCellValueFactory(new PropertyValueFactory<Keyboard, String>("manufacturer"));
@@ -87,7 +105,79 @@ public class ChooseKeyboardController implements Initializable {
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         window.setScene(scene);
         window.show();
+    }
 
+    @FXML
+    void filterEvt(ActionEvent event) {
+        int index = filterBox.getSelectionModel().getSelectedIndex();
+        if (index == 2 || index == 3) {
+            filterText.setDisable(true);
+            tableView.setItems(keyboardList.stream().filter(component -> {
+                switch (index) {
+                    case 2:
+                        return component.getTactile();
+                    case 3:
+                        return !component.getTactile();
+                    default:
+                        return false;
+                }
+            }).collect(Collectors.toCollection(FXCollections::observableArrayList)));
+        } else {
+            filterText.setDisable(false);
 
+            filterText.setOnKeyReleased(keyEvent -> {
+                String search = filterText.getText().toLowerCase();
+                int filterIndex = filterBox.getSelectionModel().getSelectedIndex();
+
+                tableView.setItems(keyboardList.stream().filter(component -> {
+                    if (search.isBlank() || search.isEmpty() || filterBox.getSelectionModel().getSelectedItem() == null) {
+                        return true;
+                    } else {
+                        switch (filterIndex) {
+                            case 0:
+                                return component.getManufacturer().toLowerCase().contains(search);
+                            case 1:
+                                return component.getModel().toLowerCase().contains(search);
+                            case 4:
+                                try {
+                                    return component.getPrice() <= Double.parseDouble(search);
+                                } catch (NumberFormatException e) {
+                                    return false;
+                                }
+                            default:
+                                return false;
+                        }
+                    }
+                }).collect(Collectors.toCollection(FXCollections::observableArrayList)));
+            });
+
+            if (filterText.getText() == null) {
+                tableView.setItems(keyboardList);
+            } else {
+                String search = filterText.getText().toLowerCase();
+                int filterIndex = filterBox.getSelectionModel().getSelectedIndex();
+
+                tableView.setItems(keyboardList.stream().filter(component -> {
+                    if (search.isBlank() || search.isEmpty() || filterBox.getSelectionModel().getSelectedItem() == null) {
+                        return true;
+                    } else {
+                        switch (filterIndex) {
+                            case 0:
+                                return component.getManufacturer().toLowerCase().contains(search);
+                            case 1:
+                                return component.getModel().toLowerCase().contains(search);
+                            case 4:
+                                try {
+                                    return component.getPrice() <= Double.parseDouble(search);
+                                } catch (NumberFormatException e) {
+                                    return false;
+                                }
+                            default:
+                                return false;
+                        }
+                    }
+                }).collect(Collectors.toCollection(FXCollections::observableArrayList)));
+            }
+        }
     }
 }
