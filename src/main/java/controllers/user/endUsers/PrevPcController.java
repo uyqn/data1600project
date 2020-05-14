@@ -35,24 +35,53 @@ public class PrevPcController implements Initializable {
     private Button addPc;
 
     @FXML
-    private TableView<Computer> computerView;
+    private TableColumn<Computer, String> gpuCol;
 
     @FXML
-    private TableColumn<Computer, String> nameCol;
+    private TableColumn<Computer, String> cpuCol;
 
     @FXML
-    private TableColumn<Computer, Double> priceComputerCol;
+    private TableColumn<Computer, String> memoryCol;
 
     @FXML
-    private Button selectPc;
+    private TableColumn<Computer, String> storageCol;
 
     @FXML
-    private TreeView<String> treeView=new TreeView<>();
+    private TableColumn<Computer, Double> priceCol;
+
+    @FXML
+    private Label priceLabel;
+
+    @FXML
+    private TreeView<String> treeView;
 
     private ObservableList<Computer> computerList=EndUser.listableList.getList();
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle){
+
+       computerList=EndUser.listableList.getList();
+
+        gpuCol.setCellValueFactory(new PropertyValueFactory<>("gpuName"));
+        cpuCol.setCellValueFactory(new PropertyValueFactory<>("cpuName"));
+        memoryCol.setCellValueFactory(new PropertyValueFactory<>("memoriesName"));
+        storageCol.setCellValueFactory(new PropertyValueFactory<>("ssdName"));
+        priceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
 
 
+    }
+
+    @FXML
+    void selectPc(ActionEvent event) throws IOException{
+
+        try{
+            treeView = App.computer.setTreeView(treeView);
+            treeView.refresh();
+
+        }catch (NullPointerException ignored){}
+
+
+    }
 
     @FXML
     void addPc(ActionEvent event) throws IOException {
@@ -74,44 +103,6 @@ public class PrevPcController implements Initializable {
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         window.setScene(scene);
         window.show();
-    }
-
-
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle){
-      /* filterBox.getItems().setAll("Name", "Price (NOK) ≤", "CPU", "GPU", "Motherboard", "Memory", "Storage", "Cooler", "Power supply", "Cabin", "Monitor", "Keyboard", "Mouse");
-       filterBox.setValue(null);*/
-
-       computerList=EndUser.listableList.getList();
-
-
-        nameCol.setCellValueFactory(new PropertyValueFactory<Computer, String >("name"));
-        priceComputerCol.setCellValueFactory(new PropertyValueFactory<Computer, Double>("price"));
-//        computerView.setItems(computerList);
-
-        try{
-            treeView = App.computer.setTreeView(treeView);
-            treeView.refresh();
-
-        }catch (NullPointerException ignored){}
-
-
-    }
-
-    @FXML
-    void selectPc(ActionEvent event) throws IOException{
-
-
-       // if ()
-
-
-
-
-
-        //treeView.setItems(computerView.getSelectionModel().getSelectedItem().getComponents());
-
-
     }
 
 }
