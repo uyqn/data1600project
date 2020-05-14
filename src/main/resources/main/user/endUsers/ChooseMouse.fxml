@@ -29,7 +29,7 @@
       </TableView>
       <Button fx:id="backBtn" layoutX="255.0" layoutY="338.0" mnemonicParsing="false" onAction="#GoBack" text="Back" />
       <Button fx:id="nextBtn" layoutX="306.0" layoutY="338.0" mnemonicParsing="false" onAction="#GoNext" text="Next" />
-      <ChoiceBox fx:id="filterBox" layoutX="41.0" layoutY="119.0" prefHeight="25.0" prefWidth="123.0" />
-      <TextField fx:id="filterText" layoutX="165.0" layoutY="119.0" prefHeight="25.0" prefWidth="404.0" />
+      <ChoiceBox fx:id="filterBox" onAction="#filterEvt" layoutX="41.0" layoutY="119.0" prefHeight="25.0" prefWidth="123.0" />
+      <TextField fx:id="filterText" layoutX="165.0" layoutY="119.0" onAction="#filterEvt" prefHeight="25.0" prefWidth="404.0" />
    </children>
 </AnchorPane>
