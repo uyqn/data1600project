@@ -23,10 +23,11 @@ import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 
-
 public class PrevPcController implements Initializable {
 
 
+    @FXML
+    private TableView<Computer> tableView;
 
     @FXML
     private Button backHome;
@@ -41,10 +42,10 @@ public class PrevPcController implements Initializable {
     private TableColumn<Computer, String> cpuCol;
 
     @FXML
-    private TableColumn<Computer, String> memoryCol;
+    private TableColumn<Computer, Integer> memoryCol;
 
     @FXML
-    private TableColumn<Computer, String> storageCol;
+    private TableColumn<Computer, Integer> storageCol;
 
     @FXML
     private TableColumn<Computer, Double> priceCol;
@@ -55,20 +56,23 @@ public class PrevPcController implements Initializable {
     @FXML
     private TreeView<String> treeView;
 
-    private ObservableList<Computer> computerList=EndUser.listableList.getList();
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle){
 
-       computerList=EndUser.listableList.getList();
 
         gpuCol.setCellValueFactory(new PropertyValueFactory<>("gpuName"));
         cpuCol.setCellValueFactory(new PropertyValueFactory<>("cpuName"));
-        memoryCol.setCellValueFactory(new PropertyValueFactory<>("memoriesName"));
-        storageCol.setCellValueFactory(new PropertyValueFactory<>("ssdName"));
+        memoryCol.setCellValueFactory(new PropertyValueFactory<>("totalRam"));
+        storageCol.setCellValueFactory(new PropertyValueFactory<>("totalStorage"));
         priceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
 
+        tableView.setItems(EndUser.listableList.getList());
 
+        try{
+            treeView=App.computer.setTreeView(treeView);
+            treeView.refresh();
+            priceLabel.setText("Total price: "+ App.computer.getPrice()+" NOK");
+        }catch (NullPointerException ignore){}
     }
 
     @FXML

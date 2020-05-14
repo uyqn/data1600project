@@ -41,6 +41,10 @@ public class EndUser extends User {
         listableList.add(computer);
     }
 
+    public ObservableList<Computer> getComputerList(){
+        return listableList.getList();
+    }
+
     @Override
     public void remove(Computer computer) {
         listableList.remove(computer);

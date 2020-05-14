@@ -16,6 +16,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import main.App;
+import users.EndUser;
 
 import java.io.IOException;
 import java.net.URL;
@@ -83,8 +84,6 @@ public class ChooseKeyboardController implements Initializable {
             priceLabel.setText("Total price: "+ App.computer.getPrice()+" NOK");
         }catch (NullPointerException ignore){}
 
-
-
     }
 
     @FXML
@@ -119,6 +118,9 @@ public class ChooseKeyboardController implements Initializable {
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(scene);
         window.show();
+
+        EndUser.listableList.add(App.computer);
+        App.computer=null;
     }
 
     @FXML
