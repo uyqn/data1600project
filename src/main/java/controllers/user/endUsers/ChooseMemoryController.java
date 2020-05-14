@@ -3,6 +3,7 @@ package controllers.user.endUsers;
 import components.Component;
 import components.Memory;
 import components.NotCompatibleException;
+import components.NotEnoughRamSlotsException;
 import controllers.guiManager.DialogBox;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
@@ -199,6 +200,11 @@ public class ChooseMemoryController implements Initializable {
             nextBtn.setDisable(false);
         } catch (NotCompatibleException e){
             DialogBox.error("Not compatible!", null, e.getMessage());
+        } catch (NotEnoughRamSlotsException e){
+            DialogBox.error("Not enough ram slots!", null, e.getMessage());
+            tableView.getSelectionModel().clearSelection();
+            addBtn.disableProperty().unbind();
+            addBtn.setDisable(true);
         }
     }
 

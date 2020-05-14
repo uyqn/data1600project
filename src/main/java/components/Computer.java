@@ -211,7 +211,7 @@ public class Computer extends ListableList<Component> implements Listable, ItemL
 
         if(getMemories().size() > 0){
             if(getMemories().size() > motherboard.getRamSlots()){
-                throw new NotCompatibleException("Motherboard: " + motherboard.getName() +
+                throw new NotEnoughRamSlotsException("Motherboard: " + motherboard.getName() +
                         "\ndoes not have enough slots for memories to house all the memories added\n" +
                         motherboard.getName() + " has " + motherboard.getRamSlots() + " available slots \n" +
                         "This computer currently has " + getMemories().size() + " memories");
@@ -251,7 +251,7 @@ public class Computer extends ListableList<Component> implements Listable, ItemL
                         "RAM: " + memory.getName());
             }
             if(availableRamSlots <= 0) {
-                throw new NotCompatibleException("No available memory slots left on\n" +
+                throw new NotEnoughRamSlotsException("No available memory slots left on\n" +
                         "this motherboard: " + getMotherboard().getName());
             }
             else {
