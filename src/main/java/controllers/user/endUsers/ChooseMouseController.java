@@ -14,6 +14,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import main.App;
 
@@ -205,5 +206,69 @@ public class ChooseMouseController implements Initializable {
             }
         }
     }
+    @FXML
+    public void filterEvent(KeyEvent event) {
+        int index = filterBox.getSelectionModel().getSelectedIndex();
+        if (index == 4 || index == 5 || index == 6 || index == 7) {
+            filterText.setDisable(true);
+            tableView.setItems(mouseList.stream().filter(component -> {
+                switch (index) {
+                    case 4:
+                        return component.isErgonomic();
+                    case 5:
+                        return !component.isErgonomic();
+                    case 6:
+                        return component.isWireless();
+                    case 7:
+                        return !component.isWireless();
+                    default:
+                        return false;
+                }
+            }).collect(Collectors.toCollection(FXCollections::observableArrayList)));
+        } else {
+            filterText.setDisable(false);
+
+            if (filterText.getText() == null) {
+                tableView.setItems(mouseList);
+            } else {
+                String search = filterText.getText().toLowerCase();
+                int filterIndex = filterBox.getSelectionModel().getSelectedIndex();
+
+                tableView.setItems(mouseList.stream().filter(component -> {
+                    if (search.isBlank() || search.isEmpty() || filterBox.getSelectionModel().getSelectedItem() == null) {
+                        return true;
+                    } else {
+                        switch (filterIndex) {
+                            case 0:
+                                return component.getManufacturer().toLowerCase().contains(search);
+                            case 1:
+                                return component.getModel().toLowerCase().contains(search);
+                            case 2:
+                                try {
+                                    return component.getNumberButtons() <= Integer.parseInt(search);
+                                } catch (NumberFormatException e) {
+                                    return false;
+                                }
+                            case 3:
+                                try {
+                                    return component.getDpi() <= Integer.parseInt(search);
+                                } catch (NumberFormatException e) {
+                                    return false;
+                                }
+                            case 8:
+                                try {
+                                    return component.getPrice() <= Double.parseDouble(search);
+                                } catch (NumberFormatException e) {
+                                    return false;
+                                }
+                            default:
+                                return false;
+                        }
+                    }
+                }).collect(Collectors.toCollection(FXCollections::observableArrayList)));
+            }
+        }
+    }
+
 }
 
