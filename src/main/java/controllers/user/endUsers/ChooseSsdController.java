@@ -137,11 +137,6 @@ public class ChooseSsdController implements Initializable {
 
     @FXML
     void GoBack(ActionEvent event) throws IOException {
-        try{
-            if(tableView.getSelectionModel().getSelectedItem() != null) {
-                App.computer.setSsd((SSD) tableView.getSelectionModel().getSelectedItem());
-            }
-
             Parent view = FXMLLoader.load(getClass().getResource("/main/user/endUsers/ChooseHdd.fxml"));
 
             Scene scene = new Scene(view);
@@ -149,10 +144,6 @@ public class ChooseSsdController implements Initializable {
             Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
             window.setScene(scene);
             window.show();
-        } catch (NotCompatibleException e){
-            DialogBox.error("Not compatible!", null, e.getMessage());
-            tableView.getSelectionModel().clearSelection();
-        }
     }
 
     @FXML

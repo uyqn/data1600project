@@ -121,7 +121,6 @@ public class ChooseCabinController implements Initializable {
 
     @FXML
     void goBack(ActionEvent event) throws IOException {
-
         Parent view = FXMLLoader.load(getClass().getResource("/main/user/endUsers/ChoosePower.fxml"));
         Scene scene = new Scene(view);
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -132,7 +131,6 @@ public class ChooseCabinController implements Initializable {
 
     @FXML
     void AddCabin(ActionEvent event) throws IOException {
-
         if(App.computer==null){
             App.computer=new Computer();
         }
@@ -145,7 +143,5 @@ public class ChooseCabinController implements Initializable {
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         window.setScene(scene);
         window.show();
-
-
     }
 }

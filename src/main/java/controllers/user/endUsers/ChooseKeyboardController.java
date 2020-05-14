@@ -3,7 +3,6 @@ package controllers.user.endUsers;
 import components.Component;
 import components.Computer;
 import components.Keyboard;
-import components.Mouse;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -15,7 +14,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import main.App;
 
@@ -97,7 +95,6 @@ public class ChooseKeyboardController implements Initializable {
 
     @FXML
     void GoBack(ActionEvent event) throws IOException {
-
         Parent view = FXMLLoader.load(getClass().getResource("/main/user/endUsers/ChooseMonitor.fxml"));
 
         Scene scene = new Scene(view);
@@ -110,7 +107,6 @@ public class ChooseKeyboardController implements Initializable {
 
     @FXML
     void GoNext(ActionEvent event) throws IOException {
-
         if (App.computer==null){
             App.computer=new Computer();
         }

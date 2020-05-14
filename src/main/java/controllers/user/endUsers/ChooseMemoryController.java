@@ -153,10 +153,6 @@ public class ChooseMemoryController implements Initializable {
 
     @FXML
     void GoBack(ActionEvent event) throws IOException {
-        try {
-            App.computer.addMemory((Memory) tableView.getSelectionModel().getSelectedItem());
-        } catch (NotCompatibleException | NullPointerException ignored){}
-
         Parent view = FXMLLoader.load(getClass().getResource("/main/user/endUsers/ChooseMotherboard.fxml"));
 
         Scene scene = new Scene(view);
@@ -169,7 +165,7 @@ public class ChooseMemoryController implements Initializable {
     @FXML
     void GoNext(ActionEvent event) throws IOException {
         try{
-            if(tableView.getSelectionModel().getSelectedItem() != null) {
+            if(tableView.getSelectionModel().getSelectedItem() != null && App.computer.getMemories().size() == 0) {
                 App.computer.addMemory((Memory) tableView.getSelectionModel().getSelectedItem());
             }
             nextBtn.setDisable(false);

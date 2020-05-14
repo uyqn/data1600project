@@ -1,14 +1,13 @@
 package users;
 
-import components.*;
+import components.Computer;
+import components.Listable;
 import controllers.guiManager.DialogBox;
 import fileManager.FileSaverCSV;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import listManager.ItemList;
 import listManager.ListableList;
-import main.App;
-import main.TestEnvironment;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,7 +17,7 @@ import java.nio.file.Paths;
 public class EndUser extends User {
     private boolean saved;
     private FileChooser fileChooser = new FileChooser();
-    public static ListableList<Computer> listableList=new ListableList<>();
+    public static ListableList<Computer> listableList = new ListableList<>();
     private Path path;
 
     public EndUser(String username, String password) {
@@ -34,6 +33,10 @@ public class EndUser extends User {
         this.saved = false;
 
 
+    }
+
+    public void add(Computer computer){
+        listableList.add(computer);
     }
 
     @Override

@@ -2,7 +2,6 @@ package controllers.user.endUsers;
 
 import components.Component;
 import components.Computer;
-import components.Monitor;
 import components.Mouse;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -115,7 +114,6 @@ public class ChooseMouseController implements Initializable {
 
     @FXML
     void GoBack(ActionEvent event) throws IOException {
-
         Parent view = FXMLLoader.load(getClass().getResource("/main/user/endUsers/ChooseCabin.fxml"));
 
         Scene scene = new Scene(view);

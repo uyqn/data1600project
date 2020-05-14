@@ -140,10 +140,6 @@ public class ChooseHddController implements Initializable {
 
     @FXML
     void GoBack(ActionEvent event) throws IOException {
-        try {
-            App.computer.setHdd((HDD) tableView.getSelectionModel().getSelectedItem());
-        } catch (NotCompatibleException | NullPointerException ignored){}
-
         Parent view = FXMLLoader.load(getClass().getResource("/main/user/endUsers/ChooseMemory.fxml"));
         Scene scene = new Scene(view);
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();

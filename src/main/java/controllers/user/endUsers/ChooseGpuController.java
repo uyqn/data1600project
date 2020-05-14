@@ -158,14 +158,6 @@ public class ChooseGpuController implements Initializable {
 
     @FXML
     void GoBack(ActionEvent event) throws IOException {
-        if(App.computer == null){
-            App.computer = new Computer();
-        }
-
-        try {
-            App.computer.setGpu((GPU) tableView.getSelectionModel().getSelectedItem());
-        } catch (NotCompatibleException | NullPointerException ignored){}
-
         Parent view = FXMLLoader.load(getClass().getResource("/main/user/endUsers/buildPc.fxml"));
 
         Scene scene = new Scene(view);

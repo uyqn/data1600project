@@ -130,7 +130,6 @@ public class ChooseMonitorController implements Initializable {
 
     @FXML
     void goBack(ActionEvent event) throws IOException {
-
         Parent view = FXMLLoader.load(getClass().getResource("/main/user/endUsers/ChooseMouse.fxml"));
 
         Scene scene = new Scene(view);

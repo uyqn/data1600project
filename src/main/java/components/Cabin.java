@@ -419,7 +419,7 @@ public class Cabin extends Component implements Compatible, Serializable {
         if(motherboard.getClass() != Motherboard.class){
             throw new IllegalArgumentException("This component is not a connected Motherboard");
         }
-        return ((Motherboard) motherboard).getFormFactor().equals(getFormFactor());
+        return ((Motherboard) motherboard).getFormFactor().toLowerCase().equals(getFormFactor().toLowerCase());
     }
 
     private void writeObject(ObjectOutputStream objectOutputStream) throws IOException {

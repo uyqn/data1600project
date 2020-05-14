@@ -19,7 +19,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import main.App;
 
-import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -152,7 +151,6 @@ public class ChoosePowerController implements Initializable {
 
     @FXML
     void goBack(ActionEvent event) throws IOException {
-
         Parent view = FXMLLoader.load(getClass().getResource("/main/user/endUsers/ChooseCooler.fxml"));
 
         Scene scene = new Scene(view);

@@ -39,16 +39,10 @@ public class ChooseCoolerController implements Initializable {
     private TableColumn<Cooler, Double> PriceColumn;
 
     @FXML
-    private TableColumn<Cooler, Integer> CoreRpmColumn;
+    private TableColumn<Cooler, String> RpmColumn;
 
     @FXML
-    private TableColumn<Cooler, Integer> MaxRpmColumn;
-
-    @FXML
-    private TableColumn<Cooler, Double> CoreNoiseColumn;
-
-    @FXML
-    private TableColumn<Cooler, Double> MaxNoiseColumn;
+    private TableColumn<Cooler, String> NoiseColumn;
 
     @FXML
     private TableColumn<Cooler, Double> PowerColumn;
@@ -94,19 +88,13 @@ public class ChooseCoolerController implements Initializable {
         ManufacturerColumn.setCellValueFactory(new PropertyValueFactory<>("manufacturer"));
         ModelColumn.setCellValueFactory(new PropertyValueFactory<>("model"));
         PriceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
-        CoreRpmColumn.setCellValueFactory(new PropertyValueFactory<>("coreRpm"));
-        MaxRpmColumn.setCellValueFactory(new PropertyValueFactory<>("maxRpm"));
-        CoreNoiseColumn.setCellValueFactory(new PropertyValueFactory<>("coreNoise"));
-        MaxNoiseColumn.setCellValueFactory(new PropertyValueFactory<>("maxNoise"));
+        RpmColumn.setCellValueFactory(new PropertyValueFactory<>("rpmString"));
+        NoiseColumn.setCellValueFactory(new PropertyValueFactory<>("noise"));
         PowerColumn.setCellValueFactory(new PropertyValueFactory<>("powerConsumption"));
 
 
 
-        tableView.setItems(coolerList
-               /* App.listableList.getList().stream().filter(component ->
-                        component.getComponentType().equals(Cooler.COMPONENT_TYPE)
-                ).collect(Collectors.toCollection(FXCollections::observableArrayList))*/
-        );
+        tableView.setItems(coolerList);
 
         try {
             treeView=App.computer.setTreeView(treeView);

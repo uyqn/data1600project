@@ -14,22 +14,22 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<GridPane prefHeight="526.0" prefWidth="844.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.user.endUsers.ChooseCoolerController">
+<GridPane prefHeight="526.0" prefWidth="911.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.user.endUsers.ChooseCoolerController">
    <columnConstraints>
       <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" />
       <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" />
    </columnConstraints>
    <rowConstraints>
       <RowConstraints vgrow="SOMETIMES" />
-      <RowConstraints vgrow="SOMETIMES" />
-      <RowConstraints vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="37.0" minHeight="31.0" prefHeight="37.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="395.0" minHeight="389.0" prefHeight="389.0" vgrow="SOMETIMES" />
       <RowConstraints valignment="TOP" vgrow="SOMETIMES" />
    </rowConstraints>
    <children>
       <HBox alignment="CENTER_LEFT" spacing="10.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
          <children>
-            <ChoiceBox fx:id="filterBox" prefHeight="25.0" prefWidth="327.0" />
-            <TextField fx:id="filterText" onKeyReleased="#filterEvt" prefHeight="26.0" prefWidth="738.0" />
+            <ChoiceBox fx:id="filterBox" prefHeight="25.0" prefWidth="186.0" />
+            <TextField fx:id="filterText" onKeyReleased="#filterEvt" prefHeight="26.0" prefWidth="461.0" />
          </children>
          <opaqueInsets>
             <Insets />
@@ -38,16 +38,14 @@
             <Insets />
          </GridPane.margin>
       </HBox>
-      <TableView fx:id="tableView" prefHeight="400.0" prefWidth="664.0" GridPane.rowIndex="2">
+      <TableView fx:id="tableView" prefHeight="400.0" prefWidth="593.0" GridPane.rowIndex="2">
          <columns>
             <TableColumn fx:id="ManufacturerColumn" prefWidth="120.79999351501465" text="Manufacturer" />
             <TableColumn fx:id="ModelColumn" prefWidth="98.39996337890625" text="Model" />
             <TableColumn fx:id="PriceColumn" prefWidth="101.5999755859375" text="Price" />
-            <TableColumn fx:id="CoreRpmColumn" prefWidth="133.5999755859375" text="Core RPM" />
-            <TableColumn fx:id="MaxRpmColumn" prefWidth="75.0" text="Max RPM" />
-            <TableColumn fx:id="CoreNoiseColumn" prefWidth="75.0" text="Core Noise" />
-            <TableColumn fx:id="MaxNoiseColumn" prefWidth="75.0" text="MaxNoiseColumn" />
-            <TableColumn fx:id="PowerColumn" prefWidth="75.0" text="Power" />
+            <TableColumn fx:id="RpmColumn" prefWidth="108.0" text="RPM" />
+            <TableColumn fx:id="NoiseColumn" prefWidth="111.0" text="Noise (dBA)" />
+            <TableColumn fx:id="PowerColumn" prefWidth="65.0" text="Power" />
          </columns>
          <GridPane.margin>
             <Insets />

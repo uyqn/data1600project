@@ -671,7 +671,7 @@ public class Motherboard extends Component implements Serializable, Compatible {
                     ((GPU) component).getBussSlots() == getBussSlots();
         }
         else if(component.getClass() == Cabin.class) {
-            return ((Cabin) component).getFormFactor().equals(getFormFactor());
+            return ((Cabin) component).getFormFactor().toLowerCase().equals(getFormFactor().toLowerCase());
         }
         else if(component.getClass() == Memory.class) {
             return (((Memory) component).getTechNumber() == getTechNumber());
