@@ -2,6 +2,8 @@ package controllers.user.endUsers;
 
 import components.Cabin;
 import components.Component;
+import components.Computer;
+import components.NotCompatibleException;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -46,6 +48,12 @@ public class ChooseCabinController implements Initializable {
     @FXML
     private TextField filterText;
 
+    @FXML
+    private TreeView<String> treeView = new TreeView<>();
+
+    @FXML
+    private Label priceLabel;
+
     ObservableList<Component> cabinList = App.listableList.getList().stream().filter(component ->
             component.getComponentType().equals(Cabin.COMPONENT_TYPE)
     ).collect(Collectors.toCollection(FXCollections::observableArrayList));
@@ -61,7 +69,7 @@ public class ChooseCabinController implements Initializable {
         filterBox.setValue(null);
         filterText.setText(null);
 
-        nextBtn.disableProperty().bind(Bindings.isEmpty(tableView.getSelectionModel().getSelectedItems()));
+        addBtn.disableProperty().bind(Bindings.isEmpty(tableView.getSelectionModel().getSelectedItems()));
 
         //Setter opp kolonner
         ManufacturerColumn.setCellValueFactory(new PropertyValueFactory<Cabin, String>("manufacturer"));
@@ -71,6 +79,12 @@ public class ChooseCabinController implements Initializable {
 
 
         tableView.setItems(cabinList);
+        try{
+            treeView = App.computer.setTreeView(treeView);
+            treeView.refresh();
+            priceLabel.setText("Total price: "+App.computer.getPrice()+" NOK");
+
+        }catch (NullPointerException ignored){}
     }
 
     @FXML
@@ -106,15 +120,13 @@ public class ChooseCabinController implements Initializable {
     private Button backBtn;
 
     @FXML
-    private Button nextBtn;
+    private Button addBtn;
 
     @FXML
-    void GoBack(ActionEvent event) throws IOException {
+    void goBack(ActionEvent event) throws IOException {
 
         Parent view = FXMLLoader.load(getClass().getResource("/main/user/endUsers/ChoosePower.fxml"));
-
         Scene scene = new Scene(view);
-
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         window.setScene(scene);
         window.show();
@@ -122,7 +134,14 @@ public class ChooseCabinController implements Initializable {
     }
 
     @FXML
-    void GoNext(ActionEvent event) throws IOException {
+    void AddCabinet(ActionEvent event) throws IOException {
+
+        if(App.computer==null){
+            App.computer=new Computer();
+        }
+try {
+    App.computer.setCabin((Cabin) tableView.getSelectionModel().getSelectedItem());
+}catch (NotCompatibleException|NullPointerException ignored){}
 
         Parent view = FXMLLoader.load(getClass().getResource("/main/user/endUsers/ChooseMouse.fxml"));
 

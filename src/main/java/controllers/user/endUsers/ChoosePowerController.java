@@ -1,6 +1,7 @@
 package controllers.user.endUsers;
 
 import components.Component;
+import components.Computer;
 import components.PSU;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
@@ -18,6 +19,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import main.App;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -46,6 +48,12 @@ public class ChoosePowerController implements Initializable {
     @FXML
     private TextField filterText;
 
+    @FXML
+    private TreeView<String> treeView=new TreeView<>();
+
+    @FXML
+    private Label priceLabel;
+
     ObservableList<Component> powerList = App.listableList.getList().stream().filter(component ->
             component.getComponentType().equals(PSU.COMPONENT_TYPE)
     ).collect(Collectors.toCollection(FXCollections::observableArrayList));
@@ -61,7 +69,8 @@ public class ChoosePowerController implements Initializable {
         filterText.setText(null);
 
         //Enabler next-button idet man velger en komponent
-        nextBtn.disableProperty().bind(Bindings.isEmpty(tableView.getSelectionModel().getSelectedItems()));
+       addBtn.disableProperty().bind(Bindings.isEmpty(tableView.getSelectionModel().getSelectedItems()));
+
         //Setter opp kolonner
 
         ManufacturerColumn.setCellValueFactory(new PropertyValueFactory<PSU, String>("manufacturer"));
@@ -70,11 +79,16 @@ public class ChoosePowerController implements Initializable {
         PowerColumn.setCellValueFactory(new PropertyValueFactory<PSU, Integer>("powerCapacity"));
 
 
-        tableView.setItems(
-                App.listableList.getList().stream().filter(component ->
+        tableView.setItems(powerList);
+               /* App.listableList.getList().stream().filter(component ->
                         component.getComponentType().equals(PSU.COMPONENT_TYPE)
-                ).collect(Collectors.toCollection(FXCollections::observableArrayList))
-        );
+                ).collect(Collectors.toCollection(FXCollections::observableArrayList))*/
+
+        try{
+            treeView = App.computer.setTreeView(treeView);
+            treeView.refresh();
+            priceLabel.setText("Total price; "+ App.computer.getPrice()+" NOK");
+        }catch (NullPointerException ignored){}
 
     }
 
@@ -115,10 +129,29 @@ public class ChoosePowerController implements Initializable {
     private Button backBtn;
 
     @FXML
-    private Button nextBtn;
+    private Button addBtn;
 
     @FXML
-    void GoBack(ActionEvent event) throws IOException {
+    void AddPSU(ActionEvent event) throws IOException {
+
+        if (App.computer==null){
+            App.computer = new Computer();
+        }
+
+        App.computer.setPsu((PSU) tableView.getSelectionModel().getSelectedItem());
+
+
+
+        Parent view = FXMLLoader.load(getClass().getResource("/main/user/endUsers/ChooseCabin.fxml"));
+        Scene scene = new Scene(view);
+        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        window.setScene(scene);
+        window.show();
+
+    }
+
+    @FXML
+    void goBack(ActionEvent event) throws IOException {
 
         Parent view = FXMLLoader.load(getClass().getResource("/main/user/endUsers/ChooseCooler.fxml"));
 
@@ -130,17 +163,5 @@ public class ChoosePowerController implements Initializable {
 
     }
 
-    @FXML
-    void GoNext(ActionEvent event) throws IOException {
 
-        Parent view = FXMLLoader.load(getClass().getResource("/main/user/endUsers/ChooseCabin.fxml"));
-
-        Scene scene = new Scene(view);
-
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-        window.setScene(scene);
-        window.show();
-
-
-    }
 }
