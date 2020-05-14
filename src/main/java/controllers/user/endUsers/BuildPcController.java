@@ -3,6 +3,8 @@ package controllers.user.endUsers;
 import components.CPU;
 import components.Component;
 import components.Computer;
+import components.NotCompatibleException;
+import controllers.guiManager.DialogBox;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -166,8 +168,11 @@ public class BuildPcController implements Initializable {
         if(App.computer == null){
             App.computer = new Computer();
         }
-
-        App.computer.setCpu((CPU) tableView.getSelectionModel().getSelectedItem());
+        try {
+            App.computer.setCpu((CPU) tableView.getSelectionModel().getSelectedItem());
+        } catch (NotCompatibleException e){
+            DialogBox.error("Not compatible!", null, e.getMessage());
+        } catch (NullPointerException ignored){}
 
         Parent view = FXMLLoader.load(getClass().getResource("/main/user/endUsers/ChooseGpu.fxml"));
         Scene scene = new Scene(view);

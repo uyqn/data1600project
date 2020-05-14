@@ -3,6 +3,8 @@ package controllers.user.endUsers;
 import components.Component;
 import components.Computer;
 import components.GPU;
+import components.NotCompatibleException;
+import controllers.guiManager.DialogBox;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -157,7 +159,10 @@ public class ChooseGpuController implements Initializable {
             App.computer = new Computer();
         }
 
-        App.computer.setGpu((GPU) tableView.getSelectionModel().getSelectedItem());
+        try {
+            App.computer.setGpu((GPU) tableView.getSelectionModel().getSelectedItem());
+        } catch (NotCompatibleException | NullPointerException ignored){}
+
         Parent view = FXMLLoader.load(getClass().getResource("/main/user/endUsers/buildPc.fxml"));
 
         Scene scene = new Scene(view);
@@ -173,17 +178,19 @@ public class ChooseGpuController implements Initializable {
             App.computer = new Computer();
         }
 
-        App.computer.setGpu((GPU) tableView.getSelectionModel().getSelectedItem());
+        try {
+            App.computer.setGpu((GPU) tableView.getSelectionModel().getSelectedItem());
 
-        Parent view = FXMLLoader.load(getClass().getResource("/main/user/endUsers/ChooseMotherboard.fxml"));
+            Parent view = FXMLLoader.load(getClass().getResource("/main/user/endUsers/ChooseMotherboard.fxml"));
 
-        Scene scene = new Scene(view);
+            Scene scene = new Scene(view);
 
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-        window.setScene(scene);
-        window.show();
-
-
+            Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+            window.setScene(scene);
+            window.show();
+        } catch (NotCompatibleException e) {
+            DialogBox.error("Not compatible!", null, e.getMessage());
+        } catch (NullPointerException ignored){}
     }
 
 }

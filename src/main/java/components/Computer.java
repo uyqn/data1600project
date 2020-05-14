@@ -176,25 +176,30 @@ public class Computer extends ListableList<Component> implements Listable, ItemL
         if(getCpu() != null){
             if(!getCpu().compatible(motherboard)){
                 throw new NotCompatibleException("Motherboard: " + motherboard.getName() +
-                        "\n is not compatible with" + "CPU: " + getCpu().getName() + "\n" +
+                        "\n is not compatible with" + " CPU: " + getCpu().getName() + "\n" +
                         "Because mismatch sockets: \n" +
                         getCpu().getName() + " socket: " + getCpu().getSocket() + "\n" +
-                        motherboard.getName() + "socket: " +motherboard.getSocket());
+                        motherboard.getName() + " socket: " + motherboard.getSocket());
             }
         }
 
         if(getGpu() != null){
             if(!getGpu().compatible(motherboard)){
                 throw new NotCompatibleException("Motherboard: " + motherboard.getName() +
-                        "\n is not compatible with " + "GPU: " + getGpu().getName());
+                        "\n is not compatible with" + " GPU: " + getGpu().getName() + "\n" +
+                        "Because mismatch sockets: \n" +
+                        getGpu().getName() + " buss slots: " + getGpu().getBussSlots() + "\n" +
+                        motherboard.getName() + " buss slots: " + motherboard.getBussSlots());
             }
         }
 
         if(getCabin() != null){
             if(!getCabin().compatible(motherboard)){
                 throw new NotCompatibleException("Motherboard: " + motherboard.getName() +
-                        "\n is not compatible with" +
-                        "Cabin: " + getCabin().getName());
+                        "\n is not compatible with" + " Cabin: " + getCabin().getName() + "\n" +
+                        "Because mismatch sockets: \n" +
+                        getCabin().getName() + " form factor: " + getCabin().getFormFactor() + "\n" +
+                        motherboard.getName() + " form factor: " + motherboard.getFormFactor());
             }
         }
 
@@ -208,9 +213,11 @@ public class Computer extends ListableList<Component> implements Listable, ItemL
             else {
                 for (Memory memory : getMemories()) {
                     if (!motherboard.compatible(memory)) {
-                        throw new IllegalArgumentException("Motherboard: " + motherboard.getName() +
-                                "\nis not compatible with" +
-                                "Memory: " + memory.getName());
+                        throw new NotCompatibleException("Motherboard: " + motherboard.getName() +
+                                "\n is not compatible with" + " Memory: " + memory.getName() + "\n" +
+                                "Because mismatch sockets: \n" +
+                                memory.getName() + " technology: " + memory.getMemoryTech() + "\n" +
+                                motherboard.getName() + " form factor: " + motherboard.getMemoryTech());
                     }
                 }
             }

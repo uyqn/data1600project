@@ -14,18 +14,18 @@ Memory,G.Skill,Trident Z Neo,2749.0,32,DDR4,3600
 Memory,Corsair,Vengeance,1354.0,16,DDR4,2666
 HDD,Seagate,Firecuda,5400,500,647.0
 HDD,Seagate,Firecuda,5400,1000,609.0
-HDD, Samsung, 860 Evo, 500, 600, 790.0
-SSD, Samsung, 970 Evo, 500, 999.0
-SSD, Kingston, A400, 400, 450.0
-SSD, Crucial, P1, 1000, 1599.0
+HDD,Samsung, 860 Evo,500,600,790.0
+SSD,Samsung, 970 Evo,500,999.0
+SSD,Kingston,A400,400,450.0
+SSD,Crucial,P1,1000,1599.0
 Cooler,Cooler Master,MasterFan SF360R,36.0 x 12.0 x 2.5,650 - 1800,8.0 - 30.0,6.48,499.0
 Cooler,Deepcool,Captain 240 Pro,29.0 x 12.0 x 2.7,500 - 1800,30.0,2.04,1499.0
 PSU,Seasonic,Focus GX 750,750,1499.0
 PSU,Corsair,RM650X,650,1399.0
 Cabin,Fractal Design,Define 7 XL,EATX,2699.0
 Cabin,Corsair,Carbide Series 275Q,ATX,890.0
-Cabin, NZXT, H150, ATX, 749.0
-Cabin, Corsair, SPEC-DELTA RGB, MicroATX, 500.0
+Cabin, NZXT,H150,ATX, 749.0
+Cabin, Corsair,SPEC-DELTA RGB,mATX, 500.0
 Mouse,iiglo,M610,6,1600,true,true,299.0
 Mouse,Svivie,Proteus 3360,7,12000,true,false,449.0
 Keyboard,Razer,Huntsman Tournament Edition,true,1999.0
