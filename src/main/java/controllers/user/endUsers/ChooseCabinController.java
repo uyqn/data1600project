@@ -134,14 +134,14 @@ public class ChooseCabinController implements Initializable {
     }
 
     @FXML
-    void AddCabinet(ActionEvent event) throws IOException {
+    void AddCabin(ActionEvent event) throws IOException {
 
         if(App.computer==null){
             App.computer=new Computer();
         }
-try {
-    App.computer.setCabin((Cabin) tableView.getSelectionModel().getSelectedItem());
-}catch (NotCompatibleException|NullPointerException ignored){}
+
+        App.computer.setCabin((Cabin) tableView.getSelectionModel().getSelectedItem());
+
 
         Parent view = FXMLLoader.load(getClass().getResource("/main/user/endUsers/ChooseMouse.fxml"));
 

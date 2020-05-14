@@ -46,7 +46,7 @@
             <TableColumn fx:id="CoreRpmColumn" prefWidth="133.5999755859375" text="Core RPM" />
             <TableColumn fx:id="MaxRpmColumn" prefWidth="75.0" text="Max RPM" />
             <TableColumn fx:id="CoreNoiseColumn" prefWidth="75.0" text="Core Noise" />
-            <TableColumn fx:id="MaxNoiseColumn" prefWidth="75.0" text="Max Noise" />
+            <TableColumn fx:id="MaxNoiseColumn" prefWidth="75.0" text="MaxNoiseColumn" />
             <TableColumn fx:id="PowerColumn" prefWidth="75.0" text="Power" />
          </columns>
          <GridPane.margin>

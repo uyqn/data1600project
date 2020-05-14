@@ -91,14 +91,14 @@ public class ChooseCoolerController implements Initializable {
 
         //Setter opp kolonner
 
-        ManufacturerColumn.setCellValueFactory(new PropertyValueFactory<Cooler, String>("manufacturer"));
-        ModelColumn.setCellValueFactory(new PropertyValueFactory<Cooler, String>("model"));
-        PriceColumn.setCellValueFactory(new PropertyValueFactory<Cooler, Double>("price"));
-        CoreRpmColumn.setCellValueFactory(new PropertyValueFactory<Cooler, Integer>("coreRpm"));
-        MaxRpmColumn.setCellValueFactory(new PropertyValueFactory<Cooler, Integer>("maxRpm"));
-        CoreNoiseColumn.setCellValueFactory(new PropertyValueFactory<Cooler, Double>("coreNoise"));
-        MaxNoiseColumn.setCellValueFactory(new PropertyValueFactory<Cooler, Double>("maxNoise"));
-        PowerColumn.setCellValueFactory(new PropertyValueFactory<Cooler, Double>("powerConsumption"));
+        ManufacturerColumn.setCellValueFactory(new PropertyValueFactory<>("manufacturer"));
+        ModelColumn.setCellValueFactory(new PropertyValueFactory<>("model"));
+        PriceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
+        CoreRpmColumn.setCellValueFactory(new PropertyValueFactory<>("coreRpm"));
+        MaxRpmColumn.setCellValueFactory(new PropertyValueFactory<>("maxRpm"));
+        CoreNoiseColumn.setCellValueFactory(new PropertyValueFactory<>("coreNoise"));
+        MaxNoiseColumn.setCellValueFactory(new PropertyValueFactory<>("maxNoise"));
+        PowerColumn.setCellValueFactory(new PropertyValueFactory<>("powerConsumption"));
 
 
 
@@ -199,10 +199,6 @@ public class ChooseCoolerController implements Initializable {
     @FXML
     void goBack(ActionEvent event) throws IOException {
 
-        if (App.computer==null){
-            App.computer=new Computer();
-        }
-        App.computer.setCooler((Cooler) tableView.getSelectionModel().getSelectedItem());
 
 
         Parent view = FXMLLoader.load(getClass().getResource("/main/user/endUsers/ChooseSsd.fxml"));
@@ -218,10 +214,14 @@ public class ChooseCoolerController implements Initializable {
     @FXML
     void AddCooler(ActionEvent event) throws IOException {
 
+        if (App.computer==null){
+            App.computer=new Computer();
+        }
+        App.computer.setCooler((Cooler) tableView.getSelectionModel().getSelectedItem());
+
+
         Parent view = FXMLLoader.load(getClass().getResource("/main/user/endUsers/ChoosePower.fxml"));
-
         Scene scene = new Scene(view);
-
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         window.setScene(scene);
         window.show();

@@ -14,6 +14,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import main.App;
 import users.EndUser;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
@@ -37,9 +38,6 @@ public class PrevPcController implements Initializable {
     private TableView<Computer> computerView;
 
     @FXML
-    private TableView<Component> componentView;
-
-    @FXML
     private TableColumn<Computer, String> nameCol;
 
     @FXML
@@ -49,58 +47,11 @@ public class PrevPcController implements Initializable {
     private Button selectPc;
 
     @FXML
-    private TableColumn<Component, String > typeCol;
+    private TreeView<String> treeView=new TreeView<>();
 
-    @FXML
-    private TableColumn<Component, String > manufacturerCol;
+    private ObservableList<Computer> computerList=EndUser.listableList.getList();
 
-    @FXML
-    private TableColumn<Component, String> modelCol;
 
-    @FXML TableColumn<Component, Double> priceComponentCol;
-
-    /*
-    @FXML
-    private TableColumn<Computer, String> cpuCol;
-    @FXML
-    private TableColumn<Computer, String> gpuCol;
-    @FXML
-    private TableColumn<Computer, String> mbCol;
-    @FXML
-    private TableColumn<Computer, String> memoryCol;
-    @FXML
-    private TableColumn<Computer, String>ssdCol;
-    @FXML
-    private TableColumn<Computer, String> hddCol;
-
-    @FXML
-    private TableColumn<Computer, String>coolerCol;
-
-    @FXML
-    private TableColumn<Computer, String> psCol;
-
-    @FXML
-    private TableColumn<Computer, String> cabinCol;
-
-    @FXML
-    private TableColumn<Computer, String> monitorCol;
-
-    @FXML
-    private TableColumn<Computer, String> keyboardCol;
-
-    @FXML
-    private TableColumn<Computer, String> mouseCol;
-
-    @FXML
-    private ChoiceBox<String> filterBox;
-
-    @FXML
-    private TextField filterText;
-
-*/
-    private ObservableList<Computer> computerList=EndUser.listableList.getList().stream().filter(computer ->
-            computer.getName().equals(computer.getName())
-    ).collect(Collectors.toCollection(FXCollections::observableArrayList));
 
 
     @FXML
@@ -139,72 +90,28 @@ public class PrevPcController implements Initializable {
         priceComputerCol.setCellValueFactory(new PropertyValueFactory<Computer, Double>("price"));
 //        computerView.setItems(computerList);
 
+        try{
+            treeView = App.computer.setTreeView(treeView);
+            treeView.refresh();
+
+        }catch (NullPointerException ignored){}
+
+
     }
 
     @FXML
     void selectPc(ActionEvent event) throws IOException{
 
 
-
-        typeCol.setCellValueFactory(new PropertyValueFactory<>("componentType"));
-        manufacturerCol.setCellValueFactory(new PropertyValueFactory<>("manufacturer"));
-        modelCol.setCellValueFactory(new PropertyValueFactory<>("model"));
-        priceComponentCol.setCellValueFactory(new PropertyValueFactory<>("price"));
+       // if ()
 
 
-        componentView.setItems(computerView.getSelectionModel().getSelectedItem().getComponents());
+
+
+
+        //treeView.setItems(computerView.getSelectionModel().getSelectedItem().getComponents());
 
 
     }
-/*
-    @FXML
-    void filterEvt(KeyEvent event){
-        String search = filterText.getText().toLowerCase();
-        int filterIndex=filterBox.getSelectionModel().getSelectedIndex();
 
-        tableView.setItems(computerList.stream().filter(computer -> {
-            if (search.isBlank() || search.isEmpty() || filterBox.getSelectionModel().getSelectedItem()==null){
-                return true;
-            }
-            else {
-                switch (filterIndex){
-                    case 0:
-                        return computer.getName().toLowerCase().contains(search);
-                    case 1:
-                        try {
-                            return computer.getPrice() < Double.parseDouble(search);
-                        }catch (NumberFormatException e){
-                            return false;
-                        }
-                    case 2:
-                        return computer.getCpuName().toLowerCase().contains(search);
-                    case 3:
-                        return computer.getGpuName().toLowerCase().contains(search);
-                    case 4:
-                        return computer.getMotherboardName().toLowerCase().contains(search);
-                    case 5:
-                        return computer.getMemoriesName().toLowerCase().contains(search);
-                    case 6:
-                        return computer.getStorageName().toLowerCase().contains(search);
-                    case 7:
-                        return computer.getCoolerName().toLowerCase().contains(search);
-                    case 8:
-                        return computer.getPsuName().toLowerCase().contains(search);
-                    case 9:
-                        return computer.getCabinName().toLowerCase().contains(search);
-                    case 10:
-                        return computer.getMonitorName().toLowerCase().contains(search);
-                    case 11:
-                        return computer.getKeyboardName().toLowerCase().contains(search);
-                    case 12:
-                        return computer.getMouseName().toLowerCase().contains(search);
-
-                    default:
-                        return false;
-                }
-            }
-        }).collect(Collectors.toCollection(FXCollections::observableArrayList)));
-    }
-
-*/
 }
