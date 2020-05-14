@@ -3,8 +3,8 @@ package users;
 import components.Computer;
 import components.Listable;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.ObservableList;
 import listManager.ItemList;
+import listManager.ListableList;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -45,7 +45,6 @@ public abstract class User implements Serializable, Listable {
     public abstract Path getPath();
     public abstract <S extends Listable> void save(ItemList<S> list);
     public abstract <S extends Listable> void saveAs(ItemList<S> list);
-    public abstract void add(Computer computer);
     public abstract void remove(Computer computer);
-    public abstract ObservableList<Computer> getComputers();
+    public abstract ListableList<Computer> getComputers();
 }

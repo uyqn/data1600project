@@ -39,7 +39,7 @@ public class ChooseHddController implements Initializable {
     private TableColumn<HDD, Double> PriceColumn;
 
     @FXML
-    private TableColumn<HDD, Integer> CapacityColumn;
+    private TableColumn<HDD, String> CapacityColumn;
 
     @FXML
     private TableColumn<HDD, String> RpmColumn;
@@ -73,11 +73,11 @@ public class ChooseHddController implements Initializable {
 
         //Setter opp kolonner
 
-        ManufacturerColumn.setCellValueFactory(new PropertyValueFactory<HDD, String>("manufacturer"));
-        ModelColumn.setCellValueFactory(new PropertyValueFactory<HDD, String>("model"));
-        PriceColumn.setCellValueFactory(new PropertyValueFactory<HDD, Double>("price"));
-        CapacityColumn.setCellValueFactory(new PropertyValueFactory<HDD, Integer>("capacity"));
-        RpmColumn.setCellValueFactory(new PropertyValueFactory<HDD, String>("rpm"));
+        ManufacturerColumn.setCellValueFactory(new PropertyValueFactory<>("manufacturer"));
+        ModelColumn.setCellValueFactory(new PropertyValueFactory<>("model"));
+        PriceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
+        CapacityColumn.setCellValueFactory(new PropertyValueFactory<>("capacityString"));
+        RpmColumn.setCellValueFactory(new PropertyValueFactory<>("rpm"));
 
 
         tableView.setItems(

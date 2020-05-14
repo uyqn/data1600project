@@ -46,7 +46,6 @@ public class ChooseKeyboardController implements Initializable {
     @FXML
     private Label priceLabel;
 
-
     @FXML
     private ChoiceBox<String> filterBox;
 
@@ -57,9 +56,10 @@ public class ChooseKeyboardController implements Initializable {
             component.getComponentType().equals(Keyboard.COMPONENT_TYPE)
     ).collect(Collectors.toCollection(FXCollections::observableArrayList));
 
+    private EndUser user;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
         filterBox.getItems().setAll(
                 "Manufacturer",
                 "Model",
@@ -106,9 +106,10 @@ public class ChooseKeyboardController implements Initializable {
 
     @FXML
     void GoNext(ActionEvent event) throws IOException {
-        if (App.computer==null){
-            App.computer=new Computer();
+        if (App.computer == null){
+            App.computer = new Computer();
         }
+
         App.computer.setKeyboard((Keyboard) tableView.getSelectionModel().getSelectedItem());
 
         System.out.println(App.computer.toCSV());
@@ -119,7 +120,7 @@ public class ChooseKeyboardController implements Initializable {
         window.setScene(scene);
         window.show();
 
-        EndUser.listableList.add(App.computer);
+        App.user.getComputers().add(App.computer);
         App.computer=null;
     }
 
@@ -169,5 +170,9 @@ public class ChooseKeyboardController implements Initializable {
                 }).collect(Collectors.toCollection(FXCollections::observableArrayList)));
             }
         }
+    }
+
+    public void setUser(EndUser user) {
+        this.user = user;
     }
 }

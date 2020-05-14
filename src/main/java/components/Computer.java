@@ -238,6 +238,10 @@ public class Computer extends ListableList<Component> implements Listable, ItemL
         return totalRam;
     }
 
+    public String getTotalRamString(){
+        return getTotalRam() + " GB";
+    }
+
     public void addMemory(Memory memory){
         if(getMotherboard() != null){
             if(!getMotherboard().compatible(memory)){
@@ -303,7 +307,14 @@ public class Computer extends ListableList<Component> implements Listable, ItemL
     }
 
     public int getTotalStorage(){
-       return getSsd().getCapacity()+getHdd().getCapacity();
+        int totalStorage = 0;
+        if(getSsd() != null){
+            totalStorage += getSsd().getCapacity();
+        }
+        if(getHdd() != null){
+            totalStorage += getHdd().getCapacity();
+        }
+        return totalStorage;
     }
 
     public String getSsdName(){
@@ -352,9 +363,11 @@ public class Computer extends ListableList<Component> implements Listable, ItemL
     public void setCabin(Cabin cabin){
         if(getMotherboard() != null){
             if(!getMotherboard().compatible(cabin)){
-                throw new NotCompatibleException("Cabin: " + cabin.getName() +
-                        "\n is not compatible with \n" +
-                        "Motherboard: " + getMotherboard().getName());
+                throw new NotCompatibleException("Motherboard: " + motherboard.getName() +
+                        "\n is not compatible with" + " Cabin: " + getCabin().getName() + "\n" +
+                        "Because mismatch sockets: \n" +
+                        getMotherboard().getName() + " form factor: " + getMotherboard().getFormFactor() + "\n" +
+                        cabin.getName() + " form factor: " + cabin.getFormFactor());
             }
         }
         this.cabin.set(cabin);
@@ -414,19 +427,32 @@ public class Computer extends ListableList<Component> implements Listable, ItemL
         return price;
     }
 
+    public String getTotalStorageString(){
+        return (getTotalStorage() >= 1000) ?
+                String.format("%.1f", (double) getTotalStorage()/1000) + " TB" :
+                getTotalStorage() + " GB";
+    }
+
+    public String getPriceString(){
+        return String.format("%.2f", getPrice()) + " NOK";
+    }
+
     @Override
     public String getName() {
+        return null;
+        /*
         return "GPU: " + getGpuName() + "\n" +
                 "CPU: " + getCpuName() + "\n" +
                 "RAM: " + getTotalRam() + " GB \n" +
-                "Storage: " + (getSsd().getCapacity() + getHdd().getCapacity()) + " GB\n" +
-                "Price: " + getPrice();
+                "Storage: " + getTotalStorageString() +
+                "Price: " + getPriceString();
+         */
     }
 
     @Override
     public String toCSV(){
         StringBuilder csv = new StringBuilder();
-        csv.append("Computer");
+        csv.append("Computer").append("\n");
         for(Component component : components){
             csv.append(component.toCSV()).append("\n");
         }

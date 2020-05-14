@@ -26,11 +26,17 @@ public abstract class Storage extends Component implements Serializable {
     @Override
     public void setCapacity(int capacity){
         if (capacity<0){
-            throw new IllegalArgumentException("Capaity must be positive");
+            throw new IllegalArgumentException("Capacity must be positive");
         }
         this.capacity.set(capacity);
 
 
+    }
+
+    public String getCapacityString(){
+        return (getCapacity() >= 1000) ?
+                String.format("%.1f", (double) getCapacity()/1000) + " TB" :
+                getCapacity() + " GB";
     }
 
     public String getForm(){return form.getValue();}

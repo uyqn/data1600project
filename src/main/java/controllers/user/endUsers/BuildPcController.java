@@ -1,9 +1,9 @@
 package controllers.user.endUsers;
 
+import Exceptions.NotCompatibleException;
 import components.CPU;
 import components.Component;
 import components.Computer;
-import Exceptions.NotCompatibleException;
 import controllers.guiManager.DialogBox;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
@@ -74,7 +74,6 @@ public class BuildPcController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
         //Enabler next-button idet man velger en komponent
         addBtn.disableProperty().bind(Bindings.isEmpty(tableView.getSelectionModel().getSelectedItems()));
 
@@ -197,5 +196,4 @@ public class BuildPcController implements Initializable {
         window.setScene(scene);
         window.show();
     }
-
 }

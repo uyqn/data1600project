@@ -1,9 +1,6 @@
 package controllers.user.endUsers;
 
-import components.Component;
 import components.Computer;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,19 +10,17 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import main.App;
-import users.EndUser;
-import java.awt.event.KeyEvent;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
 
 
 public class PrevPcController implements Initializable {
-
-
     @FXML
     private TableView<Computer> tableView;
 
@@ -42,13 +37,13 @@ public class PrevPcController implements Initializable {
     private TableColumn<Computer, String> cpuCol;
 
     @FXML
-    private TableColumn<Computer, Integer> memoryCol;
+    private TableColumn<Computer, String> memoryCol;
 
     @FXML
-    private TableColumn<Computer, Integer> storageCol;
+    private TableColumn<Computer, String> storageCol;
 
     @FXML
-    private TableColumn<Computer, Double> priceCol;
+    private TableColumn<Computer, String> priceCol;
 
     @FXML
     private Label priceLabel;
@@ -58,34 +53,16 @@ public class PrevPcController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle){
-
-
         gpuCol.setCellValueFactory(new PropertyValueFactory<>("gpuName"));
         cpuCol.setCellValueFactory(new PropertyValueFactory<>("cpuName"));
-        memoryCol.setCellValueFactory(new PropertyValueFactory<>("totalRam"));
-        storageCol.setCellValueFactory(new PropertyValueFactory<>("totalStorage"));
-        priceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
+        memoryCol.setCellValueFactory(new PropertyValueFactory<>("totalRamString"));
+        storageCol.setCellValueFactory(new PropertyValueFactory<>("totalStorageString"));
+        priceCol.setCellValueFactory(new PropertyValueFactory<>("priceString"));
 
-        tableView.setItems(EndUser.listableList.getList());
-
-        try{
-            treeView=App.computer.setTreeView(treeView);
-            treeView.refresh();
-            priceLabel.setText("Total price: "+ App.computer.getPrice()+" NOK");
-        }catch (NullPointerException ignore){}
+        tableView.setItems(App.user.getComputers().getList());
     }
 
-    @FXML
-    void selectPc(ActionEvent event) throws IOException{
 
-        try{
-            treeView = App.computer.setTreeView(treeView);
-            treeView.refresh();
-
-        }catch (NullPointerException ignored){}
-
-
-    }
 
     @FXML
     void addPc(ActionEvent event) throws IOException {
@@ -109,4 +86,26 @@ public class PrevPcController implements Initializable {
         window.show();
     }
 
+    @FXML
+    void keyPressedComputer(KeyEvent event) {
+        if(tableView.getSelectionModel().getSelectedItem() != null){
+            treeView = tableView.getSelectionModel().getSelectedItem().setTreeView(treeView);
+            priceLabel.setText(
+                    "Price: " + String.format("%.2f",tableView.getSelectionModel().getSelectedItem().getPrice()) + " " +
+                            "NOK"
+            );
+        }
+        treeView.refresh();
+    }
+
+    @FXML
+    void mouseClickedComputer(MouseEvent event) {
+        if(tableView.getSelectionModel().getSelectedItem() != null){
+            treeView = tableView.getSelectionModel().getSelectedItem().setTreeView(treeView);
+            priceLabel.setText(
+                    "Price: " + String.format("%.2f",tableView.getSelectionModel().getSelectedItem().getPrice()) + " NOK"
+            );
+        }
+        treeView.refresh();
+    }
 }

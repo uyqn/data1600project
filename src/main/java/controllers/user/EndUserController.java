@@ -2,16 +2,15 @@ package controllers.user;
 
 import controllers.LoginController;
 import controllers.guiManager.GUI;
+import controllers.user.endUsers.BuildPcController;
+import controllers.user.endUsers.PrevPcController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
 import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
+import main.App;
 import users.EndUser;
 
 import java.io.IOException;
@@ -19,6 +18,9 @@ import java.io.IOException;
 public class EndUserController{
 
     private EndUser user;
+
+    @FXML
+    private Menu userAccountMenu;
 
     @FXML
     private Label centerLabel;
@@ -36,26 +38,35 @@ public class EndUserController{
     private GridPane endHome;
 
     @FXML
+    void open(ActionEvent event) {
+        try {
+            App.user.open();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void save(ActionEvent event) {
+        App.user.save(App.user.getComputers());
+    }
+
+    @FXML
+    void saveAs(ActionEvent event) {
+        App.user.saveAs(App.user.getComputers());
+    }
+
+    @FXML
     void buildPc(ActionEvent event) throws IOException {
-        Parent view = FXMLLoader.load(getClass().getResource("/main/user/endUsers/buildPc.fxml"));
-
-        Scene scene = new Scene(view);
-
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-        window.setScene(scene);
-        window.show();
+        GUI<BuildPcController> buildPc = new GUI<>(event, "user/endUsers/buildPc");
+        buildPc.switchScene();
     }
 
 
     @FXML
     void showPrev(ActionEvent event) throws IOException {
-        Parent view = FXMLLoader.load(getClass().getResource("/main/user/endUsers/prevPC.fxml"));
-
-        Scene scene = new Scene(view);
-
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-        window.setScene(scene);
-        window.show();
+        GUI<PrevPcController> prevPc = new GUI<>(event, "user/endUsers/prevPC");
+        prevPc.switchScene();
     }
 
     @FXML
@@ -66,5 +77,6 @@ public class EndUserController{
 
     public void setUser(EndUser user) {
         this.user = user;
+        this.userAccountMenu.setText(user.getUsername());
     }
 }

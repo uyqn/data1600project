@@ -40,7 +40,7 @@ public class ChooseSsdController implements Initializable {
     private TableColumn<SSD, Double> PriceColumn;
 
     @FXML
-    private TableColumn<SSD, Double> CapacityColumn;
+    private TableColumn<SSD, String> CapacityColumn;
 
     @FXML
     private ChoiceBox<String> filterBox;
@@ -71,10 +71,10 @@ public class ChooseSsdController implements Initializable {
         filterText.setText(null);
 
         //Setter opp kolonner
-        ManufacturerColumn.setCellValueFactory(new PropertyValueFactory<SSD, String>("manufacturer"));
-        ModelColumn.setCellValueFactory(new PropertyValueFactory<SSD, String>("model"));
-        PriceColumn.setCellValueFactory(new PropertyValueFactory<SSD, Double>("price"));
-        CapacityColumn.setCellValueFactory(new PropertyValueFactory<SSD, Double>("capacity"));
+        ManufacturerColumn.setCellValueFactory(new PropertyValueFactory<>("manufacturer"));
+        ModelColumn.setCellValueFactory(new PropertyValueFactory<>("model"));
+        PriceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
+        CapacityColumn.setCellValueFactory(new PropertyValueFactory<>("capacityString"));
 
 
         tableView.setItems(

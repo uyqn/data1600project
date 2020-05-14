@@ -49,11 +49,11 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <TableView fx:id="tableView" prefHeight="200.0" prefWidth="200.0">
+                  <TableView fx:id="tableView" onKeyPressed="#keyPressedComputer" onMouseClicked="#mouseClickedComputer" prefHeight="200.0" prefWidth="200.0">
                     <columns>
                       <TableColumn fx:id="gpuCol" prefWidth="107.19997787475586" text="Graphic Card" />
                       <TableColumn fx:id="cpuCol" prefWidth="92.79998779296875" text="Processor" />
-                        <TableColumn fx:id="memoryCol" prefWidth="104.80006408691406" text="RAM (GB)" />
+                        <TableColumn fx:id="memoryCol" prefWidth="104.80006408691406" text="RAM" />
                         <TableColumn fx:id="storageCol" prefWidth="98.39996337890625" text="Storage" />
                         <TableColumn fx:id="priceCol" prefWidth="123.199951171875" text="Price" />
                     </columns>

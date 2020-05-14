@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import listManager.UserList;
+import main.App;
 import users.EndUser;
 import users.SuperUser;
 import users.User;
@@ -23,6 +24,7 @@ public class LoginController {
     void signIn(ActionEvent event) throws IOException {
         User user = fetchUser();
         if (user != null) {
+            App.user = user;
             if(user.getClass() == SuperUser.class){
                 GUI<SuperUserController> toSuper = new GUI<>(event, "user/superUser");
                 toSuper.getController().setUser((SuperUser) user);

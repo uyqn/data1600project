@@ -4,10 +4,10 @@ import components.Computer;
 import components.Listable;
 import controllers.guiManager.DialogBox;
 import fileManager.FileSaverBin;
-import javafx.collections.ObservableList;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import listManager.ItemList;
+import listManager.ListableList;
 
 import java.io.File;
 import java.io.IOException;
@@ -77,17 +77,12 @@ public class SuperUser extends User {
     }
 
     @Override
-    public void add(Computer computer) {
-
-    }
-
-    @Override
     public void remove(Computer computer) {
 
     }
 
     @Override
-    public ObservableList<Computer> getComputers() {
+    public ListableList<Computer> getComputers() {
         return null;
     }
 

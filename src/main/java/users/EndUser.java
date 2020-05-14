@@ -20,7 +20,7 @@ import java.nio.file.Paths;
 public class EndUser extends User {
     private boolean saved;
     private FileChooser fileChooser = new FileChooser();
-    public static ListableList<Computer> listableList = new ListableList<>();
+    private ListableList<Computer> listableList = new ListableList<>();
     private Path path;
 
     public EndUser(String username, String password) {
@@ -36,12 +36,11 @@ public class EndUser extends User {
         this.saved = false;
     }
 
-    @Override
     public void add(Computer computer){
         listableList.add(computer);
     }
 
-    public ObservableList<Computer> getComputerList(){
+    public ObservableList<Computer> getList(){
         return listableList.getList();
     }
 
@@ -51,8 +50,8 @@ public class EndUser extends User {
     }
 
     @Override
-    public ObservableList<Computer> getComputers(){
-        return listableList.getList();
+    public ListableList<Computer> getComputers(){
+        return listableList;
     }
 
     @Override
@@ -62,14 +61,31 @@ public class EndUser extends User {
             this.path = Paths.get(String.valueOf(file));
             FileOpenerCSV opener = new FileOpenerCSV();
             ObservableList<Component> listOfComponents = opener.open(getPath());
-            Computer computer = new Computer();
-            for(int i = 1 ; i < listOfComponents.size() ; i++){
-                if(listOfComponents.get(i) == null){
-                    add(computer);
-                    computer = new Computer();
-                } else {
-                    computer.addComponent(listOfComponents.get(i));
+
+            int numberOfComputers = 0;
+            for(Component component : listOfComponents){
+                if(component == null){
+                    numberOfComputers++;
                 }
+            }
+
+            Computer computer = new Computer();
+            if(numberOfComputers > 1) {
+                for (int i = 1; i < listOfComponents.size(); i++) {
+                    if (listOfComponents.get(i) == null) {
+                        add(computer);
+                        computer = new Computer();
+                    } else {
+                        computer.addComponent(listOfComponents.get(i));
+                    }
+                }
+            } else {
+                for(Component component : listOfComponents){
+                    if(component != null){
+                        computer.addComponent(component);
+                    }
+                }
+                add(computer);
             }
         }
     }
