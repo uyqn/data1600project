@@ -4,6 +4,7 @@ import components.Computer;
 import components.Listable;
 import controllers.guiManager.DialogBox;
 import fileManager.FileSaverCSV;
+import javafx.collections.ObservableList;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import listManager.ItemList;
@@ -37,6 +38,10 @@ public class EndUser extends User {
 
     public void add(Computer computer){
         listableList.add(computer);
+    }
+
+    public ObservableList<Computer> getComputerList(){
+        return listableList.getList();
     }
 
     @Override

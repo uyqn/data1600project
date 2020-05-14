@@ -281,6 +281,10 @@ public class Computer extends ListableList<Component> implements Listable, ItemL
         return ssd.getValue();
     }
 
+    public int getTotalStorage(){
+       return getSsd().getCapacity()+getHdd().getCapacity();
+    }
+
     public String getSsdName(){
         return getSsd().getName();
     }
