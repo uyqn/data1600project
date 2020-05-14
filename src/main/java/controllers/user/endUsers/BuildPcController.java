@@ -98,6 +98,10 @@ public class BuildPcController implements Initializable {
             treeView = App.computer.setTreeView(treeView);
             treeView.refresh();
             priceLabel.setText("Total price: " + App.computer.getPrice() + " NOK");
+            if(treeView.getTreeItem(0).getValue().contains("CPU")){
+                addBtn.disableProperty().unbind();
+                addBtn.setDisable(false);
+            }
         } catch (NullPointerException ignored){}
     }
 
@@ -169,16 +173,17 @@ public class BuildPcController implements Initializable {
             App.computer = new Computer();
         }
         try {
-            App.computer.setCpu((CPU) tableView.getSelectionModel().getSelectedItem());
+            if(tableView.getSelectionModel().getSelectedItem() != null) {
+                App.computer.setCpu((CPU) tableView.getSelectionModel().getSelectedItem());
+            }
+            Parent view = FXMLLoader.load(getClass().getResource("/main/user/endUsers/ChooseGpu.fxml"));
+            Scene scene = new Scene(view);
+            Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+            window. setScene(scene);
+            window.show();
         } catch (NotCompatibleException e){
             DialogBox.error("Not compatible!", null, e.getMessage());
-        } catch (NullPointerException ignored){}
-
-        Parent view = FXMLLoader.load(getClass().getResource("/main/user/endUsers/ChooseGpu.fxml"));
-        Scene scene = new Scene(view);
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-        window. setScene(scene);
-        window.show();
+        }
     }
 
     @FXML

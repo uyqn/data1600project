@@ -61,6 +61,7 @@ public class Computer extends ListableList<Component> implements Listable, ItemL
     public TreeView<String> setTreeView(TreeView<String> treeView){
         TreeItem<String> root = new TreeItem<>();
         TreeItem<String> memories = new TreeItem<>("Memories");
+        int memoryMembers = memories.getChildren().size();
 
         for(Component component : this.components){
             if(component.getClass() == Memory.class && getMemories().size() > 1){
@@ -68,6 +69,7 @@ public class Computer extends ListableList<Component> implements Listable, ItemL
                 TreeItem<String> memorySpec = new TreeItem<>(component.getSpec());
                 memory.getChildren().add(memorySpec);
                 memories.getChildren().add(memory);
+                memoryMembers++;
                 if(!root.getChildren().contains(memories)){
                     root.getChildren().add(memories);
                 }
@@ -78,6 +80,10 @@ public class Computer extends ListableList<Component> implements Listable, ItemL
                 comp.getChildren().add(compSpec);
                 root.getChildren().add(comp);
             }
+        }
+
+        if(memoryMembers > 1){
+            memories.setValue("Memories " + "(" + memoryMembers + ")");
         }
 
         treeView.setRoot(root);

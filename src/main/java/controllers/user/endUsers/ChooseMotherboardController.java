@@ -112,6 +112,10 @@ public class ChooseMotherboardController implements Initializable {
             treeView = App.computer.setTreeView(treeView);
             treeView.refresh();
             priceLabel.setText("Total price: " + App.computer.getPrice() + " NOK");
+            if(treeView.getTreeItem(2).getValue().contains("Motherboard")){
+                nextBtn.disableProperty().unbind();
+                nextBtn.setDisable(false);
+            }
         } catch (NullPointerException ignored){}
     }
 
@@ -193,7 +197,9 @@ public class ChooseMotherboardController implements Initializable {
             App.computer = new Computer();
         }
         try {
-            App.computer.setMotherboard((Motherboard) tableView.getSelectionModel().getSelectedItem());
+            if(tableView.getSelectionModel().getSelectedItem() != null) {
+                App.computer.setMotherboard((Motherboard) tableView.getSelectionModel().getSelectedItem());
+            }
 
             Parent view = FXMLLoader.load(getClass().getResource("/main/user/endUsers/ChooseMemory.fxml"));
 
@@ -204,6 +210,6 @@ public class ChooseMotherboardController implements Initializable {
             window.show();
         } catch (NotCompatibleException e){
             DialogBox.error("Not compatible", null, e.getMessage());
-        }
+        } catch (NullPointerException ignored){}
     }
 }

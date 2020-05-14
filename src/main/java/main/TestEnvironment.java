@@ -30,7 +30,7 @@ public class TestEnvironment extends Application {
         testList.add(null);
 
         TreeItem<String> cpuItem = new TreeItem<>(cpu.getName());
-
+        System.out.println(cpuItem.getChildren().size());
         TreeItem<String> cpuLeaf1 = new TreeItem<>(cpu.getPrice() + "");
         cpuItem.getChildren().add(cpuLeaf1);
 

@@ -84,7 +84,6 @@ public class ChooseGpuController implements Initializable {
 
         //Enabler next-button idet man velger en komponent
         nextBtn.disableProperty().bind(Bindings.isEmpty(tableView.getSelectionModel().getSelectedItems()));
-
         //Setter opp kolonner
 
         ManufacturerColumn.setCellValueFactory(new PropertyValueFactory<GPU, String>("manufacturer"));
@@ -100,6 +99,10 @@ public class ChooseGpuController implements Initializable {
             treeView = App.computer.setTreeView(treeView);
             treeView.refresh();
             priceLabel.setText("Total price: " + App.computer.getPrice() + " NOK");
+            if(treeView.getTreeItem(1).getValue().contains("GPU")){
+                nextBtn.disableProperty().unbind();
+                nextBtn.setDisable(false);
+            }
         } catch (NullPointerException ignored){}
     }
 
@@ -179,7 +182,9 @@ public class ChooseGpuController implements Initializable {
         }
 
         try {
-            App.computer.setGpu((GPU) tableView.getSelectionModel().getSelectedItem());
+            if(tableView.getSelectionModel().getSelectedItem() != null) {
+                App.computer.setGpu((GPU) tableView.getSelectionModel().getSelectedItem());
+            }
 
             Parent view = FXMLLoader.load(getClass().getResource("/main/user/endUsers/ChooseMotherboard.fxml"));
 
@@ -190,7 +195,7 @@ public class ChooseGpuController implements Initializable {
             window.show();
         } catch (NotCompatibleException e) {
             DialogBox.error("Not compatible!", null, e.getMessage());
-        } catch (NullPointerException ignored){}
+        }
     }
 
 }

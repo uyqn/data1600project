@@ -2,10 +2,9 @@ package controllers.user.endUsers;
 
 import components.Component;
 import components.Memory;
+import components.NotCompatibleException;
+import controllers.guiManager.DialogBox;
 import javafx.beans.binding.Bindings;
-import javafx.beans.property.ListProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -53,6 +52,12 @@ public class ChooseMemoryController implements Initializable {
     private ChoiceBox<String> filterBox;
 
     @FXML
+    private TreeView<String> treeView;
+
+    @FXML
+    private Label priceLabel;
+
+    @FXML
     private TextField filterText;
 
 
@@ -86,6 +91,15 @@ public class ChooseMemoryController implements Initializable {
         SpeedColumn.setCellValueFactory(new PropertyValueFactory<Memory, Integer>("speed"));
 
         tableView.setItems(memoryList);
+
+        try{
+            treeView = App.computer.setTreeView(treeView);
+            treeView.refresh();
+            priceLabel.setText("Total price: " + App.computer.getPrice() + " NOK");
+            if(treeView.getTreeItem(3).getValue().contains("Memor")) {
+                nextBtn.setDisable(false);
+            }
+        } catch (NullPointerException ignored){}
     }
 
     @FXML
@@ -141,6 +155,9 @@ public class ChooseMemoryController implements Initializable {
 
     @FXML
     void GoBack(ActionEvent event) throws IOException {
+        try {
+            App.computer.addMemory((Memory) tableView.getSelectionModel().getSelectedItem());
+        } catch (NotCompatibleException | NullPointerException ignored){}
 
         Parent view = FXMLLoader.load(getClass().getResource("/main/user/endUsers/ChooseMotherboard.fxml"));
 
@@ -149,31 +166,40 @@ public class ChooseMemoryController implements Initializable {
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         window.setScene(scene);
         window.show();
-
     }
 
     @FXML
     void GoNext(ActionEvent event) throws IOException {
+        try{
+            if(tableView.getSelectionModel().getSelectedItem() != null) {
+                App.computer.addMemory((Memory) tableView.getSelectionModel().getSelectedItem());
+            }
+            nextBtn.setDisable(false);
 
-        Parent view = FXMLLoader.load(getClass().getResource("/main/user/endUsers/ChooseHdd.fxml"));
+            Parent view = FXMLLoader.load(getClass().getResource("/main/user/endUsers/ChooseHdd.fxml"));
 
-        Scene scene = new Scene(view);
+            Scene scene = new Scene(view);
 
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-        window.setScene(scene);
-        window.show();
-
-
+            Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+            window.setScene(scene);
+            window.show();
+        } catch (NotCompatibleException e){
+            DialogBox.error("Not compatible!", null, e.getMessage());
+        }
     }
 
     @FXML
     void addEvt(ActionEvent event) throws IOException {
-
-        //Fjerner Selection idet man trykker på add
-        tableView.getSelectionModel().clearSelection();
-
-        nextBtn.setDisable(false);
-
+        try{
+            if(tableView.getSelectionModel().getSelectedItem() != null) {
+                App.computer.addMemory((Memory) tableView.getSelectionModel().getSelectedItem());
+            }
+            treeView = App.computer.setTreeView(treeView);
+            treeView.refresh();
+            nextBtn.setDisable(false);
+        } catch (NotCompatibleException e){
+            DialogBox.error("Not compatible!", null, e.getMessage());
+        }
     }
 
 }
