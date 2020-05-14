@@ -1,9 +1,12 @@
 package users;
 
+import components.Component;
 import components.Computer;
 import components.Listable;
 import controllers.guiManager.DialogBox;
+import fileManager.FileOpenerCSV;
 import fileManager.FileSaverCSV;
+import javafx.collections.ObservableList;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import listManager.ItemList;
@@ -31,19 +34,39 @@ public class EndUser extends User {
         fileChooser.getExtensionFilters().add(csvExtensions);
 
         this.saved = false;
-
-
     }
 
+    @Override
     public void add(Computer computer){
         listableList.add(computer);
     }
 
     @Override
-    public void open() {
+    public void remove(Computer computer) {
+        listableList.remove(computer);
+    }
+
+    @Override
+    public ObservableList<Computer> getComputers(){
+        return listableList.getList();
+    }
+
+    @Override
+    public void open() throws IOException {
         File file = fileChooser.showOpenDialog(new Stage());
         if(file != null){
             this.path = Paths.get(String.valueOf(file));
+            FileOpenerCSV opener = new FileOpenerCSV();
+            ObservableList<Component> listOfComponents = opener.open(getPath());
+            Computer computer = new Computer();
+            for(int i = 1 ; i < listOfComponents.size() ; i++){
+                if(listOfComponents.get(i) == null){
+                    add(computer);
+                    computer = new Computer();
+                } else {
+                    computer.addComponent(listOfComponents.get(i));
+                }
+            }
         }
     }
 

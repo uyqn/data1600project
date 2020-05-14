@@ -1,5 +1,6 @@
 package fileManager;
 
+import Exceptions.InvalidCsvException;
 import components.*;
 import components.Storage.HDD;
 import components.Storage.SSD;
@@ -12,20 +13,22 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
-public class FileOpenerCSV implements FileOpener {
+public class FileOpenerCSV {
 
-    @Override
     public ObservableList<Component> open(Path path) throws IOException, InvalidCsvException {
         List<String> list = Files.readAllLines(path);
         ObservableList<Component> tempList = FXCollections.observableArrayList();
 
-        for (String csvString : list) {
-            Component component = parseInfo(csvString);
-            if(component != null){
-                tempList.add(component);
+        for (String line : list) {
+            if (line.equals("Computer")) {
+                tempList.add(null);
+            } else {
+                Component component = parseInfo(line);
+                if (component != null) {
+                    tempList.add(component);
+                }
             }
         }
-
         return tempList;
     }
 

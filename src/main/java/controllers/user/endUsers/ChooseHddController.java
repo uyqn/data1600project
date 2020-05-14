@@ -1,7 +1,7 @@
 package controllers.user.endUsers;
 
 import components.Component;
-import components.NotCompatibleException;
+import Exceptions.NotCompatibleException;
 import components.Storage.HDD;
 import controllers.guiManager.DialogBox;
 import javafx.collections.FXCollections;

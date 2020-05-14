@@ -1,4 +1,4 @@
-package components;
+package Exceptions;
 
 public class NotEnoughRamSlotsException extends IllegalArgumentException {
     public NotEnoughRamSlotsException(String msg){

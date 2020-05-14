@@ -1,5 +1,8 @@
 package controllers.user.endUsers;
 
+import Exceptions.NotCompatibleException;
+import Exceptions.NotEnoughRamSlotsException;
+import Exceptions.RamExceededException;
 import components.*;
 import controllers.guiManager.DialogBox;
 import javafx.beans.binding.Bindings;

@@ -1,5 +1,6 @@
 package controllers.user.endUsers;
 
+import Exceptions.NotCompatibleException;
 import components.*;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;

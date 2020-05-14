@@ -4,9 +4,11 @@ import components.Computer;
 import components.Listable;
 import fileManager.FileManager;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.ObservableList;
 import listManager.ItemList;
 import listManager.ListableList;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.nio.file.Path;
 
@@ -44,8 +46,11 @@ public abstract class User implements Serializable, Listable {
         this.password.set(password);
     }
 
-    public abstract void open();
+    public abstract void open() throws IOException;
     public abstract Path getPath();
     public abstract <S extends Listable> void save(ItemList<S> list);
     public abstract <S extends Listable> void saveAs(ItemList<S> list);
+    public abstract void add(Computer computer);
+    public abstract void remove(Computer computer);
+    public abstract ObservableList<Computer> getComputers();
 }

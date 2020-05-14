@@ -1,8 +1,10 @@
 package users;
 
+import components.Computer;
 import components.Listable;
 import controllers.guiManager.DialogBox;
 import fileManager.FileSaverBin;
+import javafx.collections.ObservableList;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import listManager.ItemList;
@@ -72,6 +74,21 @@ public class SuperUser extends User {
                 DialogBox.error(e.getCause().toString(), null ,e.getMessage());;
             }
         }
+    }
+
+    @Override
+    public void add(Computer computer) {
+
+    }
+
+    @Override
+    public void remove(Computer computer) {
+
+    }
+
+    @Override
+    public ObservableList<Computer> getComputers() {
+        return null;
     }
 
     private void setPath(File file) {

@@ -1,10 +1,13 @@
 package components;
 
+import Exceptions.NotAComponentException;
+import Exceptions.NotCompatibleException;
+import Exceptions.NotEnoughRamSlotsException;
+import Exceptions.RamExceededException;
 import components.Storage.HDD;
 import components.Storage.SSD;
 import components.Storage.Storage;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TreeItem;
@@ -20,7 +23,6 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class Computer extends ListableList<Component> implements Listable, ItemList<Component>, Serializable {
-    private transient SimpleStringProperty name = new SimpleStringProperty();
     private transient ObservableList<Component> components = FXCollections.observableArrayList();
 
     private transient int availableRamSlots;
@@ -38,16 +40,35 @@ public class Computer extends ListableList<Component> implements Listable, ItemL
     public transient SimpleObjectProperty<Monitor> monitor = new SimpleObjectProperty<>();
     public transient SimpleObjectProperty<Keyboard> keyboard = new SimpleObjectProperty<>();
 
-    public Computer(){
-        setName("Unnamed");
-    }
-
-    public Computer(String name){
-        this.name = new SimpleStringProperty(name);
-    }
-
-    public Computer(String[] csv) {
-        setName(csv[1]);
+    public void addComponent(Component component){
+        switch (component.getComponentType()){
+            case CPU.COMPONENT_TYPE:
+                setCpu((CPU) component); break;
+            case GPU.COMPONENT_TYPE:
+                setGpu((GPU) component); break;
+            case Motherboard.COMPONENT_TYPE:
+                setMotherboard((Motherboard) component); break;
+            case Memory.COMPONENT_TYPE:
+                addMemory((Memory) component); break;
+            case SSD.COMPONENT_TYPE:
+                setSsd((SSD) component); break;
+            case HDD.COMPONENT_TYPE:
+                setHdd((HDD) component); break;
+            case Cooler.COMPONENT_TYPE:
+                setCooler((Cooler) component); break;
+            case PSU.COMPONENT_TYPE:
+                setPsu((PSU) component); break;
+            case Cabin.COMPONENT_TYPE:
+                setCabin((Cabin) component); break;
+            case Mouse.COMPONENT_TYPE:
+                setMouse((Mouse) component); break;
+            case Monitor.COMPONENT_TYPE:
+                setMonitor((Monitor) component); break;
+            case Keyboard.COMPONENT_TYPE:
+                setKeyboard((Keyboard) component); break;
+            default:
+                throw new NotAComponentException(component + " is not a recognizable component");
+        }
     }
 
     private void sortList(){
@@ -389,23 +410,20 @@ public class Computer extends ListableList<Component> implements Listable, ItemL
         return price;
     }
 
+    @Override
     public String getName() {
-        return this.name.getValue();
-    }
-
-    public void setName(String name) {
-        if(name.isEmpty() || name.isBlank()){
-            throw new IllegalArgumentException("Name cannot be empty!");
-        }
-        this.name.set(name);
+        return "GPU: " + getGpuName() + "\n" +
+                "CPU: " + getCpuName() + "\n" +
+                "RAM: " + getTotalRam() + " GB \n" +
+                "Storage: ";
     }
 
     @Override
     public String toCSV(){
         StringBuilder csv = new StringBuilder();
-
+        csv.append("Computer");
         for(Component component : components){
-            csv.append(component.toCSV());
+            csv.append(component.toCSV()).append("\n");
         }
 
         return csv.toString();
@@ -419,8 +437,8 @@ public class Computer extends ListableList<Component> implements Listable, ItemL
                 "GPU: %s\n" +
                 "Motherboard: %s\n" +
                 "Memories: %s\n" +
-                "HDD:  %s\n" +
-                "SSD: %s\n" +
+                "SSD:  %s\n" +
+                "HDD: %s\n" +
                 "Cooler: %s \n" +
                 "PSU: %s \n" +
                 "Cabin: %s \n" +
@@ -433,8 +451,8 @@ public class Computer extends ListableList<Component> implements Listable, ItemL
                 getGpuName(),
                 getMotherboardName(),
                 getMemoriesName(),
-                getHddName(),
                 getSsdName(),
+                getHddName(),
                 getCoolerName(),
                 getPsuName(),
                 getCabinName(),
@@ -447,7 +465,6 @@ public class Computer extends ListableList<Component> implements Listable, ItemL
 
     private void writeObject(ObjectOutputStream outputStream) throws IOException {
         outputStream.defaultWriteObject();
-        outputStream.writeUTF(getName());
         outputStream.writeObject(getCpu());
         outputStream.writeObject(getMotherboard());
         outputStream.writeObject(getMemories());
@@ -462,7 +479,6 @@ public class Computer extends ListableList<Component> implements Listable, ItemL
     }
 
     private void readObject(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
-        String name = inputStream.readUTF();
         CPU cpu = (CPU) inputStream.readObject();
         Motherboard motherboard = (Motherboard) inputStream.readObject();
         ArrayList<Memory> memories = (ArrayList<Memory>) inputStream.readObject();
@@ -475,7 +491,6 @@ public class Computer extends ListableList<Component> implements Listable, ItemL
         Monitor monitor = (Monitor) inputStream.readObject();
         Keyboard keyboard = (Keyboard) inputStream.readObject();
 
-        this.name = new SimpleStringProperty();
         this.gpu = new SimpleObjectProperty<>();
         this.motherboard = new SimpleObjectProperty<>();
         this.memories = new SimpleObjectProperty<>();
@@ -488,7 +503,6 @@ public class Computer extends ListableList<Component> implements Listable, ItemL
         this.monitor = new SimpleObjectProperty<>();
         this.keyboard = new SimpleObjectProperty<>();
 
-        setName(name);
         setCpu(cpu);
         setMotherboard(motherboard);
         setMemories(memories);
