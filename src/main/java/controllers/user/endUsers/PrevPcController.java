@@ -105,26 +105,28 @@ public class PrevPcController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle){
-       filterBox.getItems().setAll("Name", "Price (NOK) ≤", "CPU", "GPU", "Motherboard", "Memory", "Storage", "Cooler", "Power supply", "Cabin", "Monitor", "Keyboard", "Mouse");
+       filterBox.getItems().setAll("Name", "CPU", "GPU", "Motherboard", "Memory", "SSD", "HDD",
+               "Cooler",
+               "Power supply", "Cabin", "Monitor", "Keyboard", "Mouse", "Price (NOK) ≤");
        filterBox.setValue(null);
 
        computerList=EndUser.listableList.getList();
 
 
-        nameCol.setCellValueFactory(new PropertyValueFactory<Computer, String >("name"));
-        priceCol.setCellValueFactory(new PropertyValueFactory<Computer, Double>("price"));
-        cpuCol.setCellValueFactory(new PropertyValueFactory<Computer, String>("cpuName"));
-        gpuCol.setCellValueFactory(new PropertyValueFactory<Computer, String>("gpuName"));
-        mbCol.setCellValueFactory(new PropertyValueFactory<Computer, String>("motherboardName"));
-        memoryCol.setCellValueFactory(new PropertyValueFactory<Computer, String>("memoryName"));
-        ssdCol.setCellValueFactory(new PropertyValueFactory<Computer, String>("ssdName"));
-        hddCol.setCellValueFactory(new PropertyValueFactory<Computer, String>("hddName"));
-        coolerCol.setCellValueFactory(new PropertyValueFactory<Computer, String>("coolerName"));
-        psCol.setCellValueFactory(new PropertyValueFactory<Computer, String>("psuName"));
-        cabinCol.setCellValueFactory(new PropertyValueFactory<Computer, String>("cabinName"));
-        monitorCol.setCellValueFactory(new PropertyValueFactory<Computer, String>("monitorName"));
-        keyboardCol.setCellValueFactory(new PropertyValueFactory<Computer, String>("keyboardName"));
-        mouseCol.setCellValueFactory(new PropertyValueFactory<Computer, String>("mouseName"));
+        nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        priceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
+        cpuCol.setCellValueFactory(new PropertyValueFactory<>("cpuName"));
+        gpuCol.setCellValueFactory(new PropertyValueFactory<>("gpuName"));
+        mbCol.setCellValueFactory(new PropertyValueFactory<>("motherboardName"));
+        memoryCol.setCellValueFactory(new PropertyValueFactory<>("memoryName"));
+        ssdCol.setCellValueFactory(new PropertyValueFactory<>("ssdName"));
+        hddCol.setCellValueFactory(new PropertyValueFactory<>("hddName"));
+        coolerCol.setCellValueFactory(new PropertyValueFactory<>("coolerName"));
+        psCol.setCellValueFactory(new PropertyValueFactory<>("psuName"));
+        cabinCol.setCellValueFactory(new PropertyValueFactory<>("cabinName"));
+        monitorCol.setCellValueFactory(new PropertyValueFactory<>("monitorName"));
+        keyboardCol.setCellValueFactory(new PropertyValueFactory<>("keyboardName"));
+        mouseCol.setCellValueFactory(new PropertyValueFactory<>("mouseName"));
 
         tableView.setItems(computerList);
 
@@ -144,22 +146,24 @@ public class PrevPcController implements Initializable {
                 switch (filterIndex){
                     case 0:
                         return computer.getName().toLowerCase().contains(search);
-                    case 1:
+                    case 13:
                         try {
-                            return computer.getPrice() < Double.parseDouble(search);
+                            return computer.getPrice() <= Double.parseDouble(search);
                         }catch (NumberFormatException e){
                             return false;
                         }
-                    case 2:
+                    case 1:
                         return computer.getCpuName().toLowerCase().contains(search);
-                    case 3:
+                    case 2:
                         return computer.getGpuName().toLowerCase().contains(search);
-                    case 4:
+                    case 3:
                         return computer.getMotherboardName().toLowerCase().contains(search);
-                    case 5:
+                    case 4:
                         return computer.getMemoriesName().toLowerCase().contains(search);
+                    case 5:
+                        return computer.getSsdName().toLowerCase().contains(search);
                     case 6:
-                        return computer.getStorageName().toLowerCase().contains(search);
+                        return computer.getHddName().toLowerCase().contains(search);
                     case 7:
                         return computer.getCoolerName().toLowerCase().contains(search);
                     case 8:
@@ -172,7 +176,6 @@ public class PrevPcController implements Initializable {
                         return computer.getKeyboardName().toLowerCase().contains(search);
                     case 12:
                         return computer.getMouseName().toLowerCase().contains(search);
-
                     default:
                         return false;
                 }
