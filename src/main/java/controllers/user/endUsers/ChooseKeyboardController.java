@@ -14,6 +14,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import main.App;
 
@@ -38,6 +39,12 @@ public class ChooseKeyboardController implements Initializable {
 
     @FXML
     private TableColumn<Keyboard, Boolean> TactileColumn;
+
+    @FXML
+    private TreeView<Component> treeView;
+
+    @FXML
+    private Label priceLabel;
 
 
     @FXML
@@ -76,6 +83,7 @@ public class ChooseKeyboardController implements Initializable {
         );
 
     }
+
     @FXML
     private Button backBtn;
 
@@ -89,7 +97,7 @@ public class ChooseKeyboardController implements Initializable {
 
         Scene scene = new Scene(view);
 
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(scene);
         window.show();
 
@@ -102,7 +110,7 @@ public class ChooseKeyboardController implements Initializable {
 
         Scene scene = new Scene(view);
 
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(scene);
         window.show();
     }
@@ -124,32 +132,6 @@ public class ChooseKeyboardController implements Initializable {
             }).collect(Collectors.toCollection(FXCollections::observableArrayList)));
         } else {
             filterText.setDisable(false);
-
-            filterText.setOnKeyReleased(keyEvent -> {
-                String search = filterText.getText().toLowerCase();
-                int filterIndex = filterBox.getSelectionModel().getSelectedIndex();
-
-                tableView.setItems(keyboardList.stream().filter(component -> {
-                    if (search.isBlank() || search.isEmpty() || filterBox.getSelectionModel().getSelectedItem() == null) {
-                        return true;
-                    } else {
-                        switch (filterIndex) {
-                            case 0:
-                                return component.getManufacturer().toLowerCase().contains(search);
-                            case 1:
-                                return component.getModel().toLowerCase().contains(search);
-                            case 4:
-                                try {
-                                    return component.getPrice() <= Double.parseDouble(search);
-                                } catch (NumberFormatException e) {
-                                    return false;
-                                }
-                            default:
-                                return false;
-                        }
-                    }
-                }).collect(Collectors.toCollection(FXCollections::observableArrayList)));
-            });
 
             if (filterText.getText() == null) {
                 tableView.setItems(keyboardList);
