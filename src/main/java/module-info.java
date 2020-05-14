@@ -8,8 +8,11 @@ module main {
 
     exports users;
 
-    opens components;
+    opens components to javafx.fxml;
     exports components;
+
+    opens Exceptions to javafx.fxml;
+    exports Exceptions;
 
     opens controllers.guiManager to javafx.fxml;
     exports controllers.guiManager;

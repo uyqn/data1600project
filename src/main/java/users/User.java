@@ -2,11 +2,9 @@ package users;
 
 import components.Computer;
 import components.Listable;
-import fileManager.FileManager;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import listManager.ItemList;
-import listManager.ListableList;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -15,9 +13,6 @@ import java.nio.file.Path;
 public abstract class User implements Serializable, Listable {
     private transient SimpleStringProperty username = new SimpleStringProperty();
     private transient SimpleStringProperty password = new SimpleStringProperty();
-
-    private transient FileManager manager = new FileManager();
-    private transient ListableList<Computer> computerList = new ListableList<>();
 
     public User(String username, String password) {
         setUsername(username);

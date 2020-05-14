@@ -2,7 +2,6 @@ package main;
 
 import components.Component;
 import components.Computer;
-import fileManager.FileManager;
 import fileManager.FileOpenerCSV;
 import fileManager.FileSaverBin;
 import javafx.application.Application;
@@ -23,7 +22,6 @@ import java.nio.file.Paths;
  * JavaFX App
  */
 public class App extends Application {
-    public static FileManager fileManager = new FileManager();
     public static ListableList<Component> listableList = new ListableList<>();
     public static User user;
     public static Computer computer;
