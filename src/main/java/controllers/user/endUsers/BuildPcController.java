@@ -122,34 +122,34 @@ public class BuildPcController implements Initializable {
                     case 1:
                         return component.getModel().toLowerCase().contains(search);
                     case 2:
-                        return component.getSocket().toLowerCase().contains(search);
+                        try {
+                            return component.getPrice() <= Double.parseDouble(search);
+                        } catch (NumberFormatException e) {
+                            return false;
+                        }
                     case 3:
+                        return component.getSocket().toLowerCase().contains(search);
+                    case 4:
                         try {
                             return component.getCoreCount() <= Integer.parseInt(search);
                         } catch (NumberFormatException e){
                             return false;
                         }
-                    case 4:
+                    case 5:
                         try {
                             return component.getCoreClock() <= Double.parseDouble(search);
                         } catch (NumberFormatException e) {
                             return false;
                         }
-                    case 5:
+                    case 6:
                         try {
                             return component.getBoostClock() <= Double.parseDouble(search);
                         } catch (NumberFormatException e) {
                             return false;
                         }
-                    case 6:
-                        try {
-                            return component.getPowerConsumption() <= Double.parseDouble(search);
-                        } catch (NumberFormatException e) {
-                            return false;
-                        }
                     case 7:
                         try {
-                            return component.getPrice() <= Double.parseDouble(search);
+                            return component.getPowerConsumption() <= Double.parseDouble(search);
                         } catch (NumberFormatException e) {
                             return false;
                         }
