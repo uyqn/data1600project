@@ -4,6 +4,7 @@ import components.Component;
 import components.Computer;
 import components.Listable;
 import controllers.guiManager.DialogBox;
+import exceptions.EmptyCsvException;
 import exceptions.InvalidCsvException;
 import exceptions.NotCompatibleException;
 import fileManager.FileOpenerCSV;
@@ -62,9 +63,12 @@ public class EndUser extends User {
         File file = fileChooser.showOpenDialog(new Stage());
         if(file != null){
             this.path = Paths.get(String.valueOf(file));
+            this.saved = true;
             FileOpenerCSV opener = new FileOpenerCSV();
             try {
                 listableList.setList(analyzeList(opener.open(getPath())));
+            } catch (EmptyCsvException ignored){
+
             } catch (InvalidCsvException e){
                 DialogBox.error("Failed to open",
                         "Cannot open " + getPath(),
@@ -118,12 +122,13 @@ public class EndUser extends User {
 
     @Override
     public <S extends Listable> void save(ItemList<S> list) {
+        FileSaverCSV<S> saver = new FileSaverCSV<>();
         if (!saved || path == null) {
             File file = fileChooser.showSaveDialog(new Stage());
             if (file != null) {
                 setPath(file);
                 this.saved = true;
-                FileSaverCSV<S> saver = new FileSaverCSV<>();
+                saver = new FileSaverCSV<>();
                 try {
                     saver.save(path, list);
                     DialogBox.info("Successfully saved file", null,
@@ -131,6 +136,15 @@ public class EndUser extends User {
                 } catch (IOException e) {
                     DialogBox.error(e.getCause().toString(), null ,e.getMessage());
                 }
+            }
+        }
+        else {
+            try {
+                saver.save(path, list);
+                DialogBox.info("Successfully saved file", null,
+                        "File saved to path: " + path);
+            } catch (IOException e) {
+                DialogBox.error(e.getCause().toString(), null ,e.getMessage());
             }
         }
     }

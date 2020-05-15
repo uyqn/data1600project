@@ -46,10 +46,43 @@ public class PrevPcController implements Initializable {
     private TableColumn<Computer, String> priceCol;
 
     @FXML
+    private Menu userAccount;
+
+    @FXML
     private Label priceLabel;
 
     @FXML
     private TreeView<String> treeView;
+
+    @FXML
+    void open(ActionEvent event) {
+        try {
+            App.user.open();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        tableView.setItems(App.user.getComputers().getList());
+        tableView.refresh();
+    }
+
+    @FXML
+    void save(ActionEvent event) {
+        App.user.save(App.user.getComputers());
+    }
+
+    @FXML
+    void saveAs(ActionEvent event) {
+        App.user.saveAs(App.user.getComputers());
+    }
+
+    @FXML
+    void remove(ActionEvent event) {
+        App.user.getComputers().remove(tableView.getSelectionModel().getSelectedItem());
+        tableView.getSelectionModel().clearSelection();
+        tableView.refresh();
+        treeView.getRoot().setExpanded(false);
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle){
@@ -60,6 +93,7 @@ public class PrevPcController implements Initializable {
         priceCol.setCellValueFactory(new PropertyValueFactory<>("priceString"));
 
         tableView.setItems(App.user.getComputers().getList());
+        userAccount.setText(App.user.getUsername());
     }
 
 
