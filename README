@@ -16,7 +16,7 @@ Det er mulighet for å registrere nye brukere. Men disse brukerne er satt som en
 under main.App metoden "initiateCoreUsers" som user object.
 
 I denne applikasjonen har vi valgt å gjøre følgende:
-Superuser har:
+Superuser:
 > Mulighet for å legge til komponenter.
 >> Mange av feltene har blitt begrenset input som f.eks pris har blitt begrenset til kun desimaltall mens andre
 >> felt som RAM har blitt begrenset til heltall.
@@ -33,7 +33,7 @@ Superuser har:
 >>>> Vi kan også filtrere via komponenttyper og hver av disse komponentene har sine egne filtrerings funksjoner avhengig
 >>>> avhengig av hva slags attributter som identifiserer disse komponentene.
 
-Enduser har :
+Enduser:
 > Mulighet for å konfigurere en datamaskin
 >> Applikasjonen veileder brukeren til å lage en datamaskin
 >>>> Vi har her også tatt i betrakning til kompatibiliteten med komponentene som blir lagt avhengig av hva som skal
