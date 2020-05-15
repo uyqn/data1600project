@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
@@ -7,57 +8,71 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TreeView?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<GridPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.user.endUsers.ChooseMouseController">
-   <columnConstraints>
-      <ColumnConstraints halignment="CENTER" maxWidth="905.0" minWidth="510.0" prefWidth="648.0" />
-      <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="450.0" minWidth="55.0" prefWidth="312.0" />
-   </columnConstraints>
-   <rowConstraints>
-      <RowConstraints maxHeight="194.0" minHeight="47.0" prefHeight="65.0" valignment="CENTER" vgrow="SOMETIMES" />
-      <RowConstraints valignment="CENTER" />
-      <RowConstraints maxHeight="434.0" minHeight="237.0" prefHeight="347.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="98.0" minHeight="57.0" prefHeight="84.0" valignment="TOP" vgrow="SOMETIMES" />
-   </rowConstraints>
-   <children>
-      <TableView fx:id="tableView" onKeyReleased="#filterEvent" prefHeight="182.0" prefWidth="640.0" GridPane.rowIndex="2">
-         <columns>
-            <TableColumn fx:id="ManufacturerColumn" prefWidth="88.33334350585938" text="Manufacturer" />
-            <TableColumn fx:id="ModelColumn" prefWidth="61.666656494140625" text="Model" />
-            <TableColumn fx:id="PriceColumn" prefWidth="51.6666259765625" text="Price" />
-            <TableColumn fx:id="ButtonsColumn" prefWidth="63.0" text="Buttons" />
-            <TableColumn fx:id="DpiColumn" prefWidth="66.33331298828125" text="DPI" />
-            <TableColumn fx:id="ErgonomicColumn" minWidth="0.0" prefWidth="147.0" text="Ergonomic" />
-            <TableColumn fx:id="WirelessColumn" prefWidth="159.0" text="Wireless" />
-         </columns>
-      </TableView>
-      <Label prefHeight="36.0" prefWidth="238.0" text="Choose a Mouse">
-         <font>
-            <Font size="22.0" />
-         </font>
-      </Label>
-      <HBox alignment="CENTER" prefHeight="57.0" prefWidth="938.0" spacing="20.0" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+<BorderPane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.user.endUsers.ChooseMouseController">
+   <center>
+      <GridPane>
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" prefWidth="700.0" />
+            <ColumnConstraints hgrow="SOMETIMES" prefWidth="300.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints prefHeight="25.0" vgrow="SOMETIMES" />
+            <RowConstraints prefHeight="50.0" vgrow="SOMETIMES" />
+            <RowConstraints prefHeight="400.0" vgrow="SOMETIMES" />
+            <RowConstraints prefHeight="50.0" vgrow="SOMETIMES" />
+         </rowConstraints>
          <children>
-            <Button fx:id="backBtn" mnemonicParsing="false" onAction="#GoBack" text="Back" />
-            <Button fx:id="nextBtn" mnemonicParsing="false" onAction="#addMouse" text="Next" />
+            <TableView fx:id="tableView" onKeyReleased="#filterEvent" prefHeight="182.0" prefWidth="640.0" GridPane.rowIndex="2">
+               <columns>
+                  <TableColumn fx:id="ManufacturerColumn" prefWidth="88.33334350585938" text="Manufacturer" />
+                  <TableColumn fx:id="ModelColumn" prefWidth="61.666656494140625" text="Model" />
+                  <TableColumn fx:id="PriceColumn" prefWidth="51.6666259765625" text="Price" />
+                  <TableColumn fx:id="ButtonsColumn" prefWidth="63.0" text="Buttons" />
+                  <TableColumn fx:id="DpiColumn" prefWidth="66.33331298828125" text="DPI" />
+                  <TableColumn fx:id="ErgonomicColumn" minWidth="0.0" prefWidth="147.0" text="Ergonomic" />
+                  <TableColumn fx:id="WirelessColumn" prefWidth="159.0" text="Wireless" />
+               </columns>
+            </TableView>
+            <Label prefHeight="36.0" prefWidth="238.0" text="Choose a Mouse">
+               <font>
+                  <Font name="System Bold" size="22.0" />
+               </font>
+            </Label>
+            <HBox alignment="CENTER" prefHeight="57.0" prefWidth="938.0" spacing="100.0" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+               <children>
+                  <Button fx:id="backBtn" mnemonicParsing="false" onAction="#GoBack" text="Back">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font></Button>
+                  <Button fx:id="nextBtn" mnemonicParsing="false" onAction="#addMouse" text="Next">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font></Button>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" fillHeight="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="44.0" prefWidth="648.0" spacing="10.0" GridPane.rowIndex="1">
+               <children>
+                  <ChoiceBox fx:id="filterBox" onAction="#filterEvt" prefHeight="25.0" prefWidth="282.0" />
+                  <TextField fx:id="filterText" onKeyReleased="#filterEvent" prefHeight="25.0" prefWidth="515.0" />
+               </children>
+            </HBox>
+            <TreeView fx:id="treeView" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Label fx:id="priceLabel" alignment="TOP_LEFT" text="Total price:" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
          </children>
-      </HBox>
-      <HBox alignment="CENTER" fillHeight="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="44.0" prefWidth="648.0" spacing="10.0" GridPane.rowIndex="1">
-         <children>
-            <ChoiceBox fx:id="filterBox" onAction="#filterEvt" prefHeight="25.0" prefWidth="282.0" />
-            <TextField fx:id="filterText" onKeyReleased="#filterEvent" prefHeight="25.0" prefWidth="515.0" />
-         </children>
-      </HBox>
-      <TreeView fx:id="treeView" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-      <Label fx:id="priceLabel" alignment="TOP_LEFT" text="Total price:" GridPane.columnIndex="1" GridPane.rowIndex="3">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Label>
-   </children>
-</GridPane>
+         <padding>
+            <Insets left="20.0" right="20.0" top="20.0" />
+         </padding>
+      </GridPane>
+   </center>
+</BorderPane>
