@@ -24,7 +24,7 @@ Superuser:
 >>>> Dette er for å sikre så lite feil ved input for å legge til komponenter til databasen.
 
 >> Komponentene som blir lagt til blir automatisk lagret når man lukker programmet.
->> Komponentene som tidligere har blitt lagt til blir også automatisk lastet inn i applikasjonen ved start.
+>> Komponentene som tidligere har blitt lagt til blir også automatisk lastet inn i applikasjonen ved start (temp.bin)
 >>>> Vi har valgt å ikke legge til trådventing ved automatisk innlasting og lagring av kompontene ved applikasjon start
 >>>> men simuleringen av store filer (trådventing) er lagt ved når filene blir åpnet av super user manuelt fra GUI.
 
@@ -42,6 +42,7 @@ Enduser:
 >>>>>> er kompatibel med formfaktorer som er mindre. Dette er på grunn av at formfaktor har veldig ulike dimensjoner.
 >>>>>>>> Kompatibilitets funksjonen er kun satt til de viktigste komponentene som skal kobles til hovedkortet som RAM,
 >>>>>>>> Skjermkort og prossessor. I tillegg til hovedkort og kabinettet.
+>>>>>>>>>>> Total prisen på PCer har vi valgt til å bare være totalprisen til alle komponentene som er lagt til i POen.
 
 Filbehandlingen har blitt lagt til for begge brukerne hvor super bruker kan kun lagre og åpne .bin filer og slutt bruker
 kan kun lagre og åpne csv filer. Disse har også blitt testet mot Excel og skal fint kunne åpnes der. Det er også andre
