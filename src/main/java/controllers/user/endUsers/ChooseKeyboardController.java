@@ -113,7 +113,7 @@ public class ChooseKeyboardController implements Initializable {
 
         App.computer.setKeyboard((Keyboard) tableView.getSelectionModel().getSelectedItem());
 
-        Parent view = FXMLLoader.load(getClass().getResource("/main/user/endUser.fxml"));
+        Parent view = FXMLLoader.load(getClass().getResource("/main/user/endUsers/prevPc.fxml"));
         Scene scene = new Scene(view);
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(scene);
