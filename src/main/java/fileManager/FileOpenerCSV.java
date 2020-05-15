@@ -13,7 +13,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
-public class FileOpenerCSV {
+public class FileOpenerCSV implements FileOpener{
 
     public ObservableList<Component> open(Path path) throws IOException, InvalidCsvException {
         List<String> list = Files.readAllLines(path);

@@ -3,7 +3,6 @@ package controllers.user;
 import components.*;
 import components.Storage.HDD;
 import components.Storage.SSD;
-import controllers.ComponentController;
 import controllers.guiManager.DialogBox;
 import controllers.guiManager.GUI;
 import fileManager.FileOpenerBin;

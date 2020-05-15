@@ -2,7 +2,6 @@ package controllers.user;
 
 import components.Component;
 import controllers.LoginController;
-import controllers.ComponentController;
 import controllers.guiManager.DialogBox;
 import controllers.guiManager.GUI;
 import fileManager.FileOpenerBin;
@@ -124,7 +123,7 @@ public class SuperUserController implements Initializable {
 
     @FXML
     void viewComponents(ActionEvent event) throws IOException {
-        addViewComponentWindow = new GUI<>(event, "views/components");
+        addViewComponentWindow = new GUI<>(event, "user/componentView");
         addViewComponentWindow.newWindow();
         addViewComponentWindow.getController().setSuperHome(superHome);
         addViewComponentWindow.getController().setUser(user);
