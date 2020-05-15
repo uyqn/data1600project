@@ -41,6 +41,7 @@ public class App extends Application {
 
         stage.setOnCloseRequest(windowEvent -> {
             FileSaverBin<Component> tempSaver = new FileSaverBin<>();
+
             try {
                 tempSaver.save(Paths.get("temp.bin"), listableList);
             } catch (IOException e) {
