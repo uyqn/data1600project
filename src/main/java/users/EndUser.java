@@ -141,8 +141,6 @@ public class EndUser extends User {
         else {
             try {
                 saver.save(path, list);
-                DialogBox.info("Successfully saved file", null,
-                        "File saved to path: " + path);
             } catch (IOException e) {
                 DialogBox.error(e.getCause().toString(), null ,e.getMessage());
             }

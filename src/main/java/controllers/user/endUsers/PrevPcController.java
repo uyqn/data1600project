@@ -64,6 +64,10 @@ public class PrevPcController implements Initializable {
 
         tableView.setItems(App.user.getComputers().getList());
         tableView.refresh();
+        if(treeView.getRoot() != null){
+            treeView.getRoot().setExpanded(false);
+            priceLabel.setText("Price: ");
+        }
     }
 
     @FXML
@@ -81,6 +85,7 @@ public class PrevPcController implements Initializable {
         App.user.getComputers().remove(tableView.getSelectionModel().getSelectedItem());
         tableView.getSelectionModel().clearSelection();
         tableView.refresh();
+        priceLabel.setText("Price: ");
         treeView.getRoot().setExpanded(false);
     }
 
