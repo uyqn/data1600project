@@ -368,7 +368,7 @@ public class Computer extends ListableList<Component> implements Listable, ItemL
         if(getMotherboard() != null){
             if(!getMotherboard().compatible(cabin)){
                 throw new NotCompatibleException("Motherboard: " + motherboard.getName() +
-                        "\n is not compatible with" + " Cabin: " + getCabin().getName() + "\n" +
+                        "\n is not compatible with" + " Cabin: " + cabin.getName() + "\n" +
                         "Because mismatch sockets: \n" +
                         getMotherboard().getName() + " form factor: " + getMotherboard().getFormFactor() + "\n" +
                         cabin.getName() + " form factor: " + cabin.getFormFactor());

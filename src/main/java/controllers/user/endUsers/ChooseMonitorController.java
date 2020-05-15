@@ -146,7 +146,9 @@ public class ChooseMonitorController implements Initializable {
             App.computer=new Computer();
         }
 
-        App.computer.setMonitor((Monitor) tableView.getSelectionModel().getSelectedItem());
+        if(tableView.getSelectionModel().getSelectedItem() != null) {
+            App.computer.setMonitor((Monitor) tableView.getSelectionModel().getSelectedItem());
+        }
 
         Parent view = FXMLLoader.load(getClass().getResource("/main/user/endUsers/ChooseKeyboard.fxml"));
         Scene scene = new Scene(view);

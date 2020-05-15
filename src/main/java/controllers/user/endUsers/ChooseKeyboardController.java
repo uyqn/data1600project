@@ -111,7 +111,9 @@ public class ChooseKeyboardController implements Initializable {
             App.computer = new Computer();
         }
 
-        App.computer.setKeyboard((Keyboard) tableView.getSelectionModel().getSelectedItem());
+        if(tableView.getSelectionModel().getSelectedItem() != null) {
+            App.computer.setKeyboard((Keyboard) tableView.getSelectionModel().getSelectedItem());
+        }
 
         Parent view = FXMLLoader.load(getClass().getResource("/main/user/endUsers/prevPc.fxml"));
         Scene scene = new Scene(view);

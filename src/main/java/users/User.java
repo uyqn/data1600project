@@ -24,7 +24,7 @@ public abstract class User implements Serializable, Listable {
     }
 
     public void setUsername(String username) throws IllegalArgumentException {
-        if(!username.matches("[\\w]{4,}")){
+        if(!username.matches("[\\w]{3,}")){
             throw new IllegalArgumentException("Invalid username!");
         }
         this.username.set(username);
@@ -35,8 +35,13 @@ public abstract class User implements Serializable, Listable {
     }
 
     public void setPassword(String password) throws IllegalArgumentException {
-        if(!password.matches("[^\\s]*")){
-            throw new IllegalArgumentException("Invalid characters");
+        if(!password.matches("[^\\s]{5,}")){
+            if(password.length() < 5){
+                throw new IllegalArgumentException("Password must at least be 5 characters long");
+            }
+            else {
+                throw new IllegalArgumentException("Invalid characters");
+            }
         }
         this.password.set(password);
     }

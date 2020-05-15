@@ -3,7 +3,6 @@ package main;
 import components.Component;
 import components.Computer;
 import fileManager.FileOpenerBin;
-import fileManager.FileOpenerCSV;
 import fileManager.FileSaverBin;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -34,12 +33,8 @@ public class App extends Application {
         Scene scene = new Scene(fxmlLoader.load());
         stage.setScene(scene);
 
-
-        FileOpenerCSV tempOpener = new FileOpenerCSV();
-        listableList.setList(tempOpener.open(Paths.get("temp.csv")));
-
-        //FileOpenerBin tempOpener = new FileOpenerBin();
-        //listableList.setList(tempOpener.open(Paths.get("temp.bin")));
+        FileOpenerBin tempOpener = new FileOpenerBin();
+        listableList.setList(tempOpener.open(Paths.get("temp.bin")));
 
         stage.setOnCloseRequest(windowEvent -> {
             FileSaverBin<Component> tempSaver = new FileSaverBin<>();
@@ -59,15 +54,10 @@ public class App extends Application {
     }
 
     private void initiateCoreUsers(){
-        User admin = new SuperUser("admin", "super");
-        User uyqn = new SuperUser("uyqn", "s341864");
-        User helene = new SuperUser("hele", "s341873");
-        User end = new EndUser("bruker", "passord");
+        User superUser = new SuperUser("admin", "admin");
+        User endUser = new EndUser("bruker", "bruker");
 
-        UserList.add(uyqn);
-        UserList.add(admin);
-        UserList.add(helene);
-
-        UserList.add(end);
+        UserList.add(superUser);
+        UserList.add(endUser);
     }
 }

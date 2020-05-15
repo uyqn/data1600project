@@ -81,9 +81,12 @@ public class ChooseCabinController implements Initializable {
         try{
             treeView = App.computer.setTreeView(treeView);
             treeView.refresh();
-            priceLabel.setText("Total price: "+App.computer.getPrice()+" NOK");
-
-        }catch (NullPointerException ignored){}
+            priceLabel.setText("Total price: " + App.computer.getPrice() + " NOK");
+            if(App.computer.getCabin() != null) {
+                addBtn.disableProperty().unbind();
+                addBtn.setDisable(false);
+            }
+        } catch (NullPointerException ignored){}
     }
 
     @FXML
@@ -133,20 +136,21 @@ public class ChooseCabinController implements Initializable {
 
     @FXML
     void AddCabin(ActionEvent event) throws IOException {
-        if(App.computer==null){
-            App.computer=new Computer();
-        }
-        try {
-            App.computer.setCabin((Cabin) tableView.getSelectionModel().getSelectedItem());
+        try{
+            if(tableView.getSelectionModel().getSelectedItem() != null) {
+                App.computer.setCabin((Cabin) tableView.getSelectionModel().getSelectedItem());
+            }
 
             Parent view = FXMLLoader.load(getClass().getResource("/main/user/endUsers/ChooseMouse.fxml"));
+
             Scene scene = new Scene(view);
+
             Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
             window.setScene(scene);
             window.show();
-        } catch (NotCompatibleException e) {
-            DialogBox.error("Not Compatible", null, e.getMessage());
+        } catch (NotCompatibleException e){
+            DialogBox.error("Not compatible!", null, e.getMessage());
             tableView.getSelectionModel().clearSelection();
-        } catch (NullPointerException ignored){}
+        }
     }
 }

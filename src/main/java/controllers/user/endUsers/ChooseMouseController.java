@@ -127,12 +127,13 @@ public class ChooseMouseController implements Initializable {
 
     @FXML
     void addMouse(ActionEvent event) throws IOException {
-
         if(App.computer==null){
             App.computer=new Computer();
         }
 
-        App.computer.setMouse((Mouse) tableView.getSelectionModel().getSelectedItem());
+        if(tableView.getSelectionModel() != null) {
+            App.computer.setMouse((Mouse) tableView.getSelectionModel().getSelectedItem());
+        }
 
         Parent view = FXMLLoader.load(getClass().getResource("/main/user/endUsers/ChooseMonitor.fxml"));
         Scene scene = new Scene(view);

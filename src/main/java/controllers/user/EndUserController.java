@@ -6,6 +6,7 @@ import controllers.user.endUsers.BuildPcController;
 import controllers.user.endUsers.PrevPcController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
@@ -14,8 +15,10 @@ import main.App;
 import users.EndUser;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class EndUserController{
+public class EndUserController implements Initializable {
 
     private EndUser user;
 
@@ -75,8 +78,8 @@ public class EndUserController{
         toLogin.switchScene();
     }
 
-    public void setUser(EndUser user) {
-        this.user = user;
-        this.userAccountMenu.setText(user.getUsername());
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        userAccountMenu.setText(App.user.getUsername());
     }
 }

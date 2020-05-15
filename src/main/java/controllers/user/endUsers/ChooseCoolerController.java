@@ -1,8 +1,9 @@
 package controllers.user.endUsers;
 
 import components.Component;
-import components.Computer;
 import components.Cooler;
+import controllers.guiManager.DialogBox;
+import exceptions.NotCompatibleException;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,7 +16,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import main.App;
 
@@ -93,11 +93,16 @@ public class ChooseCoolerController implements Initializable {
 
         tableView.setItems(coolerList);
 
-        try {
-            treeView=App.computer.setTreeView(treeView);
+
+        try{
+            treeView = App.computer.setTreeView(treeView);
             treeView.refresh();
-            priceLabel.setText("Total price: "+App.computer.getPrice()+" NOK");
-        }catch (NullPointerException ignored){}
+            priceLabel.setText("Total price: " + App.computer.getPrice() + " NOK");
+            if(App.computer.getCooler() != null) {
+                addBtn.disableProperty().unbind();
+                addBtn.setDisable(false);
+            }
+        } catch (NullPointerException ignored){}
     }
 
     @FXML
@@ -166,9 +171,6 @@ public class ChooseCoolerController implements Initializable {
 
     @FXML
     void goBack(ActionEvent event) throws IOException {
-
-
-
         Parent view = FXMLLoader.load(getClass().getResource("/main/user/endUsers/ChooseSsd.fxml"));
 
         Scene scene = new Scene(view);
@@ -176,23 +178,25 @@ public class ChooseCoolerController implements Initializable {
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         window.setScene(scene);
         window.show();
-
     }
 
     @FXML
     void AddCooler(ActionEvent event) throws IOException {
+        try{
+            if(tableView.getSelectionModel().getSelectedItem() != null) {
+                App.computer.setCooler((Cooler) tableView.getSelectionModel().getSelectedItem());
+            }
 
-        if (App.computer==null){
-            App.computer=new Computer();
+            Parent view = FXMLLoader.load(getClass().getResource("/main/user/endUsers/ChoosePower.fxml"));
+
+            Scene scene = new Scene(view);
+
+            Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+            window.setScene(scene);
+            window.show();
+        } catch (NotCompatibleException e){
+            DialogBox.error("Not compatible!", null, e.getMessage());
+            tableView.getSelectionModel().clearSelection();
         }
-        App.computer.setCooler((Cooler) tableView.getSelectionModel().getSelectedItem());
-
-
-        Parent view = FXMLLoader.load(getClass().getResource("/main/user/endUsers/ChoosePower.fxml"));
-        Scene scene = new Scene(view);
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-        window.setScene(scene);
-        window.show();
-
     }
 }

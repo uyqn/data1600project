@@ -10,7 +10,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import listManager.UserList;
 import main.App;
-import users.EndUser;
 import users.SuperUser;
 import users.User;
 
@@ -31,7 +30,6 @@ public class LoginController {
                 toSuper.switchScene();
             } else {
                 GUI<EndUserController> toEnd = new GUI<>(event, "user/endUser");
-                toEnd.getController().setUser((EndUser) user);
                 toEnd.switchScene();
             }
         } else {
