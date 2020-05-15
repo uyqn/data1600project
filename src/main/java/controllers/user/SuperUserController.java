@@ -90,7 +90,7 @@ public class SuperUserController implements Initializable {
         DialogBox.error(
                 "Unable to open file!",
                 "Error caused by: ",
-                workerStateEvent.getSource().getException().getMessage());
+                "Corrupt file");
         messageLabel.setText(null);
         disableGui(false);
     }

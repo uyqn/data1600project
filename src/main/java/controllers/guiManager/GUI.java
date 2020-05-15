@@ -14,11 +14,6 @@ public class GUI<T> {
     private Parent parent;
     private Stage stage;
 
-    public GUI(String location) throws IOException {
-        this.fxmlLoader = new FXMLLoader(getClass().getResource("/main/"+ location + ".fxml"));
-        this.parent = fxmlLoader.load();
-    }
-
     public GUI(ActionEvent event, String location) throws IOException {
         this.event = event;
         this.fxmlLoader = new FXMLLoader(getClass().getResource("/main/"+ location + ".fxml"));

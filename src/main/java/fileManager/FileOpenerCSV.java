@@ -19,13 +19,19 @@ public class FileOpenerCSV implements FileOpener{
         List<String> list = Files.readAllLines(path);
         ObservableList<Component> tempList = FXCollections.observableArrayList();
 
+        if(list.isEmpty()){
+            throw new InvalidCsvException("The following file: " + path.toString() + " is empty");
+        }
+
         for (String line : list) {
-            if (line.equals("Computer")) {
-                tempList.add(null);
-            } else {
-                Component component = parseInfo(line);
-                if (component != null) {
-                    tempList.add(component);
+            if (!line.isEmpty()) {
+                if (line.equals("Computer")) {
+                    tempList.add(null);
+                } else {
+                    Component component = parseInfo(line);
+                    if (component != null) {
+                        tempList.add(component);
+                    }
                 }
             }
         }

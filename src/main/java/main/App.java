@@ -40,13 +40,11 @@ public class App extends Application {
         listableList.setList(tempOpener.open(Paths.get("temp.bin")));
 
         stage.setOnCloseRequest(windowEvent -> {
-            if(user.getClass() == SuperUser.class) {
-                FileSaverBin<Component> tempSaver = new FileSaverBin<>();
-                try {
-                    tempSaver.save(Paths.get("temp.bin"), listableList);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+            FileSaverBin<Component> tempSaver = new FileSaverBin<>();
+            try {
+                tempSaver.save(Paths.get("temp.bin"), listableList);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
             Platform.exit();
         });

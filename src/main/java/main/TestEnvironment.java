@@ -9,6 +9,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.stage.Stage;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.List;
+
 public class TestEnvironment extends Application {
     public static void main(String[] args){
         launch();
@@ -28,6 +32,10 @@ public class TestEnvironment extends Application {
 
         String test1 = "ATX";
         String test2 = "Flex ATX";
+
+        List<String> csvList = Files.readAllLines(Paths.get("test.csv"));
+
+        System.out.println(csvList.isEmpty());
 
         //------------------------------------
 

@@ -80,6 +80,9 @@ public class EndUser extends User {
     private void analyzeList(ObservableList<Component> list){
         int numberOfComputers = 0;
         for(Component component : list){
+            if(numberOfComputers > 1){
+                break;
+            }
             if(component == null){
                 numberOfComputers++;
             }
@@ -95,6 +98,7 @@ public class EndUser extends User {
                     computer.addComponent(list.get(i));
                 }
             }
+            add(computer);
         } else {
             for(Component component : list){
                 if(component != null){
