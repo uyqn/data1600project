@@ -1721,7 +1721,6 @@ public class ComponentView implements Initializable {
         filterBox.getItems().setAll(
                 "Manufacturer",
                 "Model",
-                "Buttons ≤",
                 "Display size (inches) ≤",
                 "Refresh rate (Hz)",
                 "Price (NOK) ≤");
