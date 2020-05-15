@@ -49,4 +49,5 @@ Enduser:
 
 Filbehandlingen har blitt lagt til for begge brukerne hvor super bruker kan kun lagre og åpne .bin filer og slutt bruker
 kan kun lagre og åpne csv filer. Disse har også blitt testet mot Excel og skal fint kunne åpnes der. Det er også andre
-små detaljer som har blitt lagt til å programmet.
+små detaljer som har blitt lagt til å programmet. For å laste inn en allerede eksisterende liste med computere til
+"Show previous computers", gå til Files -> Open og velg bruker.csv eller newTest.csv (Dette er bare identiske maskiner).
