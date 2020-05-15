@@ -219,6 +219,7 @@ public class ChooseKeyboardController implements Initializable {
             }
     }
 
+
     public void setUser(EndUser user) {
         this.user = user;
     }
