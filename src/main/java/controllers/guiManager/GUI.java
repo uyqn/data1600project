@@ -49,6 +49,7 @@ public class GUI<T> {
     public void switchScene() {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene());
+        stage.centerOnScreen();
     }
 
     private Scene scene() {
