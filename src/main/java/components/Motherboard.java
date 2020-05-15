@@ -324,7 +324,8 @@ public class Motherboard extends Component implements Serializable, Compatible {
         }
 
         if(!valid){
-            throw new IllegalArgumentException("Buss slots must be between 1 and 32 and a multiple of 2");
+            throw new IllegalArgumentException("Buss slots must be one of the following values:"+
+                    "1,2,4,8,16 or 32");
         }
 
         this.bussSlots = integer;

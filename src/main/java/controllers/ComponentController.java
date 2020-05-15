@@ -29,6 +29,12 @@ public class ComponentController implements Initializable {
     private BorderPane gui;
 
     @FXML
+    private ChoiceBox<String> cabinFormFactor;
+
+    @FXML
+    private ChoiceBox<String> mbFormFactor;
+
+    @FXML
     private GridPane superHome;
 
     @FXML
@@ -81,70 +87,74 @@ public class ComponentController implements Initializable {
     //Add Components
     @FXML
     void addMb(ActionEvent event) {
-
         try {
-            if (validate(addMbGui, "manufacturer", "model", "socket", "bussType", "numSlots", "maxRamSize", "formFactor", "price")) {
-
+            if (validate(addMbGui, "manufacturer", "model", "socket", "bussType", "numSlots", "maxRamSize", "price")) {
                 String manufacturer = getString(addMbGui, "manufacturer");
-            String model = getString(addMbGui, "model");
-            String socket = getString(addMbGui, "socket");
-            String bussType = getString(addMbGui, "bussType");
-            int availableRamSlots = getInt(addMbGui, "numSlots");
-            String memoryTech = ramTech.getSelectionModel().getSelectedItem();
-            int maxRamSize = getInt(addMbGui, "maxRamSize");
-            String formFactor = getString(addMbGui, "formFactor");
-            double price = getDouble(addMbGui, "price");
+                String model = getString(addMbGui, "model");
+                String socket = getString(addMbGui, "socket");
+                String bussType = getString(addMbGui, "bussType");
+                int availableRamSlots = getInt(addMbGui, "numSlots");
+                String memoryTech = ramTech.getSelectionModel().getSelectedItem();
+                int maxRamSize = getInt(addMbGui, "maxRamSize");
+                String formFactor = mbFormFactor.getSelectionModel().getSelectedItem();
+                double price = getDouble(addMbGui, "price");
 
-            Motherboard mb = new Motherboard(manufacturer, model, socket, bussType, availableRamSlots,
-                    memoryTech, maxRamSize, formFactor, price);
+                Motherboard mb = new Motherboard(manufacturer, model, socket, bussType, availableRamSlots,
+                        memoryTech, maxRamSize, formFactor, price);
 
-            DialogBox.info("Motherboard successfully added",
-                    "The following motherboard was added:",
-                    mb.toString());
+                DialogBox.info("Motherboard successfully added",
+                        "The following motherboard was added:",
+                        mb.toString());
 
-            App.listableList.add(mb);
+                App.listableList.add(mb);
 
-            resetGui(addMbGui,
-                    "manufacturer",
-                    "model",
-                    "socket",
-                    "bussType",
-                    "numSlots",
-                    "maxRamSize",
-                    "formFactor",
-                    "price");
+                resetGui(addMbGui,
+                        "manufacturer",
+                        "model",
+                        "socket",
+                        "bussType",
+                        "numSlots",
+                        "maxRamSize",
+                        "price");
 
-            ramTech.setValue(null);
+                ramTech.setValue(null);
+                mbFormFactor.setValue(null);
         }
         } catch (IllegalArgumentException e){
             DialogBox.error(e.getClass().toString(), null,
                     e.getMessage());
+        }
+        catch (NullPointerException e){
+            DialogBox.error("Cannot add motherboard", null, "because memory technology or formfactor has not " +
+                        "been selected");
         }
     }
 
     @FXML
     void addCabin(ActionEvent event){
         try {
-            if (validate(addCabinGui, "manufacturer", "model", "formFactor", "price")) {
-
+            if (validate(addCabinGui, "manufacturer", "model", "price")) {
                 String manufacturer = getString(addCabinGui, "manufacturer");
-            String model = getString(addCabinGui, "model");
-            String formFactor = getString(addCabinGui, "formFactor");
-            double price = getDouble(addCabinGui, "price");
+                String model = getString(addCabinGui, "model");
+                String formFactor = cabinFormFactor.getSelectionModel().getSelectedItem();
+                double price = getDouble(addCabinGui, "price");
 
-            Cabin cabin = new Cabin(manufacturer, model, formFactor, price);
+                Cabin cabin = new Cabin(manufacturer, model, formFactor, price);
 
-            App.listableList.add(cabin);
+                App.listableList.add(cabin);
 
-            DialogBox.info("Cabin successfully added",
-                    "The following cabin was added:",
-                    cabin.toString());
+                DialogBox.info("Cabin successfully added",
+                        "The following cabin was added:",
+                        cabin.toString());
 
-            resetGui(addCabinGui, "manufacturer", "model", "formFactor", "price");
+                resetGui(addCabinGui, "manufacturer", "model", "price");
+                cabinFormFactor.setValue(null);
         }
         } catch (IllegalArgumentException e){
             DialogBox.error(e.getClass().toString(), null,
                     e.getMessage());
+        } catch (NullPointerException e){
+            DialogBox.error("Cannot add cabin", null, "because form factor has not been selected");
         }
     }
 
@@ -292,7 +302,8 @@ public class ComponentController implements Initializable {
         }catch (IllegalArgumentException e) {
             DialogBox.error(e.getClass().toString(), null,
                     e.getMessage());
-
+        }catch (NullPointerException e) {
+            DialogBox.error("Cannot add memory", null, "because memory technology has not been selected");
         }
 
 
@@ -565,17 +576,15 @@ public class ComponentController implements Initializable {
     }
 
     private boolean validate(Pane pane, String... id){
-
         for (String str : id){
-            if (((TextField) pane.lookup("#" + str )).getText().isEmpty()){
-
+            if (((TextField) pane.lookup("#" + str )).getText().isEmpty() ||
+                    ((TextField) pane.lookup("#" + str )).getText().isBlank()){
 
                 Alert alert=new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("Warning");
                 alert.setHeaderText("All the fields must be filled");
                 alert.showAndWait();
                 return false;
-
             }
         }
         return true;
@@ -623,6 +632,8 @@ public class ComponentController implements Initializable {
         Limit.text2double(addMonitorGui, "price", "displaySize");
         Limit.text2double(addKeyboardGui, "price");
 
+        mbFormFactor.getItems().addAll("WTX", "EATX", "ATX", "Mini ATX", "microATX", "Flex ATX");
+        cabinFormFactor.getItems().addAll("WTX", "EATX", "ATX", "Mini ATX", "microATX", "Flex ATX");
         ramTech.getItems().addAll("DDR", "DDR2", "DDR3", "DDR4");
         ramTech.setValue(null);
         speedTech.getItems().addAll("DDR", "DDR2", "DDR3", "DDR4");

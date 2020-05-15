@@ -9,9 +9,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 public class TestEnvironment extends Application {
     public static void main(String[] args){
         launch();
@@ -29,12 +26,8 @@ public class TestEnvironment extends Application {
 
         testList.add(null);
 
-        final String[] FORM_FACTORS = {"WTX", "EATX", "ATX", "Mini ATX", "microATX", "FlexATX"};
-
-        ArrayList<String> FORMFACTORS = new ArrayList<>(Arrays.asList("WTX", "EATX", "ATX", "Mini ATX", "microATX",
-                "FlexATX"));
-
-        String find = "ATX";
+        String test1 = "ATX";
+        String test2 = "Flex ATX";
 
         //------------------------------------
 

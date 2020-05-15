@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="gui" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="726.0" prefWidth="558.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ComponentController">
+<BorderPane fx:id="gui" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="726.0" prefWidth="558.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ComponentController">
    <center>
       <Accordion prefHeight="618.0" prefWidth="458.0" BorderPane.alignment="CENTER">
         <panes>
@@ -180,7 +180,7 @@
                         </GridPane>
                         <ChoiceBox id="ramTech" fx:id="ramTech" prefHeight="25.0" prefWidth="190.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                         <TextField id="maxRamSize" promptText="Max ram size" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                        <TextField id="formFactor" promptText="Form factor" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                        <ChoiceBox fx:id="mbFormFactor" prefHeight="25.0" prefWidth="210.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                         <TextField id="price" promptText="Enter price of component" GridPane.columnIndex="1" GridPane.rowIndex="8" />
                         <Label text=" NOK" GridPane.columnIndex="2" GridPane.rowIndex="8" />
                         <Button mnemonicParsing="false" onAction="#addMb" text="Add Motherboard" GridPane.columnIndex="1" GridPane.rowIndex="9" />
@@ -396,10 +396,10 @@
                         <Label text="Price: " GridPane.rowIndex="3" />
                         <TextField id="manufacturer" promptText="Enter manufacturer" GridPane.columnIndex="1" />
                         <TextField id="model" promptText="Enter model" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <TextField id="formFactor" promptText="Enter power consumption" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                         <TextField id="price" promptText="Enter price of component" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                         <Label text=" NOK" GridPane.columnIndex="2" GridPane.rowIndex="3" />
                         <Button mnemonicParsing="false" onAction="#addCabin" text="Add Cabin" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <ChoiceBox fx:id="cabinFormFactor" prefHeight="25.0" prefWidth="208.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                      </children>
                   </GridPane>
                </content>
