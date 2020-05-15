@@ -60,7 +60,7 @@
             <HBox alignment="CENTER" spacing="20.0" GridPane.rowIndex="3">
                <children>
                   <Button fx:id="backBtn" mnemonicParsing="false" onAction="#GoBack" text="Back" />
-                  <Button fx:id="nextBtn" mnemonicParsing="false" onAction="#GoNext" text="Finish" />
+                  <Button fx:id="nextBtn" mnemonicParsing="false" onAction="#GoNext" text="Next" />
                </children>
                <GridPane.margin>
                   <Insets bottom="10.0" top="10.0" />

@@ -33,7 +33,7 @@
             <Insets />
          </BorderPane.margin>
          <children>
-            <Label text="Your Computers" GridPane.halignment="CENTER">
+            <Label text="Previous computers" GridPane.halignment="CENTER">
                <font>
                   <Font size="18.0" />
                </font>
