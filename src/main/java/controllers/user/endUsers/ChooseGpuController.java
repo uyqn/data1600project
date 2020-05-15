@@ -50,7 +50,7 @@ public class ChooseGpuController implements Initializable {
     private TableColumn<GPU, String> MemoryTypeColumn;
 
     @FXML
-    private TableColumn<GPU, Double> BoostClockColumn;
+    private TableColumn<GPU, String> BoostClockColumn;
 
     @FXML
     private TreeView<String> treeView;
@@ -92,7 +92,7 @@ public class ChooseGpuController implements Initializable {
         BussTypeColumn.setCellValueFactory(new PropertyValueFactory<GPU, String>("bussType"));
         MemoryColumn.setCellValueFactory(new PropertyValueFactory<GPU, String>("memory"));
         MemoryTypeColumn.setCellValueFactory(new PropertyValueFactory<GPU, String>("memoryType"));
-        BoostClockColumn.setCellValueFactory(new PropertyValueFactory<GPU, Double>("boostSpeed"));
+        BoostClockColumn.setCellValueFactory(new PropertyValueFactory<GPU, String>("boostSpeed"));
 
         tableView.setItems(gpuList);
         try{
