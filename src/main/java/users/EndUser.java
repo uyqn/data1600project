@@ -4,6 +4,7 @@ import components.Component;
 import components.Computer;
 import components.Listable;
 import controllers.guiManager.DialogBox;
+import exceptions.InvalidCsvException;
 import fileManager.FileOpenerCSV;
 import fileManager.FileSaverCSV;
 import javafx.collections.ObservableList;
@@ -60,32 +61,13 @@ public class EndUser extends User {
         if(file != null){
             this.path = Paths.get(String.valueOf(file));
             FileOpenerCSV opener = new FileOpenerCSV();
-            ObservableList<Component> listOfComponents = opener.open(getPath());
 
-            int numberOfComputers = 0;
-            for(Component component : listOfComponents){
-                if(component == null){
-                    numberOfComputers++;
-                }
-            }
-
-            Computer computer = new Computer();
-            if(numberOfComputers > 1) {
-                for (int i = 1; i < listOfComponents.size(); i++) {
-                    if (listOfComponents.get(i) == null) {
-                        add(computer);
-                        computer = new Computer();
-                    } else {
-                        computer.addComponent(listOfComponents.get(i));
-                    }
-                }
-            } else {
-                for(Component component : listOfComponents){
-                    if(component != null){
-                        computer.addComponent(component);
-                    }
-                }
-                add(computer);
+            try {
+                analyzeList(opener.open(getPath()));
+            } catch (InvalidCsvException e){
+                DialogBox.error("Failed to open",
+                        "Cannot open " + getPath(),
+                        e.getMessage());
             }
         }
     }
@@ -93,6 +75,38 @@ public class EndUser extends User {
     @Override
     public Path getPath() {
         return this.path;
+    }
+
+    private void analyzeList(ObservableList<Component> list){
+        int numberOfComputers = 0;
+        for(Component component : list){
+            if(numberOfComputers > 1){
+                break;
+            }
+            if(component == null){
+                numberOfComputers++;
+            }
+        }
+
+        Computer computer = new Computer();
+        if(numberOfComputers > 1) {
+            for (int i = 1; i < list.size(); i++) {
+                if (list.get(i) == null) {
+                    add(computer);
+                    computer = new Computer();
+                } else {
+                    computer.addComponent(list.get(i));
+                }
+            }
+            add(computer);
+        } else {
+            for(Component component : list){
+                if(component != null){
+                    computer.addComponent(component);
+                }
+            }
+            add(computer);
+        }
     }
 
     @Override

@@ -3,7 +3,7 @@ package controllers.user.endUsers;
 import components.Component;
 import components.Computer;
 import components.GPU;
-import Exceptions.NotCompatibleException;
+import exceptions.NotCompatibleException;
 import controllers.guiManager.DialogBox;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
@@ -86,13 +86,13 @@ public class ChooseGpuController implements Initializable {
         nextBtn.disableProperty().bind(Bindings.isEmpty(tableView.getSelectionModel().getSelectedItems()));
         //Setter opp kolonner
 
-        ManufacturerColumn.setCellValueFactory(new PropertyValueFactory<GPU, String>("manufacturer"));
-        ModelColumn.setCellValueFactory(new PropertyValueFactory<GPU, String>("model"));
-        PriceColumn.setCellValueFactory(new PropertyValueFactory<GPU, Double>("price"));
-        BussTypeColumn.setCellValueFactory(new PropertyValueFactory<GPU, String>("bussType"));
-        MemoryColumn.setCellValueFactory(new PropertyValueFactory<GPU, String>("memory"));
-        MemoryTypeColumn.setCellValueFactory(new PropertyValueFactory<GPU, String>("memoryType"));
-        BoostClockColumn.setCellValueFactory(new PropertyValueFactory<GPU, Integer>("boostSpeed"));
+        ManufacturerColumn.setCellValueFactory(new PropertyValueFactory<>("manufacturer"));
+        ModelColumn.setCellValueFactory(new PropertyValueFactory<>("model"));
+        PriceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
+        BussTypeColumn.setCellValueFactory(new PropertyValueFactory<>("bussType"));
+        MemoryColumn.setCellValueFactory(new PropertyValueFactory<>("memory"));
+        MemoryTypeColumn.setCellValueFactory(new PropertyValueFactory<>("memoryType"));
+        BoostClockColumn.setCellValueFactory(new PropertyValueFactory<>("boostSpeed"));
 
         tableView.setItems(gpuList);
         try{

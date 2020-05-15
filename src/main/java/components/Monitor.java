@@ -16,10 +16,10 @@ public class Monitor extends Component implements Serializable {
     private transient SimpleDoubleProperty size = new SimpleDoubleProperty();
 
     public Monitor(String[] csv) {
-        super(csv[0], csv[1], Double.parseDouble(csv[4]));
+        super(csv[1], csv[2], Double.parseDouble(csv[5]));
 
-        setSize(Double.parseDouble(csv[2]));
-        setRefreshRate(Integer.parseInt(csv[3]));
+        setSize(Double.parseDouble(csv[3]));
+        setRefreshRate(Integer.parseInt(csv[4]));
     }
 
     public Monitor(String manufacturer,
@@ -201,6 +201,7 @@ public class Monitor extends Component implements Serializable {
         double size = objectInputStream.readDouble();
         int refreshRate = objectInputStream.readInt();
 
+        this.size = new SimpleDoubleProperty();
         this.refreshRate = new SimpleIntegerProperty();
 
         super.setManufacturer(manufacturer);

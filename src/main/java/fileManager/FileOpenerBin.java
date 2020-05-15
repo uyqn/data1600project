@@ -13,7 +13,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-public class FileOpenerBin extends Task<ObservableList<Component>> {
+public class FileOpenerBin extends Task<ObservableList<Component>> implements FileOpener{
     private Path path;
 
     @SuppressWarnings("unchecked")

@@ -1,6 +1,6 @@
 package controllers.user.endUsers;
 
-import Exceptions.NotCompatibleException;
+import exceptions.NotCompatibleException;
 import components.CPU;
 import components.Component;
 import components.Computer;
@@ -48,10 +48,7 @@ public class BuildPcController implements Initializable {
     private TableColumn<Component, Integer> CoreCountColumn;
 
     @FXML
-    private TableColumn<Component, Double> CoreClockColumn;
-
-    @FXML
-    private TableColumn<Component, Double> BoostClockColumn;
+    private TableColumn<Component, String> CoreClockColumn;
 
     @FXML
     private TableColumn<Component, Double> PowerColumn;
@@ -88,8 +85,7 @@ public class BuildPcController implements Initializable {
         PriceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
         SocketColumn.setCellValueFactory(new PropertyValueFactory<>("socket"));
         CoreCountColumn.setCellValueFactory(new PropertyValueFactory<>("coreCount"));
-        CoreClockColumn.setCellValueFactory(new PropertyValueFactory<>("coreClock"));
-        BoostClockColumn.setCellValueFactory(new PropertyValueFactory<>("boostClock"));
+        CoreClockColumn.setCellValueFactory(new PropertyValueFactory<>("clockSpeed"));
         PowerColumn.setCellValueFactory(new PropertyValueFactory<>("powerConsumption"));
 
         tableView.setItems(cpuList);

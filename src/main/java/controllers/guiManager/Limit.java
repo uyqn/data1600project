@@ -14,6 +14,7 @@ public class Limit {
             });
         }
     }
+
     public static void text2double(Pane pane, String... id){
         for(String str : id){
             TextField textField = (TextField) pane.lookup("#" + str);

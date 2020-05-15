@@ -1,12 +1,10 @@
-package controllers.views;
+package controllers.user;
 
 import components.*;
 import components.Storage.HDD;
 import components.Storage.SSD;
-import controllers.component.ComponentController;
 import controllers.guiManager.DialogBox;
 import controllers.guiManager.GUI;
-import controllers.user.SuperUserController;
 import fileManager.FileOpenerBin;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -90,6 +88,10 @@ public class ComponentView implements Initializable {
     @FXML
     void open(ActionEvent event){
         user.open();
+        open();
+    }
+
+    private void open(){
         if(user.getPath() != null) {
             opener = new FileOpenerBin();
             opener.setPath(user.getPath());
@@ -1153,9 +1155,6 @@ public class ComponentView implements Initializable {
         filterBox.getItems().setAll(
                 "Manufacturer",
                 "Model",
-                "Width (cm) ≤",
-                "Depth (cm) ≤",
-                "Height (cm) ≤",
                 "Base RPM ≤",
                 "Max RPM ≤",
                 "Base noise (dBA) ≤",
@@ -1190,19 +1189,6 @@ public class ComponentView implements Initializable {
             } catch (IllegalArgumentException e){
                 inputError("model", e.getMessage());
                 tableView.getSelectionModel().getSelectedItem().setModel(edit.getOldValue());
-            }
-            tableView.refresh();
-        });
-
-        TableColumn<Component, String> dimCol = new TableColumn<>("Dimension (cm)");
-        dimCol.setCellValueFactory(new PropertyValueFactory<>("dimension"));
-        dimCol.setCellFactory(TextFieldTableCell.forTableColumn());
-        dimCol.setOnEditCommit(edit -> {
-            try {
-                tableView.getSelectionModel().getSelectedItem().setDimension(edit.getNewValue());
-            } catch (IllegalArgumentException e) {
-                inputError("dimension", e.getMessage());
-                tableView.getSelectionModel().getSelectedItem().setDimension(edit.getOldValue());
             }
             tableView.refresh();
         });
@@ -1262,7 +1248,6 @@ public class ComponentView implements Initializable {
         tableView.getColumns().setAll(
                 manuCol,
                 modelCol,
-                dimCol,
                 rpmCol,
                 noiseCol,
                 powerCol,
@@ -1285,53 +1270,35 @@ public class ComponentView implements Initializable {
                                 return component.getModel().toLowerCase().contains(search);
                             case 2:
                                 try {
-                                    return component.getWidth() <= Double.parseDouble(search);
+                                    return component.getCoreRpm() <= Integer.parseInt(search);
                                 } catch (NumberFormatException e) {
                                     return false;
                                 }
                             case 3:
                                 try {
-                                    return component.getDepth() <= Double.parseDouble(search);
+                                    return component.getMaxRpm() <= Integer.parseInt(search);
                                 } catch (NumberFormatException e) {
                                     return false;
                                 }
                             case 4:
                                 try {
-                                    return component.getHeight() <= Double.parseDouble(search);
+                                    return component.getCoreNoise() <= Double.parseDouble(search);
                                 } catch (NumberFormatException e) {
                                     return false;
                                 }
                             case 5:
                                 try {
-                                    return component.getCoreRpm() <= Integer.parseInt(search);
+                                    return component.getMaxNoise() <= Double.parseDouble(search);
                                 } catch (NumberFormatException e) {
                                     return false;
                                 }
                             case 6:
                                 try {
-                                    return component.getMaxRpm() <= Integer.parseInt(search);
-                                } catch (NumberFormatException e) {
-                                    return false;
-                                }
-                            case 7:
-                                try {
-                                    return component.getCoreNoise() <= Double.parseDouble(search);
-                                } catch (NumberFormatException e) {
-                                    return false;
-                                }
-                            case 8:
-                                try {
-                                    return component.getMaxNoise() <= Double.parseDouble(search);
-                                } catch (NumberFormatException e) {
-                                    return false;
-                                }
-                            case 9:
-                                try {
                                     return component.getPowerConsumption() <= Double.parseDouble(search);
                                 } catch (NumberFormatException e) {
                                     return false;
                                 }
-                            case 10:
+                            case 7:
                                 try {
                                     return component.getPrice() <= Double.parseDouble(search);
                                 } catch (NumberFormatException e) {
@@ -2039,7 +2006,8 @@ public class ComponentView implements Initializable {
 
     @FXML
     void remove(ActionEvent event){
-        App.listableList.getList().remove(tableView.getSelectionModel().getSelectedItem());
+        filteredList.remove(tableView.getSelectionModel().getSelectedItem());
+        App.listableList.remove(tableView.getSelectionModel().getSelectedItem());
     }
 
     public void setSuperHome(GridPane superHome) {
@@ -2143,11 +2111,8 @@ public class ComponentView implements Initializable {
         tableView.setItems(filteredList);
         tableView.setEditable(true);
         tableView.refresh();
-    }
 
-    public void setUser(SuperUser user) {
-        this.user = user;
-        this.userAccountMenu.setText(user.getUsername());
+        userAccountMenu.setText(App.user.getUsername());
     }
 
     public void setDashboard(GUI<SuperUserController> dashboard) {

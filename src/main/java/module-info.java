@@ -11,8 +11,8 @@ module main {
     opens components to javafx.fxml;
     exports components;
 
-    opens Exceptions to javafx.fxml;
-    exports Exceptions;
+    opens exceptions to javafx.fxml;
+    exports exceptions;
 
     opens controllers.guiManager to javafx.fxml;
     exports controllers.guiManager;
@@ -25,12 +25,6 @@ module main {
 
     opens controllers.user.endUsers to javafx.fxml;
     exports controllers.user.endUsers;
-
-    opens controllers.component to javafx.fxml;
-    exports controllers.component;
-
-    opens controllers.views to javafx.fxml;
-    exports controllers.views;
 
     opens components.Storage to javafx.fxml;
     exports components.Storage;

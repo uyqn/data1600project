@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 public class UserList {
     private static ArrayList<User> members = new ArrayList<>();
-
     public static void add(User user) throws IllegalArgumentException{
         for (User member : members) {
             if (user.getUsername().equals(member.getUsername())) {
