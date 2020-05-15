@@ -4,7 +4,6 @@ import components.Component;
 import components.Listable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.TableView;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -13,8 +12,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListableList<S extends Listable>
-        extends attachTableView<S> implements Serializable, ItemList<S> {
+public class ListableList<S extends Listable> implements Serializable, ItemList<S> {
     private transient ObservableList<S> list = FXCollections.observableArrayList();
 
     public void setList(ObservableList<S> list){
@@ -33,11 +31,6 @@ public class ListableList<S extends Listable>
 
     public void remove(S item){
         list.remove(item);
-    }
-
-    @Override
-    public void setTableView(TableView<S> tableView){
-        tableView.setItems(list);
     }
 
     @Override

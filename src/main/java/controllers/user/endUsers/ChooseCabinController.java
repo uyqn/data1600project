@@ -1,6 +1,6 @@
 package controllers.user.endUsers;
 
-import Exceptions.NotCompatibleException;
+import exceptions.NotCompatibleException;
 import components.*;
 import controllers.guiManager.DialogBox;
 import javafx.beans.binding.Bindings;

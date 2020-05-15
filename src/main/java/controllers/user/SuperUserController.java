@@ -2,10 +2,9 @@ package controllers.user;
 
 import components.Component;
 import controllers.LoginController;
-import controllers.component.ComponentController;
+import controllers.ComponentController;
 import controllers.guiManager.DialogBox;
 import controllers.guiManager.GUI;
-import controllers.views.ComponentView;
 import fileManager.FileOpenerBin;
 import fileManager.FileSaverBin;
 import javafx.concurrent.WorkerStateEvent;

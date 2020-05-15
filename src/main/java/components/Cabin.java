@@ -12,7 +12,6 @@ import java.io.Serializable;
 public class Cabin extends Component implements Compatible, Serializable {
     public transient static final String COMPONENT_TYPE = "Cabin";
     private transient SimpleStringProperty formFactor = new SimpleStringProperty();
-
     private transient SimpleObjectProperty<Motherboard> motherboard = new SimpleObjectProperty<>();
 
     public Cabin(String[] csv){

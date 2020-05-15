@@ -1,7 +1,6 @@
 package components;
 
 import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 import java.io.IOException;
@@ -13,7 +12,6 @@ public abstract class Component implements Serializable, Listable, Interchangeab
     private transient SimpleStringProperty manufacturer = new SimpleStringProperty();
     private transient SimpleStringProperty model = new SimpleStringProperty();
     private transient SimpleDoubleProperty price = new SimpleDoubleProperty();
-    private transient SimpleObjectProperty<Dimension> dimension = new SimpleObjectProperty<>(new Dimension());
 
     public Component(String manufacturer, String model,
                      double price) {
@@ -59,87 +57,27 @@ public abstract class Component implements Serializable, Listable, Interchangeab
         this.price.set(price);
     }
 
-    public void setWidth(double width){
-        dimension.getValue().setWidth(width);
-    }
-
-    public double getWidth(){
-        return dimension.getValue().getWidth();
-    }
-
-    public void setDepth(double depth){
-        dimension.getValue().setDepth(depth);
-    }
-
-    public double getDepth(){
-        return dimension.getValue().getDepth();
-    }
-
-    public void setHeight(double height){
-        dimension.getValue().setHeight(height);
-    }
-
-    public double getHeight(){
-        return dimension.getValue().getHeight();
-    }
-
-    public double getArea(){
-        return dimension.getValue().getArea();
-    }
-
-    public double getVolume(){
-        return dimension.getValue().getVolume();
-    }
-
-    public String getDimension() {
-        return dimension.getValue().toString();
-    }
-
-    public void setDimension(double width, double depth){
-        dimension.getValue().setWidth(width);
-        dimension.getValue().setDepth(depth);
-    }
-
-    public void setDimension(double width, double depth, double height){
-        dimension.getValue().setWidth(width);
-        dimension.getValue().setDepth(depth);
-        dimension.getValue().setHeight(height);
-    }
-
-    public void setDimension(String dimension){
-        this.dimension.getValue().setDimension(dimension);
-    }
-
-    public void setDimension(Dimension dimension) {
-        this.dimension.set(dimension);
-    }
-
     public abstract String toCSV();
 
     private void writeObject(ObjectOutputStream objectOutputStream) throws IOException {
         objectOutputStream.defaultWriteObject();
 
-        //Super component
         objectOutputStream.writeUTF(getManufacturer());
         objectOutputStream.writeUTF(getModel());
         objectOutputStream.writeDouble(getPrice());
-        objectOutputStream.writeObject(this.dimension.getValue());
     }
 
     private void readObject(ObjectInputStream objectInputStream) throws IOException, ClassNotFoundException {
         String manufacturer = objectInputStream.readUTF();
         String model = objectInputStream.readUTF();
         double price = objectInputStream.readDouble();
-        Dimension dimension = (Dimension) objectInputStream.readObject();
 
         this.manufacturer = new SimpleStringProperty();
         this.model = new SimpleStringProperty();
         this.price = new SimpleDoubleProperty();
-        this.dimension = new SimpleObjectProperty<>();
 
         setManufacturer(manufacturer);
         setModel(model);
         setPrice(price);
-        setDimension(dimension);
     }
 }

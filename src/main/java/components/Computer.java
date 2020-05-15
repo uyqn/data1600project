@@ -1,9 +1,9 @@
 package components;
 
-import Exceptions.NotAComponentException;
-import Exceptions.NotCompatibleException;
-import Exceptions.NotEnoughRamSlotsException;
-import Exceptions.RamExceededException;
+import exceptions.NotAComponentException;
+import exceptions.NotCompatibleException;
+import exceptions.NotEnoughRamSlotsException;
+import exceptions.RamExceededException;
 import components.Storage.HDD;
 import components.Storage.SSD;
 import components.Storage.Storage;

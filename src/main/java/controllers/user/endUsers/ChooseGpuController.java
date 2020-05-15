@@ -3,7 +3,7 @@ package controllers.user.endUsers;
 import components.Component;
 import components.Computer;
 import components.GPU;
-import Exceptions.NotCompatibleException;
+import exceptions.NotCompatibleException;
 import controllers.guiManager.DialogBox;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;

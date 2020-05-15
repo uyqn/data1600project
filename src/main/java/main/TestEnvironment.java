@@ -4,13 +4,13 @@ import components.CPU;
 import components.Component;
 import components.Cooler;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.Scene;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeView;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class TestEnvironment extends Application {
     public static void main(String[] args){
@@ -29,27 +29,15 @@ public class TestEnvironment extends Application {
 
         testList.add(null);
 
-        TreeItem<String> cpuItem = new TreeItem<>(cpu.getName());
-        System.out.println(cpuItem.getChildren().size());
-        TreeItem<String> cpuLeaf1 = new TreeItem<>(cpu.getPrice() + "");
-        cpuItem.getChildren().add(cpuLeaf1);
+        final String[] FORM_FACTORS = {"WTX", "EATX", "ATX", "Mini ATX", "microATX", "FlexATX"};
 
-        TreeItem<String> test11 = new TreeItem<>(null);
-        TreeItem<String> test12 = new TreeItem<>("Not null");
-        cpuItem.getChildren().addAll(test11, test12);
+        ArrayList<String> FORMFACTORS = new ArrayList<>(Arrays.asList("WTX", "EATX", "ATX", "Mini ATX", "microATX",
+                "FlexATX"));
 
+        String find = "ATX";
 
-        TreeView<String> tree = new TreeView<>(cpuItem);
-
-        System.out.println(cpuItem.getChildren().contains(test11));
-
-        StackPane layout = new StackPane();
-        layout.getChildren().add(tree);
-        Scene scene = new Scene(layout);
-        primaryStage.setScene(scene);
-        primaryStage.show();
         //------------------------------------
 
-        //Platform.exit(); //Ikke fjern denne!
+        Platform.exit(); //Ikke fjern denne!
     }
 }

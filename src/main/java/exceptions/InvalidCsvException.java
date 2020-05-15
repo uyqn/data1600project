@@ -1,4 +1,4 @@
-package Exceptions;
+package exceptions;
 
 public class InvalidCsvException extends IllegalArgumentException {
     public InvalidCsvException(String msg){

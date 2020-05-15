@@ -1,4 +1,4 @@
-package controllers.component;
+package controllers;
 
 import components.*;
 import components.Storage.HDD;
