@@ -397,7 +397,7 @@ public class GPU extends Component implements Serializable, Compatible {
         String bussType = objecInputStream.readUTF();
         int memory= objecInputStream.readInt();
         String memoryType= objecInputStream.readUTF();
-        double boostSpeed = objecInputStream.readInt();
+        int boostSpeed = objecInputStream.readInt();
 
         this.bussType = new SimpleStringProperty();
         this.memory = new SimpleIntegerProperty();
@@ -410,7 +410,7 @@ public class GPU extends Component implements Serializable, Compatible {
         setBussType(bussType);
         setMemory(memory);
         setMemoryType(memoryType);
-        setBoostClock(boostSpeed);
+        setBoostSpeed(boostSpeed);
     }
 
     @Override

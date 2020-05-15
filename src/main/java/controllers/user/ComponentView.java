@@ -88,6 +88,10 @@ public class ComponentView implements Initializable {
     @FXML
     void open(ActionEvent event){
         user.open();
+        open();
+    }
+
+    private void open(){
         if(user.getPath() != null) {
             opener = new FileOpenerBin();
             opener.setPath(user.getPath());
@@ -2107,11 +2111,8 @@ public class ComponentView implements Initializable {
         tableView.setItems(filteredList);
         tableView.setEditable(true);
         tableView.refresh();
-    }
 
-    public void setUser(SuperUser user) {
-        this.user = user;
-        this.userAccountMenu.setText(user.getUsername());
+        userAccountMenu.setText(App.user.getUsername());
     }
 
     public void setDashboard(GUI<SuperUserController> dashboard) {

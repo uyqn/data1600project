@@ -15,7 +15,6 @@ import javafx.scene.control.Menu;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import main.App;
-import users.SuperUser;
 
 import java.io.IOException;
 import java.net.URL;
@@ -27,7 +26,6 @@ public class SuperUserController implements Initializable {
     GUI<ComponentController> addComponentWindow;
     GUI<ComponentView> addViewComponentWindow;
     GUI<SuperUserController> dashboard;
-    SuperUser user;
 
     @FXML
     private BorderPane gui;
@@ -43,17 +41,11 @@ public class SuperUserController implements Initializable {
 
     @FXML
     void open(ActionEvent event) {
-        user.open();
-        if(user.getPath() != null) {
-            opener = new FileOpenerBin();
-            opener.setPath(user.getPath());
-            opener.setOnSucceeded(this::openSuccess);
-            opener.setOnFailed(this::openFailed);
-            Thread thread = new Thread(opener);
-            thread.setDaemon(true);
-            messageLabel.setText("Please wait while we load your data...");
-            disableGui(true);
-            thread.start();
+        try {
+            App.user.open();
+            open();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -80,6 +72,20 @@ public class SuperUserController implements Initializable {
         }
     }
 
+    private void open(){
+        if(App.user.getPath() != null) {
+            opener = new FileOpenerBin();
+            opener.setPath(App.user.getPath());
+            opener.setOnSucceeded(this::openSuccess);
+            opener.setOnFailed(this::openFailed);
+            Thread thread = new Thread(opener);
+            thread.setDaemon(true);
+            messageLabel.setText("Please wait while we load your data...");
+            disableGui(true);
+            thread.start();
+        }
+    }
+
     private void openFailed(WorkerStateEvent workerStateEvent) {
         DialogBox.error(
                 "Unable to open file!",
@@ -97,12 +103,12 @@ public class SuperUserController implements Initializable {
 
     @FXML
     void save(ActionEvent event) {
-        user.save(App.listableList);
+        App.user.save(App.listableList);
     }
 
     @FXML
     void saveAs(ActionEvent event) {
-        user.saveAs(App.listableList);
+        App.user.saveAs(App.listableList);
     }
 
     @FXML
@@ -126,7 +132,6 @@ public class SuperUserController implements Initializable {
         addViewComponentWindow = new GUI<>(event, "user/componentView");
         addViewComponentWindow.newWindow();
         addViewComponentWindow.getController().setSuperHome(superHome);
-        addViewComponentWindow.getController().setUser(user);
         addViewComponentWindow.getController().setDashboard(dashboard);
         addViewComponentWindow.getController().setComponentAdder(addComponentWindow);
         addViewComponentWindow.getStage().setOnCloseRequest(windowEvent -> {
@@ -161,17 +166,12 @@ public class SuperUserController implements Initializable {
         toLogin.switchScene();
     }
 
-    public void setUser(SuperUser user){
-        this.user = user;
-        this.userAccount.setText(user.getUsername());
-    }
-
     public void setDashboard(GUI<SuperUserController> dashboard) {
         this.dashboard = dashboard;
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        userAccount.setText(App.user.getUsername());
     }
 }
