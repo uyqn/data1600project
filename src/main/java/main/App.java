@@ -34,6 +34,7 @@ public class App extends Application {
         Scene scene = new Scene(fxmlLoader.load());
         stage.setScene(scene);
 
+
         FileOpenerCSV tempOpener = new FileOpenerCSV();
         listableList.setList(tempOpener.open(Paths.get("temp.csv")));
 
