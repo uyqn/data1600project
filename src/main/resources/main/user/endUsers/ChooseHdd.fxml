@@ -15,30 +15,29 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-
-<BorderPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.user.endUsers.ChooseHddController">
+<BorderPane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.user.endUsers.ChooseHddController">
    <center>
-      <GridPane prefHeight="500.0" prefWidth="1000.0">
+      <GridPane prefHeight="600.0" prefWidth="1000.0">
          <columnConstraints>
-            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" />
-            <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" prefWidth="700.0" />
+            <ColumnConstraints hgrow="SOMETIMES" prefWidth="300.0" />
          </columnConstraints>
          <rowConstraints>
-            <RowConstraints maxHeight="45.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="64.0" minHeight="0.0" prefHeight="29.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="392.0" minHeight="10.0" prefHeight="352.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="119.0" minHeight="0.0" prefHeight="64.0" valignment="TOP" vgrow="SOMETIMES" />
+            <RowConstraints prefHeight="25.0" vgrow="SOMETIMES" />
+            <RowConstraints prefHeight="50.0" vgrow="SOMETIMES" />
+            <RowConstraints prefHeight="400.0" vgrow="SOMETIMES" />
+            <RowConstraints prefHeight="50.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <Label prefHeight="36.0" prefWidth="129.0" text="Choose HDD">
+            <Label prefHeight="36.0" prefWidth="143.0" text="Choose HDD">
                <font>
-                  <Font size="22.0" />
+                  <Font name="System Bold" size="22.0" />
                </font>
             </Label>
-            <HBox alignment="CENTER" prefHeight="37.0" prefWidth="481.0" GridPane.rowIndex="1">
+            <HBox alignment="CENTER_LEFT" spacing="10.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                <children>
-                  <ChoiceBox fx:id="filterBox" prefHeight="25.0" prefWidth="318.0" />
-                  <TextField fx:id="filterText" onKeyReleased="#filterEvt" prefHeight="25.0" prefWidth="732.0" />
+                  <ChoiceBox fx:id="filterBox" prefHeight="25.0" prefWidth="170.0" />
+                  <TextField fx:id="filterText" onKeyReleased="#filterEvt" prefHeight="25.0" prefWidth="500.0" />
                </children>
             </HBox>
             <TableView fx:id="tableView" prefHeight="361.0" prefWidth="225.0" GridPane.rowIndex="2">
@@ -50,10 +49,16 @@
                   <TableColumn fx:id="RpmColumn" prefWidth="172.3333740234375" text="RPM" />
                </columns>
             </TableView>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0" GridPane.rowIndex="3">
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="100.0" GridPane.rowIndex="3">
                <children>
-                  <Button fx:id="backBtn" mnemonicParsing="false" onAction="#GoBack" text="Back" />
-                  <Button fx:id="nextBtn" mnemonicParsing="false" onAction="#GoNext" text="Next" />
+                  <Button fx:id="backBtn" mnemonicParsing="false" onAction="#GoBack" text="Back">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font></Button>
+                  <Button fx:id="nextBtn" mnemonicParsing="false" onAction="#GoNext" text="Next">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font></Button>
                </children>
             </HBox>
             <TreeView fx:id="treeView" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
@@ -64,8 +69,11 @@
             </Label>
          </children>
          <BorderPane.margin>
-            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+            <Insets />
          </BorderPane.margin>
+         <padding>
+            <Insets left="20.0" right="20.0" top="20.0" />
+         </padding>
       </GridPane>
    </center>
 </BorderPane>
