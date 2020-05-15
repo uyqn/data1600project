@@ -52,7 +52,7 @@
                   <Insets />
                </GridPane.margin>
             </TableView>
-            <Label text="Choose a Keyboard">
+            <Label text="Your Computers">
                <font>
                   <Font name="System Bold" size="22.0" />
                </font>
