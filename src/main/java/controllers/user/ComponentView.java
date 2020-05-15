@@ -1669,49 +1669,48 @@ public class ComponentView implements Initializable {
                     }).collect(Collectors.toCollection(FXCollections::observableArrayList)));
                 } else {
                     searchText.setDisable(false);
+                    searchText.setOnKeyReleased(keyEvent -> {
+                        if(searchText.getText() == null){
+                            tableView.setItems(filteredList);
+                        } else {
+                            String search = searchText.getText().toLowerCase();
+                            int filterIndex = filterBox.getSelectionModel().getSelectedIndex();
 
-                    if(searchText.getText() == null){
-                        tableView.setItems(filteredList);
-                    } else {
-                        String search = searchText.getText().toLowerCase();
-                        int filterIndex = filterBox.getSelectionModel().getSelectedIndex();
-
-                        tableView.setItems(filteredList.stream().filter(component -> {
-                            if (search.isBlank() || search.isEmpty() || filterBox.getSelectionModel().getSelectedItem() == null) {
-                                return true;
-                            } else {
-                                switch (filterIndex) {
-                                    case 0:
-                                        return component.getManufacturer().toLowerCase().contains(search);
-                                    case 1:
-                                        return component.getModel().toLowerCase().contains(search);
-                                    case 2:
-                                        try {
-                                            return component.getNumberButtons() <= Integer.parseInt(search);
-                                        } catch (NumberFormatException e) {
+                            tableView.setItems(filteredList.stream().filter(component -> {
+                                if (search.isBlank() || search.isEmpty() || filterBox.getSelectionModel().getSelectedItem() == null) {
+                                    return true;
+                                } else {
+                                    switch (filterIndex) {
+                                        case 0:
+                                            return component.getManufacturer().toLowerCase().contains(search);
+                                        case 1:
+                                            return component.getModel().toLowerCase().contains(search);
+                                        case 2:
+                                            try {
+                                                return component.getNumberButtons() <= Integer.parseInt(search);
+                                            } catch (NumberFormatException e) {
+                                                return false;
+                                            }
+                                        case 3:
+                                            try {
+                                                return component.getDpi() <= Integer.parseInt(search);
+                                            } catch (NumberFormatException e) {
+                                                return false;
+                                            }
+                                        case 8:
+                                            try {
+                                                return component.getPrice() <= Double.parseDouble(search);
+                                            } catch (NumberFormatException e) {
+                                                return false;
+                                            }
+                                        default:
                                             return false;
-                                        }
-                                    case 3:
-                                        try {
-                                            return component.getDpi() <= Integer.parseInt(search);
-                                        } catch (NumberFormatException e) {
-                                            return false;
-                                        }
-                                    case 8:
-                                        try {
-                                            return component.getPrice() <= Double.parseDouble(search);
-                                        } catch (NumberFormatException e) {
-                                            return false;
-                                        }
-                                    default:
-                                        return false;
+                                    }
                                 }
-                            }
-                        }).collect(Collectors.toCollection(FXCollections::observableArrayList)));
-                    }
-                }
-            });
-        } catch (NullPointerException ignored){}
+                            }).collect(Collectors.toCollection(FXCollections::observableArrayList)));
+                        }
+                    });
+        }});} catch (NullPointerException ignored){}
 
         tableView.setItems(filteredList);
     }
