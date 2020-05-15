@@ -208,9 +208,9 @@ public class Computer extends ListableList<Component> implements Listable, ItemL
                     if (!motherboard.compatible(memory)) {
                         throw new NotCompatibleException("Motherboard: " + motherboard.getName() +
                                 "\n is not compatible with" + " Memory: " + memory.getName() + "\n" +
-                                "Because mismatch sockets: \n" +
+                                "Because mismatch in memory technology: \n" +
                                 memory.getName() + " technology: " + memory.getMemoryTech() + "\n" +
-                                motherboard.getName() + " form factor: " + motherboard.getMemoryTech());
+                                motherboard.getName() + " technology: " + motherboard.getMemoryTech());
                     }
                 }
             }
@@ -245,13 +245,17 @@ public class Computer extends ListableList<Component> implements Listable, ItemL
     public void addMemory(Memory memory){
         if(getMotherboard() != null){
             if(!getMotherboard().compatible(memory)){
-                throw new NotCompatibleException("Motherboard: " + this.motherboard.getValue().getName() +
-                        "\n is not compatible with \n" +
-                        "RAM: " + memory.getName());
+                throw new NotCompatibleException("Motherboard: " + getMotherboard().getName() +
+                        "\n is not compatible with" + " Memory: " + memory.getName() + "\n" +
+                        "Because mismatch in memory technology: \n" +
+                        memory.getName() + " technology: " + memory.getMemoryTech() + "\n" +
+                        getMotherboard().getName() + " technology: " + getMotherboard().getMemoryTech());
             }
             if(availableRamSlots <= 0) {
-                throw new NotEnoughRamSlotsException("No available memory slots left on\n" +
-                        "this motherboard: " + getMotherboard().getName());
+                throw new NotEnoughRamSlotsException("Motherboard: " + getMotherboard().getName() +
+                        "\n does not have enough slots for memories to house all the memories added\n" +
+                        getMotherboard().getName() + " has " + getMotherboard().getRamSlots() + " available slots \n" +
+                        "This computer currently has " + getMemories().size() + " memories");
             }
             if(getMotherboard().getMaxRamSize() < getTotalRam() + memory.getRam()){
                 throw new RamExceededException(getMotherboard().getName() + "cannot support the attempted total input" +

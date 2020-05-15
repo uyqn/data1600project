@@ -1,10 +1,11 @@
 package fileManager;
 
-import exceptions.InvalidCsvException;
 import components.*;
 import components.Storage.HDD;
 import components.Storage.SSD;
 import controllers.guiManager.DialogBox;
+import exceptions.EmptyCsvException;
+import exceptions.InvalidCsvException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -20,7 +21,7 @@ public class FileOpenerCSV implements FileOpener{
         ObservableList<Component> tempList = FXCollections.observableArrayList();
 
         if(list.isEmpty()){
-            throw new InvalidCsvException("The following file: " + path.toString() + " is empty");
+            throw new EmptyCsvException("The following file: " + path.toString() + " is empty");
         }
 
         for (String line : list) {

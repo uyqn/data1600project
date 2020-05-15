@@ -3,6 +3,9 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TreeView?>
@@ -40,6 +43,7 @@
             </Label>
             <Button fx:id="backHome" mnemonicParsing="false" onAction="#backHome" text="Home" GridPane.rowIndex="2" />
             <Button fx:id="addPc" mnemonicParsing="false" onAction="#addPc" text="Add new PC" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
+            <Button mnemonicParsing="false" onAction="#remove" text="Remove" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
             <GridPane GridPane.rowIndex="1">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="526.2000122070312" minWidth="10.0" prefWidth="526.2000122070312" />
@@ -80,4 +84,33 @@
          </children>
       </GridPane>
    </center>
+   <top>
+      <GridPane BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <MenuBar>
+              <menus>
+                <Menu mnemonicParsing="false" text="File">
+                  <items>
+                    <MenuItem mnemonicParsing="false" onAction="#open" text="Open" />
+                        <MenuItem mnemonicParsing="false" onAction="#save" onMenuValidation="#saveAs" text="Save" />
+                        <MenuItem mnemonicParsing="false" text="Save as" />
+                  </items>
+                </Menu>
+              </menus>
+            </MenuBar>
+            <MenuBar nodeOrientation="RIGHT_TO_LEFT" GridPane.columnIndex="1">
+              <menus>
+                <Menu fx:id="userAccount" mnemonicParsing="false" text="userAccount" />
+              </menus>
+            </MenuBar>
+         </children>
+      </GridPane>
+   </top>
 </BorderPane>
