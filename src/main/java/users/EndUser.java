@@ -5,8 +5,10 @@ import components.Computer;
 import components.Listable;
 import controllers.guiManager.DialogBox;
 import exceptions.InvalidCsvException;
+import exceptions.NotCompatibleException;
 import fileManager.FileOpenerCSV;
 import fileManager.FileSaverCSV;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -61,13 +63,14 @@ public class EndUser extends User {
         if(file != null){
             this.path = Paths.get(String.valueOf(file));
             FileOpenerCSV opener = new FileOpenerCSV();
-
             try {
-                analyzeList(opener.open(getPath()));
+                listableList.setList(analyzeList(opener.open(getPath())));
             } catch (InvalidCsvException e){
                 DialogBox.error("Failed to open",
                         "Cannot open " + getPath(),
                         e.getMessage());
+            } catch (NotCompatibleException e){
+                DialogBox.error("Failed to create PC", null, e.getMessage());
             }
         }
     }
@@ -77,7 +80,7 @@ public class EndUser extends User {
         return this.path;
     }
 
-    private void analyzeList(ObservableList<Component> list){
+    private ObservableList<Computer> analyzeList(ObservableList<Component> list){
         int numberOfComputers = 0;
         for(Component component : list){
             if(numberOfComputers > 1){
@@ -88,25 +91,29 @@ public class EndUser extends User {
             }
         }
 
+        ObservableList<Computer> newList = FXCollections.observableArrayList();
+
         Computer computer = new Computer();
         if(numberOfComputers > 1) {
             for (int i = 1; i < list.size(); i++) {
                 if (list.get(i) == null) {
-                    add(computer);
+                    newList.add(computer);
                     computer = new Computer();
                 } else {
                     computer.addComponent(list.get(i));
                 }
             }
-            add(computer);
+            newList.add(computer);
         } else {
             for(Component component : list){
                 if(component != null){
                     computer.addComponent(component);
                 }
             }
-            add(computer);
+            newList.add(computer);
         }
+
+        return newList;
     }
 
     @Override
