@@ -1,6 +1,7 @@
 package controllers.user.endUsers;
 
 import components.Computer;
+import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -29,6 +30,10 @@ public class PrevPcController implements Initializable {
 
     @FXML
     private Button addPc;
+
+
+    @FXML
+    private Button removeButton;
 
     @FXML
     private TableColumn<Computer, String> gpuCol;
@@ -91,6 +96,10 @@ public class PrevPcController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle){
+
+
+        removeButton.disableProperty().bind(Bindings.isEmpty(tableView.getSelectionModel().getSelectedItems()));
+
         gpuCol.setCellValueFactory(new PropertyValueFactory<>("gpuName"));
         cpuCol.setCellValueFactory(new PropertyValueFactory<>("cpuName"));
         memoryCol.setCellValueFactory(new PropertyValueFactory<>("totalRamString"));
