@@ -4,9 +4,45 @@ Gruppe 3142
 Kandidatnummer gruppemedlemmer: 209, 298, 318
 
 Oppgave 1: Konfigurasjonssystem datamaskin.
-
 For å logge inn på superbruker kan man logge inn med:
-Brukernavn: admin
-Passord: super
+For super user:
+> Brukernavn: admin
+> Passord: admin
+For end user:
+> Brukernavn: bruker
+> Passord: bruker
 
+Det er mulighet for å registrere nye brukere. Men disse brukerne er satt som enduser, mao. super user kan kun bli lagd
+under main.App metoden "initiateCoreUsers" som user object.
 
+I denne applikasjonen har vi valgt å gjøre følgende:
+Superuser:
+> Mulighet for å legge til komponenter.
+>> Mange av feltene har blitt begrenset input som f.eks pris har blitt begrenset til kun desimaltall mens andre
+>> felt som RAM har blitt begrenset til heltall.
+>> Noen felter med "+" og "-" knapper har blitt begrenset til å kun bruke disse knappene for å sette inn input av tall
+>>>> Dette er for å sikre så lite feil ved input for å legge til komponenter til databasen.
+
+>> Komponentene som blir lagt til blir automatisk lagret når man lukker programmet.
+>> Komponentene som tidligere har blitt lagt til blir også automatisk lastet inn i applikasjonen ved start.
+>>>> Vi har valgt å ikke legge til trådventing ved automatisk innlasting og lagring av kompontene ved applikasjon start
+>>>> men simuleringen av store filer (trådventing) er lagt ved når filene blir åpnet av super user manuelt fra GUI.
+
+> Visning av komponenter
+>> Visningen viser alle komponentene som har blitt lagt til av super bruker.
+>>>> Vi kan også filtrere via komponenttyper og hver av disse komponentene har sine egne filtrerings funksjoner avhengig
+>>>> avhengig av hva slags attributter som identifiserer disse komponentene.
+
+Enduser:
+> Mulighet for å konfigurere en datamaskin
+>> Applikasjonen veileder brukeren til å lage en datamaskin
+>>>> Vi har her også tatt i betrakning til kompatibiliteten med komponentene som blir lagt avhengig av hva som skal
+>>>> passe med hverandre i henhold til de eksisterende komponentene som har blitt valgt.
+>>>>>> Når det gjelder formfaktor så har vi valgt å bare sjekke om de er like selvom vi vet at noen av formfaktorene
+>>>>>> er kompatibel med formfaktorer som er mindre. Dette er på grunn av at formfaktor har veldig ulike dimensjoner.
+>>>>>>>> Kompatibilitets funksjonen er kun satt til de viktigste komponentene som skal kobles til hovedkortet som RAM,
+>>>>>>>> Skjermkort og prossessor. I tillegg til hovedkort og kabinettet.
+
+Filbehandlingen har blitt lagt til for begge brukerne hvor super bruker kan kun lagre og åpne .bin filer og slutt bruker
+kan kun lagre og åpne csv filer. Disse har også blitt testet mot Excel og skal fint kunne åpnes der. Det er også andre
+små detaljer som har blitt lagt til å programmet.
