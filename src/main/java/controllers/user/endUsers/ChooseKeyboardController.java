@@ -14,6 +14,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import main.App;
 import users.EndUser;
@@ -168,6 +169,54 @@ public class ChooseKeyboardController implements Initializable {
                 }).collect(Collectors.toCollection(FXCollections::observableArrayList)));
             }
         }
+    }
+
+        @FXML
+        void filterEvent(KeyEvent event) {
+            int index = filterBox.getSelectionModel().getSelectedIndex();
+            if (index == 2 || index == 3) {
+                filterText.setDisable(true);
+                tableView.setItems(keyboardList.stream().filter(component -> {
+                    switch (index) {
+                        case 2:
+                            return component.getTactile();
+                        case 3:
+                            return !component.getTactile();
+                        default:
+                            return false;
+                    }
+                }).collect(Collectors.toCollection(FXCollections::observableArrayList)));
+            } else {
+                filterText.setDisable(false);
+
+                if (filterText.getText() == null) {
+                    tableView.setItems(keyboardList);
+                } else {
+                    String search = filterText.getText().toLowerCase();
+                    int filterIndex = filterBox.getSelectionModel().getSelectedIndex();
+
+                    tableView.setItems(keyboardList.stream().filter(component -> {
+                        if (search.isBlank() || search.isEmpty() || filterBox.getSelectionModel().getSelectedItem() == null) {
+                            return true;
+                        } else {
+                            switch (filterIndex) {
+                                case 0:
+                                    return component.getManufacturer().toLowerCase().contains(search);
+                                case 1:
+                                    return component.getModel().toLowerCase().contains(search);
+                                case 4:
+                                    try {
+                                        return component.getPrice() <= Double.parseDouble(search);
+                                    } catch (NumberFormatException e) {
+                                        return false;
+                                    }
+                                default:
+                                    return false;
+                            }
+                        }
+                    }).collect(Collectors.toCollection(FXCollections::observableArrayList)));
+                }
+            }
     }
 
     public void setUser(EndUser user) {
