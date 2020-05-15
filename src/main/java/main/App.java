@@ -3,6 +3,7 @@ package main;
 import components.Component;
 import components.Computer;
 import fileManager.FileOpenerBin;
+import fileManager.FileOpenerCSV;
 import fileManager.FileSaverBin;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -33,11 +34,12 @@ public class App extends Application {
         Scene scene = new Scene(fxmlLoader.load());
         stage.setScene(scene);
 
-        //FileOpenerCSV tempOpener = new FileOpenerCSV();
-        //listableList.setList(tempOpener.open(Paths.get("temp.csv")));
 
-        FileOpenerBin tempOpener = new FileOpenerBin();
-        listableList.setList(tempOpener.open(Paths.get("temp.bin")));
+        FileOpenerCSV tempOpener = new FileOpenerCSV();
+        listableList.setList(tempOpener.open(Paths.get("temp.csv")));
+
+        //FileOpenerBin tempOpener = new FileOpenerBin();
+        //listableList.setList(tempOpener.open(Paths.get("temp.bin")));
 
         stage.setOnCloseRequest(windowEvent -> {
             FileSaverBin<Component> tempSaver = new FileSaverBin<>();

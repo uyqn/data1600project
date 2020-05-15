@@ -6,10 +6,13 @@ GPU,ASUS,Radeon RX 5600,PCIe 4.0x16,6,GDDR6,1770,4099.0
 GPU,Gigabyte,GeForce GTX 1650,PCIe 3.0x16,4,GDDR6,1755,2499.0
 GPU,Sapphire,Radeon RX 5500,PCIe 4.0x16,8,GDDR6,1845,3299.0
 GPU,ZOTAC,GeForce RTX 2080 Ti,PCIe 4.0x16,11,GDDR6,4352,16489.0
+Motherboard,Acer,B360N Micro ,AM4,PCIe 3.0x16,2,DDR3,64,microATX,2069.0
 Motherboard,ASUS,TUF X299 Mark 1,LGA2066,PCIe 3.0x16,8,DDR4,128,ATX,4499.0
 Motherboard,Gigabyte,Z390 AORUS MASTER,LGA1151,PCIe 3.0x16,4,DDR4,128,ATX,4419.0
+Motherboard,Acer,B360N Wi-Fi,AM4,PCIe 4.0x16,4,DDR4,64,EATX,5069.0
 Motherboard,ASUS,ROG MAXIMUS XI HERO,LGA1151,PCIe 3.0x16,4,DDR4,64,ATX,4869.0
 Memory,HyperX,Predator,1247.0,16,DDR4,3200
+Memory,HyperX,Fury,1600.0,16,DDR3,1231
 Memory,G.Skill,Trident Z Neo,2749.0,32,DDR4,3600
 Memory,Corsair,Vengeance,1354.0,16,DDR4,2666
 HDD,Seagate,Firecuda,500,5400,647.0
@@ -18,17 +21,30 @@ HDD,Samsung,860 Evo,500,600,790.0
 SSD,Samsung,970 Evo,500,999.0
 SSD,Kingston,A400,400,450.0
 SSD,Crucial,P1,1000,1599.0
+Cooler,Deepcool,Captain 240,800 - 2500,10.0 - 37.6,8.21,2779.0
 Cooler,Cooler Master,MasterFan SF360R,650 - 1800,8.0 - 30.0,6.48,499.0
+Cooler,CM,Masterliquid,650 - 2000,7.0 - 22.0,5.31,699.0
 Cooler,Deepcool,Captain 240 Pro,500 - 1800,30.0,2.04,1499.0
 PSU,Seasonic,Focus GX 750,750,1499.0
+PSU,Cooler Master,MasterWatt 650,750,899.0
+PSU,Corsair,HX1200i,1200,3399.0
+PSU,ASUS,ROG Thor 850,850,2799.0
 PSU,Corsair,RM650X,650,1399.0
 Cabin,Fractal Design,Define 7 XL,EATX,2699.0
 Cabin,Corsair,Carbide Series 275Q,ATX,890.0
 Cabin,NZXT,H150,ATX,749.0
 Cabin,Corsair,SPEC-DELTA RGB,microATX,500.0
 Mouse,iiglo,M610,6,1600,true,true,299.0
+Mouse,Razer,Chroma,8,16000,true,true,749.0
+Mouse,Logitech,HS68,3,4000,false,false,299.0
+Mouse,Logitech,M545,5,12000,true,false,489.0
 Mouse,Svivie,Proteus 3360,7,12000,true,false,449.0
 Keyboard,Razer,Huntsman Tournament Edition,true,1999.0
 Keyboard,SteelSeries,Apex 7 gaming,true,1989.0
 Keyboard,Corsair,Gaming K70 MK.2,true,2190.0
 Keyboard,Razer,BlackWidow Elite Gaming,true,2349.0
+Monitor,HP,27W,27.0,75,1299.0
+Monitor,Razer,Gaming2,24.0,144,1299.0
+Monitor,AOC,E2475SWQE,24.0,75,1595.0
+Monitor,Svive,Curved,34.0,144,4995.0
+Monitor,AOC,27G2U,27.0,144,2895.0

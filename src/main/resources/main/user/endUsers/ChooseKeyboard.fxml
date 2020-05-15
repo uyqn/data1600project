@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.user.endUsers.ChooseKeyboardController">
+<BorderPane minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.user.endUsers.ChooseKeyboardController">
    <center>
       <GridPane>
          <columnConstraints>
@@ -52,7 +52,7 @@
                   <Insets />
                </GridPane.margin>
             </TableView>
-            <Label text="Choose a Keyboard">
+            <Label text="Your Computers">
                <font>
                   <Font name="System Bold" size="22.0" />
                </font>
@@ -63,7 +63,7 @@
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font></Button>
-                  <Button fx:id="nextBtn" mnemonicParsing="false" onAction="#GoNext" text="Next">
+                  <Button fx:id="nextBtn" mnemonicParsing="false" onAction="#GoNext" text="Finish">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font></Button>
