@@ -25,6 +25,7 @@ import javafx.util.converter.IntegerStringConverter;
 import main.App;
 import users.SuperUser;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
@@ -87,14 +88,18 @@ public class ComponentView implements Initializable {
 
     @FXML
     void open(ActionEvent event){
-        user.open();
-        open();
+        try {
+            App.user.open();
+            open();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void open(){
-        if(user.getPath() != null) {
+        if(App.user.getPath() != null) {
             opener = new FileOpenerBin();
-            opener.setPath(user.getPath());
+            opener.setPath(App.user.getPath());
             opener.setOnSucceeded(this::openSuccess);
             opener.setOnFailed(this::openFailed);
             Thread thread = new Thread(opener);
@@ -121,12 +126,12 @@ public class ComponentView implements Initializable {
 
     @FXML
     void save(ActionEvent event){
-        user.save(App.listableList);
+        App.user.save(App.listableList);
     }
 
     @FXML
     void saveAs(ActionEvent event){
-        user.saveAs(App.listableList);
+        App.user.saveAs(App.listableList);
     }
 
     @FXML
