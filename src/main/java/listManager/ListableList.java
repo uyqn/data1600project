@@ -41,7 +41,7 @@ public class ListableList<S extends Listable>
     }
 
     @Override
-    public String toCSV(){
+    public String toCsv(){
         StringBuilder csv = new StringBuilder();
         for(S item : list){
             csv.append(item.toCSV()).append("\n");

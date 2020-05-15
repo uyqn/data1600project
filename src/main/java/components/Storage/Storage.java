@@ -1,6 +1,7 @@
 package components.Storage;
 
 import components.Component;
+import components.Interchangeable;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
@@ -9,7 +10,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
-public abstract class Storage extends Component implements Serializable {
+public abstract class Storage extends Component implements Serializable, Interchangeable {
     private transient SimpleIntegerProperty capacity=new SimpleIntegerProperty();
     private transient SimpleStringProperty form=new SimpleStringProperty();
 
@@ -69,7 +70,6 @@ public abstract class Storage extends Component implements Serializable {
         setCapacity(capacity);
         super.setPrice(price);
     }
-
 }
 
 

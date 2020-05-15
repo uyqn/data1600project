@@ -438,18 +438,6 @@ public class Computer extends ListableList<Component> implements Listable, ItemL
     }
 
     @Override
-    public String getName() {
-        return null;
-        /*
-        return "GPU: " + getGpuName() + "\n" +
-                "CPU: " + getCpuName() + "\n" +
-                "RAM: " + getTotalRam() + " GB \n" +
-                "Storage: " + getTotalStorageString() +
-                "Price: " + getPriceString();
-         */
-    }
-
-    @Override
     public String toCSV(){
         StringBuilder csv = new StringBuilder();
         csv.append("Computer").append("\n");
@@ -461,9 +449,13 @@ public class Computer extends ListableList<Component> implements Listable, ItemL
     }
 
     @Override
+    public String getName() {
+        return null;
+    }
+
+    @Override
     public String toString() {
         return String.format(
-                "Computer: %s\n" +
                 "CPU: %s\n" +
                 "GPU: %s\n" +
                 "Motherboard: %s\n" +
@@ -477,7 +469,6 @@ public class Computer extends ListableList<Component> implements Listable, ItemL
                 "Monitor: %s \n" +
                 "Keyboard: %s \n" +
                 "Price: %s",
-                getName(),
                 getCpuName(),
                 getGpuName(),
                 getMotherboardName(),
